@@ -4,11 +4,11 @@ export const FOOTNOTES = {
   visa:      'Visa policy is a moving target. We mark every report with a timestamp. This is information, not legal advice.',
   relocate:  'Rent numbers come from listings, not brochures. Assume +15% in the first month.',
   lawyer:    'We never list or recommend specific lawyers. We show you how to find and choose one safely.',
-  stories:   'Real people, real moves. Submit yours — we'll read it.',
+  stories:   "Real people, real moves. Submit yours — we'll read it.",
   legal:     'Last updated June 2026. If anything here is unclear, ask a licensed immigration attorney.',
   profile:   'Your profile stays on this device unless you check the Remember box.',
   contact:   'We read every email. Response time is usually within 48 hours.',
-  auth:      'Sign-in requires a verified email. We don't sell data. We don't spam.',
+  auth:      "Sign-in requires a verified email. We don't sell data. We don't spam.",
 };
 
 export const HERO_COPY = {
