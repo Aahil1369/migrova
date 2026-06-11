@@ -151,35 +151,6 @@ body {
 }
 .tool-card-underline:hover::after { width: 100%; }
 
-/* ─── Mapbox popups (terminal register) ─── */
-.mapboxgl-popup-content {
-  padding: 0 !important;
-  border-radius: 0 !important;
-  background: var(--term-bg) !important;
-  border: 1px solid var(--term-rule) !important;
-  color: var(--term-ink);
-  font-family: var(--font-mono);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
-}
-.mapboxgl-popup-tip { border-top-color: var(--term-bg) !important; border-bottom-color: var(--term-bg) !important; }
-.popup-inner { padding: 12px 14px; }
-.popup-title { font-size: 12px; font-weight: 500; margin: 0 0 4px; color: var(--term-ink); }
-.popup-company { font-size: 11px; margin: 0 0 2px; color: var(--term-ink-sub); }
-.popup-location { font-size: 10px; margin: 0 0 6px; color: var(--term-ink-sub); }
-.popup-salary { font-size: 12px; font-weight: 500; margin: 0 0 6px; color: var(--data); }
-.popup-link { font-size: 11px; color: var(--accent); text-decoration: none; }
-.popup-link:hover { opacity: 0.8; }
-
-/* ─── Map job marker ─── */
-.job-marker {
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--paper-bg);
-  cursor: pointer;
-  transition: transform 0.2s var(--ease);
-}
-.job-marker:hover { transform: scale(1.3); }
-
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .reveal, .italic-draw, .page-transition-bar, .glyph-strokes *, .tool-card-underline::after {

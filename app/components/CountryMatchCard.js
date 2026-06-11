@@ -55,7 +55,7 @@ export default function CountryMatchCard({ match, rank }) {
       <div className="flex flex-wrap gap-2 font-mono text-[11px]">
         <Link href="/visa" className="px-3 py-1.5 bg-paper-ink text-paper-bg hover:bg-[#2a3a2f] transition-colors">Visa details →</Link>
         <Link href="/relocate" className="px-3 py-1.5 border border-paper-rule text-paper-ink hover:bg-paper-bg-alt transition-colors">Relocation</Link>
-        <Link href="/jobs" className="px-3 py-1.5 border border-paper-rule text-paper-ink hover:bg-paper-bg-alt transition-colors">Jobs</Link>
+        <a href="https://opportumap.netlify.app/jobs" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-paper-rule text-paper-ink hover:bg-paper-bg-alt transition-colors">Jobs ↗</a>
       </div>
     </div>
   );

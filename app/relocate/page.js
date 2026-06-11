@@ -33,24 +33,6 @@ function CostCard({ label, item }) {
   );
 }
 
-function Avatar({ name }) {
-  const initials = (name || '?').split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
-  return (
-    <div className="w-8 h-8 border border-paper-rule flex items-center justify-center font-mono font-medium text-paper-ink text-[11px] flex-shrink-0">
-      {initials}
-    </div>
-  );
-}
-
-function timeAgo(dateStr) {
-  if (!dateStr) return '';
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const d = Math.floor(diff / 86400000);
-  if (d < 1) return 'today';
-  if (d < 30) return `${d}d ago`;
-  return new Date(dateStr).toLocaleDateString();
-}
-
 export default function RelocatePage() {
   useScrollReveal();
   const [destination, setDestination] = useState('');
@@ -557,33 +539,6 @@ export default function RelocatePage() {
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
-
-              {/* Community connections from OpportuMap */}
-              {result.connections?.length > 0 && (
-                <div className="border border-paper-rule p-5">
-                  <div className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-1">// PEOPLE TALKING ABOUT {result.destination?.toUpperCase()}</div>
-                  <p className="text-[13px] mb-4 mt-2 text-paper-ink-dim">From the OpportuMap community — connect with people who&apos;ve been there:</p>
-                  <div className="space-y-3">
-                    {result.connections.map((post) => (
-                      <a key={post.id} href="/community"
-                        className="flex gap-3 p-3 border border-paper-rule hover:border-accent/60 transition-colors cursor-pointer">
-                        <Avatar name={post.user_name} />
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-[13px] font-medium text-paper-ink">{post.user_name}</span>
-                            <span className="font-mono text-[10px] text-paper-ink-sub">{timeAgo(post.created_at)}</span>
-                          </div>
-                          {post.title && <p className="text-[13px] font-medium mt-0.5 text-paper-ink">{post.title}</p>}
-                          <p className="text-[12px] mt-0.5 line-clamp-2 text-paper-ink-dim">{post.content}</p>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                  <Btn variant="ghost" href="/community" className="mt-3 mx-auto flex w-fit">
-                    See all community posts →
-                  </Btn>
                 </div>
               )}
 
