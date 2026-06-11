@@ -8,23 +8,15 @@ import AuthModal from './AuthModal';
 import ProfileModal from './ProfileModal';
 
 const NAV_LINKS = [
-  { href: '/jobs',      label: 'Jobs' },
-  { href: '/map',       label: 'Map' },
-  { href: '/startups',  label: 'Startups' },
-  { href: '/community', label: 'Community' },
-  { href: '/messages',  label: 'Messages' },
+  { href: '/stories', label: 'Stories' },
 ];
 
 const TOOL_LINKS = [
-  { href: '/match',        label: 'Country Match' },
-  { href: '/visa',         label: 'Visa Intelligence' },
-  { href: '/relocate',     label: 'Relocation Guide' },
-  { href: '/resume',       label: 'Resume Grader' },
-  { href: '/cover-letter', label: 'Cover Letter' },
-  { href: '/interview',    label: 'Interview Prep' },
+  { href: '/match',    label: 'Country Match' },
+  { href: '/visa',     label: 'Visa Intelligence' },
+  { href: '/relocate', label: 'Relocation Guide' },
+  { href: '/lawyer',   label: 'Lawyer Guide' },
 ];
-
-const ADMIN_EMAIL = 'aahilakbar567@gmail.com';
 
 function UserAvatar({ user, size = 'sm' }) {
   const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email || '?';
@@ -105,7 +97,6 @@ export default function Navbar() {
   const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Account';
   const progressPct = Math.min(100, (toolsUsed / TOOL_LINKS.length) * 100);
   const isToolActive = TOOL_LINKS.some((t) => pathname === t.href);
-  const isAdmin = user?.email === ADMIN_EMAIL;
 
   return (
     <>
@@ -134,7 +125,7 @@ export default function Navbar() {
           <div className="absolute inset-0 bg-paper-ink/60" onClick={() => setMobileOpen(false)} />
           <div className="absolute top-0 right-0 h-full w-[280px] bg-paper-bg border-l border-paper-rule flex flex-col">
             <div className="flex items-center justify-between px-5 py-4 border-b border-paper-rule">
-              <span className="font-display italic text-[22px] leading-none text-paper-ink">OpportuMap</span>
+              <span className="font-display italic text-[22px] leading-none text-paper-ink">Migrova</span>
               <button onClick={() => setMobileOpen(false)} className="font-mono text-[12px] text-paper-ink-sub hover:text-accent">CLOSE</button>
             </div>
             <div className="flex-1 overflow-y-auto px-5 py-5 font-mono text-[12px] tracking-[0.08em] uppercase text-paper-ink-dim space-y-1">
@@ -157,9 +148,6 @@ export default function Navbar() {
                     </div>
                   </div>
                   <Link href="/profile" className="block font-mono text-[11px] tracking-[0.1em] uppercase text-paper-ink-dim hover:text-accent">Profile</Link>
-                  {isAdmin && (
-                    <Link href="/admin" className="block font-mono text-[11px] tracking-[0.1em] uppercase text-accent hover:opacity-80">Admin</Link>
-                  )}
                   <button onClick={handleSignOut} className="block font-mono text-[11px] tracking-[0.1em] uppercase text-paper-ink-sub hover:text-accent">Sign out</button>
                 </div>
               ) : (
@@ -176,7 +164,7 @@ export default function Navbar() {
       <header className="border-b border-paper-rule bg-paper-bg sticky top-0 z-30">
         <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-4 flex items-center justify-between gap-6">
           <Link href="/" className="font-display italic text-[24px] leading-none tracking-[-0.02em] text-paper-ink hover:text-accent transition-colors">
-            OpportuMap
+            Migrova
           </Link>
 
           <nav className="hidden md:flex items-center gap-7 font-mono text-[11px] tracking-[0.08em] uppercase text-paper-ink-dim">
@@ -222,10 +210,6 @@ export default function Navbar() {
                     </div>
                     <div className="py-1 font-sans normal-case tracking-normal">
                       <Link href="/profile" onClick={() => setUserMenuOpen(false)} className="block px-4 py-2 text-[13px] text-paper-ink hover:bg-paper-bg">Profile</Link>
-                      <Link href="/saved" onClick={() => setUserMenuOpen(false)} className="block px-4 py-2 text-[13px] text-paper-ink hover:bg-paper-bg">Saved jobs</Link>
-                      {isAdmin && (
-                        <Link href="/admin" onClick={() => setUserMenuOpen(false)} className="block px-4 py-2 text-[13px] text-accent hover:bg-paper-bg">Admin</Link>
-                      )}
                       <div className="my-1 h-px bg-paper-rule" />
                       <button onClick={handleSignOut} className="block w-full text-left px-4 py-2 text-[13px] text-paper-ink-sub hover:bg-paper-bg">Sign out</button>
                     </div>

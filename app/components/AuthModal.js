@@ -55,7 +55,7 @@ export default function AuthModal({ onClose, onSuccess }) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-paper-rule">
           <h2 className="font-display text-[22px] leading-[1.15] text-paper-ink">
-            {mode === 'signin' ? 'Sign in to OpportuMap' : 'Create your account'}
+            {mode === 'signin' ? 'Sign in to Migrova' : 'Create your account'}
           </h2>
           <button onClick={onClose} className="text-lg leading-none text-paper-ink-sub hover:text-accent transition-colors">✕</button>
         </div>

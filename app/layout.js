@@ -26,20 +26,8 @@ const jbMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: 'OpportuMap — Global Opportunities for Everyone',
-  description: 'Jobs, visas, and relocation intelligence across 100 countries. Built by an immigrant kid for people who weren’t born into the passport lottery.',
-  openGraph: {
-    title: 'OpportuMap — Global Opportunities for Everyone',
-    description: 'Find work you can actually access. 100 countries, 33,664 roles, written for people crossing borders.',
-    url: 'https://opportumap.netlify.app',
-    siteName: 'OpportuMap',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'OpportuMap — Global Opportunities for Everyone',
-    description: 'Find work you can actually access. 100 countries, 33,664 roles.',
-  },
+  title: 'Migrova — visas, relocation, and legal guidance',
+  description: 'General information about visas, relocation, and finding immigration legal help — built for immigrant families. Information, not legal advice.',
 };
 
 export default function RootLayout({ children }) {
