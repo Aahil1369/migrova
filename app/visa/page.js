@@ -9,6 +9,8 @@ import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { NATIONALITIES } from '../data/countries';
 import VisaProbabilityMeter from '../components/VisaProbabilityMeter';
+import DisclaimerBlock from '../components/DisclaimerBlock';
+import LegalAckModal, { hasLegalAck } from '../components/LegalAckModal';
 
 const COUNTRIES = [
   { code: 'us', label: 'United States 🇺🇸' },
@@ -113,6 +115,7 @@ export default function VisaPage() {
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [probData, setProbData] = useState(null);
   const [probLoading, setProbLoading] = useState(false);
+  const [showAck, setShowAck] = useState(false);
 
   // Pre-fill nationality from saved profile
   useEffect(() => {
@@ -168,6 +171,11 @@ export default function VisaPage() {
       setError(e.message || 'Failed to load visa information.');
     }
     setLoading(false);
+  };
+
+  const handleSearchGated = () => {
+    if (!hasLegalAck()) { setShowAck(true); return; }
+    handleSearch();
   };
 
   const statusCfg = result ? (STATUS_CONFIG[result.currentStatus] || STATUS_CONFIG['visa-required']) : null;
@@ -232,7 +240,7 @@ export default function VisaPage() {
               </div>
             </div>
             {error && <p className="text-[12px] text-accent mb-3">{error}</p>}
-            <Btn variant="primary" as="button" onClick={handleSearch} disabled={loading || !nationality || !targetCountry}
+            <Btn variant="primary" as="button" onClick={handleSearchGated} disabled={loading || !nationality || !targetCountry}
               className="w-full justify-center disabled:opacity-40">
               {loading ? (
                 <span className="flex items-center justify-center gap-2 font-mono text-[11px] tracking-[0.12em]">
@@ -246,6 +254,8 @@ export default function VisaPage() {
           {/* Results */}
           {result && (
             <div className="space-y-5">
+              <DisclaimerBlock />
+
               {/* Status banner */}
               <div className="border border-paper-rule bg-paper-bg-alt p-5">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -498,6 +508,12 @@ export default function VisaPage() {
           <Footnote>{FOOTNOTES.visa}</Footnote>
         </div>
       </main>
+
+      <LegalAckModal
+        open={showAck}
+        onAccept={() => { setShowAck(false); handleSearch(); }}
+        onClose={() => setShowAck(false)}
+      />
     </div>
   );
 }
