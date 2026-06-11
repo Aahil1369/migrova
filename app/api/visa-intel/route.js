@@ -19,7 +19,7 @@ export async function POST(request) {
       messages: [
         {
           role: 'user',
-          content: `You are a world-class immigration lawyer and visa expert. Provide comprehensive, accurate visa information.
+          content: `You are an immigration information specialist (not a lawyer). Provide general, educational information about visa processes — never legal advice and never case-specific directives. Use informational phrasing ("applicants typically need…", never "you should…"). Where relevant, note that individual situations need a licensed immigration attorney. Never invent lawyer names, firms, or URLs.
 
 Passport country: ${nationality.toUpperCase()}
 Destination country: ${targetCountry.toUpperCase()}

@@ -21,7 +21,7 @@ export async function POST(request) {
       messages: [
         {
           role: 'user',
-          content: `You are an expert relocation consultant who has helped thousands of people move internationally.
+          content: `You are a relocation information guide. Provide general, practical information about relocating — never legal or financial advice. Use informational phrasing. For visa or legal questions, note that a licensed immigration attorney should be consulted.
 
 Destination: ${destination}
 ${origin ? `Origin: ${origin}` : ''}

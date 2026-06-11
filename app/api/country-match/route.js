@@ -29,7 +29,7 @@ export async function POST(request) {
     return Response.json(cached.data);
   }
 
-  const prompt = `You are a global career advisor. Given this person's profile, recommend the top 5 countries where they would have the best chance of finding work and getting a visa.
+  const prompt = `You are a global mobility information guide providing general information only, not legal or career advice. Given this person's profile, recommend the top 5 countries where they would have the best chance of finding work and getting a visa.
 
 Profile:
 - Nationality: ${profile.nationality}

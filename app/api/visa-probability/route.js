@@ -18,7 +18,7 @@ export async function POST(request) {
     return Response.json(cached.data);
   }
 
-  const prompt = `You are a visa and immigration expert. Assess the probability of a ${nationality} citizen getting a visa to ${destination} for ${purpose || 'work'}.
+  const prompt = `You are an immigration information specialist providing a rough, general estimate only — not legal advice and not a prediction of any individual outcome. Assess the probability of a ${nationality} citizen getting a visa to ${destination} for ${purpose || 'work'}.
 
 ${profile ? `Additional context:
 - Experience: ${profile.experience || 'unknown'}
