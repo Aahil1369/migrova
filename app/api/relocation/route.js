@@ -6,7 +6,11 @@ const cache = new Map();
 
 export async function POST(request) {
   try {
-    const { destination, origin, field } = await request.json();
+    const clamp = (v, n = 120) => String(v ?? '').slice(0, n);
+    const body = await request.json();
+    const destination = clamp(body.destination);
+    const origin = clamp(body.origin);
+    const field = clamp(body.field, 200);
     if (!destination) return Response.json({ error: 'Destination required' }, { status: 400 });
 
     const cacheKey = `${destination}:${origin || 'unknown'}`;

@@ -6,7 +6,12 @@ const cache = new Map();
 const CACHE_TTL = 60 * 60 * 1000;
 
 export async function POST(request) {
-  const { nationality, destination, purpose, profile } = await request.json();
+  const clamp = (v, n = 120) => String(v ?? '').slice(0, n);
+  const body = await request.json();
+  const nationality = clamp(body.nationality);
+  const destination = clamp(body.destination);
+  const purpose = clamp(body.purpose, 200);
+  const profile = body.profile;
 
   if (!nationality || !destination) {
     return Response.json({ error: 'Nationality and destination required' }, { status: 400 });

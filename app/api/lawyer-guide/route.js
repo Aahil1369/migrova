@@ -7,7 +7,12 @@ const CACHE_MS = 60 * 60 * 1000;
 
 export async function POST(request) {
   try {
-    const { caseType, destination, budget, language } = await request.json();
+    const clamp = (v, n = 120) => String(v ?? '').slice(0, n);
+    const body = await request.json();
+    const caseType = clamp(body.caseType);
+    const destination = clamp(body.destination);
+    const budget = clamp(body.budget, 60);
+    const language = clamp(body.language, 60);
     if (!caseType || !destination) {
       return Response.json({ error: 'Case type and destination are required' }, { status: 400 });
     }

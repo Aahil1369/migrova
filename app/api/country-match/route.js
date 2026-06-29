@@ -22,6 +22,10 @@ export async function POST(request) {
   if (!profile?.nationality) {
     return Response.json({ error: 'Nationality is required' }, { status: 400 });
   }
+  // Guard against oversized payloads inflating token cost.
+  if (JSON.stringify(profile).length > 6000) {
+    return Response.json({ error: 'Profile too large' }, { status: 400 });
+  }
 
   const key = cacheKey(profile);
   const cached = cache.get(key);

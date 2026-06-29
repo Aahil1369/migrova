@@ -5,7 +5,11 @@ const cache = new Map();
 
 export async function POST(request) {
   try {
-    const { nationality, targetCountry, purpose } = await request.json();
+    const clamp = (v, n = 120) => String(v ?? '').slice(0, n);
+    const body = await request.json();
+    const nationality = clamp(body.nationality);
+    const targetCountry = clamp(body.targetCountry);
+    const purpose = clamp(body.purpose, 200);
     if (!nationality || !targetCountry) {
       return Response.json({ error: 'Missing nationality or target country' }, { status: 400 });
     }
