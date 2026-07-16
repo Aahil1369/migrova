@@ -3,6 +3,7 @@ import './globals.css';
 import PingTracker from './components/PingTracker';
 import PageTransition from './components/ui/PageTransition';
 import LegalFooter from './components/LegalFooter';
+import AuthErrorBanner from './components/AuthErrorBanner';
 
 const instrumentSerif = Instrument_Serif({
   variable: '--font-instrument-serif',
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col bg-paper-bg text-paper-ink">
         <PageTransition />
         <PingTracker />
+        <AuthErrorBanner />
         {children}
         <LegalFooter />
       </body>

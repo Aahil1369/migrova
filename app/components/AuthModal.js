@@ -25,7 +25,13 @@ export default function AuthModal({ onClose, onSuccess }) {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { full_name: name } },
+          options: {
+            data: { full_name: name },
+            // Without this, Supabase builds the confirmation link from the
+            // project's Site URL — which is OpportuMap's domain (shared project),
+            // so Migrova signups would land on the wrong app.
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+          },
         });
         if (error) throw error;
         setSent(true);
