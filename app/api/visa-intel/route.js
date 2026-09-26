@@ -1,4 +1,5 @@
 import Groq from 'groq-sdk';
+import { GROQ_OPTIONS } from '../../../lib/ai.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const cache = new Map();
@@ -19,7 +20,7 @@ export async function POST(request) {
     if (cached && Date.now() - cached.ts < 3600000) return Response.json(cached.data);
 
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      ...GROQ_OPTIONS,
       messages: [
         {
           role: 'user',
@@ -86,7 +87,7 @@ Return ONLY valid JSON (no markdown) with this exact structure:
 Include at least 3 visa types, 5 application steps, 5 guarantee tips, 3 rejection reasons, a full document checklist, and timeline info.`,
         },
       ],
-      max_tokens: 2048,
+      max_tokens: 3500, // gpt-oss output for this schema runs ~1.8-2.4k tokens
     });
 
     let text = completion.choices[0].message.content.trim().replace(/```json|```/g, '').trim();

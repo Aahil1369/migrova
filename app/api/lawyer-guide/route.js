@@ -1,4 +1,5 @@
 import Groq from 'groq-sdk';
+import { GROQ_OPTIONS } from '../../../lib/ai.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -22,7 +23,7 @@ export async function POST(request) {
     if (hit && Date.now() - hit.t < CACHE_MS) return Response.json(hit.data);
 
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      ...GROQ_OPTIONS,
       max_tokens: 3000,
       messages: [
         {

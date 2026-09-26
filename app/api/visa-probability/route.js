@@ -1,4 +1,5 @@
 import Groq from 'groq-sdk';
+import { GROQ_OPTIONS } from '../../../lib/ai.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -47,7 +48,7 @@ Be realistic and specific. Consider actual visa policies between these countries
 
   try {
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      ...GROQ_OPTIONS,
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 1500,
       temperature: 0.2,

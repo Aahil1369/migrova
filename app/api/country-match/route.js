@@ -1,4 +1,5 @@
 import Groq from 'groq-sdk';
+import { GROQ_OPTIONS } from '../../../lib/ai.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -59,7 +60,7 @@ Return ONLY valid JSON: { "matches": [...] } sorted by match_score descending. N
 
   try {
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      ...GROQ_OPTIONS,
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 2000,
       temperature: 0.3,
