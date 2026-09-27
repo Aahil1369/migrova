@@ -1,0 +1,6705 @@
+{
+ "dz": {
+  "qid": "Q262",
+  "portal": [
+   "https://www.el-mouradia.dz/ar/home"
+  ],
+  "agencies": [
+   {
+    "qid": "Q3315352",
+    "label": "Ministry of Foreign Affairs of Algeria",
+    "site": "http://www.mae.gov.dz/default_en.aspx"
+   },
+   {
+    "qid": "Q3315224",
+    "label": "Ministry of the Interior of Algeria",
+    "site": "https://www.interieur.gov.dz"
+   }
+  ]
+ },
+ "ao": {
+  "qid": "Q916",
+  "portal": [
+   "https://www.governo.gov.ao/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q205384",
+    "label": "Minister of External Relations",
+    "site": "http://www.mirex.gv.ao/"
+   },
+   {
+    "qid": "Q30939064",
+    "label": "Ministry of the Interior of Angola",
+    "site": "http://www.minint.gov.ao/"
+   }
+  ]
+ },
+ "bj": {
+  "qid": "Q962",
+  "portal": [
+   "https://www.gouv.bj/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q108123958",
+    "label": "Ministry of Foreign Affairs of Benin",
+    "site": "https://diplomatie.gouv.bj"
+   },
+   {
+    "qid": "Q109045093",
+    "label": "Ministry of the Interior",
+    "site": "https://interieur.gouv.bj"
+   }
+  ]
+ },
+ "bw": {
+  "qid": "Q963",
+  "portal": [
+   "https://gov.bw/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q963",
+    "label": "Botswana",
+    "site": "http://www.gov.bw"
+   },
+   {
+    "qid": "Q963",
+    "label": "Botswana",
+    "site": "https://gov.bw/"
+   }
+  ]
+ },
+ "bf": {
+  "qid": "Q965",
+  "portal": [
+   "https://www.gouvernement.gov.bf/accueil"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16856039",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mae.gov.bf/"
+   }
+  ]
+ },
+ "bi": {
+  "qid": "Q967",
+  "portal": [
+   "https://www.presidence.gov.bi/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q18204361",
+    "label": "Ministry of Foreign Affairs, Regional Integration and Development Cooperation of Burundi",
+    "site": "https://www.mae.gov.bi/"
+   },
+   {
+    "qid": "Q6867468",
+    "label": "Ministry of Public Security of Burundi",
+    "site": "https://mininterinfos.gov.bi/"
+   }
+  ]
+ },
+ "cv": {
+  "qid": "Q1011",
+  "portal": [
+   "http://www.governo.cv"
+  ],
+  "agencies": []
+ },
+ "cm": {
+  "qid": "Q1009",
+  "portal": [
+   "https://www.prc.cm"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q30745752",
+    "label": "Ministry of External Relations",
+    "site": "http://www.diplocam.cm/index.php/fr/"
+   }
+  ]
+ },
+ "cf": {
+  "qid": "Q929",
+  "portal": [],
+  "agencies": []
+ },
+ "td": {
+  "qid": "Q657",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q134369309",
+    "label": "Q134369309",
+    "site": "https://chad.iom.int"
+   },
+   {
+    "qid": "Q18204369",
+    "label": "Minister of Foreign Affairs",
+    "site": "https://diplomatie.gouv.td/"
+   }
+  ]
+ },
+ "km": {
+  "qid": "Q970",
+  "portal": [
+   "https://beit-salam.km/"
+  ],
+  "agencies": []
+ },
+ "cg": {
+  "qid": "Q971",
+  "portal": [
+   "https://gouvernement.cg/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q139669549",
+    "label": "Ministry of Foreign Affairs, Francophonie and Congolese Abroad",
+    "site": "https://diplobrazza.net/"
+   }
+  ]
+ },
+ "cd": {
+  "qid": "Q974",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   }
+  ]
+ },
+ "ci": {
+  "qid": "Q1008",
+  "portal": [
+   "https://www.gouv.ci"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16766111",
+    "label": "Ministry of Foreign Affairs of the Republic of Côte d'Ivoire",
+    "site": "http://www.diplomatie.gouv.ci/"
+   },
+   {
+    "qid": "Q3315223",
+    "label": "Ministry of the Interior",
+    "site": "http://www.interieur.gouv.ci/"
+   }
+  ]
+ },
+ "dj": {
+  "qid": "Q977",
+  "portal": [
+   "https://www.presidence.dj/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q23021666",
+    "label": "Ministry of Foreign Affairs and International Cooperation of Djibouti",
+    "site": "https://diplomatie.gouv.dj/"
+   },
+   {
+    "qid": "Q136489883",
+    "label": "Interior ministry of Djibouti",
+    "site": "https://www.presidence.dj/"
+   }
+  ]
+ },
+ "eg": {
+  "qid": "Q79",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q22934989",
+    "label": "Ministry of Immigration and Expatriates Affairs",
+    "site": "https://www.emigration.gov.eg/DefaultAr/Pages/default.aspx"
+   },
+   {
+    "qid": "Q947229",
+    "label": "Ministry of Foreign Affairs of Egypt",
+    "site": "https://www.egyptconsulates.org"
+   },
+   {
+    "qid": "Q2607694",
+    "label": "Ministry of Interior (Egypt)",
+    "site": "https://moi.gov.eg"
+   },
+   {
+    "qid": "Q3394202",
+    "label": "Egyptian National Police",
+    "site": "https://moi.gov.eg/"
+   },
+   {
+    "qid": "Q139510739",
+    "label": "Trend Group",
+    "site": "https://trendgroupglobal.com/"
+   },
+   {
+    "qid": "Q139510739",
+    "label": "Trend Group",
+    "site": "https://trendgroup.co.za/"
+   }
+  ]
+ },
+ "gq": {
+  "qid": "Q983",
+  "portal": [
+   "https://www.guineaecuatorialpress.com/"
+  ],
+  "agencies": []
+ },
+ "er": {
+  "qid": "Q986",
+  "portal": [
+   "http://www.shabait.com/index.php"
+  ],
+  "agencies": []
+ },
+ "sz": {
+  "qid": "Q1050",
+  "portal": [
+   "http://www.gov.sz/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q138878035",
+    "label": "Ministry of Foreign Affairs and International Cooperation of Eswatini",
+    "site": "https://gov.sz/index.php/about-us-sp-1300693458"
+   }
+  ]
+ },
+ "et": {
+  "qid": "Q115",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q3315366",
+    "label": "Ministry of Foreign Affairs of the Federal Democratic Republic of Ethiopia",
+    "site": "http://www.mfa.gov.et/"
+   }
+  ]
+ },
+ "ga": {
+  "qid": "Q1000",
+  "portal": [
+   "https://gouvernement.ga"
+  ],
+  "agencies": []
+ },
+ "gm": {
+  "qid": "Q1005",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q1492914",
+    "label": "Ministry of Foreign Affairs, International Cooperation and Gambians Abroad",
+    "site": "http://www.mofa.gov.gm/"
+   },
+   {
+    "qid": "Q140387110",
+    "label": "Ministry of Interior",
+    "site": "https://moi.gov.gm"
+   }
+  ]
+ },
+ "gh": {
+  "qid": "Q117",
+  "portal": [
+   "https://www.ghana.gov.gh/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q5555355",
+    "label": "Ghana Immigration Service",
+    "site": "https://home.gis.gov.gh/"
+   },
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q140814836",
+    "label": "Ministry of Foreign Affairs and Regional Integration",
+    "site": "https://www.mfa.gov.gh/"
+   },
+   {
+    "qid": "Q16874286",
+    "label": "Ministry of Foreign Affairs and Regional Integration of the Republic of Ghana",
+    "site": "https://mfa.gov.gh/"
+   },
+   {
+    "qid": "Q4294295",
+    "label": "Ministry of Interior",
+    "site": "https://www.mint.gov.gh/"
+   }
+  ]
+ },
+ "gn": {
+  "qid": "Q1006",
+  "portal": [
+   "http://www.presidence.gov.gn/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q109255122",
+    "label": "Ministry of Foreign Affairs, International Cooperation, African Integration and Guineans Abroad",
+    "site": "https://mae.gov.gn/"
+   }
+  ]
+ },
+ "gw": {
+  "qid": "Q1007",
+  "portal": [
+   "https://www.gov.gw/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   }
+  ]
+ },
+ "ke": {
+  "qid": "Q114",
+  "portal": [
+   "http://www.president.go.ke"
+  ],
+  "agencies": [
+   {
+    "qid": "Q61932553",
+    "label": "African Migration and Development Policy Centre",
+    "site": "http://www.amadpoc.org/"
+   },
+   {
+    "qid": "Q6867007",
+    "label": "Ministry of Foreign and Diaspora Affairs of the Republic of Kenya",
+    "site": "https://www.mfa.go.ke/"
+   },
+   {
+    "qid": "Q135553619",
+    "label": "Ministry of Interior and National Administration",
+    "site": "https://www.interior.go.ke/"
+   }
+  ]
+ },
+ "ls": {
+  "qid": "Q1013",
+  "portal": [
+   "https://www.gov.ls/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867053",
+    "label": "Ministry of Foreign Affairs and International Relations",
+    "site": "http://www.gov.ls/foreign/"
+   }
+  ]
+ },
+ "lr": {
+  "qid": "Q1014",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q4294387",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mofa.gov.lr"
+   }
+  ]
+ },
+ "ly": {
+  "qid": "Q1016",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q16448991",
+    "label": "Ministry of Foreign Affairs and International Cooperation of the State of Libya",
+    "site": "http://www.foreign.gov.ly/ar/index.php#"
+   },
+   {
+    "qid": "Q100989459",
+    "label": "Ministry of Internal Affairs of Libya",
+    "site": "https://moi.gov.ly/"
+   }
+  ]
+ },
+ "mg": {
+  "qid": "Q1019",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q141141961",
+    "label": "Ministry of Interior and Decentralization",
+    "site": "http://mid.gov.mg/"
+   }
+  ]
+ },
+ "mw": {
+  "qid": "Q1020",
+  "portal": [
+   "http://www.malawi.gov.mw/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q125121141",
+    "label": "Department of Immigration and Citizenship Services",
+    "site": "https://immigration.gov.mw"
+   }
+  ]
+ },
+ "ml": {
+  "qid": "Q912",
+  "portal": [
+   "http://www.primature.gov.ml"
+  ],
+  "agencies": []
+ },
+ "mr": {
+  "qid": "Q1025",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q6867014",
+    "label": "Ministry of Foreign Affairs, Cooperation and Mauritanians Abroad",
+    "site": "https://www.diplomatie.gov.mr"
+   },
+   {
+    "qid": "Q6867014",
+    "label": "Ministry of Foreign Affairs, Cooperation and Mauritanians Abroad",
+    "site": "https://www.diplomatie.gov.mr/fr"
+   },
+   {
+    "qid": "Q6867696",
+    "label": "Ministry of the Interior and Decentralization",
+    "site": "http://www.interieur.gov.mr/"
+   },
+   {
+    "qid": "Q6867696",
+    "label": "Ministry of the Interior and Decentralization",
+    "site": "https://www.interieur.gov.mr/fr"
+   }
+  ]
+ },
+ "mu": {
+  "qid": "Q1027",
+  "portal": [
+   "http://www.govmu.org/"
+  ],
+  "agencies": []
+ },
+ "ma": {
+  "qid": "Q1028",
+  "portal": [
+   "https://www.maroc.ma/ar",
+   "https://www.maroc.ma/es",
+   "https://www.maroc.ma/fr",
+   "http://www.maroc.ma/en",
+   "https://www.maroc.ma/amz"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16034407",
+    "label": "Agadir Film and Migration Festival",
+    "site": "https://www.festival-agadir.com/"
+   },
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q3315358",
+    "label": "Ministry of Foreign Affairs, African Cooperation and Moroccan Expatriates",
+    "site": "https://diplomatie.ma/"
+   },
+   {
+    "qid": "Q141021950",
+    "label": "Ministry of the Interior",
+    "site": "http://www.interieur.gov.ma"
+   }
+  ]
+ },
+ "mz": {
+  "qid": "Q1029",
+  "portal": [
+   "http://www.portaldogoverno.gov.mz/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16963554",
+    "label": "Ministry of Foreign Affairs and Cooperation of the Republic of Mozambique",
+    "site": "http://www.minec.gov.mz/"
+   },
+   {
+    "qid": "Q30261937",
+    "label": "Ministry of Sea Inland Waters and Fisheries",
+    "site": "http://www.mozpesca.gov.mz/index.php/en/"
+   }
+  ]
+ },
+ "na": {
+  "qid": "Q1030",
+  "portal": [
+   "https://gov.na/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q789852",
+    "label": "Ministry of Foreign Affairs of Namibia",
+    "site": "http://www.mfa.gov.na/"
+   },
+   {
+    "qid": "Q1663915",
+    "label": "Ministry of the Interior",
+    "site": "http://www.mha.gov.na/"
+   }
+  ]
+ },
+ "ne": {
+  "qid": "Q1032",
+  "portal": [],
+  "agencies": []
+ },
+ "ng": {
+  "qid": "Q1033",
+  "portal": [
+   "https://nigeria.gov.ng/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q131377893",
+    "label": "Nigeria Immigration Service TV",
+    "site": "https://immigration.gov.ng/"
+   },
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q16753607",
+    "label": "Ministry of Foreign Affairs of the Federal Republic of Nigeria",
+    "site": "http://www.foreignaffairs.gov.ng/"
+   },
+   {
+    "qid": "Q7032918",
+    "label": "Nigerian Institute of International Affairs",
+    "site": "http://niianet.org/"
+   },
+   {
+    "qid": "Q111347308",
+    "label": "Lagos State Ministry of Foreign affairs",
+    "site": "https://www.foreign.gov.bb"
+   },
+   {
+    "qid": "Q682721",
+    "label": "Osun State",
+    "site": "https://www.osunstate.gov.ng/"
+   },
+   {
+    "qid": "Q96418631",
+    "label": "Interior Designers Association of Nigeria",
+    "site": "https://idanng.org"
+   },
+   {
+    "qid": "Q107491033",
+    "label": "Gemona West Interior Design",
+    "site": "https://www.gemonawest.com"
+   },
+   {
+    "qid": "Q17090046",
+    "label": "FMA Architects",
+    "site": "http://fmaarchitects.com/"
+   },
+   {
+    "qid": "Q112011614",
+    "label": "Visa Karena Hotels",
+    "site": "https://visakarenahotels.com/"
+   }
+  ]
+ },
+ "rw": {
+  "qid": "Q1037",
+  "portal": [
+   "https://www.gov.rw/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16911151",
+    "label": "Ministry of Foreign Affairs and International Cooperation of the Republic of Rwanda",
+    "site": "https://www.minaffet.gov.rw/"
+   },
+   {
+    "qid": "Q136223167",
+    "label": "ministry of Interior",
+    "site": "https://www.mininter.gov.rw/"
+   }
+  ]
+ },
+ "st": {
+  "qid": "Q1039",
+  "portal": [
+   "http://www.saotome.st/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q18128075",
+    "label": "Ministry of Foreign Affairs, Cooperation and Communities",
+    "site": "http://www.mnecc.gov.st/"
+   }
+  ]
+ },
+ "sn": {
+  "qid": "Q1041",
+  "portal": [
+   "https://www.sec.gouv.sn/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q125601363",
+    "label": "IOM Global Migration Film Festival",
+    "site": "https://www.iom.int/global-migration-film-festival"
+   },
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q140814310",
+    "label": "Ministry of Foreign Affairs and Senegalese Abroad",
+    "site": "https://diplomatie.gouv.sn/⁠"
+   },
+   {
+    "qid": "Q139567817",
+    "label": "Ministry of African Integration and Foreign Affairs of Senegal",
+    "site": "https://diplomatie.gouv.sn/"
+   },
+   {
+    "qid": "Q16798010",
+    "label": "Ministry of Foreign Affairs of the Republic of Senegal",
+    "site": "http://www.diplomatie.gouv.sn/"
+   },
+   {
+    "qid": "Q140046535",
+    "label": "Ministry of the Interior of Senegal",
+    "site": "https://interieur.gouv.sn/"
+   }
+  ]
+ },
+ "sc": {
+  "qid": "Q1042",
+  "portal": [
+   "https://egov.sc"
+  ],
+  "agencies": [
+   {
+    "qid": "Q140723760",
+    "label": "Internal Affairs, Immigration & Civil Identity Systems Department",
+    "site": "https://www.mhsca.gov.sc/about/departments/immigration-and-civil-identity-systems"
+   },
+   {
+    "qid": "Q6867030",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mfa.gov.sc/"
+   },
+   {
+    "qid": "Q140729432",
+    "label": "Ministry of Foreign Affairs and the Diaspora",
+    "site": "https://mfa.gov.sc/"
+   },
+   {
+    "qid": "Q140727332",
+    "label": "Department of Foreign Affairs and the Diaspora",
+    "site": "https://mfa.gov.sc/"
+   }
+  ]
+ },
+ "sl": {
+  "qid": "Q1044",
+  "portal": [
+   "https://statehouse.gov.sl/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   }
+  ]
+ },
+ "so": {
+  "qid": "Q1045",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q16737115",
+    "label": "Ministry of Foreign Affairs and International Cooperation of the Federal Republic of Somalia",
+    "site": "http://www.mfa.somaligov.net"
+   },
+   {
+    "qid": "Q16895207",
+    "label": "Ministry of Interior and Security (Somalia)",
+    "site": "https://moifar.gov.so/en/"
+   }
+  ]
+ },
+ "za": {
+  "qid": "Q258",
+  "portal": [
+   "https://gov.za"
+  ],
+  "agencies": [
+   {
+    "qid": "Q140011880",
+    "label": "New World Immigration",
+    "site": "https://nwivisas.com"
+   },
+   {
+    "qid": "Q139853561",
+    "label": "March and March",
+    "site": "https://marchandmarch.org.za/"
+   },
+   {
+    "qid": "Q3315351",
+    "label": "Department of International Relations and Cooperation of South Africa",
+    "site": "https://www.dfa.gov.za/"
+   },
+   {
+    "qid": "Q3315351",
+    "label": "Department of International Relations and Cooperation of South Africa",
+    "site": "https://dirco.gov.za/"
+   },
+   {
+    "qid": "Q141023385",
+    "label": "Kestrel Private",
+    "site": "https://kestrelprivate.com"
+   },
+   {
+    "qid": "Q139510739",
+    "label": "Trend Group",
+    "site": "https://trendgroupglobal.com/"
+   },
+   {
+    "qid": "Q139510739",
+    "label": "Trend Group",
+    "site": "https://trendgroup.co.za/"
+   },
+   {
+    "qid": "Q2640095",
+    "label": "Minister of Home Affairs of South Africa",
+    "site": "http://www.dha.gov.za/"
+   }
+  ]
+ },
+ "ss": {
+  "qid": "Q958",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q6867052",
+    "label": "Ministry of Foreign Affairs and International Cooperation",
+    "site": "http://www.goss-online.org/magnoliaPublic/en/ministries/Regional-Cooperation.html"
+   }
+  ]
+ },
+ "sd": {
+  "qid": "Q1049",
+  "portal": [
+   "http://www.sudan.gov.sd/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867035",
+    "label": "Ministry of Foreign Affairs of the Republic of Sudan",
+    "site": "http://www.mfa.gov.sd/"
+   }
+  ]
+ },
+ "tz": {
+  "qid": "Q924",
+  "portal": [
+   "https://www.tanzania.go.tz/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q13125255",
+    "label": "Ministry of Foreign Affairs and East African Cooperation",
+    "site": "http://www.foreign.go.tz"
+   }
+  ]
+ },
+ "tg": {
+  "qid": "Q945",
+  "portal": [
+   "https://www.republicoftogo.com"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   }
+  ]
+ },
+ "tn": {
+  "qid": "Q948",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q3315361",
+    "label": "Ministry of Foreign Affairs of Tunisia",
+    "site": "https://www.diplomatie.gov.tn/"
+   },
+   {
+    "qid": "Q123204727",
+    "label": "Digital Citizenship Organization",
+    "site": "https://dco-tn.org/"
+   },
+   {
+    "qid": "Q3315236",
+    "label": "Ministry of Interior",
+    "site": "https://www.interieur.gov.tn/"
+   }
+  ]
+ },
+ "ug": {
+  "qid": "Q1036",
+  "portal": [
+   "http://www.statehouse.go.ug/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q130284298",
+    "label": "International Organization for Migration IOM Uganda",
+    "site": "https://uganda.iom.int/"
+   },
+   {
+    "qid": "Q6867037",
+    "label": "Ministry of Foreign Affairs of the Republic of Uganda",
+    "site": "http://www.mofa.go.ug"
+   },
+   {
+    "qid": "Q28223332",
+    "label": "Ministry of Internal Affairs",
+    "site": "http://www.mia.go.ug/"
+   }
+  ]
+ },
+ "zm": {
+  "qid": "Q953",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q30261755",
+    "label": "National Registration, Passport and Citizenship Department",
+    "site": "http://www.homeaffairs.gov.zm/?q=national_registration_passport_and_citizenship_department"
+   }
+  ]
+ },
+ "zw": {
+  "qid": "Q954",
+  "portal": [
+   "https://www.zim.gov.zw/index.php/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867041",
+    "label": "Ministry of Foreign Affairs of the Republic of Zimbabwe",
+    "site": "http://www.zimfa.gov.zw/"
+   }
+  ]
+ },
+ "ag": {
+  "qid": "Q781",
+  "portal": [
+   "http://www.ab.gov.ag"
+  ],
+  "agencies": [
+   {
+    "qid": "Q113588150",
+    "label": "Ministry of Foreign Affairs of Antigua & Barbuda",
+    "site": "https://foreignaffairs.gov.ag/index.php"
+   }
+  ]
+ },
+ "ar": {
+  "qid": "Q414",
+  "portal": [
+   "https://www.argentina.gob.ar/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q9005010",
+    "label": "National Museum of Immigration",
+    "site": "https://www.argentina.gob.ar/interior/migraciones/museo/el-hotel"
+   },
+   {
+    "qid": "Q48795653",
+    "label": "Immigration Museum",
+    "site": "https://untref.edu.ar/muntref/es/museo-de-la-inmigracion/"
+   },
+   {
+    "qid": "Q50817436",
+    "label": "Odisea: Revista de Estudios Migratorios",
+    "site": "http://publicaciones.sociales.uba.ar/index.php/odisea"
+   },
+   {
+    "qid": "Q28663170",
+    "label": "National Directorate for Migration (Argentina)",
+    "site": "https://www.argentina.gob.ar/interior/migraciones"
+   },
+   {
+    "qid": "Q140429797",
+    "label": "Centro de Estudios Migratorios Latinoamericanos",
+    "site": "https://cemla.com"
+   },
+   {
+    "qid": "Q4294380",
+    "label": "Ministry of Foreign Affairs, International Trade and Worship of Argentina",
+    "site": "https://www.cancilleria.gob.ar/"
+   },
+   {
+    "qid": "Q6017550",
+    "label": "Secretariat of the Interior of Argentina",
+    "site": "https://www.argentina.gob.ar/interior/secretaria"
+   },
+   {
+    "qid": "Q6523103",
+    "label": "Torneo del Interior",
+    "site": "https://uar.com.ar/torneos/torneo-del-interior/"
+   },
+   {
+    "qid": "Q924518",
+    "label": "La Voz del Interior",
+    "site": "https://www.lavoz.com.ar/"
+   },
+   {
+    "qid": "Q924518",
+    "label": "La Voz del Interior",
+    "site": "http://lavoz.com.ar"
+   }
+  ]
+ },
+ "bs": {
+  "qid": "Q778",
+  "portal": [
+   "https://www.bahamas.gov.bs/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q136500565",
+    "label": "Department of Immigration",
+    "site": "https://www.immigration.gov.bs/"
+   },
+   {
+    "qid": "Q136556214",
+    "label": "Ministry of Immigration and National Insurance",
+    "site": "https://www.moinib.gov.bs/"
+   },
+   {
+    "qid": "Q6866984",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://mofa.gov.bs/"
+   },
+   {
+    "qid": "Q6866984",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://mofa.gov.bs/"
+   }
+  ]
+ },
+ "bb": {
+  "qid": "Q244",
+  "portal": [
+   "https://www.gov.bb/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q1274417",
+    "label": "Barbados passport",
+    "site": "http://immigration.gov.bb/"
+   },
+   {
+    "qid": "Q4294378",
+    "label": "Ministry of Foreign Affairs, Foreign Trade and International Business",
+    "site": "http://www.foreign.gov.bb"
+   }
+  ]
+ },
+ "bz": {
+  "qid": "Q242",
+  "portal": [
+   "http://www.belize.gov.bz/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6866987",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mfa.gov.bz/"
+   }
+  ]
+ },
+ "bo": {
+  "qid": "Q750",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q6866989",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.cancilleria.bo/"
+   }
+  ]
+ },
+ "br": {
+  "qid": "Q155",
+  "portal": [
+   "https://www.gov.br"
+  ],
+  "agencies": [
+   {
+    "qid": "Q25422832",
+    "label": "Venezuelan immigration in Brazil",
+    "site": "http://www.venezolanoenbrasil.com/"
+   },
+   {
+    "qid": "Q10333505",
+    "label": "Museu Histórico da Imigração Japonesa no Brasil",
+    "site": "https://www.bunkyo.org.br/br/museu-historico/"
+   },
+   {
+    "qid": "Q10333505",
+    "label": "Museu Histórico da Imigração Japonesa no Brasil",
+    "site": "https://www.bunkyo.org.br/jp/museu-jp/"
+   },
+   {
+    "qid": "Q3854482",
+    "label": "Immigration Museum of the State of São Paulo",
+    "site": "https://museudaimigracao.org.br/"
+   },
+   {
+    "qid": "Q50668290",
+    "label": "REMHU: Revista Interdisciplinar da Mobilidade Humana",
+    "site": "http://www.csem.org.br/remhu/index.php/remhu/index"
+   },
+   {
+    "qid": "Q1193807",
+    "label": "Ministry of Foreign Affairs of Brazil",
+    "site": "http://www.itamaraty.gov.br"
+   },
+   {
+    "qid": "Q52663759",
+    "label": "Centro de Estudos em Geopolítica e Relações Internacionais",
+    "site": "https://www.cenegri.org.br/"
+   },
+   {
+    "qid": "Q2337189",
+    "label": "National Defense Council",
+    "site": "http://www.presidencia.gov.br/estrutura_presidencia/conselhos/defesa"
+   },
+   {
+    "qid": "Q28680221",
+    "label": "Constitution, Justice and Citizenship Commission of Senate (Brazil)",
+    "site": "https://legis.senado.leg.br/comissoes/comissao?codcol=34"
+   },
+   {
+    "qid": "Q10330387",
+    "label": "Ministry of Justice and Public Security",
+    "site": "https://www.justica.gov.br/"
+   },
+   {
+    "qid": "Q10330387",
+    "label": "Ministry of Justice and Public Security",
+    "site": "https://www.gov.br/mj/"
+   },
+   {
+    "qid": "Q61000678",
+    "label": "Ministry of Citizenship",
+    "site": "http://cidadania.gov.br/"
+   },
+   {
+    "qid": "Q123219082",
+    "label": "Ferrara Cidadania Italiana",
+    "site": "https://www.ferraracidadaniaitaliana.com.br"
+   },
+   {
+    "qid": "Q28677083",
+    "label": "Ministry of Human Rights and Citizenship",
+    "site": "http://www.mdh.gov.br"
+   },
+   {
+    "qid": "Q106986107",
+    "label": "Constitution and Justice and Citizenship Commission (Brazil)",
+    "site": "https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/ccjc"
+   },
+   {
+    "qid": "Q61933455",
+    "label": "Citizenship, Studies, Research, Information and Action",
+    "site": "https://cepia.org.br"
+   },
+   {
+    "qid": "Q851253",
+    "label": "Campos do Jordão",
+    "site": "http://www.camposdojordao.sp.gov.br"
+   },
+   {
+    "qid": "Q622830",
+    "label": "Caruaru",
+    "site": "http://www.caruaru.pe.gov.br"
+   },
+   {
+    "qid": "Q194338",
+    "label": "São Carlos",
+    "site": "http://www.saocarlos.sp.gov.br/"
+   },
+   {
+    "qid": "Q188892",
+    "label": "Ribeirão Preto",
+    "site": "https://www.ribeiraopreto.sp.gov.br/"
+   },
+   {
+    "qid": "Q330175",
+    "label": "Piracicaba",
+    "site": "http://www.piracicaba.sp.gov.br/"
+   },
+   {
+    "qid": "Q1165421",
+    "label": "Giro do Interior de São Paulo",
+    "site": "http://www.girodointerior.com.br"
+   },
+   {
+    "qid": "Q188901",
+    "label": "Sorocaba",
+    "site": "http://www.sorocaba.sp.gov.br/"
+   },
+   {
+    "qid": "Q193019",
+    "label": "Juiz de Fora",
+    "site": "http://www.pjf.mg.gov.br/"
+   },
+   {
+    "qid": "Q139397263",
+    "label": "Q139397263",
+    "site": "https://netvistos.com.br"
+   },
+   {
+    "qid": "Q50816824",
+    "label": "Vigilância Sanitária em Debate: Sociedade, Ciência & Tecnologia",
+    "site": "http://www.visaemdebate.incqs.fiocruz.br/index.php/visaemdebate"
+   },
+   {
+    "qid": "Q50816824",
+    "label": "Vigilância Sanitária em Debate: Sociedade, Ciência & Tecnologia",
+    "site": "https://visaemdebate.incqs.fiocruz.br/index.php/visaemdebate"
+   },
+   {
+    "qid": "Q3657314",
+    "label": "National Justice Council",
+    "site": "http://www.cnj.jus.br/"
+   }
+  ]
+ },
+ "ca": {
+  "qid": "Q16",
+  "portal": [
+   "https://www.canada.ca"
+  ],
+  "agencies": [
+   {
+    "qid": "Q1056074",
+    "label": "Immigration, Refugees and Citizenship Canada",
+    "site": "https://ircc.canada.ca"
+   },
+   {
+    "qid": "Q140395599",
+    "label": "Northern Pathways Immigration Consulting",
+    "site": "https://northernpathways.ca"
+   },
+   {
+    "qid": "Q17989829",
+    "label": "Canadian Museum of Immigration at Pier 21",
+    "site": "https://pier21.ca/"
+   },
+   {
+    "qid": "Q17989829",
+    "label": "Canadian Museum of Immigration at Pier 21",
+    "site": "https://quai21.ca/"
+   },
+   {
+    "qid": "Q139493618",
+    "label": "IMMERGITY Immigration Consultant",
+    "site": "https://immergity.ca"
+   },
+   {
+    "qid": "Q71856526",
+    "label": "Mover",
+    "site": "https://www.mover.io"
+   },
+   {
+    "qid": "Q100956008",
+    "label": "Southern African Migration Programme",
+    "site": "https://samponline.org/"
+   },
+   {
+    "qid": "Q24964314",
+    "label": "International Association for the Study of Forced Migration",
+    "site": "http://iasfm.org/"
+   },
+   {
+    "qid": "Q7076093",
+    "label": "Ocean Tracking Network",
+    "site": "http://www.oceantrackingnetwork.org/"
+   },
+   {
+    "qid": "Q3315371",
+    "label": "Global Affairs Canada",
+    "site": "https://www.international.gc.ca/"
+   },
+   {
+    "qid": "Q3315371",
+    "label": "Global Affairs Canada",
+    "site": "https://www.international.gc.ca/"
+   },
+   {
+    "qid": "Q541355",
+    "label": "Minister of Foreign Affairs of Canada",
+    "site": "http://www.dfait-maeci.gc.ca"
+   },
+   {
+    "qid": "Q29025014",
+    "label": "Canadian Senate Standing Committee on Foreign Affairs and International Trade",
+    "site": "https://sencanada.ca/en/committees/ollo/"
+   },
+   {
+    "qid": "Q5029940",
+    "label": "Canadian Defence and Foreign Affairs Institute",
+    "site": "http://www.cgai.ca"
+   },
+   {
+    "qid": "Q3251793",
+    "label": "Minister of Immigration, Refugees and Citizenship",
+    "site": "https://www.cic.gc.ca/"
+   },
+   {
+    "qid": "Q128123146",
+    "label": "Centre for Interdisciplinary Research on Citizenship and Minorities",
+    "site": "https://www.uottawa.ca/research-innovation/circem"
+   },
+   {
+    "qid": "Q6046681",
+    "label": "Interior Health",
+    "site": "https://www.interiorhealth.ca/"
+   },
+   {
+    "qid": "Q124986752",
+    "label": "Moving2Canada",
+    "site": "https://moving2canada.com/"
+   }
+  ]
+ },
+ "cl": {
+  "qid": "Q298",
+  "portal": [
+   "https://www.gob.cl/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4294926",
+    "label": "Ministry of Foreign Affairs of Chile",
+    "site": "http://www.minrel.gob.cl/"
+   },
+   {
+    "qid": "Q4294320",
+    "label": "Ministry of the Interior",
+    "site": "http://www.interior.gob.cl/"
+   },
+   {
+    "qid": "Q5644308",
+    "label": "Undersecretariat of the Interior of Chile",
+    "site": "http://subinterior.gob.cl/"
+   },
+   {
+    "qid": "Q3121214",
+    "label": "National Office of Emergency of the Interior Ministry",
+    "site": "https://www.onemi.gov.cl"
+   }
+  ]
+ },
+ "co": {
+  "qid": "Q739",
+  "portal": [
+   "https://www.gov.co/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q18164965",
+    "label": "Migración Colombia",
+    "site": "http://www.migracioncolombia.gov.co/"
+   },
+   {
+    "qid": "Q2602530",
+    "label": "Ministry of Foreign Affairs of the Republic of Colombia",
+    "site": "http://www.cancilleria.gov.co/"
+   },
+   {
+    "qid": "Q3062487",
+    "label": "Ministry of the Interior",
+    "site": "http://www.mininterior.gov.co"
+   },
+   {
+    "qid": "Q46905086",
+    "label": "Ministry of the Interior and Justice",
+    "site": "http://www.mij.gov.co"
+   },
+   {
+    "qid": "Q6975050",
+    "label": "National Printing Office of Colombia",
+    "site": "https://www.imprenta.gov.co/"
+   },
+   {
+    "qid": "Q140356851",
+    "label": "Comercializadora Internacional Aliada SAS",
+    "site": "https://www.licsymanufacturing.com"
+   },
+   {
+    "qid": "Q141354566",
+    "label": "VIIO",
+    "site": "https://viio.me"
+   },
+   {
+    "qid": "Q132337352",
+    "label": "2025 Copa Colsanitas",
+    "site": "https://wtafiles.wtatennis.com/pdf/matchnotes/2025/894_preview.pdf"
+   }
+  ]
+ },
+ "cr": {
+  "qid": "Q800",
+  "portal": [
+   "https://www.presidencia.go.cr/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q17144287",
+    "label": "Ministry of Foreign Affairs and Worship of the Republic of Costa Rica",
+    "site": "http://www.rree.go.cr"
+   }
+  ]
+ },
+ "cu": {
+  "qid": "Q241",
+  "portal": [
+   "http://www.cuba.cu"
+  ],
+  "agencies": [
+   {
+    "qid": "Q50817434",
+    "label": "Mundi Migratios",
+    "site": "http://www.anuariocemi.uh.cu/index.php/AC/index"
+   },
+   {
+    "qid": "Q10330349",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.cubaminrex.cu/en"
+   },
+   {
+    "qid": "Q10330349",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://cubaminrex.cu/"
+   },
+   {
+    "qid": "Q126208849",
+    "label": "Observatorio Científico Comercio Interior",
+    "site": "https://observatorio.mincin.gob.cu"
+   },
+   {
+    "qid": "Q47262992",
+    "label": "Ministry of Domestic Trade of the Republic of Cuba",
+    "site": "https://www.mincin.gob.cu/"
+   }
+  ]
+ },
+ "dm": {
+  "qid": "Q784",
+  "portal": [
+   "http://www.dominica.gov.dm/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q1273808",
+    "label": "Commonwealth of Dominica passport",
+    "site": "http://nationalsecurity.gov.dm/divisions/immigration-division"
+   }
+  ]
+ },
+ "do": {
+  "qid": "Q786",
+  "portal": [
+   "https://www.dominicanrepublic.com/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q28344904",
+    "label": "Ministry of Foreign Affairs of the Dominican Republic",
+    "site": "http://www.mirex.gob.do/"
+   },
+   {
+    "qid": "Q30908803",
+    "label": "Ministry of the Interior and Police",
+    "site": "https://www.mip.gob.do/"
+   }
+  ]
+ },
+ "ec": {
+  "qid": "Q736",
+  "portal": [
+   "http://www.cancilleria.gob.ec/",
+   "http://www.presidencia.gob.ec/",
+   "http://www.gob.ec/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6017414",
+    "label": "Ministry of Foreign Affairs and Migration of Ecuador",
+    "site": "https://www.cancilleria.gob.ec/"
+   },
+   {
+    "qid": "Q56377204",
+    "label": "Ministry of Government of Ecuador",
+    "site": "https://www.ministeriodegobierno.gob.ec/"
+   }
+  ]
+ },
+ "sv": {
+  "qid": "Q792",
+  "portal": [
+   "https://elsalvador.travel/en/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q11249153",
+    "label": "Ministry of Foreign Affairs of El Salvador",
+    "site": "http://www.rree.gob.sv/"
+   },
+   {
+    "qid": "Q6017324",
+    "label": "Ministry of Governance and Territorial Development of El Salvador",
+    "site": "http://www.gobernacion.gob.sv/"
+   }
+  ]
+ },
+ "gd": {
+  "qid": "Q769",
+  "portal": [
+   "https://www.gov.gd/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q135243395",
+    "label": "Investment Migration Agency Grenada",
+    "site": "https://imagrenada.gd/"
+   },
+   {
+    "qid": "Q134965899",
+    "label": "Ministry of Foreign Affairs, Trade & Export Development of Grenada",
+    "site": "https://www.gov.gd/index.php/foreignaffairs"
+   }
+  ]
+ },
+ "gt": {
+  "qid": "Q774",
+  "portal": [
+   "https://www.guatemala.gob.gt/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q25241973",
+    "label": "Minister of Foreign Affairs of Guatemala",
+    "site": "http://www.minex.gob.gt/"
+   },
+   {
+    "qid": "Q6017420",
+    "label": "Ministry of Foreign Affairs of the Republic of Guatemala",
+    "site": "https://www.minex.gob.gt/"
+   },
+   {
+    "qid": "Q6017328",
+    "label": "Ministry of the Interior of Guatemala",
+    "site": "http://www.mingob.gob.gt/"
+   }
+  ]
+ },
+ "gy": {
+  "qid": "Q734",
+  "portal": [
+   "https://parliament.gov.gy/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6866999",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://www.minfor.gov.gy/"
+   },
+   {
+    "qid": "Q96375058",
+    "label": "Citizenship Initiative",
+    "site": "https://www.citizenship.gy"
+   }
+  ]
+ },
+ "ht": {
+  "qid": "Q790",
+  "portal": [
+   "http://primature.gouv.ht/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q18345341",
+    "label": "Ministry of Foreign Affairs of Haiti",
+    "site": "http://www.mae.gouv.ht"
+   },
+   {
+    "qid": "Q18345354",
+    "label": "Ministry of Interior and Territorial Communities",
+    "site": "http://www.mict.gouv.ht/"
+   }
+  ]
+ },
+ "hn": {
+  "qid": "Q783",
+  "portal": [
+   "https://www.honduras.travel/en/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6123246",
+    "label": "Secreteriat of Foreign Affairs of the Republic of Honduras",
+    "site": "http://www.sreci.gob.hn/"
+   }
+  ]
+ },
+ "jm": {
+  "qid": "Q766",
+  "portal": [
+   "https://www.gov.jm/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q127605705",
+    "label": "The Passport, Immigration and Citizenship Agency",
+    "site": "https://www.pica.gov.jm/"
+   },
+   {
+    "qid": "Q6867047",
+    "label": "Ministry of Foreign Affairs and Foreign Trade",
+    "site": "https://www.mfaft.gov.jm/"
+   }
+  ]
+ },
+ "mx": {
+  "qid": "Q96",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q1406494",
+    "label": "National Institute of Migration",
+    "site": "https://www.gob.mx/inm"
+   },
+   {
+    "qid": "Q50521459",
+    "label": "Migraciones Internacionales",
+    "site": "https://migracionesinternacionales.colef.mx/index.php/migracionesinternacionales"
+   },
+   {
+    "qid": "Q50521459",
+    "label": "Migraciones Internacionales",
+    "site": "https://ojs.colef.mx/index.php/migracionesinternacionales"
+   },
+   {
+    "qid": "Q51343073",
+    "label": "Migrant's Way of the Cross",
+    "site": "http://www.pueblosinfronteras.org/viacrucis.html"
+   },
+   {
+    "qid": "Q5863809",
+    "label": "Foreign Affairs Latinoamérica",
+    "site": "http://www.revistafal.com/"
+   },
+   {
+    "qid": "Q500961",
+    "label": "Secretariat of Foreign Affairs",
+    "site": "http://www.sre.gob.mx/"
+   },
+   {
+    "qid": "Q1507054",
+    "label": "Secretariat of the Interior",
+    "site": "http://www.segob.gob.mx"
+   },
+   {
+    "qid": "Q1507054",
+    "label": "Secretariat of the Interior",
+    "site": "https://www.gob.mx/segob/"
+   },
+   {
+    "qid": "Q133933649",
+    "label": "Concetto",
+    "site": "https://concetto.mx"
+   },
+   {
+    "qid": "Q427326",
+    "label": "Fonovisa Records",
+    "site": "http://www.fonovisa.com/"
+   },
+   {
+    "qid": "Q130349456",
+    "label": "Consulate General of the United States in Nuevo Laredo",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-in-nuevo-laredo/"
+   },
+   {
+    "qid": "Q136470239",
+    "label": "Consulate General of the United States in Merida",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-merida/"
+   },
+   {
+    "qid": "Q136469503",
+    "label": "Consulate General of the United States in Tijuana",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-tijuana/"
+   },
+   {
+    "qid": "Q136470547",
+    "label": "Consulate General of the United States in Guadalajara",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-guadalajara/"
+   },
+   {
+    "qid": "Q130349394",
+    "label": "Consulate General of the United States, Nogales",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-in-nogales/"
+   },
+   {
+    "qid": "Q136470610",
+    "label": "Consulate General of the United States in Ciudad Juárez",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-ciudad-juarez/"
+   },
+   {
+    "qid": "Q130349490",
+    "label": "Consulate General of the United States in Monterrey",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-monterrey/"
+   },
+   {
+    "qid": "Q136470318",
+    "label": "Consulate General of the United States in Hermosillo",
+    "site": "https://mx.usembassy.gov/visas/u-s-embassy-mexico-city/u-s-consulate-general-hermosillo/"
+   }
+  ]
+ },
+ "ni": {
+  "qid": "Q811",
+  "portal": [
+   "https://www.visitnicaragua.us/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q17142642",
+    "label": "Ministry of Foreign Affairs of the Republic of Nicaragua",
+    "site": "http://www.cancilleria.gob.ni/"
+   }
+  ]
+ },
+ "pa": {
+  "qid": "Q804",
+  "portal": [
+   "https://visitpanama.com/?lang=en"
+  ],
+  "agencies": [
+   {
+    "qid": "Q64391186",
+    "label": "Ministry of Foreign Affairs of Panama",
+    "site": "https://mire.gob.pa"
+   },
+   {
+    "qid": "Q17146588",
+    "label": "Ministry of Foreign Affairs of the Republic of Panama",
+    "site": "http://www.mire.gob.pa/"
+   }
+  ]
+ },
+ "py": {
+  "qid": "Q733",
+  "portal": [
+   "https://www.paraguay.gov.py/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q17257553",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://www.mre.gov.py/"
+   }
+  ]
+ },
+ "pe": {
+  "qid": "Q419",
+  "portal": [
+   "https://www.gob.pe/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q3065187",
+    "label": "Ministry of Foreign Affairs of Peru",
+    "site": "https://www.gob.pe/rree"
+   },
+   {
+    "qid": "Q2882089",
+    "label": "Minister of Foreign Affairs of Peru",
+    "site": "http://www.rree.gob.pe"
+   },
+   {
+    "qid": "Q6017643",
+    "label": "Minister of the Interior of Peru",
+    "site": "http://www.mininter.gob.pe"
+   },
+   {
+    "qid": "Q4294305",
+    "label": "Ministry of the Interior",
+    "site": "https://www.mininter.gob.pe/"
+   },
+   {
+    "qid": "Q141077107",
+    "label": "Bènie",
+    "site": "https://benie.com.pe"
+   }
+  ]
+ },
+ "kn": {
+  "qid": "Q763",
+  "portal": [
+   "https://www.gov.kn/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867025",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.foreign.gov.kn/"
+   }
+  ]
+ },
+ "lc": {
+  "qid": "Q760",
+  "portal": [
+   "http://www.govt.lc/"
+  ],
+  "agencies": []
+ },
+ "vc": {
+  "qid": "Q757",
+  "portal": [
+   "https://www.gov.vc/"
+  ],
+  "agencies": []
+ },
+ "sr": {
+  "qid": "Q730",
+  "portal": [
+   "https://gov.sr/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q56260584",
+    "label": "Ministry of Foreign Affairs, International Business and International Cooperation",
+    "site": "https://gov.sr/ministeries/ministerie-van-buitenlandse-zaken-internationaal-business-internationale-samenwerking/"
+   },
+   {
+    "qid": "Q97971260",
+    "label": "Stichting Fonds Ontwikkeling Binnenland",
+    "site": "https://www.stichtingfob.org/"
+   },
+   {
+    "qid": "Q25230853",
+    "label": "Medische Zending",
+    "site": "http://www.medischezending.sr/"
+   }
+  ]
+ },
+ "tt": {
+  "qid": "Q754",
+  "portal": [
+   "http://www.gov.tt/"
+  ],
+  "agencies": []
+ },
+ "us": {
+  "qid": "Q30",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q2097315",
+    "label": "United States Citizenship and Immigration Services",
+    "site": "https://www.uscis.gov/"
+   },
+   {
+    "qid": "Q2097315",
+    "label": "United States Citizenship and Immigration Services",
+    "site": "https://www.uscis.gov/es"
+   },
+   {
+    "qid": "Q943091",
+    "label": "United States Immigration and Customs Enforcement",
+    "site": "https://www.ice.gov"
+   },
+   {
+    "qid": "Q194984",
+    "label": "United States Immigration and Naturalization Service",
+    "site": "http://www.uscis.gov/portal/site/uscis"
+   },
+   {
+    "qid": "Q194984",
+    "label": "United States Immigration and Naturalization Service",
+    "site": "http://www.ins.usdoj.gov"
+   },
+   {
+    "qid": "Q194984",
+    "label": "United States Immigration and Naturalization Service",
+    "site": "http://www.ins.gov/"
+   },
+   {
+    "qid": "Q27725583",
+    "label": "Journal on migration and human security",
+    "site": "https://journals.sagepub.com/loi/MHS"
+   },
+   {
+    "qid": "Q27725583",
+    "label": "Journal on migration and human security",
+    "site": "http://bibpurl.oclc.org/web/80944"
+   },
+   {
+    "qid": "Q27725583",
+    "label": "Journal on migration and human security",
+    "site": "http://jmhs.cmsny.org/index.php/jmhs/index"
+   },
+   {
+    "qid": "Q27725583",
+    "label": "Journal on migration and human security",
+    "site": "http://heinonline.org/HOL/Index?index=journals/jmighs&collection=journals"
+   },
+   {
+    "qid": "Q27725583",
+    "label": "Journal on migration and human security",
+    "site": "http://bibpurl.oclc.org/web/73127"
+   },
+   {
+    "qid": "Q27725583",
+    "label": "Journal on migration and human security",
+    "site": "http://jmhs.cmsny.org/index.php/jmhs"
+   },
+   {
+    "qid": "Q24204268",
+    "label": "Center for Migration Studies of New York",
+    "site": "http://www.cmsny.org"
+   },
+   {
+    "qid": "Q24204268",
+    "label": "Center for Migration Studies of New York",
+    "site": "https://cmsny.org/"
+   },
+   {
+    "qid": "Q1135577",
+    "label": "Foreign Affairs",
+    "site": "https://www.foreignaffairs.com"
+   },
+   {
+    "qid": "Q1135577",
+    "label": "Foreign Affairs",
+    "site": "http://books.google.com/books?id=fkYWAAAAIAAJ"
+   },
+   {
+    "qid": "Q1135577",
+    "label": "Foreign Affairs",
+    "site": "http://catalog.hathitrust.org/api/volumes/oclc/1569702.html"
+   },
+   {
+    "qid": "Q1135577",
+    "label": "Foreign Affairs",
+    "site": "http://www.jstor.org/journals/00157120.html"
+   },
+   {
+    "qid": "Q1135577",
+    "label": "Foreign Affairs",
+    "site": "http://books.google.com/books?id=PxePAAAAMAAJ"
+   },
+   {
+    "qid": "Q1135577",
+    "label": "Foreign Affairs",
+    "site": "https://foreignaffairs.com"
+   },
+   {
+    "qid": "Q5973577",
+    "label": "United States House Committee on Foreign Affairs",
+    "site": "http://foreignaffairs.house.gov/"
+   },
+   {
+    "qid": "Q5528917",
+    "label": "Gays and Lesbians in Foreign Affairs Agencies",
+    "site": "http://www.glifaa.org"
+   },
+   {
+    "qid": "Q6981684",
+    "label": "Naval Academy Foreign Affairs Conference",
+    "site": "http://usna.edu/NAFAC/"
+   },
+   {
+    "qid": "Q16919651",
+    "label": "U.S. Department of State Foreign Affairs Manual",
+    "site": "https://fam.state.gov/"
+   },
+   {
+    "qid": "Q131729638",
+    "label": "Foreign Affairs Security Training Center",
+    "site": "https://www.state.gov/foreign-affairs-security-training-center-fastc"
+   },
+   {
+    "qid": "Q15133865",
+    "label": "citizenship of the United States",
+    "site": "https://www.uscis.gov/citizenship"
+   },
+   {
+    "qid": "Q117759360",
+    "label": "Institute for Democracy, Journalism and Citizenship",
+    "site": "https://idjc.syracuse.edu/"
+   },
+   {
+    "qid": "Q117759360",
+    "label": "Institute for Democracy, Journalism and Citizenship",
+    "site": "https://newhouse.syracuse.edu/centers/institute-for-democracy-journalism-and-citizenship/"
+   },
+   {
+    "qid": "Q3302856",
+    "label": "Maxwell School of Citizenship and Public Affairs",
+    "site": "http://www.maxwell.syr.edu/"
+   },
+   {
+    "qid": "Q51726668",
+    "label": "Citizenship and Immigration Services Ombudsman",
+    "site": "https://www.dhs.gov/topic/cis-ombudsman"
+   },
+   {
+    "qid": "Q608427",
+    "label": "United States Department of the Interior",
+    "site": "https://doi.gov"
+   },
+   {
+    "qid": "Q2287650",
+    "label": "United States Secretary of the Interior",
+    "site": "http://www.doi.gov/"
+   },
+   {
+    "qid": "Q193755",
+    "label": "United States Geological Survey",
+    "site": "http://www.usgs.gov/"
+   },
+   {
+    "qid": "Q193755",
+    "label": "United States Geological Survey",
+    "site": "https://www.usgs.gov/"
+   },
+   {
+    "qid": "Q116681",
+    "label": "Gravity Recovery and Interior Laboratory",
+    "site": "https://www.nasa.gov/grail"
+   },
+   {
+    "qid": "Q1068752",
+    "label": "Howard University",
+    "site": "https://howard.edu"
+   },
+   {
+    "qid": "Q1010556",
+    "label": "United States Bureau of Land Management",
+    "site": "https://blm.gov"
+   },
+   {
+    "qid": "Q60172308",
+    "label": "Office of Inspector General, Department of the Interior",
+    "site": "https://www.doioig.gov/"
+   },
+   {
+    "qid": "Q328840",
+    "label": "Visa Inc.",
+    "site": "https://corporate.visa.com/"
+   },
+   {
+    "qid": "Q45177",
+    "label": "Visa Waiver Program",
+    "site": "https://www.dhs.gov/visa-waiver-program"
+   },
+   {
+    "qid": "Q7048017",
+    "label": "Diversity Immigrant Visa",
+    "site": "https://dvlottery.state.gov/"
+   },
+   {
+    "qid": "Q7048017",
+    "label": "Diversity Immigrant Visa",
+    "site": "https://travel.state.gov/content/travel/en/us-visas/immigrate/diversity-visa-program-entry/diversity-visa-submit-entry1.html"
+   }
+  ]
+ },
+ "uy": {
+  "qid": "Q77",
+  "portal": [
+   "https://www.gub.uy/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q18417012",
+    "label": "Museo de las Migraciones",
+    "site": "https://mumi.montevideo.gub.uy/"
+   },
+   {
+    "qid": "Q128123375",
+    "label": "Migrations: past, present and future",
+    "site": "https://www.youtube.com/watch?v=dZHLL_fZOhU&pp=ygUXd2lraW1lZGlzdGFzIGRlIHVydWd1YXk%3D"
+   },
+   {
+    "qid": "Q17379523",
+    "label": "Ministry of Foreign Relations",
+    "site": "https://www.gub.uy/ministerio-relaciones-exteriores"
+   },
+   {
+    "qid": "Q6590411",
+    "label": "Ministry of the Interior",
+    "site": "https://www.gub.uy/ministerio-interior/"
+   },
+   {
+    "qid": "Q16491452",
+    "label": "Cooperativa de Radioemisoras del Interior",
+    "site": "http://www.cori.com.uy"
+   },
+   {
+    "qid": "Q121439037",
+    "label": "FEPREMI",
+    "site": "https://fepremi.com.uy/"
+   },
+   {
+    "qid": "Q1145679",
+    "label": "Q1145679",
+    "site": "http://www.ofi.org.uy"
+   },
+   {
+    "qid": "Q3817054",
+    "label": "National Police",
+    "site": "https://www.gub.uy/ministerio-interior/policia-nacional"
+   }
+  ]
+ },
+ "ve": {
+  "qid": "Q717",
+  "portal": [
+   "https://mppre.gob.ve/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q5576220",
+    "label": "Administrative Service for Identification, Migration and Immigration",
+    "site": "http://www.saime.gob.ve/"
+   },
+   {
+    "qid": "Q16607763",
+    "label": "Ministry of Foreign Affairs of Venezuela",
+    "site": "http://mppre.gob.ve/"
+   },
+   {
+    "qid": "Q16607766",
+    "label": "Ministry of Internal Affairs of Venezuela",
+    "site": "http://www.mpprij.gob.ve/"
+   }
+  ]
+ },
+ "af": {
+  "qid": "Q889",
+  "portal": [
+   "https://alemarahenglish.af/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4294381",
+    "label": "Ministry of Foreign Affairs of the Islamic Emirate of Afghanistan",
+    "site": "http://mfa.gov.af"
+   },
+   {
+    "qid": "Q6867688",
+    "label": "Ministry of the Interior Islamic Emirate of Afghanistan (2021)",
+    "site": "http://moi.gov.af"
+   }
+  ]
+ },
+ "am": {
+  "qid": "Q399",
+  "portal": [
+   "https://e-gov.am"
+  ],
+  "agencies": [
+   {
+    "qid": "Q191559",
+    "label": "Ministry of Foreign Affairs of Armenia",
+    "site": "https://mfa.am"
+   }
+  ]
+ },
+ "az": {
+  "qid": "Q227",
+  "portal": [
+   "http://mfa.gov.az/en"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4146608",
+    "label": "State Migration Service of Azerbaijan",
+    "site": "http://www.migration.gov.az/en"
+   },
+   {
+    "qid": "Q2065366",
+    "label": "Minister of Foreign Affairs of Azerbaijan",
+    "site": "https://mfa.gov.az"
+   },
+   {
+    "qid": "Q2578082",
+    "label": "Ministry of Foreign Affairs of Azerbaijan",
+    "site": "http://www.mfa.gov.az/index.php"
+   },
+   {
+    "qid": "Q3298064",
+    "label": "Internal Troops of Azerbaijan",
+    "site": "https://dq.mia.gov.az"
+   },
+   {
+    "qid": "Q2063223",
+    "label": "Ministry of Internal Affairs",
+    "site": "http://www.mia.gov.az"
+   }
+  ]
+ },
+ "bd": {
+  "qid": "Q902",
+  "portal": [
+   "http://www.bangladesh.gov.bd"
+  ],
+  "agencies": [
+   {
+    "qid": "Q48725842",
+    "label": "Department of Immigration & Passports",
+    "site": "https://dip.gov.bd/"
+   },
+   {
+    "qid": "Q140550173",
+    "label": "Visa Center Bangladesh",
+    "site": "https://visacenter.bd"
+   },
+   {
+    "qid": "Q140673544",
+    "label": "Luminedge Bangladesh",
+    "site": "https://luminedge.com.bd"
+   },
+   {
+    "qid": "Q3347142",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://mofa.gov.bd/"
+   }
+  ]
+ },
+ "bt": {
+  "qid": "Q917",
+  "portal": [
+   "http://www.bhutan.gov.bt"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4294382",
+    "label": "Ministry of Foreign Affairs and External Trade",
+    "site": "http://www.mfa.gov.bt/"
+   }
+  ]
+ },
+ "bn": {
+  "qid": "Q921",
+  "portal": [
+   "https://www.gov.bn/bm/Home.aspx",
+   "https://www.gov.bn/SitePages/Home.aspx"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867063",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mfa.gov.bn"
+   }
+  ]
+ },
+ "kh": {
+  "qid": "Q424",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q4294408",
+    "label": "Ministry of Foreign Affairs and International Cooperation",
+    "site": "http://www.mfaic.gov.kh"
+   },
+   {
+    "qid": "Q6867226",
+    "label": "Ministry of Interior",
+    "site": "https://www.interior.gov.kh/"
+   }
+  ]
+ },
+ "cn": {
+  "qid": "Q148",
+  "portal": [
+   "https://english.www.gov.cn/",
+   "https://www.gov.cn/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q10892869",
+    "label": "National Immigration Administration",
+    "site": "http://www.mps.gov.cn/n2254996/"
+   },
+   {
+    "qid": "Q10892869",
+    "label": "National Immigration Administration",
+    "site": "https://www.nia.gov.cn/"
+   },
+   {
+    "qid": "Q10892869",
+    "label": "National Immigration Administration",
+    "site": "https://en.nia.gov.cn/"
+   },
+   {
+    "qid": "Q10892869",
+    "label": "National Immigration Administration",
+    "site": "https://ru.nia.gov.cn/"
+   },
+   {
+    "qid": "Q10892869",
+    "label": "National Immigration Administration",
+    "site": "https://fr.nia.gov.cn/"
+   },
+   {
+    "qid": "Q10892869",
+    "label": "National Immigration Administration",
+    "site": "https://es.nia.gov.cn/"
+   },
+   {
+    "qid": "Q10892869",
+    "label": "National Immigration Administration",
+    "site": "https://ar.nia.gov.cn/"
+   },
+   {
+    "qid": "Q1860726",
+    "label": "Immigration Department",
+    "site": "https://immd.gov.hk"
+   },
+   {
+    "qid": "Q19851673",
+    "label": "China Immigration Inspection",
+    "site": "http://www.bjbj.gov.cn/"
+   },
+   {
+    "qid": "Q1155502",
+    "label": "Ministry of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.mfa.gov.cn"
+   },
+   {
+    "qid": "Q1155502",
+    "label": "Ministry of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.mfa.gov.cn/eng/"
+   },
+   {
+    "qid": "Q1155502",
+    "label": "Ministry of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.mfa.gov.cn/fra/"
+   },
+   {
+    "qid": "Q1155502",
+    "label": "Ministry of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.mfa.gov.cn/esp/"
+   },
+   {
+    "qid": "Q1155502",
+    "label": "Ministry of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.mfa.gov.cn/rus/"
+   },
+   {
+    "qid": "Q1155502",
+    "label": "Ministry of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.mfa.gov.cn/ara/"
+   },
+   {
+    "qid": "Q2492920",
+    "label": "China Foreign Affairs University",
+    "site": "http://www.cfau.edu.cn"
+   },
+   {
+    "qid": "Q2664362",
+    "label": "Minister of Foreign Affairs of the People's Republic of China",
+    "site": "http://www.fmprc.gov.cn/"
+   },
+   {
+    "qid": "Q2664362",
+    "label": "Minister of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.mfa.gov.cn/web/wjbz_673089/"
+   },
+   {
+    "qid": "Q10872036",
+    "label": "Office of the Commissioner of the Ministry of Foreign Affairs of the People's Republic of China in the Hong Kong Special Administrative Region",
+    "site": "http://www.fmcoprc.gov.hk/"
+   },
+   {
+    "qid": "Q10872036",
+    "label": "Office of the Commissioner of the Ministry of Foreign Affairs of the People's Republic of China in the Hong Kong Special Administrative Region",
+    "site": "http://hk.ocmfa.gov.cn/"
+   },
+   {
+    "qid": "Q10872036",
+    "label": "Office of the Commissioner of the Ministry of Foreign Affairs of the People's Republic of China in the Hong Kong Special Administrative Region",
+    "site": "http://hk.ocmfa.gov.cn/eng"
+   },
+   {
+    "qid": "Q5260156",
+    "label": "Department of Asian Affairs of the Ministry of Foreign Affairs of the People's Republic of China",
+    "site": "https://www.fmprc.gov.cn/mfa_eng/wjb_663304/zzjg_663340/yzs_663350/"
+   },
+   {
+    "qid": "Q16926380",
+    "label": "Office of the Commissioner of the Ministry of Foreign Affairs of the People's Republic of China in the Macao Special Administrative Region",
+    "site": "http://www.fmcoprc.gov.mo/"
+   },
+   {
+    "qid": "Q141169341",
+    "label": "Shanghai Magnolia Silver Award",
+    "site": "https://english.shanghai.gov.cn/en-HonoraryCitizenshipMagnoliaGold/index.html"
+   },
+   {
+    "qid": "Q41079",
+    "label": "Inner Mongolia",
+    "site": "https://www.nmg.gov.cn/"
+   },
+   {
+    "qid": "Q41079",
+    "label": "Inner Mongolia",
+    "site": "https://mgl.nmg.gov.cn/"
+   },
+   {
+    "qid": "Q16898722",
+    "label": "Porto Interior",
+    "site": "http://www.macauport.com.mo/"
+   },
+   {
+    "qid": "Q535534",
+    "label": "Hohhot",
+    "site": "http://www.huhhot.gov.cn/"
+   },
+   {
+    "qid": "Q535534",
+    "label": "Hohhot",
+    "site": "http://mgl.huhhot.gov.cn/"
+   },
+   {
+    "qid": "Q569907",
+    "label": "Baotou",
+    "site": "http://www.baotou.gov.cn/"
+   },
+   {
+    "qid": "Q569907",
+    "label": "Baotou",
+    "site": "http://mgl.baotou.gov.cn/"
+   },
+   {
+    "qid": "Q834458",
+    "label": "Inner Mongolia University",
+    "site": "http://www.imu.edu.cn/"
+   },
+   {
+    "qid": "Q834458",
+    "label": "Inner Mongolia University",
+    "site": "https://www.imu.edu.cn/"
+   },
+   {
+    "qid": "Q834458",
+    "label": "Inner Mongolia University",
+    "site": "https://www.imu.edu.cn/yw/Home.htm"
+   },
+   {
+    "qid": "Q834458",
+    "label": "Inner Mongolia University",
+    "site": "https://ndmw.imu.edu.cn/"
+   }
+  ]
+ },
+ "ge": {
+  "qid": "Q230",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q2568695",
+    "label": "Ministry of Foreign Affairs of Georgia",
+    "site": "https://mfa.gov.ge/"
+   },
+   {
+    "qid": "Q2568695",
+    "label": "Ministry of Foreign Affairs of Georgia",
+    "site": "https://mfa.gov.ge/en"
+   },
+   {
+    "qid": "Q141191843",
+    "label": "Foreign Relations Committee of the Parliament of Georgia",
+    "site": "https://www.parliament.ge/media/news/category/34"
+   },
+   {
+    "qid": "Q141191843",
+    "label": "Foreign Relations Committee of the Parliament of Georgia",
+    "site": "https://www.parliament.ge/en/media/news/category/34"
+   },
+   {
+    "qid": "Q200047",
+    "label": "Shida Kartli",
+    "site": "https://shidakartli.gov.ge"
+   },
+   {
+    "qid": "Q932901",
+    "label": "Khashuri",
+    "site": "https://khashuri.gov.ge/"
+   },
+   {
+    "qid": "Q956954",
+    "label": "Kaspi",
+    "site": "http://www.kaspi.org.ge/"
+   },
+   {
+    "qid": "Q956954",
+    "label": "Kaspi",
+    "site": "https://kaspi.gov.ge/"
+   },
+   {
+    "qid": "Q1987828",
+    "label": "Kareli",
+    "site": "https://www.kareli.gov.ge"
+   },
+   {
+    "qid": "Q3649223",
+    "label": "Ministry of Internal Affairs of Georgia",
+    "site": "http://www.police.ge"
+   },
+   {
+    "qid": "Q3649223",
+    "label": "Ministry of Internal Affairs of Georgia",
+    "site": "https://mia.police.ge/"
+   },
+   {
+    "qid": "Q3649223",
+    "label": "Ministry of Internal Affairs of Georgia",
+    "site": "https://mia.police.ge/en/"
+   },
+   {
+    "qid": "Q2613132",
+    "label": "Government of Georgia",
+    "site": "https://www.gov.ge/"
+   }
+  ]
+ },
+ "in": {
+  "qid": "Q668",
+  "portal": [
+   "http://india.gov.in/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q27350994",
+    "label": "Y-Axis Solutions Private Limited",
+    "site": "https://www.y-axis.com/"
+   },
+   {
+    "qid": "Q60788212",
+    "label": "Bureau of Immigration",
+    "site": "https://boi.gov.in"
+   },
+   {
+    "qid": "Q95026133",
+    "label": "Immigration (Carriers' Liability) Amendment Act, 2005",
+    "site": "http://egazette.nic.in/WriteReadData/2005/E_50_2012_112.pdf"
+   },
+   {
+    "qid": "Q61932816",
+    "label": "Migration & Asylum Project",
+    "site": "https://www.migrationandasylumproject.org/"
+   },
+   {
+    "qid": "Q3524953",
+    "label": "Ministry of External Affairs",
+    "site": "https://www.mea.gov.in/"
+   },
+   {
+    "qid": "Q6020337",
+    "label": "Indian Foreign Service",
+    "site": "http://mea.gov.in/indian-foreign-service.htm"
+   },
+   {
+    "qid": "Q5468326",
+    "label": "Foreign Secretary of India",
+    "site": "http://www.mea.gov.in"
+   },
+   {
+    "qid": "Q61066827",
+    "label": "Citizenship (Amendment) Act, 2019",
+    "site": "http://egazette.nic.in/WriteReadData/2019/214646.pdf"
+   },
+   {
+    "qid": "Q83153096",
+    "label": "Citizenship (Amendment) Act, 2003",
+    "site": "http://egazette.nic.in/WriteReadData/2004/E_7_2011_119.pdf"
+   },
+   {
+    "qid": "Q136373803",
+    "label": "Narsi Interior",
+    "site": "https://narsi.in"
+   },
+   {
+    "qid": "Q139825775",
+    "label": "InteriorOS",
+    "site": "https://interioros.app"
+   },
+   {
+    "qid": "Q136292076",
+    "label": "BNP Interiors",
+    "site": "https://bnpinteriors.com/"
+   },
+   {
+    "qid": "Q137996495",
+    "label": "Ideal Eyes Interior",
+    "site": "https://idealeyesinterior.com/"
+   },
+   {
+    "qid": "Q138818792",
+    "label": "Nex Interiors",
+    "site": "https://www.nexinteriors.com"
+   },
+   {
+    "qid": "Q139981177",
+    "label": "Interioring",
+    "site": "https://www.interioring.com"
+   },
+   {
+    "qid": "Q134889738",
+    "label": "Miggla | An Luxury Interiors & custom furniture",
+    "site": "https://miggla.com"
+   },
+   {
+    "qid": "Q140571059",
+    "label": "Cindrebay School Of Design",
+    "site": "https://www.cindrebay.com/"
+   },
+   {
+    "qid": "Q1365857",
+    "label": "Roman Catholic Archdiocese of Visakhapatnam",
+    "site": "https://archdioceseofvisakhapatnam.org"
+   },
+   {
+    "qid": "Q134700868",
+    "label": "Av Global Overseas Education",
+    "site": "https://www.avglobaloverseas.com/"
+   }
+  ]
+ },
+ "id": {
+  "qid": "Q252",
+  "portal": [
+   "https://indonesia.go.id"
+  ],
+  "agencies": [
+   {
+    "qid": "Q114290824",
+    "label": "Ngurah Rai Immigration Office",
+    "site": "https://imigrasingurahrai.kemenkumham.go.id/web/"
+   },
+   {
+    "qid": "Q12490747",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://www.kemlu.go.id/"
+   },
+   {
+    "qid": "Q140883650",
+    "label": "Himpunan Desainer Interior Indonesia",
+    "site": "https://hdii.or.id/"
+   },
+   {
+    "qid": "Q140881582",
+    "label": "PT Presenta Kana Ideastika",
+    "site": "https://studiopresenta.com/"
+   },
+   {
+    "qid": "Q141235225",
+    "label": "Madina Build",
+    "site": "https://madinabuild.com"
+   },
+   {
+    "qid": "Q139820439",
+    "label": "Solo Harmony Furniture",
+    "site": "https://soloharmonyfurniture.com"
+   },
+   {
+    "qid": "Q97195136",
+    "label": "Multatuli Museum",
+    "site": "http://museummultatuli.id/"
+   },
+   {
+    "qid": "Q140824564",
+    "label": "Bali Zero",
+    "site": "https://balizero.com"
+   }
+  ]
+ },
+ "jp": {
+  "qid": "Q17",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q11414874",
+    "label": "Nagoya Regional Immigration Bureau",
+    "site": "http://www.immi-moj.go.jp/english/soshiki/kikou/nagoya.html"
+   },
+   {
+    "qid": "Q11414874",
+    "label": "Nagoya Regional Immigration Bureau",
+    "site": "http://www.immi-moj.go.jp/soshiki/kikou/nagoya.html"
+   },
+   {
+    "qid": "Q11388879",
+    "label": "Immigration Services Agency",
+    "site": "https://www.moj.go.jp/isa/"
+   },
+   {
+    "qid": "Q11388879",
+    "label": "Immigration Services Agency",
+    "site": "http://www.immi-moj.go.jp/english/"
+   },
+   {
+    "qid": "Q11388879",
+    "label": "Immigration Services Agency",
+    "site": "http://www.immi-moj.go.jp/chinese/"
+   },
+   {
+    "qid": "Q11388879",
+    "label": "Immigration Services Agency",
+    "site": "http://www.immi-moj.go.jp/korean/"
+   },
+   {
+    "qid": "Q11388879",
+    "label": "Immigration Services Agency",
+    "site": "http://www.immi-moj.go.jp/portuguese/"
+   },
+   {
+    "qid": "Q11388879",
+    "label": "Immigration Services Agency",
+    "site": "http://www.immi-moj.go.jp/spanish/"
+   },
+   {
+    "qid": "Q84737707",
+    "label": "Japanese Overseas Migration Museum",
+    "site": "https://www.jica.go.jp/jomm/"
+   },
+   {
+    "qid": "Q222241",
+    "label": "Ministry of Foreign Affairs of Japan",
+    "site": "http://www.mofa.go.jp/"
+   },
+   {
+    "qid": "Q222241",
+    "label": "Ministry of Foreign Affairs of Japan",
+    "site": "https://www.mofa.go.jp/mofaj/"
+   },
+   {
+    "qid": "Q222241",
+    "label": "Ministry of Foreign Affairs of Japan",
+    "site": "https://www.mofa.go.jp/"
+   },
+   {
+    "qid": "Q1355043",
+    "label": "Minister for Foreign Affairs",
+    "site": "https://www.mofa.go.jp"
+   },
+   {
+    "qid": "Q3788463",
+    "label": "Diplomatic Archives of the Ministry of Foreign Affairs of Japan",
+    "site": "https://www.mofa.go.jp/mofaj/annai/honsho/shiryo/index.html"
+   },
+   {
+    "qid": "Q3788463",
+    "label": "Diplomatic Archives of the Ministry of Foreign Affairs of Japan",
+    "site": "https://www.mofa.go.jp/about/hq/record/index.html"
+   },
+   {
+    "qid": "Q231312",
+    "label": "Seto Inland Sea",
+    "site": "http://www.seto.or.jp"
+   },
+   {
+    "qid": "Q126974849",
+    "label": "ORIX Interior",
+    "site": "https://www.orix.co.jp/interior/"
+   },
+   {
+    "qid": "Q11524071",
+    "label": "Tokyo interior Corporation",
+    "site": "http://www.tokyointerior.co.jp/"
+   },
+   {
+    "qid": "Q97185687",
+    "label": "Manabe Interior Hearts",
+    "site": "https://www.manacs.com/"
+   },
+   {
+    "qid": "Q107627589",
+    "label": "TOLI Interior History Museum",
+    "site": "https://www.toli.co.jp/museum/"
+   },
+   {
+    "qid": "Q137943947",
+    "label": "Japan Interior Industry Association",
+    "site": "https://www.interior.or.jp"
+   },
+   {
+    "qid": "Q139301003",
+    "label": "House of Japan",
+    "site": "https://www.house-of-japan.co.jp/"
+   },
+   {
+    "qid": "Q242791",
+    "label": "Kyokushin kaikan",
+    "site": "https://www.labirint.ru/books/988606/"
+   },
+   {
+    "qid": "Q11354224",
+    "label": "Sumitomo Mitsui Card",
+    "site": "https://www.smbc-card.com/"
+   },
+   {
+    "qid": "Q96603039",
+    "label": "VisasQ",
+    "site": "https://visasq.co.jp/"
+   },
+   {
+    "qid": "Q131156835",
+    "label": "Chiune Sugihara Visas For Life",
+    "site": "https://www.chiune-sugihara.jp/jp/index.html"
+   },
+   {
+    "qid": "Q11252716",
+    "label": "Q11252716",
+    "site": "http://www.vja.gr.jp/"
+   }
+  ]
+ },
+ "kz": {
+  "qid": "Q232",
+  "portal": [
+   "https://www.gov.kz/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q1166098",
+    "label": "Ministry of Foreign Affairs of the Republic of Kazakhstan",
+    "site": "http://mfa.gov.kz/en/#!/"
+   },
+   {
+    "qid": "Q1166098",
+    "label": "Ministry of Foreign Affairs of the Republic of Kazakhstan",
+    "site": "https://www.gov.kz/memleket/entities/mfa"
+   }
+  ]
+ },
+ "kp": {
+  "qid": "Q423",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q15507076",
+    "label": "Ministry of Foreign Affairs of the Democratic People's Republic of Korea",
+    "site": "http://www.mfa.gov.kp/"
+   }
+  ]
+ },
+ "kr": {
+  "qid": "Q884",
+  "portal": [
+   "https://www.korea.net/",
+   "https://www.korea.go.kr/main"
+  ],
+  "agencies": [
+   {
+    "qid": "Q12620091",
+    "label": "Korea Immigration Service",
+    "site": "https://immigration.go.kr/"
+   },
+   {
+    "qid": "Q12620091",
+    "label": "Korea Immigration Service",
+    "site": "https://immigration.go.kr/immigration_eng/index.do"
+   },
+   {
+    "qid": "Q18998560",
+    "label": "Migration Reseach and Training Centre",
+    "site": "https://mrtc.re.kr/main/main.php"
+   },
+   {
+    "qid": "Q9405654",
+    "label": "Ministry of Foreign Affairs of the Republic of Korea",
+    "site": "http://www.mofa.go.kr/"
+   },
+   {
+    "qid": "Q12592092",
+    "label": "Institute of Foreign Affairs and National Security",
+    "site": "http://www.ifans.go.kr/"
+   },
+   {
+    "qid": "Q12592036",
+    "label": "Foreign Affairs and Unification Committee of the National Assembly of South Korea",
+    "site": "http://uft.na.go.kr"
+   },
+   {
+    "qid": "Q488954",
+    "label": "Ministry of the Interior and Safety",
+    "site": "http://www.mois.go.kr/"
+   },
+   {
+    "qid": "Q141475860",
+    "label": "Gonggam Design",
+    "site": "https://ggid.co.kr"
+   },
+   {
+    "qid": "Q52854306",
+    "label": "Korean Institute of Interior Design",
+    "site": "http://www.kiid.or.kr/"
+   }
+  ]
+ },
+ "kg": {
+  "qid": "Q813",
+  "portal": [
+   "https://www.gov.kg/ky"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867013",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://mfa.gov.kg/"
+   },
+   {
+    "qid": "Q135739100",
+    "label": "Diplomatic Academy of the Ministry of Foreign Affairs of the Kyrgyz Republic",
+    "site": "https://mfa.kg/system/diplomatic-academy-2_kg.html"
+   },
+   {
+    "qid": "Q4294298",
+    "label": "Ministry of the Interior",
+    "site": "http://www.mvd.kg/"
+   }
+  ]
+ },
+ "la": {
+  "qid": "Q819",
+  "portal": [
+   "https://www.tourismlaos.org/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867008",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mofa.gov.la/"
+   }
+  ]
+ },
+ "my": {
+  "qid": "Q833",
+  "portal": [
+   "https://www.malaysia.gov.my",
+   "https://www.malaysia.travel/en/us"
+  ],
+  "agencies": [
+   {
+    "qid": "Q5260346",
+    "label": "Immigration Department of Malaysia",
+    "site": "https://www.imi.gov.my"
+   },
+   {
+    "qid": "Q3527309",
+    "label": "Ministry of Foreign Affairs of Malaysia",
+    "site": "http://www.kln.gov.my/web/guest/home"
+   },
+   {
+    "qid": "Q1011955",
+    "label": "Tenom",
+    "site": "http://www.sabah.gov.my/md.tnm/"
+   },
+   {
+    "qid": "Q1011941",
+    "label": "Sipitang",
+    "site": "http://www.sabah.gov.my/pd.sptg/"
+   },
+   {
+    "qid": "Q1891127",
+    "label": "Nabawan",
+    "site": "http://www.sabah.gov.my/pd.nbw/"
+   }
+  ]
+ },
+ "mv": {
+  "qid": "Q826",
+  "portal": [
+   "https://visitmaldives.com/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q48805959",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.foreign.gov.mv/index.php/en/"
+   }
+  ]
+ },
+ "mn": {
+  "qid": "Q711",
+  "portal": [
+   "https://www.gov.mn/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16071066",
+    "label": "Ministry of Foreign Affairs of Mongolia",
+    "site": "https://mfa.gov.mn/en/"
+   },
+   {
+    "qid": "Q16071066",
+    "label": "Ministry of Foreign Affairs of Mongolia",
+    "site": "https://mfa.gov.mn/"
+   }
+  ]
+ },
+ "mm": {
+  "qid": "Q836",
+  "portal": [
+   "https://www.myanmar.gov.mm/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4294392",
+    "label": "Ministry of Foreign Affairs of Myanmar",
+    "site": "http://www.mofa.gov.mm/"
+   }
+  ]
+ },
+ "np": {
+  "qid": "Q837",
+  "portal": [
+   "https://nepal.gov.np"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867016",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mofa.gov.np"
+   }
+  ]
+ },
+ "pk": {
+  "qid": "Q843",
+  "portal": [
+   "https://pakistan.gov.pk"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4294393",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mofa.gov.pk"
+   },
+   {
+    "qid": "Q6867233",
+    "label": "Ministry of Interior",
+    "site": "https://www.interior.gov.pk"
+   }
+  ]
+ },
+ "ph": {
+  "qid": "Q928",
+  "portal": [
+   "https://www.gov.ph"
+  ],
+  "agencies": [
+   {
+    "qid": "Q27892670",
+    "label": "Bureau of Immigration",
+    "site": "https://immigration.gov.ph"
+   },
+   {
+    "qid": "Q97357835",
+    "label": "Balik Probinsya",
+    "site": "https://balikprobinsya.ph"
+   },
+   {
+    "qid": "Q140465975",
+    "label": "Scalabrini Migration Center",
+    "site": "https://smc.org.ph/"
+   },
+   {
+    "qid": "Q3545663",
+    "label": "Department of Foreign Affairs",
+    "site": "https://www.dfa.gov.ph"
+   },
+   {
+    "qid": "Q7185358",
+    "label": "Philippine nationality law",
+    "site": "https://www.officialgazette.gov.ph/constitutions/the-1987-constitution-of-the-republic-of-the-philippines/the-1987-constitution-of-the-republic-of-the-philippines-article-iv/"
+   },
+   {
+    "qid": "Q3543505",
+    "label": "Department of the Interior and Local Government",
+    "site": "https://dilg.gov.ph/"
+   },
+   {
+    "qid": "Q140753909",
+    "label": "Yixing Travel Consultancy Inc.",
+    "site": "https://yixingtravel.com/"
+   }
+  ]
+ },
+ "sg": {
+  "qid": "Q334",
+  "portal": [
+   "https://www.gov.sg/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q13637697",
+    "label": "immigration to Singapore",
+    "site": "http://www.ica.gov.sg/index.aspx"
+   },
+   {
+    "qid": "Q6005050",
+    "label": "Immigration and Checkpoints Authority",
+    "site": "http://www.ica.gov.sg"
+   },
+   {
+    "qid": "Q4294400",
+    "label": "Ministry of Foreign Affairs of the Republic of Singapore",
+    "site": "http://www.mfa.gov.sg/"
+   },
+   {
+    "qid": "Q618988",
+    "label": "Singapore Indoor Stadium",
+    "site": "http://www.sportshub.com.sg/indoor-stadium"
+   }
+  ]
+ },
+ "lk": {
+  "qid": "Q854",
+  "portal": [
+   "https://www.gov.lk/index.php"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4294404",
+    "label": "Ministry of Foreign Affairs (Sri Lanka)",
+    "site": "http://www.mfa.gov.lk/"
+   }
+  ]
+ },
+ "tj": {
+  "qid": "Q863",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q25593310",
+    "label": "Minister of Foreign Affairs of the Republic of Tajikistan",
+    "site": "http://mfa.tj/?l=en"
+   }
+  ]
+ },
+ "th": {
+  "qid": "Q869",
+  "portal": [
+   "https://www.thaigov.go.th/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q789856",
+    "label": "Ministry of Foreign Affairs of Thailand",
+    "site": "https://www.mfa.go.th/main/"
+   },
+   {
+    "qid": "Q789856",
+    "label": "Ministry of Foreign Affairs of Thailand",
+    "site": "https://www.mfa.go.th/main/en/home"
+   },
+   {
+    "qid": "Q13012489",
+    "label": "Department of Provincial Administration",
+    "site": "http://www.dopa.go.th"
+   },
+   {
+    "qid": "Q640365",
+    "label": "Ministry of Interior of Thailand",
+    "site": "http://www.moi.go.th"
+   },
+   {
+    "qid": "Q15441423",
+    "label": "Department of Local Administration",
+    "site": "http://www.dla.go.th"
+   },
+   {
+    "qid": "Q13021132",
+    "label": "Interior College",
+    "site": "http://www.ic.moi.go.th"
+   },
+   {
+    "qid": "Q139055439",
+    "label": "Hawryluk Legal Advisors",
+    "site": "https://hawryluklegal.com/"
+   },
+   {
+    "qid": "Q140627346",
+    "label": "Bangkok Business Service Center",
+    "site": "https://bbsclegal.com"
+   }
+  ]
+ },
+ "tl": {
+  "qid": "Q574",
+  "portal": [
+   "https://timor-leste.gov.tl"
+  ],
+  "agencies": [
+   {
+    "qid": "Q85785727",
+    "label": "Ministry of Foreign Affairs and Cooperation",
+    "site": "https://mnec.gov.tl/"
+   },
+   {
+    "qid": "Q96279373",
+    "label": "Ministry of the Interior",
+    "site": "http://www.minterior.gov.tl/"
+   }
+  ]
+ },
+ "tm": {
+  "qid": "Q874",
+  "portal": [
+   "http://www.turkmenistan.gov.tm/",
+   "http://www.turkmenistan.gov.tm/_eng/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4146602",
+    "label": "State Migration Service of Turkmenistan",
+    "site": "http://www.migration.gov.tm"
+   },
+   {
+    "qid": "Q4294398",
+    "label": "Ministry of Foreign Affairs of Turkmenistan",
+    "site": "http://www.mfa.gov.tm/"
+   },
+   {
+    "qid": "Q4466118",
+    "label": "Bank for Foreign Economic Relations",
+    "site": "http://www.tfeb.gov.tm/"
+   },
+   {
+    "qid": "Q4294310",
+    "label": "Ministry of Internal Affairs",
+    "site": "https://asuda.gov.tm/?lang=ru"
+   }
+  ]
+ },
+ "uz": {
+  "qid": "Q265",
+  "portal": [
+   "https://www.gov.uz/en"
+  ],
+  "agencies": [
+   {
+    "qid": "Q8188630",
+    "label": "Ministry of Foreign Affairs of Uzbekistan",
+    "site": "https://mfa.uz/"
+   }
+  ]
+ },
+ "vn": {
+  "qid": "Q881",
+  "portal": [
+   "https://chinhphu.vn/",
+   "https://vietnam.gov.vn/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141563504",
+    "label": "The Legation Times",
+    "site": "https://thelegationtimes.com/"
+   },
+   {
+    "qid": "Q6867039",
+    "label": "Ministry of Foreign Affairs of the Socialist Republic of Vietnam",
+    "site": "https://mofa.gov.vn/"
+   },
+   {
+    "qid": "Q19892487",
+    "label": "Minister of Foreign Affairs",
+    "site": "http://www.mofa.gov.vn/en"
+   },
+   {
+    "qid": "Q140626638",
+    "label": "Maison Interior",
+    "site": "https://maisoninterior.vn/"
+   },
+   {
+    "qid": "Q132775315",
+    "label": "Kingroomcomvn",
+    "site": "https://kingroom.com.vn/"
+   }
+  ]
+ },
+ "al": {
+  "qid": "Q222",
+  "portal": [
+   "https://www.kryeministria.al/en/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q3304204",
+    "label": "Minister of Foreign Affairs",
+    "site": "http://www.mfa.gov.al"
+   },
+   {
+    "qid": "Q3304204",
+    "label": "Minister of Foreign Affairs",
+    "site": "http://punetejashtme.gov.al"
+   },
+   {
+    "qid": "Q3302844",
+    "label": "Ministry of Foreign Affairs of Albania",
+    "site": "https://punetejashtme.gov.al/"
+   },
+   {
+    "qid": "Q3302362",
+    "label": "Ministry of Internal Affairs",
+    "site": "https://mb.gov.al/"
+   }
+  ]
+ },
+ "ad": {
+  "qid": "Q228",
+  "portal": [
+   "https://www.govern.ad/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q12008643",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.exteriors.ad/ca/"
+   }
+  ]
+ },
+ "at": {
+  "qid": "Q40",
+  "portal": [
+   "https://www.oesterreich.gv.at/de",
+   "https://www.oesterreich.gv.at/en"
+  ],
+  "agencies": [
+   {
+    "qid": "Q498496",
+    "label": "International Centre for Migration Policy Development",
+    "site": "https://www.icmpd.org/"
+   },
+   {
+    "qid": "Q133812261",
+    "label": "Center for Health and Migration (Austria)",
+    "site": "https://www.c-hm.com"
+   },
+   {
+    "qid": "Q293844",
+    "label": "ÖRK-Suchdienst",
+    "site": "http://www.roteskreuz.at/migration-suchdienst/suchdienst/"
+   },
+   {
+    "qid": "Q1005436",
+    "label": "Q1005436",
+    "site": "http://www.bfa.gv.at/"
+   },
+   {
+    "qid": "Q5468294",
+    "label": "Federal Minister of Foreign Affairs of Austria",
+    "site": "https://www.bmeia.gv.at/"
+   },
+   {
+    "qid": "Q642938",
+    "label": "Federal Ministry for European and International Affairs",
+    "site": "https://www.bmeia.gv.at/"
+   },
+   {
+    "qid": "Q358589",
+    "label": "Federal Ministry of the Interior",
+    "site": "http://www.bmi.gv.at"
+   },
+   {
+    "qid": "Q358589",
+    "label": "Federal Ministry of the Interior",
+    "site": "https://www.bmi.gv.at"
+   },
+   {
+    "qid": "Q23938055",
+    "label": "Federal Minister of the Interior of Austria",
+    "site": "http://www.bmi.gv.at/101/start.aspx"
+   },
+   {
+    "qid": "Q267329",
+    "label": "Innere Stadt",
+    "site": "https://www.wien.gv.at/bezirke/innerestadt/"
+   },
+   {
+    "qid": "Q1501755",
+    "label": "Directorate General for Public Security",
+    "site": "http://www.bmi.gv.at/cms/BMI_Geschaeftseinteilung/sektion_2/start.aspx"
+   }
+  ]
+ },
+ "by": {
+  "qid": "Q184",
+  "portal": [
+   "https://www.belarus.by/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q2045068",
+    "label": "Minister of Foreign Affairs of Belarus",
+    "site": "http://mfa.gov.by"
+   },
+   {
+    "qid": "Q2047848",
+    "label": "Ministry of Foreign Affairs of the Republic of Belarus",
+    "site": "http://www.mfa.gov.by/en/"
+   },
+   {
+    "qid": "Q4059211",
+    "label": "Ministry of the Interior Academy of the Republic of Belarus",
+    "site": "http://academy.mia.by"
+   },
+   {
+    "qid": "Q2427674",
+    "label": "Ministry of Internal Affairs of the Republic of Belarus",
+    "site": "http://mvd.gov.by"
+   }
+  ]
+ },
+ "be": {
+  "qid": "Q31",
+  "portal": [
+   "https://www.belgium.be/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q84737703",
+    "label": "MigratieMuseumMigration",
+    "site": "https://mmm.brussels/"
+   },
+   {
+    "qid": "Q118214600",
+    "label": "International Migration and Gender Research Institute - European Platform for Advanced Women",
+    "site": "https://www.epawomen.org/"
+   },
+   {
+    "qid": "Q131899586",
+    "label": "Q131899586",
+    "site": "https://www.migpolgroup.com/"
+   },
+   {
+    "qid": "Q131906656",
+    "label": "Q131906656",
+    "site": "http://mpieurope.org"
+   },
+   {
+    "qid": "Q133866362",
+    "label": "Q133866362",
+    "site": "https://www.irfam.org"
+   },
+   {
+    "qid": "Q137670",
+    "label": "Federal Public Service Foreign Affairs",
+    "site": "https://diplomatie.belgium.be"
+   },
+   {
+    "qid": "Q137670",
+    "label": "Federal Public Service Foreign Affairs",
+    "site": "https://diplomatie.belgium.be/nl"
+   },
+   {
+    "qid": "Q137670",
+    "label": "Federal Public Service Foreign Affairs",
+    "site": "https://diplomatie.belgium.be/fr"
+   },
+   {
+    "qid": "Q137670",
+    "label": "Federal Public Service Foreign Affairs",
+    "site": "https://diplomatie.belgium.be/de"
+   },
+   {
+    "qid": "Q137670",
+    "label": "Federal Public Service Foreign Affairs",
+    "site": "https://diplomatie.belgium.be/en"
+   },
+   {
+    "qid": "Q121995592",
+    "label": "European Union Foreign Affairs Spouses and Partners Association",
+    "site": "https://eufasa.org/"
+   },
+   {
+    "qid": "Q2505692",
+    "label": "Belgian nationality law",
+    "site": "https://diplomatie.belgium.be/fr/pour-les-belges-letranger/nationalite"
+   },
+   {
+    "qid": "Q2505692",
+    "label": "Belgian nationality law",
+    "site": "https://diplomatie.belgium.be/nl/voor-belgen-het-buitenland/nationaliteit"
+   },
+   {
+    "qid": "Q2505692",
+    "label": "Belgian nationality law",
+    "site": "https://diplomatie.belgium.be/de/fuer-belgier-im-ausland/belgische-staatsangehoerigkeit"
+   },
+   {
+    "qid": "Q2505692",
+    "label": "Belgian nationality law",
+    "site": "https://diplomatie.belgium.be/en/belgians-abroad/nationality"
+   },
+   {
+    "qid": "Q1383639",
+    "label": "European Education and Culture Executive Agency",
+    "site": "https://www.eacea.ec.europa.eu"
+   },
+   {
+    "qid": "Q118214109",
+    "label": "Q118214109",
+    "site": "https://www.uantwerpen.be/en/rg/ced/"
+   },
+   {
+    "qid": "Q281880",
+    "label": "Federal Public Service Interior",
+    "site": "https://www.ibz.be/"
+   },
+   {
+    "qid": "Q137668296",
+    "label": "Èggo kitchens and interiors",
+    "site": "https://www.eggo.be"
+   }
+  ]
+ },
+ "ba": {
+  "qid": "Q225",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q4294895",
+    "label": "Ministry of Foreign Affairs of Bosnia and Herzegovina",
+    "site": "http://www.mvp.gov.ba"
+   },
+   {
+    "qid": "Q3500488",
+    "label": "Federal Ministry of Interior",
+    "site": "http://www.fmup.gov.ba/"
+   },
+   {
+    "qid": "Q6867244",
+    "label": "Ministry of Interior of Republika Srpska",
+    "site": "http://www.mup.vladars.net/"
+   }
+  ]
+ },
+ "bg": {
+  "qid": "Q219",
+  "portal": [
+   "http://www.government.bg/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q1813345",
+    "label": "Ministry of Foreign Affairs of Bulgaria",
+    "site": "https://www.mfa.bg/"
+   },
+   {
+    "qid": "Q1813345",
+    "label": "Ministry of Foreign Affairs of Bulgaria",
+    "site": "https://www.mfa.bg/en/"
+   },
+   {
+    "qid": "Q15916856",
+    "label": "Minister of Foreign Affairs",
+    "site": "http://www.mfa.bg"
+   },
+   {
+    "qid": "Q1696952",
+    "label": "Antarctic Place-names Commission",
+    "site": "http://apcbg.org/"
+   },
+   {
+    "qid": "Q136417835",
+    "label": "State Institute for Culture under the Minister of Foreign Affairs",
+    "site": "http://www.culture-mfa.bg"
+   },
+   {
+    "qid": "Q12279296",
+    "label": "State Agency for Bulgarians Abroad",
+    "site": "https://www.aba.government.bg/"
+   },
+   {
+    "qid": "Q134523231",
+    "label": "Bulgaria International Journalism Fellowship",
+    "site": "https://www.aubg.edu/center-for-information-democracy-and-citizenship-cidc/bijf/?region=bulgaria"
+   },
+   {
+    "qid": "Q792527",
+    "label": "VMRO – Bulgarian National Movement",
+    "site": "http://www.vmro.bg"
+   },
+   {
+    "qid": "Q2594388",
+    "label": "Ministry of Interior of Bulgaria",
+    "site": "https://www.mvr.bg/"
+   },
+   {
+    "qid": "Q2594388",
+    "label": "Ministry of Interior of Bulgaria",
+    "site": "https://www.mvr.bg/en/home"
+   },
+   {
+    "qid": "Q12291596",
+    "label": "Professional High School of Interior Architecture and Woodworking",
+    "site": "https://www.pgvad.org"
+   },
+   {
+    "qid": "Q6993182",
+    "label": "Neolithic Dwellings Museum",
+    "site": "https://www.rimstz.eu/%D0%BC%D1%83%D0%B7%D0%B5%D0%B9-%C2%AB%D0%BD%D0%B5%D0%BE%D0%BB%D0%B8%D1%82%D0%BD%D0%B8-%D0%B6%D0%B8%D0%BB%D0%B8%D1%89%D0%B0%C2%BB"
+   }
+  ]
+ },
+ "hr": {
+  "qid": "Q224",
+  "portal": [
+   "https://vlada.gov.hr/en",
+   "http://www.vlada.hr"
+  ],
+  "agencies": [
+   {
+    "qid": "Q52633799",
+    "label": "Institute for Migration and Ethnic Studies",
+    "site": "https://www.imin.hr/"
+   },
+   {
+    "qid": "Q52633799",
+    "label": "Institute for Migration and Ethnic Studies",
+    "site": "https://www.imin.hr/en/imin-en/"
+   },
+   {
+    "qid": "Q1789649",
+    "label": "Ministry of Foreign and European Affairs",
+    "site": "http://www.mvep.hr/en/"
+   },
+   {
+    "qid": "Q1789649",
+    "label": "Ministry of Foreign and European Affairs",
+    "site": "https://mvep.gov.hr/"
+   },
+   {
+    "qid": "Q1647",
+    "label": "Rijeka",
+    "site": "https://www.rijeka.hr/"
+   },
+   {
+    "qid": "Q2607663",
+    "label": "Ministry of the Interior of Croatia",
+    "site": "http://www.mup.hr"
+   },
+   {
+    "qid": "Q137795955",
+    "label": "MUP Centar za forenzična ispitivanja, istraživanja i vještačenja \"Ivan Vučetić\"",
+    "site": "https://forenzika.gov.hr"
+   },
+   {
+    "qid": "Q132795215",
+    "label": "Lotus Architecti",
+    "site": "http://www.lotusarchitecti.com/"
+   },
+   {
+    "qid": "Q12645671",
+    "label": "University of Applied Health Sciences",
+    "site": "http://www.zvu.hr/?lang=en"
+   }
+  ]
+ },
+ "cy": {
+  "qid": "Q644636",
+  "portal": [
+   "http://www.cyprus.gov.cy/"
+  ],
+  "agencies": []
+ },
+ "cz": {
+  "qid": "Q213",
+  "portal": [
+   "https://www.czechia.eu/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.int/es"
+   },
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.int/fr"
+   },
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.int/"
+   },
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.cz/"
+   },
+   {
+    "qid": "Q2501396",
+    "label": "Minister of Foreign Affairs",
+    "site": "http://www.mzv.cz/jnp/en/index.html"
+   },
+   {
+    "qid": "Q6867005",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://mzv.gov.cz"
+   },
+   {
+    "qid": "Q6867005",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://mzv.gov.cz/jnp/en"
+   },
+   {
+    "qid": "Q11781499",
+    "label": "Ministry of the Interior",
+    "site": "https://www.mvcr.cz/"
+   },
+   {
+    "qid": "Q11781499",
+    "label": "Ministry of the Interior",
+    "site": "https://www.mvcr.cz/mvcren"
+   },
+   {
+    "qid": "Q11781499",
+    "label": "Ministry of the Interior",
+    "site": "https://mv.gov.cz"
+   },
+   {
+    "qid": "Q64595181",
+    "label": "Register of political parties and movements",
+    "site": "https://aplikace.mvcr.cz/seznam-politickych-stran/"
+   },
+   {
+    "qid": "Q64595181",
+    "label": "Register of political parties and movements",
+    "site": "https://aplikace.mv.gov.cz/seznam-politickych-stran/"
+   }
+  ]
+ },
+ "dk": {
+  "qid": "Q35",
+  "portal": [
+   "http://www.denmark.dk"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4573196",
+    "label": "Danish Immigration Service",
+    "site": "https://www.us.dk"
+   },
+   {
+    "qid": "Q20638217",
+    "label": "Ministry of Immigration and Integration",
+    "site": "https://uim.dk/"
+   },
+   {
+    "qid": "Q85751268",
+    "label": "Centre for Advanced Migration Studies",
+    "site": "https://amis.ku.dk/about"
+   },
+   {
+    "qid": "Q6866144",
+    "label": "Minister of Foreign Affairs of Denmark",
+    "site": "http://um.dk"
+   },
+   {
+    "qid": "Q3359275",
+    "label": "Ministry of Foreign Affairs of Denmark",
+    "site": "https://um.dk/"
+   },
+   {
+    "qid": "Q3013586",
+    "label": "Danish International Development Agency",
+    "site": "https://um.dk/danida"
+   },
+   {
+    "qid": "Q12318214",
+    "label": "Ministry of Interior",
+    "site": "https://im.dk/"
+   },
+   {
+    "qid": "Q3376586",
+    "label": "Ministry of Interior and Health",
+    "site": "https://sum.dk/"
+   },
+   {
+    "qid": "Q3376586",
+    "label": "Ministry of Interior and Health",
+    "site": "https://www.ism.dk/"
+   },
+   {
+    "qid": "Q3373784",
+    "label": "Ministry of Economic Affairs and Interior",
+    "site": "http://www.oim.dk"
+   },
+   {
+    "qid": "Q124332948",
+    "label": "Hay",
+    "site": "https://www.hay.dk/"
+   }
+  ]
+ },
+ "ee": {
+  "qid": "Q191",
+  "portal": [
+   "https://valitsus.ee/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4476390",
+    "label": "Citizenship and Migration Board",
+    "site": "http://www.mig.ee"
+   },
+   {
+    "qid": "Q1760777",
+    "label": "Minister of Foreign Affairs",
+    "site": "https://www.vm.ee"
+   },
+   {
+    "qid": "Q6867006",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.vm.ee"
+   },
+   {
+    "qid": "Q129571886",
+    "label": "Global Citizenship Foundation",
+    "site": "https://globalcitizenshipfoundation.org"
+   },
+   {
+    "qid": "Q4294315",
+    "label": "Ministry of the Interior",
+    "site": "https://www.siseministeerium.ee/"
+   },
+   {
+    "qid": "Q20530549",
+    "label": "IT and Development Centre of the Ministry of the Interior",
+    "site": "https://www.smit.ee/"
+   }
+  ]
+ },
+ "fi": {
+  "qid": "Q33",
+  "portal": [
+   "https://finland.fi/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q11880302",
+    "label": "Finnish Immigration Service",
+    "site": "https://migri.fi/"
+   },
+   {
+    "qid": "Q59629628",
+    "label": "Suomen Kansa Ensin",
+    "site": "https://skepuolue.fi/"
+   },
+   {
+    "qid": "Q3357767",
+    "label": "Ministry of the Interior of Finland",
+    "site": "https://intermin.fi/etusivu"
+   },
+   {
+    "qid": "Q3357767",
+    "label": "Ministry of the Interior of Finland",
+    "site": "https://intermin.fi./en"
+   },
+   {
+    "qid": "Q10585127",
+    "label": "The Migration Institute of Finland",
+    "site": "https://siirtolaisuusinstituutti.fi/"
+   },
+   {
+    "qid": "Q10585127",
+    "label": "The Migration Institute of Finland",
+    "site": "https://siirtolaisuusinstituutti.fi/sv/framsida/"
+   },
+   {
+    "qid": "Q10585127",
+    "label": "The Migration Institute of Finland",
+    "site": "https://siirtolaisuusinstituutti.fi/en/frontpage-eng/"
+   },
+   {
+    "qid": "Q121598321",
+    "label": "Society for the Study of Ethnic Relations and International Migration",
+    "site": "http://www.etmu.fi"
+   },
+   {
+    "qid": "Q2386529",
+    "label": "Minister for Foreign Affairs of Finland",
+    "site": "http://formin.finland.fi/english"
+   },
+   {
+    "qid": "Q2639539",
+    "label": "Ministry of Foreign Affairs of Finland",
+    "site": "https://um.fi/"
+   },
+   {
+    "qid": "Q5391618",
+    "label": "Foreign Affairs Committee of the Finnish Parliament",
+    "site": "https://www.eduskunta.fi/EN/lakiensaataminen/valiokunnat/ulkoasiainvaliokunta/Pages/default.aspx"
+   },
+   {
+    "qid": "Q5391618",
+    "label": "Foreign Affairs Committee of the Finnish Parliament",
+    "site": "https://www.eduskunta.fi/FI/valiokunnat/ulkoasiainvaliokunta/Sivut/default.aspx"
+   },
+   {
+    "qid": "Q11900171",
+    "label": "Vallila Interior",
+    "site": "http://www.vallilainterior.fi/"
+   },
+   {
+    "qid": "Q2605555",
+    "label": "Martela",
+    "site": "https://www.martela.com/"
+   },
+   {
+    "qid": "Q18659862",
+    "label": "Visa Ski Team Kemi",
+    "site": "https://www.visaskiteam.fi/"
+   },
+   {
+    "qid": "Q135447046",
+    "label": "Q135447046",
+    "site": "https://www.lauritsalanvisa.fi/"
+   }
+  ]
+ },
+ "fr": {
+  "qid": "Q142",
+  "portal": [
+   "https://www.service-public.fr/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4294375",
+    "label": "French Ministry of Immigration, Integration, National Identity and Codevelopment",
+    "site": "https://www.immigration.interieur.gouv.fr"
+   },
+   {
+    "qid": "Q63852425",
+    "label": "Association for the recognition of the gays and transexuals right to migration",
+    "site": "https://ardhis.org/"
+   },
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q50520948",
+    "label": "Diasporas: Circulations, Migrations, Histoire",
+    "site": "http://journals.openedition.org/diasporas"
+   },
+   {
+    "qid": "Q50497839",
+    "label": "Netcom",
+    "site": "http://journals.openedition.org/netcom"
+   },
+   {
+    "qid": "Q789848",
+    "label": "Ministry for Europe and Foreign Affairs",
+    "site": "https://www.diplomatie.gouv.fr"
+   },
+   {
+    "qid": "Q789848",
+    "label": "Ministry for Europe and Foreign Affairs",
+    "site": "https://www.diplomatie.gouv.fr/de/"
+   },
+   {
+    "qid": "Q789848",
+    "label": "Ministry for Europe and Foreign Affairs",
+    "site": "https://www.diplomatie.gouv.fr/ar/"
+   },
+   {
+    "qid": "Q789848",
+    "label": "Ministry for Europe and Foreign Affairs",
+    "site": "https://www.diplomatie.gouv.fr/en/"
+   },
+   {
+    "qid": "Q789848",
+    "label": "Ministry for Europe and Foreign Affairs",
+    "site": "https://www.diplomatie.gouv.fr/es/"
+   },
+   {
+    "qid": "Q789848",
+    "label": "Ministry for Europe and Foreign Affairs",
+    "site": "https://www.diplomatie.gouv.fr/ru/"
+   },
+   {
+    "qid": "Q2860452",
+    "label": "Diplomatic Archives",
+    "site": "https://www.diplomatie.gouv.fr/fr/archives-diplomatiques/"
+   },
+   {
+    "qid": "Q99432372",
+    "label": "Center of Political and Foreign Affairs",
+    "site": "https://thecpfa.com/"
+   },
+   {
+    "qid": "Q7579391",
+    "label": "Sport and Citizenship",
+    "site": "http://www.sportetcitoyennete.com/"
+   },
+   {
+    "qid": "Q7579391",
+    "label": "Sport and Citizenship",
+    "site": "https://www.sportetcitoyennete.com/en/"
+   },
+   {
+    "qid": "Q1351963",
+    "label": "Cap21",
+    "site": "https://cap21.earth/"
+   },
+   {
+    "qid": "Q1351963",
+    "label": "Cap21",
+    "site": "http://lerassemblementcitoyen.fr/cap21lrc/"
+   },
+   {
+    "qid": "Q1518496",
+    "label": "Ministry of the Interior",
+    "site": "https://www.interieur.gouv.fr/"
+   },
+   {
+    "qid": "Q167079",
+    "label": "General Directorate for Internal Security",
+    "site": "https://www.dgsi.interieur.gouv.fr/"
+   },
+   {
+    "qid": "Q167079",
+    "label": "General Directorate for Internal Security",
+    "site": "https://www.dgsi.interieur.gouv.fr/english"
+   },
+   {
+    "qid": "Q16960507",
+    "label": "Visa Europe",
+    "site": "https://www.visa.co.uk/"
+   },
+   {
+    "qid": "Q16960507",
+    "label": "Visa Europe",
+    "site": "https://www.visa.fr/"
+   },
+   {
+    "qid": "Q70326319",
+    "label": "Visa Francophone",
+    "site": "http://www.visa-francophone.com"
+   },
+   {
+    "qid": "Q2891553",
+    "label": "Visa pour l'image",
+    "site": "http://www.visapourlimage.com"
+   },
+   {
+    "qid": "Q3560977",
+    "label": "film distribution certificate",
+    "site": "https://www.cnc.fr/professionnels/visas-et-classification"
+   }
+  ]
+ },
+ "de": {
+  "qid": "Q183",
+  "portal": [
+   "https://verwaltung.bund.de"
+  ],
+  "agencies": [
+   {
+    "qid": "Q93864514",
+    "label": "Berlin Immigration Office",
+    "site": "https://www.berlin.de/einwanderung/"
+   },
+   {
+    "qid": "Q136613710",
+    "label": "Nuremberg Council for Integration and Immigration",
+    "site": "https://www.nuernberg.de/internet/integrationsrat/"
+   },
+   {
+    "qid": "Q2111410",
+    "label": "Pro Asyl",
+    "site": "https://www.proasyl.de/"
+   },
+   {
+    "qid": "Q1005470",
+    "label": "Bundesamt für Migration und Flüchtlinge",
+    "site": "https://www.bamf.de/"
+   },
+   {
+    "qid": "Q1005470",
+    "label": "Bundesamt für Migration und Flüchtlinge",
+    "site": "http://bafl.de/"
+   },
+   {
+    "qid": "Q113516912",
+    "label": "Information Network Asylum and Migration",
+    "site": "https://www.asyl.net"
+   },
+   {
+    "qid": "Q1429835",
+    "label": "The Expert Council of German Foundations on Integration and Migration",
+    "site": "http://www.svr-migration.de/en/"
+   },
+   {
+    "qid": "Q1429835",
+    "label": "The Expert Council of German Foundations on Integration and Migration",
+    "site": "https://www.svr-migration.de/"
+   },
+   {
+    "qid": "Q813387",
+    "label": "Federal Government Commissioner for Migration, Refugees and Integration",
+    "site": "https://www.integrationsbeauftragte.de/"
+   },
+   {
+    "qid": "Q17102915",
+    "label": "Young Initiative on Foreign Affairs and International Relations",
+    "site": "http://www.ifair.eu"
+   },
+   {
+    "qid": "Q568605",
+    "label": "Federal Minister for Foreign Affairs",
+    "site": "http://www.auswaertiges-amt.de/"
+   },
+   {
+    "qid": "Q56034",
+    "label": "Federal Foreign Office",
+    "site": "https://www.auswaertiges-amt.de/"
+   },
+   {
+    "qid": "Q21973906",
+    "label": "Q21973906",
+    "site": "http://www.foreign-affairs.info"
+   },
+   {
+    "qid": "Q1205355",
+    "label": "German citizenship award",
+    "site": "https://www.staatsbuergerlichestiftung.de/deutscher-staatsburgerpreis"
+   },
+   {
+    "qid": "Q130822400",
+    "label": "honorary citizen of Speyer",
+    "site": "https://www.speyer.de/de/rathaus/ehrenbuergerwuerde/"
+   },
+   {
+    "qid": "Q52860",
+    "label": "European Youth Parliament",
+    "site": "https://eyp.org"
+   },
+   {
+    "qid": "Q138772415",
+    "label": "Migrando",
+    "site": "https://migrando.de"
+   },
+   {
+    "qid": "Q502698",
+    "label": "Federal Ministry of the Interior",
+    "site": "https://www.bmi.bund.de/"
+   },
+   {
+    "qid": "Q812438",
+    "label": "Bavarian Ministry of the Interior",
+    "site": "https://www.stmi.bayern.de/"
+   },
+   {
+    "qid": "Q812438",
+    "label": "Bavarian Ministry of the Interior",
+    "site": "https://www.im.bayern/"
+   },
+   {
+    "qid": "Q56510643",
+    "label": "Amazon.de VISA Card",
+    "site": "https://www.amazon.de/amazon-visa-karte/dp/B00OSAGJTY"
+   },
+   {
+    "qid": "Q56489433",
+    "label": "Barclaycard Visa",
+    "site": "https://www.barclaycard.de/kreditkarten/visa-kreditkarte"
+   },
+   {
+    "qid": "Q57047474",
+    "label": "Consorsbank VISA Card",
+    "site": "https://www.consorsbank.de/ev/Girokonto/-/Girokonto#1"
+   },
+   {
+    "qid": "Q56509979",
+    "label": "Santander 1plus Visa Card",
+    "site": "https://www.santander.de/privatkunden/konten-karten/karten/1plus-visa/"
+   },
+   {
+    "qid": "Q131890067",
+    "label": "Q131890067",
+    "site": "http://www.dvkg.de"
+   },
+   {
+    "qid": "Q140282713",
+    "label": "GrandRoyal Travel",
+    "site": "https://www.grandroyaltravel.com"
+   }
+  ]
+ },
+ "gr": {
+  "qid": "Q41",
+  "portal": [
+   "https://www.government.gov.gr"
+  ],
+  "agencies": [
+   {
+    "qid": "Q93726107",
+    "label": "Ministry of Migration and Asylum",
+    "site": "https://migration.gov.gr"
+   },
+   {
+    "qid": "Q3125291",
+    "label": "Ministry of Foreign Affairs of Greece",
+    "site": "https://www.mfa.gr"
+   },
+   {
+    "qid": "Q3555550",
+    "label": "Ministry of the Interior (Greece)",
+    "site": "https://www.ypes.gr"
+   },
+   {
+    "qid": "Q136297789",
+    "label": "Church Interior (Ralli)",
+    "site": "https://www.nationalgallery.gr/en/artwork/church-interior/"
+   },
+   {
+    "qid": "Q140007566",
+    "label": "HRCM",
+    "site": "https://www.hrcm.gr"
+   },
+   {
+    "qid": "Q140386933",
+    "label": "Advisors Greece",
+    "site": "https://advisorsgreece.com"
+   }
+  ]
+ },
+ "hu": {
+  "qid": "Q28",
+  "portal": [
+   "https://www.kormany.hu/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q20968732",
+    "label": "Immigration and Asylum Office",
+    "site": "http://www.bmbah.hu"
+   },
+   {
+    "qid": "Q15978652",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.kormany.hu/en/ministry-of-foreign-affairs"
+   },
+   {
+    "qid": "Q15978652",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.kormany.hu/hu/kulgazdasagi-es-kulugyminiszterium"
+   },
+   {
+    "qid": "Q15978652",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://2020-2025.kormany.hu/kulgazdasagi-es-kulugyminiszterium"
+   },
+   {
+    "qid": "Q15978652",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://kormany.hu/kormanyzat/kulugyminiszter"
+   },
+   {
+    "qid": "Q25456977",
+    "label": "Institute for Foreign Affairs and Trade",
+    "site": "http://kki.gov.hu/"
+   },
+   {
+    "qid": "Q30577700",
+    "label": "Hungarian Institute Of International Affairs",
+    "site": "https://hiia.hu/en/"
+   },
+   {
+    "qid": "Q30577700",
+    "label": "Hungarian Institute Of International Affairs",
+    "site": "https://hiia.hu"
+   },
+   {
+    "qid": "Q61942494",
+    "label": "Külügyi Szemle",
+    "site": "https://kki.hu/kulugyi-szemle/"
+   },
+   {
+    "qid": "Q61942494",
+    "label": "Külügyi Szemle",
+    "site": "http://www.kulugyiintezet.hu/index.php?oldal=6&kep=22"
+   },
+   {
+    "qid": "Q61942494",
+    "label": "Külügyi Szemle",
+    "site": "http://kki.gov.hu/kulugyi-szemle-archivum/"
+   },
+   {
+    "qid": "Q125036723",
+    "label": "Foreign Affairs Committee of the Hungarian Parliament",
+    "site": "https://www.parlament.hu/web/kulugyi-bizottsag"
+   },
+   {
+    "qid": "Q125918795",
+    "label": "Digital Citizenship Program",
+    "site": "https://dap.gov.hu/"
+   },
+   {
+    "qid": "Q792611",
+    "label": "Ministry of Interior",
+    "site": "http://www.kormany.hu/hu/belugyminiszterium"
+   },
+   {
+    "qid": "Q792611",
+    "label": "Ministry of Interior",
+    "site": "https://kormany.hu/belugyminiszterium"
+   },
+   {
+    "qid": "Q282460",
+    "label": "Nagymaros",
+    "site": "https://nagymaros.hu/"
+   }
+  ]
+ },
+ "is": {
+  "qid": "Q189",
+  "portal": [
+   "http://www.iceland.is/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q15983772",
+    "label": "Ministry of Foreign Affairs of Iceland",
+    "site": "http://www.mfa.is/ministry/"
+   },
+   {
+    "qid": "Q15983772",
+    "label": "Ministry of Foreign Affairs of Iceland",
+    "site": "https://www.government.is/ministries/ministry-for-foreign-affairs/"
+   },
+   {
+    "qid": "Q5468211",
+    "label": "Foreign Affairs Committee",
+    "site": "http://www.althingi.is/vefur/committies.html"
+   }
+  ]
+ },
+ "ie": {
+  "qid": "Q27",
+  "portal": [
+   "http://www.gov.ie/",
+   "https://www.ireland.ie/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6071037",
+    "label": "Irish Naturalisation and Immigration Service",
+    "site": "https://www.irishimmigration.ie/"
+   },
+   {
+    "qid": "Q66819496",
+    "label": "Generation Identity UK and Ireland",
+    "site": "http://generation-identity.org.uk/"
+   },
+   {
+    "qid": "Q6865904",
+    "label": "Minister for Justice, Home Affairs and Migration",
+    "site": "https://www.gov.ie/en/department-of-justice-home-affairs-and-migration/"
+   },
+   {
+    "qid": "Q73378959",
+    "label": "Irish Migration Studies in Latin Amera",
+    "site": "http://www.irlandeses.org/imsla0703.htm"
+   },
+   {
+    "qid": "Q73378959",
+    "label": "Irish Migration Studies in Latin Amera",
+    "site": "https://irlandeses.org/imsla.htm"
+   },
+   {
+    "qid": "Q73378959",
+    "label": "Irish Migration Studies in Latin Amera",
+    "site": "http://www.irlandeses.org"
+   },
+   {
+    "qid": "Q848798",
+    "label": "Department of Foreign Affairs of Ireland",
+    "site": "https://www.gov.ie/en/organisation/department-of-foreign-affairs/"
+   },
+   {
+    "qid": "Q848798",
+    "label": "Department of Foreign Affairs of Ireland",
+    "site": "https://www.ireland.ie/en/dfa/"
+   },
+   {
+    "qid": "Q6865853",
+    "label": "Minister for Foreign Affairs (Ireland)",
+    "site": "https://www.gov.ie/en/organisation/department-of-foreign-affairs/"
+   },
+   {
+    "qid": "Q55299",
+    "label": "County Laois",
+    "site": "http://www.laois.ie"
+   },
+   {
+    "qid": "Q139595936",
+    "label": "House Interior Blog",
+    "site": "https://houseinteriorblog.com/"
+   }
+  ]
+ },
+ "it": {
+  "qid": "Q38",
+  "portal": [
+   "https://www.italia.it/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q21192497",
+    "label": "Department of Civil Liberties and Immigration",
+    "site": "https://www.interno.gov.it/it/ministero/dipartimenti/dipartimento-liberta-civili-e-limmigrazione"
+   },
+   {
+    "qid": "Q131906829",
+    "label": "Q131906829",
+    "site": "https://asgi.it/"
+   },
+   {
+    "qid": "Q141388587",
+    "label": "Center for Migration and Societal Change",
+    "site": "https://www.eurac.edu/en/institutes-centers/center-for-migration-and-societal-change"
+   },
+   {
+    "qid": "Q30256626",
+    "label": "International and European Forum on Migration Research",
+    "site": "http://fieri.it/"
+   },
+   {
+    "qid": "Q789842",
+    "label": "Ministry of Foreign Affairs and International Cooperation",
+    "site": "https://www.esteri.it/"
+   },
+   {
+    "qid": "Q3683042",
+    "label": "Museum collection of the Farnesina",
+    "site": "https://collezionefarnesina.esteri.it"
+   },
+   {
+    "qid": "Q30284515",
+    "label": "Centre for Science, Society and Citizenship",
+    "site": "http://www.cssc.eu/"
+   },
+   {
+    "qid": "Q1575872",
+    "label": "Ministry of the Interior of Italy",
+    "site": "https://www.interno.gov.it/"
+   },
+   {
+    "qid": "Q138639538",
+    "label": "Q138639538",
+    "site": "https://www.antoninocardillo.com/en/works/specus-corallii/"
+   },
+   {
+    "qid": "Q138016355",
+    "label": "House of Dust",
+    "site": "https://www.antoninocardillo.com/en/works/house-of-dust/"
+   },
+   {
+    "qid": "Q40106",
+    "label": "Valdidentro",
+    "site": "http://www.comune.valdidentro.so.it/"
+   },
+   {
+    "qid": "Q55373690",
+    "label": "Observatory Ximeniano - Interior",
+    "site": "http://www.ximeniano.it"
+   },
+   {
+    "qid": "Q137589154",
+    "label": "Italy Golden Visa",
+    "site": "https://investorvisa.mise.gov.it/"
+   },
+   {
+    "qid": "Q137589154",
+    "label": "Italy Golden Visa",
+    "site": "https://investorvisa.mise.gov.it/index.php/en/"
+   },
+   {
+    "qid": "Q765935",
+    "label": "SBF Visa Group",
+    "site": "http://www.sbfrides.com/"
+   },
+   {
+    "qid": "Q124350606",
+    "label": "Racing Bulls",
+    "site": "https://www.visacashapprb.com"
+   },
+   {
+    "qid": "Q71371541",
+    "label": "Scuderia AlphaTauri",
+    "site": "https://visacashapprb.com/int-en"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://www.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://fr.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://es.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://ar.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://zh.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://da.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://fa.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://fi.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://de.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://it.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://ja.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://ko.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://no.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://ru.wfp.org/"
+   },
+   {
+    "qid": "Q204344",
+    "label": "World Food Programme",
+    "site": "https://sv.wfp.org/"
+   }
+  ]
+ },
+ "lv": {
+  "qid": "Q211",
+  "portal": [
+   "https://www.mk.gov.lv/",
+   "https://www.president.lv/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q23012016",
+    "label": "Office of Citizenship and Migration Affairs",
+    "site": "http://www.pmlp.gov.lv/"
+   },
+   {
+    "qid": "Q285178",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mfa.gov.lv/"
+   },
+   {
+    "qid": "Q18752389",
+    "label": "Ministry of the Interior of the Republic of Latvia",
+    "site": "https://www.iem.gov.lv/"
+   },
+   {
+    "qid": "Q4120292",
+    "label": "Metropolitan of Riga and all Latvia",
+    "site": "http://www.pareizticiba.lv"
+   }
+  ]
+ },
+ "li": {
+  "qid": "Q347",
+  "portal": [
+   "https://www.liechtenstein.li"
+  ],
+  "agencies": [
+   {
+    "qid": "Q30264222",
+    "label": "Ministry for Foreign Affairs, Education and Culture",
+    "site": "http://www.regierung.li/"
+   }
+  ]
+ },
+ "lt": {
+  "qid": "Q37",
+  "portal": [
+   "https://lietuva.lt"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16464569",
+    "label": "Migration Department",
+    "site": "https://migracija.lrv.lt"
+   },
+   {
+    "qid": "Q16464569",
+    "label": "Migration Department",
+    "site": "https://www.migracija.lt"
+   },
+   {
+    "qid": "Q1548931",
+    "label": "Ministry of Foreign Affairs of Lithuania",
+    "site": "https://www.urm.lt/"
+   },
+   {
+    "qid": "Q957048",
+    "label": "Ministry of the Interior of Lithuania",
+    "site": "https://vrm.lrv.lt/"
+   },
+   {
+    "qid": "Q1729128",
+    "label": "Police Department of the Ministry of the Interior",
+    "site": "http://www.policija.lt"
+   },
+   {
+    "qid": "Q1729128",
+    "label": "Police Department of the Ministry of the Interior",
+    "site": "https://policija.lrv.lt"
+   },
+   {
+    "qid": "Q12664330",
+    "label": "Mano namai",
+    "site": "https://manonamai.lt/"
+   },
+   {
+    "qid": "Q137995203",
+    "label": "Resources Agency of Lithuania",
+    "site": "https://ia.lrv.lt/"
+   },
+   {
+    "qid": "Q141022858",
+    "label": "Lima Design",
+    "site": "https://limadesign.lt"
+   },
+   {
+    "qid": "Q12676467",
+    "label": "State Forensic Medicine Service of Lithuania",
+    "site": "https://vtmt.lrv.lt"
+   }
+  ]
+ },
+ "lu": {
+  "qid": "Q32",
+  "portal": [
+   "https://luxembourg.public.lu"
+  ],
+  "agencies": [
+   {
+    "qid": "Q123475730",
+    "label": "Ministry of Foreign and European Affairs, Defence, Development Cooperation and Foreign Trade",
+    "site": "https://maee.gouvernement.lu/"
+   },
+   {
+    "qid": "Q2460471",
+    "label": "Ministry of Foreign and European Affairs",
+    "site": "https://maee.gouvernement.lu/"
+   },
+   {
+    "qid": "Q6866008",
+    "label": "Ministry for the Interior of Luxembourg",
+    "site": "https://maint.gouvernement.lu/"
+   }
+  ]
+ },
+ "mt": {
+  "qid": "Q233",
+  "portal": [
+   "http://www.gov.mt/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q3315354",
+    "label": "Ministry of Foreign Affairs of the Republic of Malta",
+    "site": "http://www.foreign.gov.mt/"
+   },
+   {
+    "qid": "Q119776293",
+    "label": "Ministry for Foreign and European Affairs and Trade",
+    "site": "https://foreign.gov.mt/"
+   },
+   {
+    "qid": "Q119776484",
+    "label": "Ministry for home affairs, security, reforms and equality",
+    "site": "https://homeaffairs.gov.mt/"
+   }
+  ]
+ },
+ "md": {
+  "qid": "Q217",
+  "portal": [
+   "http://www.moldova.md/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q118153727",
+    "label": "General Inspectorate for MigrationMinistry",
+    "site": "http://igm.gov.md/"
+   },
+   {
+    "qid": "Q4294406",
+    "label": "Ministry of Foreign Affairs",
+    "site": "https://mfa.gov.md/"
+   }
+  ]
+ },
+ "mc": {
+  "qid": "Q235",
+  "portal": [
+   "https://www.mairie.mc/",
+   "https://www.gouv.mc/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q5260308",
+    "label": "Department of Foreign Affairs and Cooperation of the Principality of Monaco",
+    "site": "http://www.relext.gouv.mc"
+   },
+   {
+    "qid": "Q5260308",
+    "label": "Department of Foreign Affairs and Cooperation of the Principality of Monaco",
+    "site": "http://www.gouv.mc/Gouvernement-et-Institutions/Le-Gouvernement/Departement-des-Relations-Exterieures-et-de-la-Cooperation"
+   },
+   {
+    "qid": "Q3336998",
+    "label": "nationality law of Monaco",
+    "site": "https://monservicepublic.gouv.mc/thematiques/nationalite-et-residence/nationalite-monegasque"
+   },
+   {
+    "qid": "Q3336998",
+    "label": "nationality law of Monaco",
+    "site": "https://www.mairie.mc/nationalite-2"
+   },
+   {
+    "qid": "Q3907566",
+    "label": "Police of Monaco",
+    "site": "https://en.gouv.mc/Government-Institutions/The-Government/Ministry-of-Interior/Police-Department"
+   }
+  ]
+ },
+ "me": {
+  "qid": "Q236",
+  "portal": [
+   "https://www.gov.me/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q2508854",
+    "label": "Ministry of Foreign Affairs and European Integration",
+    "site": "https://www.gov.me/mvp"
+   },
+   {
+    "qid": "Q4294316",
+    "label": "Ministry of Interior Affairs",
+    "site": "http://www.mup.gov.me/"
+   }
+  ]
+ },
+ "nl": {
+  "qid": "Q29999",
+  "portal": [
+   "https://www.rijksoverheid.nl/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q50816208",
+    "label": "Comparative Migration Studies",
+    "site": "http://www.imiscoe.org/publications/library/6-journal-cms"
+   },
+   {
+    "qid": "Q50816208",
+    "label": "Comparative Migration Studies",
+    "site": "http://www.comparativemigrationstudies.com/"
+   },
+   {
+    "qid": "Q132531063",
+    "label": "Planetary Security Initiative",
+    "site": "https://www.planetarysecurityinitiative.org/"
+   },
+   {
+    "qid": "Q131336052",
+    "label": "EventArchitectuur",
+    "site": "https://www.eventarchitectuur.nl/"
+   },
+   {
+    "qid": "Q131336052",
+    "label": "EventArchitectuur",
+    "site": "https://eventarchitectuur.nl/"
+   }
+  ]
+ },
+ "mk": {
+  "qid": "Q221",
+  "portal": [
+   "https://vlada.mk/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q2502787",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mfa.gov.mk"
+   },
+   {
+    "qid": "Q945717",
+    "label": "Internal Macedonian Revolutionary Organization – Democratic Party for Macedonian National Unity",
+    "site": "http://www.vmro-dpmne.org.mk"
+   }
+  ]
+ },
+ "no": {
+  "qid": "Q20",
+  "portal": [
+   "https://norway.no"
+  ],
+  "agencies": [
+   {
+    "qid": "Q12008658",
+    "label": "Norwegian Directorate of Immigration",
+    "site": "https://udi.no/"
+   },
+   {
+    "qid": "Q25424509",
+    "label": "Norwegian Immigration Detention Centre",
+    "site": "https://www.politiet.no/om-politiet/organisasjonen/sarorganene/politiets-utlendingsenhet/utlendingsinternat-og-familieenhet"
+   },
+   {
+    "qid": "Q5464506",
+    "label": "Folkebevegelsen mot innvandring",
+    "site": "http://www.fmi.as"
+   },
+   {
+    "qid": "Q5464506",
+    "label": "Folkebevegelsen mot innvandring",
+    "site": "https://fmi.no/"
+   },
+   {
+    "qid": "Q6974968",
+    "label": "National Police Immigration Service",
+    "site": "https://www.politiet.no/om/organisasjonen/sarorganene/politiets-utlendingsenhet/"
+   },
+   {
+    "qid": "Q30260070",
+    "label": "Museum Of Migration",
+    "site": "http://www.emigrantmuseum.no/"
+   },
+   {
+    "qid": "Q2982622",
+    "label": "Ministry of Foreign Affairs of Norway",
+    "site": "http://www.regjeringen.no/en.html?id=4"
+   },
+   {
+    "qid": "Q2982622",
+    "label": "Ministry of Foreign Affairs of Norway",
+    "site": "https://www.regjeringen.no/no/dep/ud/id833/"
+   },
+   {
+    "qid": "Q18018541",
+    "label": "Foreign Minister of Norway",
+    "site": "http://www.regjeringen.no/en/dep/ud.html?id=833"
+   },
+   {
+    "qid": "Q3433940",
+    "label": "Standing Committee on Foreign Affairs and Defence",
+    "site": "https://stortinget.no/no/Representanter-og-komiteer/Komiteene/Utenriks--og-forsvarskomiteen"
+   },
+   {
+    "qid": "Q12718705",
+    "label": "Enlarged Committee on Foreign Affairs and Defence",
+    "site": "https://stortinget.no/no/Representanter-og-komiteer/Komiteene/Andre-faste-komiteer/den-utvidete-utenriks--og-forsvarskomite"
+   },
+   {
+    "qid": "Q7051162",
+    "label": "Norfund",
+    "site": "http://www.norfund.no"
+   },
+   {
+    "qid": "Q7051162",
+    "label": "Norfund",
+    "site": "https://www.norfund.no/"
+   },
+   {
+    "qid": "Q109628199",
+    "label": "Kid interiør",
+    "site": "https://www.kid.no"
+   },
+   {
+    "qid": "Q109628199",
+    "label": "Kid interiør",
+    "site": "https://kid.no"
+   },
+   {
+    "qid": "Q127790786",
+    "label": "Princess",
+    "site": "https://www.princessbutikken.no/"
+   },
+   {
+    "qid": "Q56404886",
+    "label": "Innlandet",
+    "site": "https://www.innlandetfylke.no"
+   },
+   {
+    "qid": "Q19392507",
+    "label": "Q19392507",
+    "site": "https://www.tilbords.no/"
+   },
+   {
+    "qid": "Q127920019",
+    "label": "Feel",
+    "site": "https://feel.no"
+   },
+   {
+    "qid": "Q127921048",
+    "label": "Kremmerhuset",
+    "site": "https://kremmerhuset.no"
+   },
+   {
+    "qid": "Q12007715",
+    "label": "Trumf",
+    "site": "https://www.trumf.no/"
+   }
+  ]
+ },
+ "pl": {
+  "qid": "Q36",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q135557764",
+    "label": "Border Defence Movement",
+    "site": "https://ruchobronygranic.pl/"
+   },
+   {
+    "qid": "Q9336753",
+    "label": "SE European Bird Migration Network",
+    "site": "https://www.seen-net.eu/"
+   },
+   {
+    "qid": "Q26715044",
+    "label": "Central and Eastern European Migration Review",
+    "site": "http://www.ceemr.uw.edu.pl/"
+   },
+   {
+    "qid": "Q26715044",
+    "label": "Central and Eastern European Migration Review",
+    "site": "http://www.migracje.uw.edu.pl/en/publications/ceemr"
+   },
+   {
+    "qid": "Q50815499",
+    "label": "Animal Migration",
+    "site": "https://www.degruyter.com/view/j/ami"
+   },
+   {
+    "qid": "Q50815499",
+    "label": "Animal Migration",
+    "site": "http://versita.com/am/"
+   },
+   {
+    "qid": "Q94979305",
+    "label": "Centre of Migration Research of the University of Warsaw",
+    "site": "https://www.migracje.uw.edu.pl/"
+   },
+   {
+    "qid": "Q9143270",
+    "label": "Akcja Bałtycka",
+    "site": "https://akbalt.ug.edu.pl/"
+   },
+   {
+    "qid": "Q30289943",
+    "label": "International Organization for Migration",
+    "site": "http://www.iom.pl/"
+   },
+   {
+    "qid": "Q213624",
+    "label": "Ministry of Foreign Affairs of Poland",
+    "site": "http://www.gov.pl/dyplomacja"
+   },
+   {
+    "qid": "Q25598671",
+    "label": "Minister of Foreign Affairs of Poland",
+    "site": "http://msz.gov.pl"
+   },
+   {
+    "qid": "Q11689627",
+    "label": "Centrum Stosunków Międzynarodowych",
+    "site": "https://csm.org.pl/"
+   },
+   {
+    "qid": "Q11689627",
+    "label": "Centrum Stosunków Międzynarodowych",
+    "site": "http://www.csm.org.pl/en/"
+   },
+   {
+    "qid": "Q9186224",
+    "label": "Center for Citizenship Education",
+    "site": "http://www.ceo.org.pl/"
+   },
+   {
+    "qid": "Q9186224",
+    "label": "Center for Citizenship Education",
+    "site": "https://www.ceo.org.pl"
+   },
+   {
+    "qid": "Q138773796",
+    "label": "Digital Citizenship Foundation",
+    "site": "https://cyfroweobywatelstwo.pl/"
+   },
+   {
+    "qid": "Q4294318",
+    "label": "Ministry of Interior and Administration",
+    "site": "https://www.gov.pl/web/mswia"
+   },
+   {
+    "qid": "Q6867235",
+    "label": "Ministry of Interior",
+    "site": "http://www.msw.gov.pl/"
+   },
+   {
+    "qid": "Q106462766",
+    "label": "Centralny Szpital Kliniczny MSWiA w Warszawie",
+    "site": "https://www.gov.pl/web/cskmswia"
+   },
+   {
+    "qid": "Q106462766",
+    "label": "Centralny Szpital Kliniczny MSWiA w Warszawie",
+    "site": "http://www.cskmswia.pl/cse?dzial="
+   },
+   {
+    "qid": "Q106462766",
+    "label": "Centralny Szpital Kliniczny MSWiA w Warszawie",
+    "site": "https://www.gov.pl/web/pimmswia"
+   },
+   {
+    "qid": "Q116181199",
+    "label": "Deccoria.pl",
+    "site": "https://deccoria.pl/"
+   },
+   {
+    "qid": "Q7895365",
+    "label": "University of Economics and Innovation",
+    "site": "http://www.wsei.lublin.pl"
+   }
+  ]
+ },
+ "pt": {
+  "qid": "Q45",
+  "portal": [
+   "https://portugal.gov.pt"
+  ],
+  "agencies": [
+   {
+    "qid": "Q140036750",
+    "label": "IMERIA, LDA",
+    "site": "https://avrupaoturumu.tr/"
+   },
+   {
+    "qid": "Q106547799",
+    "label": "Agency for Integration, Migration and Asylum",
+    "site": "https://aima.gov.pt/pt"
+   },
+   {
+    "qid": "Q141544674",
+    "label": "Across Continents",
+    "site": "https://www.soundingwild.com/across-continents"
+   },
+   {
+    "qid": "Q1283287",
+    "label": "Ministry of Foreign Affairs of Portugal",
+    "site": "https://portaldiplomatico.mne.gov.pt/"
+   },
+   {
+    "qid": "Q113599655",
+    "label": "Global Citizen Solutions",
+    "site": "https://www.globalcitizensolutions.com/"
+   },
+   {
+    "qid": "Q51882888",
+    "label": "Commission for Citizenship and Gender Equality",
+    "site": "https://www.cig.gov.pt/"
+   },
+   {
+    "qid": "Q2105350",
+    "label": "Portugal Pro-Life",
+    "site": "http://portugalprovida.blogspot.pt/"
+   },
+   {
+    "qid": "Q846725",
+    "label": "University of Beira Interior",
+    "site": "http://www.ubi.pt"
+   },
+   {
+    "qid": "Q123167535",
+    "label": "Wool Museum of University of Beira Interior",
+    "site": "https://www.museu.ubi.pt/?cix=2998&lang=1"
+   },
+   {
+    "qid": "Q138568347",
+    "label": "Advisors Portugal",
+    "site": "https://advisorsportugal.com"
+   },
+   {
+    "qid": "Q30591380",
+    "label": "Portugal Golden Visa",
+    "site": "http://www.sef.pt/portal/V10/EN/aspx/apoiocliente/detalheApoio.aspx?fromIndex0&id_Linha6269"
+   },
+   {
+    "qid": "Q30591380",
+    "label": "Portugal Golden Visa",
+    "site": "https://vistos.mne.gov.pt/pt/ari-autorizacao-de-residencia-para-actividade-de-investimento"
+   },
+   {
+    "qid": "Q30591380",
+    "label": "Portugal Golden Visa",
+    "site": "https://ari.sef.pt/account/default.aspx"
+   },
+   {
+    "qid": "Q30591380",
+    "label": "Portugal Golden Visa",
+    "site": "https://aima.gov.pt/pt/viver/autorizacao-de-residencia-para-investimento-art-90-o-a"
+   },
+   {
+    "qid": "Q30591380",
+    "label": "Portugal Golden Visa",
+    "site": "https://portaldascomunidades.mne.gov.pt/pt/autorizacao-de-residencia-para-atividade-de-investimento-ari"
+   },
+   {
+    "qid": "Q109350757",
+    "label": "Prémio Quercus",
+    "site": "https://quercus.pt/premios-quercus/"
+   },
+   {
+    "qid": "Q108527068",
+    "label": "Prémio Barbara Virgínia",
+    "site": "https://www.academiadecinema.pt/actividades/premios-barbara-virginia/"
+   },
+   {
+    "qid": "Q109710864",
+    "label": "Prémio Maria de Sousa",
+    "site": "https://www.bial.com/pt/fundacao-bial/premios/premio-maria-de-sousa/"
+   }
+  ]
+ },
+ "ro": {
+  "qid": "Q218",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q50814792",
+    "label": "Journal of Identity and Migration Studies",
+    "site": "http://www.jims.e-migration.ro"
+   },
+   {
+    "qid": "Q50814792",
+    "label": "Journal of Identity and Migration Studies",
+    "site": "http://www.e-migration.ro/jims"
+   },
+   {
+    "qid": "Q59536549",
+    "label": "Conect Association",
+    "site": "http://www.asociatiaconect.ro/EN/home"
+   },
+   {
+    "qid": "Q15628977",
+    "label": "Ministry of Foreign Affairs of Romania",
+    "site": "https://www.mae.ro"
+   },
+   {
+    "qid": "Q141391893",
+    "label": "National Authority for Citizenship",
+    "site": "https://cetatenie.just.ro/"
+   },
+   {
+    "qid": "Q1583505",
+    "label": "Ministry of Internal Affairs",
+    "site": "http://www.mai.gov.ro/"
+   }
+  ]
+ },
+ "ru": {
+  "qid": "Q159",
+  "portal": [
+   "http://gov.ru/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q2515707",
+    "label": "Movement Against Illegal Immigration",
+    "site": "https://www.dpni.org/"
+   },
+   {
+    "qid": "Q132698",
+    "label": "Borisoglebsk",
+    "site": "http://adminborisoglebsk.ru"
+   },
+   {
+    "qid": "Q132698",
+    "label": "Borisoglebsk",
+    "site": "https://foi.hse.ru/openrussia/migration-boris"
+   },
+   {
+    "qid": "Q4481667",
+    "label": "Federal Migration Service",
+    "site": "http://www.fms.gov.ru/"
+   },
+   {
+    "qid": "Q4346571",
+    "label": "Main Directorate for Migration Issues of the Ministry of Internal Affairs of Russian Federation",
+    "site": "http://pda.guvm.mvd.ru"
+   },
+   {
+    "qid": "Q789889",
+    "label": "Ministry of Foreign Affairs of the Russian Federation",
+    "site": "https://mid.ru"
+   },
+   {
+    "qid": "Q5279909",
+    "label": "Diplomatic Academy of the Ministry of Foreign Affairs of the Russian Federation",
+    "site": "http://www.dipacademy.ru/"
+   },
+   {
+    "qid": "Q1192838",
+    "label": "Ministry of Internal Affairs of the Russian Federation",
+    "site": "https://мвд.рф"
+   },
+   {
+    "qid": "Q1192838",
+    "label": "Ministry of Internal Affairs of the Russian Federation",
+    "site": "http://mvd.ru"
+   },
+   {
+    "qid": "Q1192838",
+    "label": "Ministry of Internal Affairs of the Russian Federation",
+    "site": "https://en.mvd.ru"
+   },
+   {
+    "qid": "Q4059261",
+    "label": "Academy of Management of the Ministry of Internal Affairs of Russia",
+    "site": "https://а.мвд.рф/"
+   },
+   {
+    "qid": "Q4407685",
+    "label": "Military Institute of the Internal Troops of the Ministry of the Interior Russia",
+    "site": "http://www.spvi.ru/"
+   },
+   {
+    "qid": "Q4334698",
+    "label": "Omsk MIA Academy",
+    "site": "http://oma.mvd.ru/"
+   },
+   {
+    "qid": "Q140053658",
+    "label": "Business Horizon",
+    "site": "https://bizhorizon.ru/"
+   },
+   {
+    "qid": "Q849170",
+    "label": "Patriarch of Moscow and all Russia",
+    "site": "https://mospat.ru/"
+   },
+   {
+    "qid": "Q4303876",
+    "label": "Moscow School of Social and Economic Sciences",
+    "site": "http://www.msses.ru/"
+   },
+   {
+    "qid": "Q4303876",
+    "label": "Moscow School of Social and Economic Sciences",
+    "site": "http://www.msses.ru/en/"
+   },
+   {
+    "qid": "Q108599669",
+    "label": "School of Conference Interpreting & Translation",
+    "site": "https://scit.herzen.spb.ru/"
+   }
+  ]
+ },
+ "sm": {
+  "qid": "Q238",
+  "portal": [
+   "https://www.gov.sm/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q3954367",
+    "label": "Secretary for Foreign and Political Affairs",
+    "site": "https://www.esteri.sm/"
+   },
+   {
+    "qid": "Q17319087",
+    "label": "Ministry of Foreign Affairs of the Republic of San Marino",
+    "site": "http://www.esteri.sm/on-line/home.html"
+   }
+  ]
+ },
+ "rs": {
+  "qid": "Q403",
+  "portal": [
+   "https://www.srbija.gov.rs/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q2198916",
+    "label": "Ministry of Foreign Affairs of the Republic of Serbia",
+    "site": "https://www.mfa.gov.rs/"
+   },
+   {
+    "qid": "Q129077998",
+    "label": "Diplomatic Archives of the Ministry of Foreign Affairs of Serbia",
+    "site": "https://www.mfa.gov.rs/ministarstvo/diplomatski-arhiv"
+   },
+   {
+    "qid": "Q30589057",
+    "label": "Centre for Contemporary Politics",
+    "site": "https://centarsavremenepolitike.rs"
+   },
+   {
+    "qid": "Q139569394",
+    "label": "AA Studio",
+    "site": "https://www.aastudiobelgrade.rs"
+   },
+   {
+    "qid": "Q2198998",
+    "label": "Ministry of Internal Affairs of the Republic of Serbia",
+    "site": "http://www.mup.gov.rs"
+   },
+   {
+    "qid": "Q50516747",
+    "label": "Ekonomski Signali",
+    "site": "http://scindeks.ceon.rs/journaldetails.aspx?issn=1452-4457"
+   },
+   {
+    "qid": "Q12747362",
+    "label": "Q12747362",
+    "site": "https://vtsns.edu.rs/"
+   },
+   {
+    "qid": "Q110045525",
+    "label": "University of Criminal Investigation and Police Studies",
+    "site": "https://www.kpu.edu.rs/"
+   }
+  ]
+ },
+ "sk": {
+  "qid": "Q214",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q3499939",
+    "label": "Ministry of Foreign and European Affairs of the Slovak Republic",
+    "site": "http://www.foreign.gov.sk/en/home"
+   },
+   {
+    "qid": "Q3499939",
+    "label": "Ministry of Foreign and European Affairs of the Slovak Republic",
+    "site": "https://www.mzv.sk/"
+   },
+   {
+    "qid": "Q13450147",
+    "label": "Ministry of Interior of the Slovak Republic",
+    "site": "https://www.minv.sk/"
+   }
+  ]
+ },
+ "si": {
+  "qid": "Q215",
+  "portal": [
+   "http://www.gov.si/",
+   "https://www.gov.si/en/",
+   "https://www.gov.si/it/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867033",
+    "label": "Ministry of Foreign Affairs of Slovenia",
+    "site": "http://www.mzz.gov.si/"
+   },
+   {
+    "qid": "Q6867033",
+    "label": "Ministry of Foreign Affairs of Slovenia",
+    "site": "http://www.mzz.gov.si/en/"
+   },
+   {
+    "qid": "Q4294311",
+    "label": "Ministry of the Interior",
+    "site": "http://www.mnz.gov.si/"
+   },
+   {
+    "qid": "Q15876",
+    "label": "Ilirska Bistrica",
+    "site": "http://www.ilirska-bistrica.si/"
+   }
+  ]
+ },
+ "es": {
+  "qid": "Q29",
+  "portal": [
+   "https://administracion.gob.es/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q81895702",
+    "label": "Ministry of Inclusion, Social Security and Migration",
+    "site": "http://www.inclusion.gob.es/"
+   },
+   {
+    "qid": "Q54843875",
+    "label": "Secretariat of State for Migration",
+    "site": "http://extranjeros.mitramiss.gob.es/"
+   },
+   {
+    "qid": "Q2339304",
+    "label": "Ministry of Foreign Affairs, European Union and Cooperation of Spain",
+    "site": "http://www.exteriores.gob.es/"
+   },
+   {
+    "qid": "Q15696544",
+    "label": "Secretariat of State for Foreign Affairs",
+    "site": "http://www.exteriores.gob.es/Portal/en/Paginas/inicio.aspx"
+   },
+   {
+    "qid": "Q54578915",
+    "label": "Ministry of Foreign Action and Open Government",
+    "site": "https://exteriors.gencat.cat/ca/inici"
+   },
+   {
+    "qid": "Q1800230",
+    "label": "Spanish nationality law",
+    "site": "https://administracion.gob.es/pag_Home/Tu-espacio-europeo/derechos-obligaciones/ciudadanos/residencia/obtencion-nacionalidad.html"
+   },
+   {
+    "qid": "Q25383737",
+    "label": "Movement for Dignity and Citizenship",
+    "site": "http://www.mdycceuta.com/"
+   },
+   {
+    "qid": "Q114888073",
+    "label": "Social action & citizenship ministry from Catalonia",
+    "site": "http://treballiaferssocials.gencat.cat/"
+   },
+   {
+    "qid": "Q140869054",
+    "label": "Fundación Ciudadanía y Valores",
+    "site": "https://funciva.org"
+   },
+   {
+    "qid": "Q3113889",
+    "label": "Ministry of the Interior",
+    "site": "http://www.interior.gob.es/"
+   },
+   {
+    "qid": "Q110883937",
+    "label": "Clásica Jaén Paraíso Interior",
+    "site": "https://clasicajaen.com/"
+   },
+   {
+    "qid": "Q110883958",
+    "label": "2022 Clásica Jaén Paraíso Interior",
+    "site": "https://clasicajaen.com/"
+   },
+   {
+    "qid": "Q116266519",
+    "label": "2023 Clásica Jaén Paraíso Interior",
+    "site": "https://clasicajaen.com/"
+   }
+  ]
+ },
+ "se": {
+  "qid": "Q34",
+  "portal": [
+   "https://sweden.se"
+  ],
+  "agencies": [
+   {
+    "qid": "Q141183228",
+    "label": "Sweden Relocators AB",
+    "site": "https://swedenrelocators.se"
+   },
+   {
+    "qid": "Q141255827",
+    "label": "Unity Party",
+    "site": "https://enighetspartiet.se/"
+   },
+   {
+    "qid": "Q4585222",
+    "label": "Swedish Migration Agency",
+    "site": "http://www.migrationsverket.se/"
+   },
+   {
+    "qid": "Q4585222",
+    "label": "Swedish Migration Agency",
+    "site": "https://www.migrationsverket.se"
+   },
+   {
+    "qid": "Q4585222",
+    "label": "Swedish Migration Agency",
+    "site": "https://www.migrationsverket.se/English/Startpage.html"
+   },
+   {
+    "qid": "Q97143441",
+    "label": "Migration Court in Gothenburg",
+    "site": "https://www.domstol.se/migrationsdomstolen-vid-forvaltningsratten-i-goteborg/"
+   },
+   {
+    "qid": "Q3152205",
+    "label": "Swedish Emigrant Institute",
+    "site": "https://www.kulturparkensmaland.se/svenska-emigrantinstitutet/"
+   },
+   {
+    "qid": "Q105111111",
+    "label": "open data of the Swedish Migration Board",
+    "site": "https://www.migrationsverket.se/psidata"
+   },
+   {
+    "qid": "Q776570",
+    "label": "Ministry for Foreign Affairs of Sweden",
+    "site": "https://www.regeringen.se/sveriges-regering/utrikesdepartementet/"
+   },
+   {
+    "qid": "Q1749063",
+    "label": "Minister for Foreign Affairs of Sweden",
+    "site": "http://www.sweden.gov.se/sb/d/2059"
+   },
+   {
+    "qid": "Q48989650",
+    "label": "Malmö Association of Foreign Affairs",
+    "site": "http://www.ufmalmo.se/"
+   },
+   {
+    "qid": "Q116848033",
+    "label": "DPJ Workspace",
+    "site": "https://www.dpj.se"
+   },
+   {
+    "qid": "Q116848033",
+    "label": "DPJ Workspace",
+    "site": "https://www.dpj-workspace.com/de/"
+   },
+   {
+    "qid": "Q116848033",
+    "label": "DPJ Workspace",
+    "site": "https://www.dpj-workspace.com/dk/"
+   },
+   {
+    "qid": "Q116848033",
+    "label": "DPJ Workspace",
+    "site": "https://www.dpj-workspace.com/fi/"
+   },
+   {
+    "qid": "Q116848033",
+    "label": "DPJ Workspace",
+    "site": "https://www.dpj-workspace.com/fr/"
+   },
+   {
+    "qid": "Q116848033",
+    "label": "DPJ Workspace",
+    "site": "https://www.dpj-workspace.com/nl/"
+   },
+   {
+    "qid": "Q32926",
+    "label": "Avicii Arena",
+    "site": "https://aviciiarena.se"
+   },
+   {
+    "qid": "Q2371654",
+    "label": "Svenskt Tenn",
+    "site": "http://www.svenskttenn.se/en/"
+   },
+   {
+    "qid": "Q140361641",
+    "label": "DOX Visumpartner",
+    "site": "https://doxvl.se"
+   },
+   {
+    "qid": "Q7666369",
+    "label": "Södra Latin",
+    "site": "http://www.son.edu.stockholm.se/"
+   }
+  ]
+ },
+ "ch": {
+  "qid": "Q39",
+  "portal": [
+   "https://www.admin.ch/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q27483648",
+    "label": "Immigration Museum",
+    "site": "https://lausanne-musees.ch/fr_CH/musees/musee-de-l-immigration"
+   },
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.int/es"
+   },
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.int/fr"
+   },
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.int/"
+   },
+   {
+    "qid": "Q472311",
+    "label": "International Organization for Migration",
+    "site": "https://www.iom.cz/"
+   },
+   {
+    "qid": "Q1005466",
+    "label": "State Secretariat for Migration",
+    "site": "https://www.sem.admin.ch"
+   },
+   {
+    "qid": "Q6049012",
+    "label": "International Catholic Migration Commission",
+    "site": "http://www.icmc.net/"
+   },
+   {
+    "qid": "Q123860354",
+    "label": "Swiss Forum for Migration and Population Studies",
+    "site": "http://www.migration-population.ch/"
+   },
+   {
+    "qid": "Q125926327",
+    "label": "ORS Group",
+    "site": "https://www.ors-group.org/"
+   },
+   {
+    "qid": "Q140033462",
+    "label": "Mirabello Consultancy",
+    "site": "https://www.mirabelloconsultancy.com"
+   },
+   {
+    "qid": "Q125601363",
+    "label": "IOM Global Migration Film Festival",
+    "site": "https://www.iom.int/global-migration-film-festival"
+   },
+   {
+    "qid": "Q126127798",
+    "label": "Global Migration Centre",
+    "site": "https://www.graduateinstitute.ch/gmc"
+   },
+   {
+    "qid": "Q675983",
+    "label": "Federal Department of Foreign Affairs",
+    "site": "https://www.eda.admin.ch/"
+   },
+   {
+    "qid": "Q1665459",
+    "label": "Directorate for EU Affairs",
+    "site": "http://www.europa.admin.ch/"
+   },
+   {
+    "qid": "Q12094",
+    "label": "Canton of Appenzell Innerrhoden",
+    "site": "https://www.ai.ch/"
+   },
+   {
+    "qid": "Q96971897",
+    "label": "Pabio",
+    "site": "https://joinkoj.com"
+   },
+   {
+    "qid": "Q96971897",
+    "label": "Pabio",
+    "site": "https://koj.co"
+   },
+   {
+    "qid": "Q96971897",
+    "label": "Pabio",
+    "site": "https://pabio.com"
+   },
+   {
+    "qid": "Q140373144",
+    "label": "SIT Furniture Design Award",
+    "site": "https://www.sitaward.com/"
+   },
+   {
+    "qid": "Q139764261",
+    "label": "Edelweiss Rénovation SA",
+    "site": "https://edelweiss-renovation.ch"
+   },
+   {
+    "qid": "Q113117667",
+    "label": "Interior Department (Jura)",
+    "site": "https://www.jura.ch/fr/Autorites/Administration/DIN.html"
+   },
+   {
+    "qid": "Q688584",
+    "label": "Federal Department of Home Affairs",
+    "site": "https://www.edi.admin.ch/"
+   },
+   {
+    "qid": "Q113122518",
+    "label": "Department of the Interior and National Economy (Thurgau)",
+    "site": "https://div.tg.ch/"
+   }
+  ]
+ },
+ "ua": {
+  "qid": "Q212",
+  "portal": [
+   "https://ukraine.ua"
+  ],
+  "agencies": [
+   {
+    "qid": "Q12100330",
+    "label": "State Migration Service of Ukraine",
+    "site": "http://dmsu.gov.ua/"
+   },
+   {
+    "qid": "Q4294403",
+    "label": "Ministry of Foreign Affairs of Ukraine",
+    "site": "https://mfa.gov.ua/"
+   },
+   {
+    "qid": "Q12101145",
+    "label": "Hennadii Udovenko Diplomatic Academy of Ukraine at the Ministry of Foreign Affairs",
+    "site": "http://www.dipacadem.kiev.ua"
+   },
+   {
+    "qid": "Q2445140",
+    "label": "Ministry of Internal Affairs of Ukraine",
+    "site": "http://www.mvs.gov.ua/"
+   },
+   {
+    "qid": "Q115940978",
+    "label": "Belarusian Volunteer Corps",
+    "site": "https://t.me/BDK022"
+   },
+   {
+    "qid": "Q116773951",
+    "label": "Offensive Guard",
+    "site": "https://storm.mvs.gov.ua/"
+   },
+   {
+    "qid": "Q12112515",
+    "label": "Kontrasty",
+    "site": "http://contrasts.org.ua/"
+   },
+   {
+    "qid": "Q2841795",
+    "label": "Embassy of France, Kyiv",
+    "site": "https://ua.ambafrance.org"
+   }
+  ]
+ },
+ "gb": {
+  "qid": "Q145",
+  "portal": [
+   "https://www.gov.uk/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q18351135",
+    "label": "Immigration Enforcement",
+    "site": "https://www.gov.uk/government/organisations/immigration-enforcement"
+   },
+   {
+    "qid": "Q7079369",
+    "label": "Immigration Advice Authority",
+    "site": "https://www.gov.uk/government/organisations/office-of-the-immigration-services-commissioner"
+   },
+   {
+    "qid": "Q7079369",
+    "label": "Immigration Advice Authority",
+    "site": "https://www.gov.uk/government/organisations/immigration-advice-authority"
+   },
+   {
+    "qid": "Q15817193",
+    "label": "Cell Adhesion and Migration",
+    "site": "https://www.tandfonline.com/toc/kcam20/current"
+   },
+   {
+    "qid": "Q15817193",
+    "label": "Cell Adhesion and Migration",
+    "site": "http://www.tandfonline.com/loi/kcam20"
+   },
+   {
+    "qid": "Q15817193",
+    "label": "Cell Adhesion and Migration",
+    "site": "http://landesbioscience.com/journals/celladhesion"
+   },
+   {
+    "qid": "Q15817193",
+    "label": "Cell Adhesion and Migration",
+    "site": "http://rzblx1.uni-regensburg.de/ezeit/warpto.phtml?colors=7&jour_id=85220"
+   },
+   {
+    "qid": "Q15817193",
+    "label": "Cell Adhesion and Migration",
+    "site": "http://www.tandfonline.com/kcam"
+   },
+   {
+    "qid": "Q50817875",
+    "label": "IZA Journal of Development and Migration",
+    "site": "http://www.springer.com/economics/population/journal/40176"
+   },
+   {
+    "qid": "Q5467514",
+    "label": "Forced Migration Review",
+    "site": "https://www.fmreview.org/"
+   },
+   {
+    "qid": "Q5467514",
+    "label": "Forced Migration Review",
+    "site": "http://www.fmreview.org/sites/fmr"
+   },
+   {
+    "qid": "Q24996670",
+    "label": "Migration Advisory Committee",
+    "site": "https://www.gov.uk/government/organisations/migration-advisory-committee"
+   },
+   {
+    "qid": "Q6844331",
+    "label": "Migration Observatory at the University of Oxford",
+    "site": "http://www.migrationobservatory.ox.ac.uk/"
+   },
+   {
+    "qid": "Q5468214",
+    "label": "Foreign Affairs Select Committee",
+    "site": "https://committees.parliament.uk/committee/78/foreign-affairs-committee/"
+   },
+   {
+    "qid": "Q1371091",
+    "label": "Secretary of State for Foreign and Commonwealth Affairs",
+    "site": "http://www.gov.uk/government/ministers/foreign-secretary"
+   },
+   {
+    "qid": "Q105503321",
+    "label": "Foreign Affairs Sub-Committee",
+    "site": "https://committees.parliament.uk/committee/353/foreign-affairs-subcommittee/"
+   },
+   {
+    "qid": "Q358834",
+    "label": "Foreign, Commonwealth and Development Office",
+    "site": "https://www.gov.uk/government/organisations/foreign-commonwealth-development-office"
+   },
+   {
+    "qid": "Q113599655",
+    "label": "Global Citizen Solutions",
+    "site": "https://www.globalcitizensolutions.com/"
+   },
+   {
+    "qid": "Q918305",
+    "label": "British nationality law",
+    "site": "https://www.gov.uk/browse/citizenship/citizenship"
+   },
+   {
+    "qid": "Q123295676",
+    "label": "Alliance for Responsible Citizenship",
+    "site": "https://www.arcforum.com/"
+   },
+   {
+    "qid": "Q105503301",
+    "label": "Citizenship and Civic Engagement Committee",
+    "site": "https://old.parliament.uk/business/committees/committees-a-z/lords-select/citizenship-civic-engagement/"
+   },
+   {
+    "qid": "Q730706",
+    "label": "London Borough of Southwark",
+    "site": "https://www.southwark.gov.uk/"
+   },
+   {
+    "qid": "Q205817",
+    "label": "London Borough of Islington",
+    "site": "https://www.islington.gov.uk/"
+   },
+   {
+    "qid": "Q763388",
+    "label": "Home Office",
+    "site": "https://www.gov.uk/home-office"
+   },
+   {
+    "qid": "Q16960507",
+    "label": "Visa Europe",
+    "site": "https://www.visa.co.uk/"
+   },
+   {
+    "qid": "Q16960507",
+    "label": "Visa Europe",
+    "site": "https://www.visa.fr/"
+   },
+   {
+    "qid": "Q138654693",
+    "label": "Express Dubai Visa Ltd",
+    "site": "https://expressdubaivisa.co.uk"
+   },
+   {
+    "qid": "Q140434708",
+    "label": "Cuba Visa UK",
+    "site": "https://cubavisa.uk"
+   },
+   {
+    "qid": "Q139927991",
+    "label": "TorlyAI",
+    "site": "https://torly.ai"
+   },
+   {
+    "qid": "Q16212028",
+    "label": "UK Visas and Immigration",
+    "site": "https://www.gov.uk/government/organisations/uk-visas-and-immigration"
+   },
+   {
+    "qid": "Q140076672",
+    "label": "UK Visa Portal",
+    "site": "https://ukvisaportal.com"
+   }
+  ]
+ },
+ "va": {
+  "qid": "Q237",
+  "portal": [
+   "https://www.vaticanstate.va/it/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q3699559",
+    "label": "St. Peter's Dome",
+    "site": "https://www.basilicasanpietro.va/it"
+   },
+   {
+    "qid": "Q3699559",
+    "label": "St. Peter's Dome",
+    "site": "https://www.basilicasanpietro.va/en"
+   },
+   {
+    "qid": "Q3699559",
+    "label": "St. Peter's Dome",
+    "site": "https://www.basilicasanpietro.va/es"
+   },
+   {
+    "qid": "Q3699559",
+    "label": "St. Peter's Dome",
+    "site": "https://www.basilicasanpietro.va/fr"
+   }
+  ]
+ },
+ "bh": {
+  "qid": "Q398",
+  "portal": [
+   "https://www.bahrain.bh"
+  ],
+  "agencies": [
+   {
+    "qid": "Q15253459",
+    "label": "Ministry of Foreign Affairs of Bahrain",
+    "site": "http://www.mofa.gov.bh"
+   },
+   {
+    "qid": "Q4294294",
+    "label": "Ministry of Interior",
+    "site": "http://www.interior.gov.bh"
+   }
+  ]
+ },
+ "ir": {
+  "qid": "Q794",
+  "portal": [
+   "https://president.ir/en"
+  ],
+  "agencies": [
+   {
+    "qid": "Q108418245",
+    "label": "Visayab",
+    "site": "https://www.visayab.com/"
+   },
+   {
+    "qid": "Q127710",
+    "label": "Foreign Affairs Minister of Iran",
+    "site": "http://www.mfa.gov.ir/"
+   },
+   {
+    "qid": "Q2565708",
+    "label": "Ministry of Foreign Affairs of Iran",
+    "site": "https://mfa.gov.ir/"
+   },
+   {
+    "qid": "Q2565708",
+    "label": "Ministry of Foreign Affairs of Iran",
+    "site": "https://en.mfa.ir/"
+   },
+   {
+    "qid": "Q2565708",
+    "label": "Ministry of Foreign Affairs of Iran",
+    "site": "https://ar.mfa.gov.ir/"
+   },
+   {
+    "qid": "Q1091482",
+    "label": "Ministry of Interior (Iran)",
+    "site": "http://www.moi.ir/"
+   }
+  ]
+ },
+ "iq": {
+  "qid": "Q796",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q113283878",
+    "label": "Ministry of Migration and Displacement",
+    "site": "https://momd.gov.iq/"
+   },
+   {
+    "qid": "Q6867009",
+    "label": "Ministry of Foreign Affairs of the Republic of Iraq",
+    "site": "http://www.mofa.gov.iq/en/"
+   },
+   {
+    "qid": "Q6867232",
+    "label": "Ministry of Interior",
+    "site": "http://www.moi.gov.iq"
+   }
+  ]
+ },
+ "il": {
+  "qid": "Q801",
+  "portal": [
+   "https://www.gov.il/",
+   "https://www.gov.il/en",
+   "https://www.gov.il/ar",
+   "https://www.gov.il/es",
+   "https://www.gov.il/fr",
+   "https://www.gov.il/ru"
+  ],
+  "agencies": [
+   {
+    "qid": "Q4589155",
+    "label": "Population and Immigration Authority",
+    "site": "http://www.piba.gov.il"
+   },
+   {
+    "qid": "Q140436852",
+    "label": "The Institute for Immigration and Social Integration",
+    "site": "https://www.ruppin.ac.il/research-authority/research-centers-and-institutes/the-institute-for-immigration/"
+   },
+   {
+    "qid": "Q2376302",
+    "label": "Israeli Navy Museum",
+    "site": "http://www.amutayam.org.il"
+   },
+   {
+    "qid": "Q2376302",
+    "label": "Israeli Navy Museum",
+    "site": "https://museums.mod.gov.il/sites/Haapala/Pages/default.aspx"
+   },
+   {
+    "qid": "Q286673",
+    "label": "Nefesh B'Nefesh",
+    "site": "https://www.nbn.org.il/"
+   },
+   {
+    "qid": "Q4229667",
+    "label": "Committee for Immigration, Absorption and Diaspora Affairs",
+    "site": "http://main.knesset.gov.il/Activity/committees/Immigration"
+   },
+   {
+    "qid": "Q1431423",
+    "label": "Ministry of Foreign Affairs of Israel",
+    "site": "https://www.gov.il/he/departments/ministry_of_foreign_affairs/"
+   },
+   {
+    "qid": "Q15710855",
+    "label": "Minister of Foreign Affairs, Israel",
+    "site": "http://www.mfa.gov.il"
+   },
+   {
+    "qid": "Q15710855",
+    "label": "Minister of Foreign Affairs, Israel",
+    "site": "https://www.gov.il/he/departments/ministry_of_foreign_affairs/govil-landing-page"
+   },
+   {
+    "qid": "Q15710855",
+    "label": "Minister of Foreign Affairs, Israel",
+    "site": "https://www.gov.il/ar/departments/ministry_of_foreign_affairs/govil-landing-page"
+   },
+   {
+    "qid": "Q15710855",
+    "label": "Minister of Foreign Affairs, Israel",
+    "site": "https://www.gov.il/ru/departments/ministry_of_foreign_affairs/govil-landing-page"
+   },
+   {
+    "qid": "Q15710855",
+    "label": "Minister of Foreign Affairs, Israel",
+    "site": "https://www.gov.il/es/departments/ministry_of_foreign_affairs/govil-landing-page"
+   },
+   {
+    "qid": "Q15710855",
+    "label": "Minister of Foreign Affairs, Israel",
+    "site": "https://www.gov.il/fr/departments/ministry_of_foreign_affairs/govil-landing-page"
+   },
+   {
+    "qid": "Q5468220",
+    "label": "Foreign Affairs and Defense Committee",
+    "site": "https://main.knesset.gov.il/Activity/committees/ForeignAffairs"
+   },
+   {
+    "qid": "Q2904015",
+    "label": "Jerusalem Center for Security and Foreign Affairs",
+    "site": "https://jcfa.org/"
+   },
+   {
+    "qid": "Q801",
+    "label": "Israel",
+    "site": "https://www.gov.il/"
+   },
+   {
+    "qid": "Q801",
+    "label": "Israel",
+    "site": "https://www.gov.il/en"
+   },
+   {
+    "qid": "Q801",
+    "label": "Israel",
+    "site": "https://www.gov.il/ru"
+   },
+   {
+    "qid": "Q801",
+    "label": "Israel",
+    "site": "https://www.gov.il/ar"
+   },
+   {
+    "qid": "Q801",
+    "label": "Israel",
+    "site": "https://www.gov.il/fr"
+   },
+   {
+    "qid": "Q801",
+    "label": "Israel",
+    "site": "https://www.gov.il/es"
+   },
+   {
+    "qid": "Q2909783",
+    "label": "Ministry of Interior",
+    "site": "https://www.gov.il/he/departments/ministry_of_interior"
+   },
+   {
+    "qid": "Q139223283",
+    "label": "Tamar Rand Interior Design",
+    "site": "https://www.tamarrand.com"
+   },
+   {
+    "qid": "Q139714621",
+    "label": "Ruba Tannous",
+    "site": "https://rubatannous.com"
+   },
+   {
+    "qid": "Q104678626",
+    "label": "Planning Administration",
+    "site": "https://www.gov.il/he/departments/iplan"
+   },
+   {
+    "qid": "Q1846184",
+    "label": "Ben-Gurion House in Tel Aviv",
+    "site": "http://www.bg-house.org"
+   }
+  ]
+ },
+ "jo": {
+  "qid": "Q810",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q15989681",
+    "label": "Ministry of Foreign Affairs of the Kingdom of Jordan",
+    "site": "http://www.mfa.gov.jo/"
+   },
+   {
+    "qid": "Q6894955",
+    "label": "Ministry of Interior",
+    "site": "http://www.moi.gov.jo/"
+   }
+  ]
+ },
+ "kw": {
+  "qid": "Q817",
+  "portal": [
+   "https://www.e.gov.kw/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q16257922",
+    "label": "Ministry of Foreign Affairs",
+    "site": "http://www.mofa.gov.kw/Ar/Pages/Default.aspx/"
+   },
+   {
+    "qid": "Q17064142",
+    "label": "Ministry of Interior",
+    "site": "http://www.moi.gov.kw/portal/venglish/"
+   }
+  ]
+ },
+ "lb": {
+  "qid": "Q822",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q6867045",
+    "label": "Ministry of Foreign Affairs and Emigrants",
+    "site": "http://www.foreign.gov.lb"
+   },
+   {
+    "qid": "Q6867240",
+    "label": "Ministry of Interior and Municipalities",
+    "site": "http://www.moim.gov.lb/"
+   }
+  ]
+ },
+ "om": {
+  "qid": "Q842",
+  "portal": [
+   "https://www.oman.om/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867018",
+    "label": "Ministry of Foreign Affairs of Oman",
+    "site": "https://www.mofa.gov.om/"
+   },
+   {
+    "qid": "Q6867018",
+    "label": "Ministry of Foreign Affairs of Oman",
+    "site": "https://fm.gov.om/"
+   },
+   {
+    "qid": "Q15253467",
+    "label": "Ministry of Interior",
+    "site": "http://www.moi.gov.om"
+   }
+  ]
+ },
+ "ps": {
+  "qid": "Q219060",
+  "portal": [
+   "https://president.ps/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q5468216",
+    "label": "Ministry of Foreign Affairs and Expatriates of the State of Palestine",
+    "site": "https://mofa.pna.ps"
+   }
+  ]
+ },
+ "qa": {
+  "qid": "Q846",
+  "portal": [
+   "https://www.diwan.gov.qa/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867021",
+    "label": "Ministry of Foreign Affairs of Qatar",
+    "site": "https://www.mofa.gov.qa/en/home"
+   },
+   {
+    "qid": "Q6867021",
+    "label": "Ministry of Foreign Affairs of Qatar",
+    "site": "https://www.mofa.gov.qa/ar/home"
+   },
+   {
+    "qid": "Q22934911",
+    "label": "Ministry of Interior (Qatar)",
+    "site": "https://www.moi.gov.qa/"
+   },
+   {
+    "qid": "Q59535299",
+    "label": "Ministry of Interior",
+    "site": "https://portal.moi.gov.qa/wps/portal/en"
+   }
+  ]
+ },
+ "sa": {
+  "qid": "Q851",
+  "portal": [
+   "http://www.saudi.gov.sa"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6867032",
+    "label": "Ministry of Foreign Affairs of Saudi Arabia",
+    "site": "http://www.mofa.gov.sa"
+   },
+   {
+    "qid": "Q6867237",
+    "label": "Ministry of Interior",
+    "site": "http://www.moi.gov.sa/"
+   },
+   {
+    "qid": "Q139661657",
+    "label": "Ironwood Solutions",
+    "site": "https://www.ironwoodluxstudios.com"
+   },
+   {
+    "qid": "Q22684004",
+    "label": "Saudi Arabian Border Guards",
+    "site": "http://www.fg.gov.sa/"
+   }
+  ]
+ },
+ "sy": {
+  "qid": "Q858",
+  "portal": [],
+  "agencies": [
+   {
+    "qid": "Q1829504",
+    "label": "Ministry of Foreign Affairs and Expatriates",
+    "site": "https://mofaex.gov.sy/"
+   },
+   {
+    "qid": "Q17064124",
+    "label": "Ministry of Interior",
+    "site": "https://moia.gov.sy/"
+   }
+  ]
+ },
+ "tr": {
+  "qid": "Q43",
+  "portal": [
+   "https://www.turkiye.gov.tr/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q138416857",
+    "label": "Deniz Kurumsal Foreign Consultancy",
+    "site": "https://denizkurumsal.com"
+   },
+   {
+    "qid": "Q6070459",
+    "label": "Directorate General of Migration Management (Turkey)",
+    "site": "http://www.goc.gov.tr"
+   },
+   {
+    "qid": "Q125608993",
+    "label": "International Migration Film Festival",
+    "site": "http://migrationff.com/"
+   },
+   {
+    "qid": "Q20473519",
+    "label": "Bursa Museum of Migration History",
+    "site": "http://bursagocmuzesi.com/"
+   },
+   {
+    "qid": "Q20988486",
+    "label": "Minister of Foreign Affairs",
+    "site": "https://www.mfa.gov.tr/minister-of-fa-info.en.mfa"
+   },
+   {
+    "qid": "Q2612487",
+    "label": "Ministry of Foreign Affairs of the Republic of Turkey",
+    "site": "http://www.mfa.gov.tr/default.en.mfa"
+   },
+   {
+    "qid": "Q6071288",
+    "label": "General Directorate of Civil Registration and Nationality (Turkey)",
+    "site": "http://www.nvi.gov.tr/"
+   },
+   {
+    "qid": "Q1663916",
+    "label": "Ministry of Interior of Turkey",
+    "site": "https://www.icisleri.gov.tr/"
+   },
+   {
+    "qid": "Q4817547",
+    "label": "visa policy of Turkey",
+    "site": "https://evisa.gov.tr"
+   },
+   {
+    "qid": "Q141539033",
+    "label": "Ankara Vize Turizm Seyahat Acentası",
+    "site": "https://ankaravize.com"
+   },
+   {
+    "qid": "Q140042281",
+    "label": "Avla Gayrimenkul A.Ş.",
+    "site": "https://www.avlarealestate.com"
+   },
+   {
+    "qid": "Q140089822",
+    "label": "Vizem.net",
+    "site": "https://vizem.net"
+   }
+  ]
+ },
+ "ae": {
+  "qid": "Q878",
+  "portal": [
+   "https://u.ae"
+  ],
+  "agencies": [
+   {
+    "qid": "Q30684101",
+    "label": "Ministry of Foreign Affairs of the UAE",
+    "site": "https://www.mofaic.gov.ae/"
+   },
+   {
+    "qid": "Q101436942",
+    "label": "Ministry of Foreign Affairs and International Cooperation",
+    "site": "https://www.mofaic.gov.ae/"
+   },
+   {
+    "qid": "Q134250870",
+    "label": "Emirates Academy for Identity and Citizenship",
+    "site": "https://www.eaic.ac.ae"
+   },
+   {
+    "qid": "Q122919508",
+    "label": "Federal Authority for Identity, Citizenship, Customs and Port Security",
+    "site": "https://icp.gov.ae/en/"
+   },
+   {
+    "qid": "Q135197801",
+    "label": "Bond and Partners",
+    "site": "https://bondandpartners.com/"
+   },
+   {
+    "qid": "Q141554952",
+    "label": "HKZ Interior Decoration LLC",
+    "site": "https://www.hkzinterior.com/"
+   },
+   {
+    "qid": "Q125401283",
+    "label": "Ministry of the Interior",
+    "site": "https://moi.gov.ae/"
+   },
+   {
+    "qid": "Q139510739",
+    "label": "Trend Group",
+    "site": "https://trendgroupglobal.com/"
+   },
+   {
+    "qid": "Q139510739",
+    "label": "Trend Group",
+    "site": "https://trendgroup.co.za/"
+   },
+   {
+    "qid": "Q140590054",
+    "label": "Cindrebay Dubai",
+    "site": "https://www.cindrebay.ae/"
+   },
+   {
+    "qid": "Q140355254",
+    "label": "VisaTop",
+    "site": "https://visatop.com"
+   }
+  ]
+ },
+ "ye": {
+  "qid": "Q805",
+  "portal": [
+   "http://www.yemen.gov.ye/"
+  ],
+  "agencies": []
+ },
+ "au": {
+  "qid": "Q408",
+  "portal": [
+   "https://www.australia.gov.au/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q2694295",
+    "label": "Immigration Museum",
+    "site": "https://museumsvictoria.com.au/immigrationmuseum/"
+   },
+   {
+    "qid": "Q6844330",
+    "label": "Migration Museum",
+    "site": "http://migration.historysa.com.au/"
+   },
+   {
+    "qid": "Q6844324",
+    "label": "Migration Agents Registration Authority",
+    "site": "https://www.mara.gov.au/"
+   },
+   {
+    "qid": "Q3055310",
+    "label": "Department of Foreign Affairs and Trade",
+    "site": "https://www.dfat.gov.au/"
+   },
+   {
+    "qid": "Q104764566",
+    "label": "Australian Foreign Affairs",
+    "site": "https://www.australianforeignaffairs.com"
+   },
+   {
+    "qid": "Q1191448",
+    "label": "Department of Immigration and Citizenship",
+    "site": "http://www.immi.gov.au/"
+   },
+   {
+    "qid": "Q4823994",
+    "label": "Australian Citizenship Day",
+    "site": "http://www.border.gov.au/citizenship/"
+   },
+   {
+    "qid": "Q39071190",
+    "label": "Australian Department of Home Affairs",
+    "site": "http://www.homeaffairs.gov.au/"
+   }
+  ]
+ },
+ "fj": {
+  "qid": "Q712",
+  "portal": [
+   "https://www.fiji.gov.fj/Home"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6865844",
+    "label": "Minister for Foreign Affairs",
+    "site": "http://www.foreignaffairs.gov.fj/"
+   },
+   {
+    "qid": "Q6867051",
+    "label": "Ministry of Foreign Affairs and International Cooperation",
+    "site": "http://www.foreignaffairs.gov.fj/"
+   }
+  ]
+ },
+ "ki": {
+  "qid": "Q710",
+  "portal": [
+   "https://www.kiribati.gov.ki"
+  ],
+  "agencies": []
+ },
+ "mh": {
+  "qid": "Q709",
+  "portal": [],
+  "agencies": []
+ },
+ "fm": {
+  "qid": "Q702",
+  "portal": [
+   "https://gov.fm"
+  ],
+  "agencies": []
+ },
+ "nr": {
+  "qid": "Q697",
+  "portal": [],
+  "agencies": []
+ },
+ "nz": {
+  "qid": "Q664",
+  "portal": [
+   "https://www.govt.nz/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q6005037",
+    "label": "Immigration New Zealand",
+    "site": "https://www.immigration.govt.nz/"
+   },
+   {
+    "qid": "Q25241937",
+    "label": "Minister of Immigration",
+    "site": "https://www.beehive.govt.nz/portfolio/health"
+   },
+   {
+    "qid": "Q131410964",
+    "label": "Scottish Migration Collection",
+    "site": "https://www.waipumuseum.com/museum/collections-unesco/"
+   },
+   {
+    "qid": "Q89055017",
+    "label": "Waipu Scottish Migration Museum",
+    "site": "http://www.waipumuseum.com"
+   },
+   {
+    "qid": "Q6866148",
+    "label": "Minister of Foreign Affairs",
+    "site": "https://www.beehive.govt.nz/portfolio/Foreign-Affairs"
+   },
+   {
+    "qid": "Q6867060",
+    "label": "Ministry of Foreign Affairs and Trade of New Zealand",
+    "site": "http://www.mfat.govt.nz/"
+   },
+   {
+    "qid": "Q48798568",
+    "label": "Minister of Trade",
+    "site": "https://www.beehive.govt.nz/portfolio/corrections"
+   }
+  ]
+ },
+ "pw": {
+  "qid": "Q695",
+  "portal": [
+   "https://www.palaugov.pw/"
+  ],
+  "agencies": []
+ },
+ "pg": {
+  "qid": "Q691",
+  "portal": [
+   "https://papuanewguinea.travel/"
+  ],
+  "agencies": []
+ },
+ "ws": {
+  "qid": "Q683",
+  "portal": [
+   "http://www.samoagovt.ws/"
+  ],
+  "agencies": []
+ },
+ "sb": {
+  "qid": "Q685",
+  "portal": [
+   "https://solomons.gov.sb"
+  ],
+  "agencies": [
+   {
+    "qid": "Q135497471",
+    "label": "Ministry of Commerce, Industry, Labour and Immigration",
+    "site": "https://solomons.gov.sb/ministry-of-commerce-industry-labour-and-immigration/"
+   },
+   {
+    "qid": "Q135497483",
+    "label": "Ministry of Foreign Affairs and External Trade",
+    "site": "https://www.mfaet.gov.sb/"
+   }
+  ]
+ },
+ "to": {
+  "qid": "Q678",
+  "portal": [
+   "http://www.mic.gov.to/"
+  ],
+  "agencies": [
+   {
+    "qid": "Q19901426",
+    "label": "Minister of Foreign Affairs",
+    "site": "http://www.mic.gov.to/ministrydepartment/14-govt-ministries/mfat/"
+   }
+  ]
+ },
+ "tv": {
+  "qid": "Q672",
+  "portal": [],
+  "agencies": []
+ },
+ "vu": {
+  "qid": "Q686",
+  "portal": [
+   "https://www.gov.vu/"
+  ],
+  "agencies": []
+ }
+}
