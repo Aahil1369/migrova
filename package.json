@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test \"scripts/sources/__tests__/*.test.mjs\"",
+    "sources:wikidata": "node scripts/sources/fetch-wikidata.mjs",
+    "sources:verify": "node scripts/sources/verify.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.9.0",
