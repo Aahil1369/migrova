@@ -24,7 +24,8 @@ export const KEYWORDS = {
   citizenship: [
     'citizenship', 'naturalisation', 'naturalization', 'nationality', 'citoyenneté', 'nationalité',
     'ciudadanía', 'nacionalidad', 'einbürgerung', 'staatsangehörigkeit', 'cittadinanza', 'vatandaşlık',
-    'гражданств', 'جنسية', '国籍', '국적', 'cidadania', 'naturalizzazione',
+    'гражданств', 'جنسية', 'تجنس', '国籍', '국적', 'cidadania', 'naturalizzazione',
+    'nacionalidade', 'naturalização', 'naturalización', 'naturalisatie', 'nationaliteit', 'medborgarskap', 'statsborgerskab', 'statsborgerskap',
   ],
 };
 
@@ -53,11 +54,13 @@ export function contentMatches(type, candidate, text) {
 
 const is2xx = (s) => s >= 200 && s < 300;
 
-// linkedFromPage must itself be an official page of this country that links to `host`.
+// linkedFromPage must itself be an official page of this country, on a
+// different host (a site linking to itself proves nothing), that links to `host`.
 function officialPageLinksTo(linkedFromPage, host, govDomains) {
   if (!linkedFromPage || linkedFromPage.error || !is2xx(linkedFromPage.status)) return false;
   if (!linkedFromPage.finalUrl?.startsWith('https://')) return false;
-  if (!isAllowedHost(hostOf(linkedFromPage.finalUrl), govDomains)) return false;
+  const linkerHost = hostOf(linkedFromPage.finalUrl);
+  if (linkerHost === host || !isAllowedHost(linkerHost, govDomains)) return false;
   return (linkedFromPage.hrefs || []).some((h) => hostOf(h) === host);
 }
 

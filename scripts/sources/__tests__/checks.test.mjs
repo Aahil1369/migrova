@@ -55,6 +55,16 @@ test('gov domain corroborated by a linking gov page', () => {
   assert.deepEqual(r.evidence, ['https', 'content', 'gov-domain', 'linked-from:https://www.canada.ca/en/services.html']);
 });
 
+test('a page on the same host does not corroborate itself', () => {
+  const r = judge({
+    ...base,
+    wikidataHosts: new Set(),
+    page: ok('https://ircc.canada.ca/english/apply.asp', 'Apply for a visa online'),
+    linkedFromPage: { finalUrl: 'https://ircc.canada.ca/english/index.asp', status: 200, text: '', hrefs: ['https://ircc.canada.ca/english/apply.asp'] },
+  });
+  assert.equal(r.reason, 'corroboration');
+});
+
 test('redirect to a non-gov host without linked-from → rejected', () => {
   const r = judge({ ...base, page: ok('https://canada-visa.com/apply', 'Canada visa application') });
   assert.equal(r.status, 'not_verified');
