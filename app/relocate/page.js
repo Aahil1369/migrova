@@ -7,6 +7,8 @@ import Btn from '../components/ui/Btn';
 import Footnote from '../components/ui/Footnote';
 import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
+import { findCountryInText } from '../data/countries195';
+import OfficialSourcesBlock from '../components/OfficialSourcesBlock';
 
 const POPULAR_DESTINATIONS = [
   { name: 'Toronto, Canada', icon: '🇨🇦' },
@@ -42,6 +44,13 @@ export default function RelocatePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [profilePrefilled, setProfilePrefilled] = useState(false);
+  const [searchedDest, setSearchedDest] = useState('');
+
+  // Deep link from /sources/[code]: /relocate?dest=Portugal pre-fills the destination.
+  useEffect(() => {
+    const dest = new URLSearchParams(window.location.search).get('dest');
+    if (dest) setDestination(dest.slice(0, 120));
+  }, []);
 
   useEffect(() => {
     try {
@@ -76,6 +85,7 @@ export default function RelocatePage() {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResult(data);
+      setSearchedDest(d);
     } catch (e) {
       setError(e.message || 'Failed to load relocation guide.');
     }
@@ -213,6 +223,11 @@ export default function RelocatePage() {
                   </div>
                 )}
               </div>
+
+              <OfficialSourcesBlock
+                code={(findCountryInText(searchedDest) || findCountryInText(result.destination))?.code}
+                types={['authority', 'work', 'study', 'citizenship']}
+              />
 
               {/* Cost breakdown */}
               {result.costBreakdown && (

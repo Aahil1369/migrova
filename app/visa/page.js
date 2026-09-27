@@ -8,44 +8,15 @@ import Footnote from '../components/ui/Footnote';
 import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { NATIONALITIES } from '../data/countries';
+import { COUNTRIES_195, countryByCode } from '../data/countries195';
+import OfficialSourcesBlock from '../components/OfficialSourcesBlock';
 import VisaProbabilityMeter from '../components/VisaProbabilityMeter';
 import DisclaimerBlock from '../components/DisclaimerBlock';
 import LegalAckModal, { hasLegalAck } from '../components/LegalAckModal';
 
-const COUNTRIES = [
-  { code: 'us', label: 'United States 🇺🇸' },
-  { code: 'gb', label: 'United Kingdom 🇬🇧' },
-  { code: 'ca', label: 'Canada 🇨🇦' },
-  { code: 'au', label: 'Australia 🇦🇺' },
-  { code: 'de', label: 'Germany 🇩🇪' },
-  { code: 'fr', label: 'France 🇫🇷' },
-  { code: 'nl', label: 'Netherlands 🇳🇱' },
-  { code: 'se', label: 'Sweden 🇸🇪' },
-  { code: 'no', label: 'Norway 🇳🇴' },
-  { code: 'dk', label: 'Denmark 🇩🇰' },
-  { code: 'ch', label: 'Switzerland 🇨🇭' },
-  { code: 'sg', label: 'Singapore 🇸🇬' },
-  { code: 'jp', label: 'Japan 🇯🇵' },
-  { code: 'kr', label: 'South Korea 🇰🇷' },
-  { code: 'ae', label: 'UAE 🇦🇪' },
-  { code: 'nz', label: 'New Zealand 🇳🇿' },
-  { code: 'ie', label: 'Ireland 🇮🇪' },
-  { code: 'es', label: 'Spain 🇪🇸' },
-  { code: 'pt', label: 'Portugal 🇵🇹' },
-  { code: 'at', label: 'Austria 🇦🇹' },
-  { code: 'be', label: 'Belgium 🇧🇪' },
-  { code: 'in', label: 'India 🇮🇳' },
-  { code: 'br', label: 'Brazil 🇧🇷' },
-  { code: 'mx', label: 'Mexico 🇲🇽' },
-  { code: 'za', label: 'South Africa 🇿🇦' },
-  { code: 'ng', label: 'Nigeria 🇳🇬' },
-  { code: 'ke', label: 'Kenya 🇰🇪' },
-  { code: 'eg', label: 'Egypt 🇪🇬' },
-  { code: 'gh', label: 'Ghana 🇬🇭' },
-  { code: 'cn', label: 'China 🇨🇳' },
-  { code: 'my', label: 'Malaysia 🇲🇾' },
-  { code: 'th', label: 'Thailand 🇹🇭' },
-];
+const COUNTRIES = [...COUNTRIES_195]
+  .sort((x, y) => x.name.localeCompare(y.name))
+  .map((c) => ({ code: c.code, label: `${c.name} ${c.flag}` }));
 
 const STATUS_CONFIG = {
   'visa-free': { icon: '✅', label: 'Visa Free' },
@@ -116,6 +87,13 @@ export default function VisaPage() {
   const [probData, setProbData] = useState(null);
   const [probLoading, setProbLoading] = useState(false);
   const [showAck, setShowAck] = useState(false);
+  const [resultCountry, setResultCountry] = useState('');
+
+  // Deep link from /sources/[code]: /visa?to=ca pre-selects the destination.
+  useEffect(() => {
+    const to = new URLSearchParams(window.location.search).get('to');
+    if (to && countryByCode(to)) setTargetCountry(to.toLowerCase());
+  }, []);
 
   // Pre-fill nationality from saved profile
   useEffect(() => {
@@ -148,6 +126,7 @@ export default function VisaPage() {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResult(data);
+      setResultCountry(targetCountry);
 
       // Parallel probability fetch
       setProbLoading(true);
@@ -269,6 +248,8 @@ export default function VisaPage() {
                   </div>
                 </div>
               </div>
+
+              <OfficialSourcesBlock code={resultCountry} types={['authority', 'apply', 'embassies']} />
 
               {/* Probability meter */}
               {probLoading && (
@@ -470,8 +451,8 @@ export default function VisaPage() {
                 </div>
               )}
 
-              {/* Important notes + official site */}
-              {(result.importantNotes?.length > 0 || result.officialWebsite) && (
+              {/* Important notes */}
+              {result.importantNotes?.length > 0 && (
                 <div className="border border-paper-rule bg-paper-bg-alt p-5">
                   {result.importantNotes?.length > 0 && (
                     <>
@@ -484,13 +465,6 @@ export default function VisaPage() {
                         ))}
                       </ul>
                     </>
-                  )}
-                  {result.officialWebsite && (
-                    <div className="pt-3 border-t border-paper-rule">
-                      <p className="text-[12px] text-paper-ink-sub">
-                        Official resource: <span className="text-accent">{result.officialWebsite}</span>
-                      </p>
-                    </div>
                   )}
                 </div>
               )}

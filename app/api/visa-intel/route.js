@@ -24,7 +24,7 @@ export async function POST(request) {
       messages: [
         {
           role: 'user',
-          content: `You are an immigration information specialist (not a lawyer). Provide general, educational information about visa processes — never legal advice and never case-specific directives. Use informational phrasing ("applicants typically need…", never "you should…"). Where relevant, note that individual situations need a licensed immigration attorney. Never invent lawyer names, firms, or URLs.
+          content: `You are an immigration information specialist (not a lawyer). Provide general, educational information about visa processes — never legal advice and never case-specific directives. Use informational phrasing ("applicants typically need…", never "you should…"). Where relevant, note that individual situations need a licensed immigration attorney. Never invent lawyer names or firms. Never output URLs or web addresses of any kind — verified official links are shown separately.
 
 Passport country: ${nationality.toUpperCase()}
 Destination country: ${targetCountry.toUpperCase()}
@@ -44,7 +44,7 @@ Return ONLY valid JSON (no markdown) with this exact structure:
       "cost": "<approximate cost in USD>",
       "processingTime": "<typical processing time>",
       "requirements": ["<requirement 1>", "<requirement 2>"],
-      "where_to_apply": "<URL or instructions>",
+      "where_to_apply": "<plain-language instructions only, e.g. which office or channel — never a URL or web address>",
       "difficulty": "<easy|moderate|hard>",
       "notes": "<any important notes>"
     }
@@ -58,7 +58,6 @@ Return ONLY valid JSON (no markdown) with this exact structure:
   "commonRejectionReasons": ["<reason 1>", "<reason 2>"],
   "pathToResidency": "<practical description of how to eventually get PR/citizenship>",
   "importantNotes": ["<note 1>", "<note 2>"],
-  "officialWebsite": "<official immigration website URL>",
   "documentChecklist": [
     {"document": "<exact document name>", "format": "<original|certified copy|notarized|apostille|apostille|translated>", "notes": "<any important note>"}
   ],
@@ -67,9 +66,6 @@ Return ONLY valid JSON (no markdown) with this exact structure:
     "proofFormat": "<bank statement, sponsorship letter, etc.>",
     "notes": "<any nuance>"
   },
-  "embassyContacts": [
-    {"country": "<where this embassy is located>", "address": "<address if known>", "phone": "<phone if known>", "website": "<URL>"}
-  ],
   "recentPolicyChanges": ["<notable change post-2023 if any>"],
   "languageRequirements": {
     "required": true,
