@@ -1,0 +1,188 @@
+{
+  "sz": {
+    "govDomains": [
+      { "domain": "gov.sz", "why": "restricted: Kingdom of Eswatini government portal" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Home Affairs – Immigration Department (Eswatini)", "url": "https://www.gov.sz/index.php/ministries-departments/ministry-of-home-affairs?view=article&id=307%3Aimmigration&catid=81%3Ahome-affairs" },
+      "apply": { "name": "Eswatini eVisa Portal", "url": "https://evisa.gov.sz/" },
+      "embassies": { "name": "Eswatini Missions Abroad", "url": "https://www.gov.sz/index.php?option=com_content&view=article&id=250&Itemid=270" }
+    }
+  },
+  "et": {
+    "govDomains": [
+      { "domain": "gov.et", "why": "restricted: Federal Democratic Republic of Ethiopia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration and Citizenship Services (ICS)", "url": "https://ics.gov.et/" },
+      "apply": { "name": "Ethiopia e-Visa", "url": "https://www.evisa.gov.et/" },
+      "work": { "name": "NGO Work Permit – ICS", "url": "https://ics.gov.et/services/ngo-work-permit/" },
+      "study": { "name": "Student Visa Application – ICS", "url": "https://ics.gov.et/services/student-visa-application/" },
+      "citizenship": { "name": "Ethiopian Origin ID – ICS", "url": "https://ics.gov.et/services/ethiopian-origin-id/" }
+    }
+  },
+  "ga": {
+    "govDomains": [
+      { "domain": "dgdi.ga", "why": "official domain of Gabon's national immigration/documentation authority (Direction Générale de la Documentation et de l'Immigration)" },
+      { "domain": "gouv.ga", "why": "restricted: Gabonese Republic government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Direction Générale de la Documentation et de l'Immigration (DGDI)", "url": "https://dgdi.ga/", "keywords": ["immigration", "documentation"] },
+      "apply": { "name": "Gabon e-Visa (e-DGDI)", "url": "https://evisa.dgdi.ga/", "linkedFrom": "https://dgdi.ga/", "keywords": ["e-visa", "immigration"] }
+    }
+  },
+  "gm": {
+    "govDomains": [
+      { "domain": "gov.gm", "why": "restricted: Republic of The Gambia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Gambia Immigration Department (GID)", "url": "https://gid.gov.gm/" },
+      "apply": { "notApplicable": "No online e-visa system found; the Gambia Immigration Department states visas are issued at Gambian embassies/missions abroad or on arrival at ports of entry" },
+      "embassies": { "name": "Ministry of Foreign Affairs, International Cooperation and Gambians Abroad – Embassies", "url": "https://mofa.gov.gm/embassies/" },
+      "work": { "name": "Expatriate Quota – Gambia Immigration Department", "url": "https://gid.gov.gm/expatriate-quota-2/" },
+      "citizenship": { "name": "Citizenship – Gambia Immigration Department", "url": "https://gid.gov.gm/citizenship/" }
+    }
+  },
+  "gh": {
+    "govDomains": [
+      { "domain": "gov.gh", "why": "restricted: Republic of Ghana government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ghana Immigration Service (GIS)", "url": "https://gis.gov.gh/" },
+      "apply": { "name": "Ghana eVisa Portal", "url": "https://evisa.immigration.gov.gh/", "linkedFrom": "https://gis.gov.gh/" },
+      "embassies": { "name": "Ministry of Foreign Affairs – Ghana Missions in Africa", "url": "https://mfa.gov.gh/index.php/africa/" },
+      "work": { "name": "Work and Residence Permit (Companies) – GIS", "url": "https://gis.gov.gh/service/work-and-residence-permit-companies/" },
+      "study": { "name": "Residence Permit (Student) – GIS", "url": "https://gis.gov.gh/service/residence-permit-student/" },
+      "citizenship": { "name": "Naturalization as Ghanaian Citizen – Ministry of the Interior", "url": "https://www.mint.gov.gh/e-services-portal/naturalization-as-ghanaian-citizen/" }
+    }
+  },
+  "gn": {
+    "govDomains": [
+      { "domain": "gov.gn", "why": "restricted: Republic of Guinea government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "Guinea e-Visa (DCPAF)", "url": "https://www.paf.gov.gn/visa/" },
+      "embassies": { "name": "Ministère des Affaires Étrangères – Missions diplomatiques (Afrique)", "url": "https://mae.gov.gn/afrique/", "keywords": ["missions", "diplomatiques"] }
+    }
+  },
+  "gw": {
+    "govDomains": [
+      { "domain": "mne.gw", "why": "official domain of Guinea-Bissau's Ministry of Foreign Affairs (Ministério dos Negócios Estrangeiros)" }
+    ],
+    "links": {
+      "embassies": { "name": "Ministério dos Negócios Estrangeiros – Embaixadas do País", "url": "https://mne.gw/embaixadas-do-pais/", "keywords": ["embaixadas", "país"] },
+      "apply": { "notApplicable": "Guinea-Bissau's electronic visa system (rgb-visa.com) is currently suspended per official/travel-advisory sources; applicants must use an embassy/consulate" }
+    }
+  },
+  "ke": {
+    "govDomains": [
+      { "domain": "go.ke", "why": "restricted: Government of Kenya suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Directorate of Immigration Services (DIS)", "url": "https://immigration.go.ke/" },
+      "apply": { "name": "Kenya Electronic Travel Authorization (eTA)", "url": "https://etakenya.go.ke/", "linkedFrom": "https://immigration.go.ke/" },
+      "embassies": { "name": "Ministry of Foreign and Diaspora Affairs – Diplomatic Missions", "url": "https://mfa.go.ke/diplomatic-missions" },
+      "work": { "name": "Work Permits and Passes – DIS", "url": "https://immigration.go.ke/work-permits-and-passes/" },
+      "study": { "name": "Student's Pass – DIS", "url": "https://immigration.go.ke/students-pass/" },
+      "citizenship": { "name": "Citizenship – DIS", "url": "https://immigration.go.ke/citizenship-section/" }
+    }
+  },
+  "ls": {
+    "govDomains": [
+      { "domain": "gov.ls", "why": "restricted: Kingdom of Lesotho government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Home Affairs (Lesotho)", "url": "https://www.homeaffairs.gov.ls/" },
+      "apply": { "notApplicable": "Lesotho's online eVisa application system is currently suspended; the Ministry of Home Affairs directs applicants to email VISA-Applications.Immigration@gov.ls or apply via a Lesotho embassy/consulate" }
+    }
+  },
+  "lr": {
+    "govDomains": [
+      { "domain": "gov.lr", "why": "restricted: Republic of Liberia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Liberia Immigration Service (LIS)", "url": "https://lis.gov.lr/" },
+      "apply": { "name": "Liberia Visa on Arrival", "url": "https://visaonarrival.lis.gov.lr/", "linkedFrom": "https://lis.gov.lr/" },
+      "embassies": { "name": "Ministry of Foreign Affairs – Foreign Missions", "url": "https://mofa.gov.lr/index.php/general/foreign-missions" }
+    }
+  },
+  "ly": {
+    "govDomains": [
+      { "domain": "gov.ly", "why": "restricted: State of Libya government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "Libya e-Visa", "url": "https://evisa.gov.ly/" }
+    }
+  },
+  "mg": {
+    "govDomains": [
+      { "domain": "gov.mg", "why": "restricted: Republic of Madagascar government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "Madagascar e-Visa (Police Nationale)", "url": "https://evisamada.gov.mg/", "keywords": ["e-visa", "immigration"] },
+      "embassies": { "name": "Ministère des Affaires Étrangères – Représentations extérieures", "url": "https://www.diplomatie.gov.mg/index.php/le-ministere/representations-exterieures", "keywords": ["représentations", "extérieures"] }
+    }
+  },
+  "mw": {
+    "govDomains": [
+      { "domain": "gov.mw", "why": "restricted: Republic of Malawi government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Immigration and Citizenship Services (Malawi)", "url": "https://www.immigration.gov.mw/" },
+      "apply": { "name": "Malawi eVisa", "url": "https://evisa.gov.mw/", "linkedFrom": "https://www.immigration.gov.mw/" },
+      "work": { "name": "Temporary Employee Permit – Immigration Malawi", "url": "https://www.immigration.gov.mw/permits/temporary-employee-permit/" },
+      "study": { "name": "Student Permit – Immigration Malawi", "url": "https://www.immigration.gov.mw/permits/student-permit/" },
+      "citizenship": { "name": "Citizenship – Immigration Malawi", "url": "https://www.immigration.gov.mw/citizenship/" }
+    }
+  },
+  "ml": {
+    "govDomains": [
+      { "domain": "gouv.ml", "why": "restricted: Republic of Mali government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministère des Affaires Étrangères et des Maliens de l'Extérieur (visa services)", "url": "https://diplomatiemdc.gouv.ml/vitrine/", "keywords": ["visas", "étrangers"] }
+    }
+  },
+  "mr": {
+    "govDomains": [
+      { "domain": "gov.mr", "why": "restricted: Islamic Republic of Mauritania government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministère des Affaires Étrangères, de la Coopération et des Mauritaniens de l'Extérieur", "url": "https://www.diplomatie.gov.mr/fr", "keywords": ["visa", "affaires étrangères"] },
+      "apply": { "name": "ANRPTS e-Visa Portal", "url": "https://anrpts.gov.mr/en", "linkedFrom": "https://www.diplomatie.gov.mr/fr" },
+      "embassies": { "name": "Ministère des Affaires Étrangères – missions diplomatiques", "url": "https://www.diplomatie.gov.mr/fr", "keywords": ["missions", "ambassades"] }
+    }
+  },
+  "mu": {
+    "govDomains": [
+      { "domain": "govmu.org", "why": "restricted: Government of Mauritius portal suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Passport and Immigration Office (Mauritius)", "url": "https://passport.govmu.org/" },
+      "apply": { "name": "Application for Visa – Passport and Immigration Office", "url": "https://passport.govmu.org/passport/?page_id=620" },
+      "embassies": { "name": "Ministry of Foreign Affairs – Mauritius Diplomatic Missions Overseas", "url": "https://foreign.govmu.org/Pages/Embassies%20and%20Consulates/Mauritius%20Diplomatic%20Missions%20Overseas/Mauritius-Diplomatic-Missions-Overseas-Main-Page.aspx" },
+      "work": { "name": "Occupation Permit – Passport and Immigration Office", "url": "https://passport.govmu.org/passport/?page_id=626" },
+      "study": { "name": "Student Permit – Passport and Immigration Office", "url": "https://passport.govmu.org/passport/?p=1533" },
+      "citizenship": { "name": "Citizenship – Deputy Prime Minister's Office / Home Affairs", "url": "https://dha.govmu.org/Pages/Services/Citizenship.aspx", "linkedFrom": "https://passport.govmu.org/" }
+    }
+  },
+  "ma": {
+    "govDomains": [
+      { "domain": "diplomatie.ma", "why": "official domain of Morocco's Ministry of Foreign Affairs, African Cooperation and Moroccan Expatriates" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs, African Cooperation and Moroccan Expatriates (Morocco)", "url": "https://www.diplomatie.ma/en" },
+      "apply": { "name": "Morocco e-Visa (Accès Maroc)", "url": "https://www.acces-maroc.ma/", "linkedFrom": "https://diplomatie.ma/en/launch-electronic-visa-evisa" }
+    }
+  },
+  "mz": {
+    "govDomains": [
+      { "domain": "gov.mz", "why": "restricted: Republic of Mozambique government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Serviço Nacional de Migração (SENAMI)", "url": "https://senami.gov.mz/", "linkedFrom": "https://evisa.gov.mz/" },
+      "apply": { "name": "Mozambique e-Visa", "url": "https://evisa.gov.mz/" },
+      "embassies": { "name": "Ministério dos Negócios Estrangeiros e Cooperação (MINEC) – Embaixadas e Altos Comissariados", "url": "https://www.minec.gov.mz/index.php/missoes-diplomaticas-e-consulares/embaixadas-e-altos-comissariados", "keywords": ["embaixadas", "altos comissariados"] }
+    }
+  }
+}

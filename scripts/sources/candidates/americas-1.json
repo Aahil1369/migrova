@@ -1,0 +1,199 @@
+{
+  "ag": {
+    "govDomains": [
+      { "domain": "gov.ag", "why": "restricted: Government of Antigua and Barbuda domain" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Immigration, Antigua and Barbuda", "url": "https://immigration.gov.ag/" },
+      "apply": { "name": "Antigua and Barbuda Electronic Visa (eVisa) Portal", "url": "https://evisa.immigration.gov.ag/agEvisa-app/" },
+      "study": { "name": "Student Permit FAQs - Immigration Antigua and Barbuda", "url": "https://immigration.gov.ag/frequently-asked-questions/student-permit-faqs/" },
+      "citizenship": { "name": "Citizenship Permit FAQs - Immigration Antigua and Barbuda", "url": "https://immigration.gov.ag/frequently-asked-questions/citizenship-permit-faqs/" }
+    }
+  },
+  "ar": {
+    "govDomains": [
+      { "domain": "gob.ar", "why": "restricted: Government of Argentina domain" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección Nacional de Migraciones (DNM)", "url": "https://www.argentina.gob.ar/interior/migraciones", "keywords": ["migraciones", "Ministerio de Seguridad"] },
+      "apply": { "name": "Autorización de Viaje Electrónica (AVE)", "url": "https://www.migraciones.gob.ar/ave/index.htm", "keywords": ["autorización de viaje electrónica"] },
+      "embassies": { "name": "Embajadas y Consulados Argentinos", "url": "https://www.cancilleria.gob.ar/es/representaciones", "keywords": ["embajadas y consulados"] },
+      "work": { "name": "Visa para trabajo - Cancillería Argentina", "url": "https://www.cancilleria.gob.ar/es/servicios/visas/visa-para-trabajo", "keywords": ["visa para trabajo"] },
+      "study": { "name": "Visa para estudiantes - Cancillería Argentina", "url": "https://www.cancilleria.gob.ar/es/servicios/visas/estudiante-de-carrera-completa-del-sistema-de-ensenanza-oficial", "keywords": ["visa para estudiantes"] },
+      "citizenship": { "name": "Ciudadanía - Migraciones Argentina", "url": "https://www.argentina.gob.ar/migraciones/ciudadania-autogestion", "keywords": ["ciudadanía", "trámite"] }
+    }
+  },
+  "bs": {
+    "govDomains": [
+      { "domain": "gov.bs", "why": "restricted: Government of The Bahamas domain" }
+    ],
+    "links": {
+      "authority": { "name": "Bahamas Department of Immigration", "url": "https://www.immigration.gov.bs/" },
+      "apply": { "name": "eVISA Online Services - Ministry of Foreign Affairs Bahamas", "url": "https://mofa.gov.bs/evisa-online-services/" },
+      "embassies": { "name": "Bahamas Overseas Missions and Honorary Consuls", "url": "https://mofa.gov.bs/bahamas-overseas-missions-and-counsel/" },
+      "work": { "name": "Work Permit (Work Visa) - Bahamas Immigration", "url": "https://www.immigration.gov.bs/residence/annual-work-permit/" },
+      "citizenship": { "name": "Applying for Citizenship - Bahamas Immigration", "url": "https://www.immigration.gov.bs/applying-to-stay/applying-for-citizenship/" }
+    }
+  },
+  "bb": {
+    "govDomains": [
+      { "domain": "gov.bb", "why": "restricted: Government of Barbados domain" }
+    ],
+    "links": {
+      "authority": { "name": "Barbados Immigration Department", "url": "https://immigration.gov.bb/" },
+      "apply": { "name": "Barbados Immigration Online Entry Visa Portal", "url": "https://apps.immigration.gov.bb/portal/portal/login" },
+      "embassies": { "name": "Barbadian Representation Overseas - Ministry of Foreign Affairs and Foreign Trade", "url": "https://www.foreign.gov.bb/embassies-high-commissions-and-permanent-missions/" },
+      "work": { "name": "Work Permits/Training Attachments - Barbados Immigration Department", "url": "https://immigration.gov.bb/pages/WorkPermit.aspx" },
+      "study": { "name": "Student Visas - Barbados Immigration Department", "url": "https://immigration.gov.bb/pages/StudentVisa.aspx" },
+      "citizenship": { "name": "Barbadian Citizenship - Immigration Department", "url": "https://immigration.gov.bb/pages/Citizenship.aspx" }
+    }
+  },
+  "bz": {
+    "govDomains": [
+      { "domain": "gov.bz", "why": "restricted: Government of Belize domain" }
+    ],
+    "links": {
+      "authority": { "name": "Belize Department of Immigration and Nationality Services", "url": "https://immigration.gov.bz/" },
+      "apply": { "name": "Visa - How to Apply - Belize Immigration", "url": "https://immigration.gov.bz/visa/visa-how-to-apply/" },
+      "embassies": { "name": "Belizean Representation Overseas - Ministry of Foreign Affairs", "url": "https://mfa.gov.bz/belizean-representation-overseas/" },
+      "work": { "name": "Temporary Employment Permit - Belize Immigration", "url": "https://immigration.gov.bz/permits/work-permit/" },
+      "study": { "name": "Student Permit - Belize Immigration", "url": "https://immigration.gov.bz/permits/student-permit/" },
+      "citizenship": { "name": "Citizenship - Belize Immigration", "url": "https://immigration.gov.bz/citizenship/" }
+    }
+  },
+  "bo": {
+    "govDomains": [
+      { "domain": "gob.bo", "why": "restricted: Government of Bolivia domain" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección General de Migración (DIGEMIG)", "url": "https://migracion.gob.bo/", "linkedFrom": "https://web.mingobierno.gob.bo/", "keywords": ["Dirección General de Migración"] },
+      "embassies": { "name": "Embajadas de Bolivia en el Exterior", "url": "https://embajadas.cancilleria.gob.bo/", "keywords": ["embajadas"] }
+    }
+  },
+  "br": {
+    "govDomains": [
+      { "domain": "gov.br", "why": "restricted: Government of Brazil domain" }
+    ],
+    "links": {
+      "authority": { "name": "Departamento de Migrações (DEMIG) - Ministério da Justiça e Segurança Pública", "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes", "keywords": ["migrações", "naturalização"] },
+      "embassies": { "name": "Embaixadas e Consulados do Brasil no Exterior", "url": "https://www.gov.br/mre/pt-br/assuntos/Embaixadas-Consulados-Missoes/do-brasil-no-exterior", "keywords": ["embaixadas", "consulados"] },
+      "work": { "name": "Portal de Imigração Laboral - Ministério da Justiça", "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/portal-de-imigracao-laboral", "keywords": ["imigração laboral"] },
+      "study": { "name": "Autorização de Residência (inclui fins de estudo) - Ministério da Justiça", "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/paginas-migracoes/autorizacao-de-residencia", "keywords": ["autorização de residência", "fins de estudo"] },
+      "citizenship": { "name": "Naturalização - Ministério da Justiça", "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/naturalizacao", "keywords": ["naturalização"] }
+    }
+  },
+  "ca": {
+    "govDomains": [
+      { "domain": "canada.ca", "why": "restricted: Government of Canada portal" },
+      { "domain": "gc.ca", "why": "restricted: Government of Canada suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration, Refugees and Citizenship Canada (IRCC)", "url": "https://www.canada.ca/en/immigration-refugees-citizenship.html" },
+      "apply": { "name": "Electronic Travel Authorization (eTA): How to apply", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html" },
+      "embassies": { "name": "Global Affairs Canada — embassies and consulates", "url": "https://travel.gc.ca/assistance/embassies-consulates" },
+      "work": { "name": "Work in Canada", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada.html" },
+      "study": { "name": "Study in Canada", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada.html" },
+      "citizenship": { "name": "Canadian citizenship", "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-citizenship.html" }
+    }
+  },
+  "cl": {
+    "govDomains": [
+      { "domain": "gob.cl", "why": "restricted: Government of Chile domain" }
+    ],
+    "links": {
+      "authority": { "name": "Servicio Nacional de Migraciones (SERMIG)", "url": "https://serviciomigraciones.cl/", "linkedFrom": "https://www.interior.gob.cl/", "keywords": ["Servicio Nacional de Migraciones"] },
+      "apply": { "name": "Portal de Trámites Digitales - Migraciones Chile", "url": "https://tramites.extranjeria.gob.cl/" },
+      "embassies": { "name": "Chile en el Exterior - Embajadas y Consulados", "url": "https://www.chile.gob.cl", "keywords": ["embajadas y consulados"] },
+      "work": { "name": "Trabajadores de Temporada - Residencia Temporal (SERMIG)", "url": "https://serviciomigraciones.cl/residencia-temporal/subcategorias/trabajadores-de-temporada/", "linkedFrom": "https://www.interior.gob.cl/", "keywords": ["trabajadores de temporada"] },
+      "study": { "name": "Estudiantes - Residencia Temporal (SERMIG)", "url": "https://serviciomigraciones.cl/residencia-temporal/subcategorias/estudiantes/", "linkedFrom": "https://www.interior.gob.cl/", "keywords": ["estudiantes", "residencia temporal"] },
+      "citizenship": { "name": "Nacionalidad (SERMIG)", "url": "https://serviciomigraciones.cl/nacionalidad/", "linkedFrom": "https://www.interior.gob.cl/", "keywords": ["nacionalidad"] }
+    }
+  },
+  "co": {
+    "govDomains": [
+      { "domain": "gov.co", "why": "restricted: Government of Colombia domain" }
+    ],
+    "links": {
+      "authority": { "name": "Migración Colombia", "url": "https://www.migracioncolombia.gov.co/" },
+      "apply": { "name": "Formulario de Solicitud de Visa en Línea - Cancillería", "url": "https://tramitesmre.cancilleria.gov.co/tramites/enlinea/solicitarVisa.xhtml" },
+      "embassies": { "name": "Directorio de Embajadas y Consulados de Colombia en el Exterior", "url": "https://tramites.cancilleria.gov.co/ApostillaLegalizacion/directorio/misionesExterior.aspx" },
+      "work": { "name": "Tipos de Visa - Cancillería (incluye Visa de Trabajador)", "url": "https://www.cancilleria.gov.co/atencion-y-servicio-al-ciudadano/tramites-y-servicios/visa/tipos-de-visa", "keywords": ["visa de trabajador"] },
+      "study": { "name": "Tipos de Visa - Cancillería (incluye Visa de Estudiante)", "url": "https://www.cancilleria.gov.co/atencion-y-servicio-al-ciudadano/tramites-y-servicios/visa/tipos-de-visa", "keywords": ["visa de estudiante"] },
+      "citizenship": { "name": "Nacionalidad - Cancillería", "url": "https://www.cancilleria.gov.co/nacionalidad", "keywords": ["nacionalidad"] }
+    }
+  },
+  "cr": {
+    "govDomains": [
+      { "domain": "go.cr", "why": "restricted: Costa Rica government domain" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección General de Migración y Extranjería (DGME)", "url": "https://migracion.go.cr/" },
+      "embassies": { "name": "Embajadas, Consulados y Misiones - Ministerio de Relaciones Exteriores y Culto", "url": "https://www.rree.go.cr/?pagina=politica&scat=6", "keywords": ["embajadas, consulados y misiones"] },
+      "work": { "name": "Visas - Dirección General de Migración y Extranjería", "url": "https://migracion.go.cr/visas/", "keywords": ["visas", "categorías especiales"] },
+      "citizenship": { "name": "Naturalización por Residencia (Ley 1155) - Tribunal Supremo de Elecciones", "url": "https://www.tse.go.cr/pdf/requisitosytramites/Naturalizacion-por-residencia-ley-1155.pdf", "keywords": ["naturalización"] }
+    }
+  },
+  "cu": {
+    "govDomains": [
+      { "domain": "gob.cu", "why": "restricted: Government of Cuba domain" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección de Identificación, Inmigración y Extranjería (DIIE) - Ministerio del Interior", "url": "https://www.minint.gob.cu/tramites/4" }
+    }
+  },
+  "dm": {
+    "govDomains": [
+      { "domain": "gov.dm", "why": "restricted: Government of Dominica domain" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Division - Ministry of National Security and Legal Affairs", "url": "https://nationalsecurity.gov.dm/divisions/immigration-division" },
+      "citizenship": { "name": "Citizenship by Investment Unit (CBIU), Dominica", "url": "https://www.cbiu.gov.dm/" }
+    }
+  },
+  "do": {
+    "govDomains": [
+      { "domain": "gob.do", "why": "restricted: Government of the Dominican Republic domain" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección General de Migración", "url": "https://migracion.gob.do/" },
+      "apply": { "name": "E-Ticket - Ticket Electrónico de Entrada y Salida de la República Dominicana", "url": "https://migracion.gob.do/e-ticket-ticket-electronico-de-entrada-y-salida-de-la-republica-dominicana/", "keywords": ["e-ticket", "entrada y salida"] },
+      "work": { "name": "Residencias (incluye Residencia Temporal Laboral) - Dirección General de Migración", "url": "https://migracion.gob.do/servicios/residencias/", "keywords": ["residencia temporal laboral"] },
+      "study": { "name": "Permisos (incluye Permiso para Estudiante) - Dirección General de Migración", "url": "https://migracion.gob.do/servicios/permisos/", "keywords": ["permiso para estudiante"] }
+    }
+  },
+  "ec": {
+    "govDomains": [
+      { "domain": "gob.ec", "why": "restricted: Government of Ecuador domain" }
+    ],
+    "links": {
+      "authority": { "name": "Ministerio de Relaciones Exteriores y Movilidad Humana (Cancillería del Ecuador)", "url": "https://www.cancilleria.gob.ec/" },
+      "apply": { "name": "Portal eVISAS - Sistema de Visados Electrónicos Ecuatoriano", "url": "https://serviciosdigitales.cancilleria.gob.ec/authentication", "linkedFrom": "https://www.cancilleria.gob.ec/2024/07/16/portal-evisas-visas-electronicas-para-ecuador/", "keywords": ["evisas", "visas electrónicas"] },
+      "embassies": { "name": "Embajadas y Consulados en el Exterior - Cancillería", "url": "https://www.cancilleria.gob.ec/2021/05/11/embajadas-y-consulados-en-el-exterior/", "keywords": ["embajadas y consulados"] },
+      "work": { "name": "Visa Residencia Temporal (incluye categoría de Trabajo) - Cancillería", "url": "https://www.cancilleria.gob.ec/2020/06/16/visa-residencia-temporal/", "keywords": ["trabajo", "residencia temporal"] },
+      "study": { "name": "Visa Residencia Temporal (incluye categoría de Estudiante) - Cancillería", "url": "https://www.cancilleria.gob.ec/2020/06/16/visa-residencia-temporal/", "keywords": ["estudiante", "residencia temporal"] },
+      "citizenship": { "name": "Naturalizaciones - Cancillería", "url": "https://www.cancilleria.gob.ec/2020/06/12/naturalizaciones/", "keywords": ["naturalizaciones", "nacionalidad ecuatoriana"] }
+    }
+  },
+  "sv": {
+    "govDomains": [
+      { "domain": "gob.sv", "why": "restricted: Government of El Salvador domain" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección General de Migración y Extranjería", "url": "https://www.migracion.gob.sv/" },
+      "apply": { "name": "Solicitud y Pago de Permiso Especial de Ingreso y Visa", "url": "https://www.migracion.gob.sv/servicios/solicitud-y-pago-de-permiso-especial-de-ingreso-para-nacionales-que-no-portan-visa-consular-o-visa-consultada/", "keywords": ["permiso especial de ingreso", "visa"] },
+      "embassies": { "name": "Embajadas, Consulados y Misiones Permanentes - Ministerio de Relaciones Exteriores", "url": "https://rree.gob.sv/embajadas-consulados-y-misiones-permanentes-de-la-republica-de-el-salvador/", "keywords": ["embajadas", "consulados"] },
+      "work": { "name": "Residencias Temporales (incluye Autorización de Trabajar) - Migración", "url": "https://www.migracion.gob.sv/servicios/residencias-temporales/", "keywords": ["residencia temporal", "autorización de trabajar"] },
+      "study": { "name": "Residencias Temporales (incluye Residencia Temporal Estudios) - Migración", "url": "https://www.migracion.gob.sv/servicios/residencias-temporales/", "keywords": ["residencia temporal", "estudios"] },
+      "citizenship": { "name": "Nacionalizaciones y Naturalizaciones - Migración", "url": "https://www.migracion.gob.sv/servicios/nacionalizaciones-y-naturalizaciones/", "keywords": ["naturalizaciones"] }
+    }
+  },
+  "gd": {
+    "govDomains": [
+      { "domain": "gov.gd", "why": "restricted: Government of Grenada domain" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of National Security, Home Affairs, Public Administration, Information and Disaster Management", "url": "https://www.gov.gd/nationalsecurity" },
+      "apply": { "name": "Grenada Online Immigration & Customs Portal", "url": "https://edcard.gov.gd/en" }
+    }
+  }
+}

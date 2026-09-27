@@ -1,0 +1,47 @@
+{
+  "au": {
+    "links": {
+      "work": { "name": "Working in Australia — Department of Home Affairs", "url": "https://immi.homeaffairs.gov.au/visas/working-in-australia" },
+      "study": { "name": "Student visa (subclass 500) — Department of Home Affairs", "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/student-500" },
+      "citizenship": { "name": "Australian citizenship — Department of Home Affairs", "url": "https://immi.homeaffairs.gov.au/citizenship" }
+    }
+  },
+  "jp": {
+    "links": {
+      "embassies": { "name": "Websites of Japanese Embassies, Consulates and Permanent Missions — MOFA", "url": "https://www.mofa.go.jp/about/emb_cons/mofaserv.html" }
+    }
+  },
+  "ae": {
+    "links": {
+      "embassies": { "name": "UAE Missions Abroad — Ministry of Foreign Affairs", "url": "https://www.mofa.gov.ae/en/missions/uae-missions-abroad" }
+    }
+  },
+  "pt": {
+    "links": {
+      "apply": { "name": "Vistos Online — Ministry of Foreign Affairs of Portugal", "url": "https://pedidodevistos.mne.gov.pt/VistosOnline/", "keywords": ["vistos", "visto"] }
+    }
+  },
+  "kr": {
+    "links": {
+      "study": { "name": "Study in Korea — official portal run by the Korean Government (NIIED)", "url": "https://www.studyinkorea.go.kr/" }
+    }
+  },
+  "us": {
+    "links": {
+      "embassies": { "name": "Websites of U.S. Embassies, Consulates and Diplomatic Missions", "url": "https://www.usembassy.gov/" }
+    }
+  },
+  "nl": {
+    "govDomains": [
+      { "domain": "ind.nl", "why": "linked from https://www.rijksoverheid.nl/onderwerpen/immigratie-naar-nederland" }
+    ]
+  },
+  "se": {
+    "govDomains": [
+      { "domain": "regeringen.se", "why": "Government Offices of Sweden; Wikidata lists it as the official website of the Ministry for Foreign Affairs" }
+    ],
+    "links": {
+      "authority": { "name": "Swedish Migration Agency (Migrationsverket)", "url": "https://www.migrationsverket.se/en.html", "linkedFrom": "https://www.regeringen.se/myndigheter-med-flera/migrationsverket/" }
+    }
+  }
+}

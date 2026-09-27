@@ -1,0 +1,172 @@
+{
+  "af": {
+    "govDomains": [
+      { "domain": "gov.af", "why": "restricted: Afghanistan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of the Islamic Emirate of Afghanistan", "url": "https://mfa.gov.af/en/" },
+      "apply": { "notApplicable": "No confirmed online e-visa system; visas are issued via Afghan embassies/consulates per mfa.gov.af (visa page is informational only)" },
+      "embassies": { "name": "Afghanistan's Foreign Missions — Ministry of Foreign Affairs", "url": "https://mfa.gov.af/en/afghanistans-foreign-mission" }
+    }
+  },
+  "am": {
+    "govDomains": [
+      { "domain": "gov.am", "why": "restricted: Armenia government suffix" },
+      { "domain": "mfa.am", "why": "restricted: Armenia Ministry of Foreign Affairs official domain" }
+    ],
+    "links": {
+      "authority": { "name": "Migration and Citizenship Service (Ministry of Internal Affairs of Armenia)", "url": "https://migration.mia.gov.am/en" },
+      "apply": { "name": "Armenia e-Visa (Ministry of Foreign Affairs)", "url": "https://evisa.mfa.am/", "linkedFrom": "https://www.mfa.am/en" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Armenian embassies and consulates abroad", "url": "https://www.mfa.am/en/embassies-consulates/" },
+      "work": { "name": "Residency Status and Visa (incl. employment-based residence) — Migration and Citizenship Service", "url": "https://migration.mia.gov.am/en/residency-status-and-visa" },
+      "citizenship": { "name": "RA Citizenship — Migration and Citizenship Service", "url": "https://migration.mia.gov.am/en/grounds-for-granting-ra-citizenship" }
+    }
+  },
+  "az": {
+    "govDomains": [
+      { "domain": "gov.az", "why": "restricted: Azerbaijan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "State Migration Service of the Republic of Azerbaijan", "url": "https://migration.gov.az/en/page/49" },
+      "apply": { "name": "ASAN Visa — Official Electronic Visa Portal of Azerbaijan", "url": "https://evisa.gov.az/en/", "linkedFrom": "https://mfa.gov.az/en/category/visa/asan-visa" },
+      "work": { "name": "Work Permit for Foreigners — State Migration Service", "url": "https://migration.gov.az/en/page/75" },
+      "citizenship": { "name": "Citizenship Issues — State Migration Service", "url": "https://migration.gov.az/en/useful/43" }
+    }
+  },
+  "bd": {
+    "govDomains": [
+      { "domain": "gov.bd", "why": "restricted: Bangladesh government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "Visa-on-Arrival Online Pre-registration (Bangladesh Police, Special Branch)", "url": "https://voa.specialbranch.gov.bd/public/voa-instructions.html" }
+    }
+  },
+  "bt": {
+    "govDomains": [
+      { "domain": "gov.bt", "why": "restricted: Bhutan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Immigration, Ministry of Home Affairs, Bhutan", "url": "https://www.doi.gov.bt/?lang=en" },
+      "apply": { "name": "Bhutan Immigration Services Portal (online visa/permit application)", "url": "https://immi.gov.bt/", "linkedFrom": "https://www.doi.gov.bt/?p=1637&lang=en" },
+      "embassies": { "name": "Ministry of Foreign Affairs and External Trade — Bhutanese embassies, missions and consulates abroad", "url": "https://www.mfa.gov.bt/embassies-missions-and-consulates-abroad/" },
+      "work": { "name": "Guidelines for Foreigners under Non-Tourist Categories (incl. work) — Department of Immigration", "url": "https://www.doi.gov.bt/wp-content/uploads/2023/06/revised_non_tourist-categories_Public-1.pdf" },
+      "study": { "name": "Visa/Entry Permit Guideline for International Students — Department of Immigration", "url": "https://www.doi.gov.bt/wp-content/uploads/2026/05/VisaEntry-Permit-Guideline-for-International-Students-2026.pdf" }
+    }
+  },
+  "bn": {
+    "govDomains": [
+      { "domain": "gov.bn", "why": "restricted: Brunei government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration and National Registration Department, Brunei", "url": "https://www.immigration.gov.bn/en/home/" },
+      "apply": { "notApplicable": "No general e-visa portal; Brunei uses visa exemptions and an e-Arrival Card system (imm.gov.bn) rather than a full online e-visa" },
+      "work": { "name": "Bahagian Pas Kerja (Work Pass Division) — Immigration Department", "url": "https://www.immigration.gov.bn/bahagian-pas-kerja/", "keywords": ["Pas Kerja", "pekerja asing"] },
+      "citizenship": { "name": "Mengenai Warganegara (About Citizenship) — Immigration Department", "url": "https://www.immigration.gov.bn/mengenai-warganegara/", "keywords": ["Warganegara", "kerakyatan"] }
+    }
+  },
+  "kh": {
+    "govDomains": [
+      { "domain": "gov.kh", "why": "restricted: Cambodia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "General Department of Immigration, Cambodia", "url": "https://immigration.gov.kh/", "keywords": ["អន្តោប្រវេសន៍", "ទិដ្ឋាការ"] },
+      "apply": { "name": "eVisa Kingdom of Cambodia (Official Government Website)", "url": "https://www.evisa.gov.kh/" },
+      "work": { "name": "Foreign Worker Management System — Ministry of Labour and Vocational Training", "url": "https://fwcms.mlvt.gov.kh/", "linkedFrom": "https://www.mlvt.gov.kh/en/", "keywords": ["ការងារបរទេស", "អាជ្ញាប័ណ្ណ"] }
+    }
+  },
+  "cn": {
+    "govDomains": [
+      { "domain": "gov.cn", "why": "restricted: China government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "National Immigration Administration of China", "url": "https://en.nia.gov.cn/" },
+      "apply": { "notApplicable": "No general e-visa for most nationalities; visas are issued via Chinese embassies/consulates or visa application centers (see cs.mfa.gov.cn)" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Chinese Embassies Abroad", "url": "https://www.fmprc.gov.cn/eng/zwjg/zgdsg/" },
+      "work": { "name": "Service Guide on Issuance of Residence Permit for Foreigners (incl. work/Z-visa) — NIA", "url": "https://en.nia.gov.cn/n147423/n147478/n147715/c158270/content.html" },
+      "study": { "name": "Service Guide on Issuance of Residence Permit for Foreigners (incl. study/X1-visa) — NIA", "url": "https://en.nia.gov.cn/n147423/n147478/n147715/c158270/content.html" },
+      "citizenship": { "name": "Instructions on Application for Naturalization as a Chinese National — NIA", "url": "https://en.nia.gov.cn/n147423/n147478/n147720/c158308/content.html" }
+    }
+  },
+  "ge": {
+    "govDomains": [
+      { "domain": "gov.ge", "why": "restricted: Georgia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Public Service Development Agency (Ministry of Justice of Georgia)", "url": "https://sda.gov.ge/en/" },
+      "apply": { "name": "Georgia e-Visa Portal (Ministry of Foreign Affairs)", "url": "https://www.evisa.gov.ge/GeoVisa/", "linkedFrom": "https://www.mfa.gov.ge/en" },
+      "embassies": { "name": "Consular Services Portal — Ministry of Foreign Affairs of Georgia", "url": "https://geoconsul.gov.ge/" },
+      "work": { "name": "Migration/Residence Permits (incl. work residence permit) — Public Service Development Agency", "url": "https://sda.gov.ge/en/products/migration-residence-permits/" },
+      "study": { "name": "Migration/Residence Permits (incl. study residence permit) — Public Service Development Agency", "url": "https://sda.gov.ge/en/products/migration-residence-permits/" },
+      "citizenship": { "name": "Georgian Citizenship — Public Service Development Agency", "url": "https://sda.gov.ge/en/products/citizenship/" }
+    }
+  },
+  "in": {
+    "govDomains": [
+      { "domain": "gov.in", "why": "restricted: India government suffix" },
+      { "domain": "nic.in", "why": "restricted: India National Informatics Centre government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Bureau of Immigration, India", "url": "https://boi.gov.in/boi/" },
+      "apply": { "name": "India Visa Online (official e-Visa portal)", "url": "https://indianvisaonline.gov.in/", "linkedFrom": "https://www.mea.gov.in/visa-services" },
+      "embassies": { "name": "Ministry of External Affairs — Indian Missions Abroad", "url": "https://www.mea.gov.in/indian-mission-abroad" },
+      "work": { "name": "Visa-related Services Provided by FRROs (incl. employment visa) — Ministry of External Affairs", "url": "https://www.mea.gov.in/visa-related-services-provided-by-frros-fros-menu" },
+      "study": { "name": "Visa-related Services Provided by FRROs (incl. student visa) — Ministry of External Affairs", "url": "https://www.mea.gov.in/visa-related-services-provided-by-frros-fros-menu" },
+      "citizenship": { "name": "Indian Citizenship Online (Ministry of Home Affairs)", "url": "https://indiancitizenshiponline.nic.in/" }
+    }
+  },
+  "id": {
+    "govDomains": [
+      { "domain": "go.id", "why": "restricted: Indonesia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Directorate General of Immigration, Indonesia", "url": "https://www.imigrasi.go.id/index?lang=en-US" },
+      "apply": { "name": "Official eVisa Website for Indonesia", "url": "https://evisa.imigrasi.go.id/", "linkedFrom": "https://www.imigrasi.go.id/index?lang=en-US" },
+      "work": { "name": "E23 Work Visa (bekerja dengan penjamin) — Directorate General of Immigration", "url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E23", "keywords": ["visa kerja", "izin tinggal"] },
+      "study": { "name": "E30B Higher Education Visa — Directorate General of Immigration", "url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30B", "keywords": ["visa pendidikan", "izin tinggal"] }
+    }
+  },
+  "jp": {
+    "govDomains": [
+      { "domain": "go.jp", "why": "restricted: Japan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Services Agency of Japan (Ministry of Justice)", "url": "https://www.moj.go.jp/isa/", "keywords": ["出入国在留管理庁", "法務省"] },
+      "apply": { "notApplicable": "No general e-visa; visas issued via Japanese embassies/consulates, with online procedures limited to in-Japan residence status changes/extensions" },
+      "work": { "name": "Specified Skilled Worker System — Immigration Services Agency", "url": "https://www.moj.go.jp/isa/applications/ssw/index.html", "keywords": ["特定技能", "就労"] },
+      "study": { "name": "Residence Status Guide (incl. student/留学 status) — Immigration Services Agency", "url": "https://www.moj.go.jp/isa/applications/status/index.html", "keywords": ["在留資格", "留学"] },
+      "citizenship": { "name": "Nationality (incl. naturalization/帰化) — Ministry of Justice Civil Affairs Bureau", "url": "https://www.moj.go.jp/MINJI/kokuseki.html", "keywords": ["帰化", "国籍"] }
+    }
+  },
+  "kz": {
+    "govDomains": [
+      { "domain": "gov.kz", "why": "restricted: Kazakhstan government suffix" },
+      { "domain": "egov.kz", "why": "restricted: Kazakhstan e-government portal domain" }
+    ],
+    "links": {}
+  },
+  "kp": {
+    "govDomains": [],
+    "links": {}
+  },
+  "kr": {
+    "govDomains": [
+      { "domain": "go.kr", "why": "restricted: South Korea government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Korea Immigration Service (Ministry of Justice)", "url": "https://www.immigration.go.kr/immigration/index.do", "keywords": ["출입국", "체류"] },
+      "apply": { "name": "Korea Visa Portal (Ministry of Justice)", "url": "https://www.visa.go.kr/", "linkedFrom": "https://www.immigration.go.kr/immigration/index.do", "keywords": ["비자", "사증"] },
+      "work": { "name": "Skilled Worker Points-Based Visa (E-7-4) — Korea Immigration Service", "url": "https://www.immigration.go.kr/immigration/1521/subview.do", "keywords": ["숙련기능인력", "비자"] },
+      "citizenship": { "name": "Nationality (국적) — Korea Immigration Service", "url": "https://www.immigration.go.kr/immigration/1517/subview.do", "keywords": ["국적", "귀화"] }
+    }
+  },
+  "kg": {
+    "govDomains": [
+      { "domain": "gov.kg", "why": "restricted: Kyrgyzstan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of the Kyrgyz Republic", "url": "https://mfa.gov.kg/en" },
+      "apply": { "name": "Kyrgyzstan e-Visa Portal (Ministry of Foreign Affairs)", "url": "https://www.evisa.e-gov.kg/get_information.php?lng=en", "linkedFrom": "https://mfa.gov.kg/en" },
+      "embassies": { "name": "Kyrgyz Diplomatic Missions Abroad — Ministry of Foreign Affairs", "url": "https://mfa.gov.kg/kg/embassies/all", "keywords": ["чет өлкөдөгү", "мекемелери"] }
+    }
+  }
+}

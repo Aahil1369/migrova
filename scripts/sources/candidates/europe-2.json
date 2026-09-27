@@ -1,0 +1,170 @@
+{
+  "is": {
+    "govDomains": [
+      { "domain": "island.is", "why": "restricted: Iceland's official government digital services portal (island.is), hosting the Directorate of Immigration's pages" }
+    ],
+    "links": {
+      "authority": { "name": "Directorate of Immigration (Útlendingastofnun)", "url": "https://island.is/en/o/directorate-of-immigration" },
+      "apply": { "name": "Directorate of Immigration — Want to apply (residence permit applications)", "url": "https://island.is/en/o/directorate-of-immigration/want-to-apply" },
+      "work": { "name": "Directorate of Immigration — Work (residence permit based on work)", "url": "https://island.is/en/o/directorate-of-immigration/want-to-work" },
+      "study": { "name": "Directorate of Immigration — Studies and cultural exchange", "url": "https://island.is/en/o/directorate-of-immigration/want-to-apply-studies-and-cultural-exchange" },
+      "citizenship": { "name": "Directorate of Immigration — Icelandic citizenship", "url": "https://island.is/en/o/directorate-of-immigration/want-icelandic-citizenship" }
+    }
+  },
+  "ie": {
+    "govDomains": [
+      { "domain": "gov.ie", "why": "restricted: Government of Ireland domain suffix" },
+      { "domain": "ireland.ie", "why": "restricted: official international website of the Government of Ireland (Department of Foreign Affairs); dfa.gov.ie now redirects here" },
+      { "domain": "irishimmigration.ie", "why": "linked from https://www.gov.ie/en/department-of-justice-home-affairs-and-migration/press-releases/minister-mcentee-announces-the-launch-of-new-online-immigration-self-service-portal/ (gov.ie press release on the Immigration Service Delivery online portal)" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Service Delivery (Department of Justice, Home Affairs and Migration)", "url": "https://www.irishimmigration.ie/" },
+      "apply": { "name": "AVATS — Online Visa/Preclearance Application Facility", "url": "https://www.visas.inis.gov.ie/avats/OnlineHome.aspx", "linkedFrom": "https://www.irishimmigration.ie/coming-to-visit-ireland/giving-your-details-on-avats-for-a-visa-preclearance-application/" },
+      "embassies": { "name": "Department of Foreign Affairs — Irish Embassies and Consulates Abroad", "url": "https://www.ireland.ie/en/dfa/embassies/" },
+      "work": { "name": "Immigration Service Delivery — Coming to work in Ireland", "url": "https://www.irishimmigration.ie/coming-to-work-in-ireland/" },
+      "study": { "name": "Immigration Service Delivery — Coming to study in Ireland", "url": "https://www.irishimmigration.ie/coming-to-study-in-ireland/" },
+      "citizenship": { "name": "Immigration Service Delivery — Become an Irish citizen by naturalisation", "url": "https://www.irishimmigration.ie/how-to-become-a-citizen/become-an-irish-citizen-by-naturalisation/" }
+    }
+  },
+  "it": {
+    "govDomains": [
+      { "domain": "gov.it", "why": "restricted: Italian government institutions domain suffix" },
+      { "domain": "governo.it", "why": "restricted: official domain of the Presidency of the Council of Ministers (Government of Italy)" },
+      { "domain": "esteri.it", "why": "linked from https://www.governo.it/it/i-ministeri-0 (Presidency of the Council of Ministers' list of ministries); official domain of the Ministero degli Affari Esteri e della Cooperazione Internazionale (MAECI)" }
+    ],
+    "links": {
+      "authority": { "name": "Dipartimento per le Libertà Civili e l'Immigrazione (Ministry of Interior)", "url": "https://libertaciviliimmigrazione.dlci.interno.gov.it/", "keywords": ["Libertà Civili", "Immigrazione"] },
+      "apply": { "name": "Visto per l'Italia — Visa for Italy (MAECI online portal)", "url": "https://vistoperitalia.esteri.it/home/en" },
+      "embassies": { "name": "Ministero degli Affari Esteri — Rete diplomatico-consolare", "url": "https://www.esteri.it/it/ministero/struttura/laretediplomatica", "keywords": ["Rete diplomatico-consolare"] },
+      "work": { "name": "Portale Integrazione Migranti — Vivere e lavorare in Italia (Ministry of Labour)", "url": "https://www.integrazionemigranti.gov.it/it-it/", "keywords": ["lavoro", "immigrazione", "integrazione"] },
+      "study": { "name": "Study in Italy (MAECI)", "url": "https://studyinitaly.esteri.it/" },
+      "citizenship": { "name": "MAECI — Cittadinanza italiana", "url": "https://www.esteri.it/it/servizi_opportunita/DomandeFrequenti/Sezione_Cittadino_Italiano/", "keywords": ["Cittadinanza italiana"] }
+    }
+  },
+  "lv": {
+    "govDomains": [
+      { "domain": "gov.lv", "why": "restricted: Latvian government institutions domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Office of Citizenship and Migration Affairs (PMLP)", "url": "https://www.pmlp.gov.lv/en" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Latvia's embassies and consulates", "url": "https://www.mfa.gov.lv/en/latvias-embassies-and-consulates" },
+      "work": { "name": "PMLP — Employment of foreigners", "url": "https://www.pmlp.gov.lv/en/employment-foreigners" },
+      "citizenship": { "name": "PMLP — Acquiring Latvian citizenship", "url": "https://www.pmlp.gov.lv/en/acquiring-latvian-citizenship" }
+    }
+  },
+  "li": {
+    "govDomains": [
+      { "domain": "llv.li", "why": "restricted: Liechtenstein National Administration (Land Liechtenstein Verwaltung) domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Migration and Passport Office (Ausländer- und Passamt)", "url": "https://www.llv.li/en/national-administration/migration-and-passport-office" }
+    }
+  },
+  "lt": {
+    "govDomains": [
+      { "domain": "lrv.lt", "why": "restricted: Government of the Republic of Lithuania domain suffix, used by ministries and agencies" },
+      { "domain": "migracija.lt", "why": "linked from https://migracija.lrv.lt/en/services/ (Migration Department's official services page); branded MIGRIS, Lithuania's Migration Information System" }
+    ],
+    "links": {
+      "authority": { "name": "Migration Department under the Ministry of the Interior", "url": "https://migracija.lrv.lt/en/" },
+      "apply": { "name": "MIGRIS — Migration Information System (online e-services)", "url": "https://www.migracija.lt/en?lang=en", "linkedFrom": "https://migracija.lrv.lt/en/services/" }
+    }
+  },
+  "lu": {
+    "govDomains": [
+      { "domain": "public.lu", "why": "restricted: Luxembourg government e-services domain suffix (Guichet.lu)" },
+      { "domain": "gouvernement.lu", "why": "restricted: Luxembourg government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Guichet.lu — Immigration (Luxembourg government portal)", "url": "https://guichet.public.lu/en/citoyens/immigration.html" },
+      "embassies": { "name": "Ministry of Foreign and European Affairs — Luxembourg diplomatic and consular missions", "url": "https://mae.gouvernement.lu/en/missions-diplomatiques/missions-diplomatiques-et-consulaires-luxembourgeoises.html" },
+      "work": { "name": "Guichet.lu — Third-country salaried workers", "url": "https://guichet.public.lu/en/citoyens/immigration/plus-3-mois/ressortissant-tiers/salarie.html" },
+      "study": { "name": "Guichet.lu — Third-country students", "url": "https://guichet.public.lu/en/citoyens/immigration/plus-3-mois/ressortissant-tiers/etudiant.html" },
+      "citizenship": { "name": "Guichet.lu — Citizenship", "url": "https://guichet.public.lu/en/citoyens/citoyennete.html" }
+    }
+  },
+  "mt": {
+    "govDomains": [
+      { "domain": "gov.mt", "why": "restricted: Malta government institutions domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Identità (Malta's identity, passport and immigration agency)", "url": "https://identita.gov.mt/" },
+      "apply": { "name": "Identità — Expatriates Unit Portal (online residence permit/certificate applications)", "url": "https://expatriates.identita.gov.mt/" },
+      "work": { "name": "Identità — Employment in Malta (Single Permit, Blue Card, etc.)", "url": "https://identita.gov.mt/expatriates-unit-main-page/noneu-nationals/employment-related-permits/employment-in-malta/" },
+      "study": { "name": "Identità — Central Visa Unit: Student Visa", "url": "https://identita.gov.mt/central-visa-unit-sec-page-student-visa/" }
+    }
+  },
+  "md": {
+    "govDomains": [
+      { "domain": "gov.md", "why": "restricted: Government of the Republic of Moldova domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "General Inspectorate for Migration (Inspectoratul General pentru Migrație)", "url": "https://igm.gov.md/ro", "keywords": ["migrație", "azilul", "permis de ședere"] },
+      "embassies": { "name": "Ministry of Foreign Affairs and European Integration — Diplomatic Missions and Consular Offices of the Republic of Moldova", "url": "https://mfa.gov.md/en/advanced-page-type/misiuni-ale-republicii-moldova-strainatate" }
+    }
+  },
+  "mc": {
+    "govDomains": [
+      { "domain": "gouv.mc", "why": "restricted: Principality of Monaco government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Mon Service Public — Nationalité et Résidence (Government of Monaco)", "url": "https://monservicepublic.gouv.mc/thematiques/nationalite-et-residence", "keywords": ["Nationalité et Résidence", "carte de séjour"] },
+      "apply": { "name": "Téléservice — Première carte de séjour (online residence card application)", "url": "https://teleservice.gouv.mc/premiere-carte-de-sejour/", "linkedFrom": "https://monservicepublic.gouv.mc/thematiques/nationalite-et-residence/residence/nouveaux-arrivants/demander-une-carte-de-sejour", "keywords": ["Première carte de séjour"] },
+      "citizenship": { "name": "Mon Service Public — Acquisition de la nationalité monégasque", "url": "https://monservicepublic.gouv.mc/thematiques/nationalite-et-residence/nationalite-monegasque/acquisition-et-perte-de-nationalite/acquisition-de-la-nationalite-monegasque", "keywords": ["Acquisition de la nationalité monégasque"] }
+    }
+  },
+  "me": {
+    "govDomains": [
+      { "domain": "gov.me", "why": "restricted: Government of Montenegro domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior (Ministarstvo unutrašnjih poslova)", "url": "https://www.gov.me/mup", "keywords": ["Ministarstvo unutrašnjih poslova"] },
+      "citizenship": { "name": "Ministry of Interior — Državljanstvo i lične isprave (Citizenship and personal documents)", "url": "https://www.gov.me/mup/drzavljanstvo-i-licne-isprave", "keywords": ["Državljanstvo i lične isprave"] }
+    }
+  },
+  "nl": {
+    "govDomains": [
+      { "domain": "ind.nl", "why": "restricted: official domain of the Immigration and Naturalisation Service (IND), the Dutch government's immigration authority" },
+      { "domain": "netherlandsworldwide.nl", "why": "restricted: official Government of the Netherlands portal for services abroad, run by the Ministry of Foreign Affairs (page carries official Government of the Netherlands branding)" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration and Naturalisation Service (IND)", "url": "https://ind.nl/en" },
+      "apply": { "name": "My IND (online application and case tracking portal)", "url": "https://ind.nl/en/my-ind" },
+      "embassies": { "name": "NetherlandsWorldwide — Contact a Dutch embassy or consulate-general", "url": "https://www.netherlandsworldwide.nl/contact/embassies-consulates-general" },
+      "work": { "name": "IND — Work (residence permits)", "url": "https://ind.nl/en/residence-permits/work" },
+      "study": { "name": "IND — Study (residence permits)", "url": "https://ind.nl/en/residence-permits/study" },
+      "citizenship": { "name": "IND — Dutch citizenship", "url": "https://ind.nl/en/dutch-citizenship" }
+    }
+  },
+  "mk": {
+    "govDomains": [
+      { "domain": "gov.mk", "why": "restricted: Government of North Macedonia domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior (Министерство за внатрешни работи)", "url": "https://mvr.gov.mk/", "keywords": ["Министерство за внатрешни работи"] },
+      "embassies": { "name": "Ministry of Foreign Affairs — Embassies", "url": "https://mfa.gov.mk/en-GB/ambasadi" },
+      "work": { "name": "Ministry of Interior — Procedures for individual rights of foreigners (incl. employment permits)", "url": "https://mvr.gov.mk/mk-MK/uslugi/upatstvo-i-postapka-za-oddelni-prava-baranja-na-strancite", "keywords": ["работна дозвола", "престој на странци"] },
+      "study": { "name": "Ministry of Interior — Procedures for individual rights of foreigners (incl. student residence)", "url": "https://mvr.gov.mk/mk-MK/uslugi/upatstvo-i-postapka-za-oddelni-prava-baranja-na-strancite", "keywords": ["студирање", "престој на странци"] }
+    }
+  },
+  "no": {
+    "govDomains": [
+      { "domain": "udi.no", "why": "restricted: official domain of the Norwegian Directorate of Immigration (UDI)" },
+      { "domain": "norway.no", "why": "restricted: official portal of the Norwegian Ministry of Foreign Affairs for embassies and missions abroad" }
+    ],
+    "links": {
+      "authority": { "name": "Norwegian Directorate of Immigration (UDI)", "url": "https://www.udi.no/en/" },
+      "embassies": { "name": "Norway.no — Embassies and permanent missions of the Norwegian foreign service", "url": "https://www.norway.no/en" }
+    }
+  },
+  "pl": {
+    "govDomains": [
+      { "domain": "gov.pl", "why": "restricted: Polish government institutions domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Urząd do Spraw Cudzoziemców (Office for Foreigners)", "url": "https://www.gov.pl/web/udsc", "keywords": ["Urząd do Spraw Cudzoziemców"] },
+      "apply": { "name": "MOS — Moduł Obsługi Spraw (online residence permit application system)", "url": "https://mos.cudzoziemcy.gov.pl/", "linkedFrom": "https://www.gov.pl/web/udsc", "keywords": ["zezwolenie na pobyt", "wniosek"] },
+      "embassies": { "name": "Ministry of Foreign Affairs — Polskie przedstawicielstwa na świecie", "url": "https://www.gov.pl/web/dyplomacja/polskie-przedstawicielstwa-na-swiecie", "keywords": ["Polskie przedstawicielstwa na świecie"] }
+    }
+  }
+}

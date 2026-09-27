@@ -97,7 +97,9 @@ export async function loadInChrome(url) {
       returnByValue: true,
     }, sessionId);
     const { href, html } = JSON.parse(r.result?.result?.value || '{}');
-    return href ? { finalUrl: href, status: status ?? 200, html } : null;
+    // Chrome shows its own error page (chrome-error://…) for unreachable sites.
+    if (!href || !/^https?:\/\//.test(href)) return null;
+    return { finalUrl: href, status: status ?? 200, html };
   } catch (e) {
     if (process.env.DEBUG_SOURCES) console.error('chrome:', url, e?.message || e);
     return null;

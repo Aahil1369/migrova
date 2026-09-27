@@ -1,0 +1,217 @@
+{
+  "al": {
+    "govDomains": [
+      { "domain": "gov.al", "why": "restricted: Albanian government institutions domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Albanian State Police — Department for Border and Migration (DVKM)", "url": "https://asp.gov.al/informacione-dvkm/", "keywords": ["Kufiri", "Migracioni"] },
+      "apply": { "name": "e-Albania — Residence permit request (Kërkesë për leje qëndrimi)", "url": "https://e-albania.al/ServiceDetails/15308", "linkedFrom": "https://akshi.gov.al/", "keywords": ["Kërkesë për leje qëndrimi"] },
+      "embassies": { "name": "Ministry for Europe and Foreign Affairs — Albanian missions abroad", "url": "https://punetejashtme.gov.al/perfaqesite-shqiptare-ne-bote/", "keywords": ["Përfaqësitë Shqiptare"] },
+      "work": { "name": "Ministry of Interior — Residence permit and Unique (work+residence) permit procedure", "url": "https://mb.gov.al/procedura-dhe-dokumentacioni-per-pajisjen-me-leje-qendrimi-dhe-leje-unike-residence-unique-permit-al-en/", "keywords": ["Leje Unike", "Leje Qëndrimi"] },
+      "citizenship": { "name": "Ministry for Europe and Foreign Affairs — Citizenship issues", "url": "https://punetejashtme.gov.al/en/ceshtjet-e-shtetesise/" }
+    }
+  },
+  "ad": {
+    "govDomains": [
+      { "domain": "govern.ad", "why": "restricted: Govern d'Andorra official portal" }
+    ],
+    "links": {
+      "authority": { "name": "Govern d'Andorra — Departament d'Immigració", "url": "https://www.govern.ad/ca/tematiques/immigracio", "keywords": ["Immigració", "Residència i treball"] },
+      "apply": { "notApplicable": "No online e-visa/residence portal; applications must be submitted in person by appointment at the Servei d'Immigració in Andorra la Vella" },
+      "embassies": { "name": "Govern d'Andorra — Ambaixades d'Andorra", "url": "https://www.govern.ad/ca/ministeris-i-secretaries-d-estat/ministeri-d-afers-exteriors/representacions-diplomatiques/ambaixades-d-andorra", "keywords": ["Ambaixades d'Andorra"] },
+      "work": { "name": "Govern d'Andorra — Treballar a Andorra (residence and work authorization)", "url": "https://www.govern.ad/ca/tematiques/immigracio/treball", "keywords": ["Residència i treball"] },
+      "citizenship": { "name": "Govern d'Andorra — Nacionalitat andorrana", "url": "https://www.govern.ad/ca/ministeris-i-secretaries-d-estat/ministeri-de-justicia-i-interior/nacionalitat", "keywords": ["Nacionalitat andorrana"] }
+    }
+  },
+  "at": {
+    "govDomains": [
+      { "domain": "gv.at", "why": "restricted: Austrian government institutions domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Migration Platform of the Austrian Federal Government", "url": "https://www.migration.gv.at/en/welcome/" },
+      "embassies": { "name": "Federal Ministry for European and International Affairs — Search for Austrian representations", "url": "https://www.bmeia.gv.at/en/embassies-consulates/search-for-austrian-representations" },
+      "work": { "name": "Migration Platform — Living and working in Austria", "url": "https://www.migration.gv.at/en/living-and-working-in-austria/" },
+      "study": { "name": "Migration Platform — Temporary residence (incl. students)", "url": "https://www.migration.gv.at/en/types-of-immigration/temporary-residence/" },
+      "citizenship": { "name": "Federal Ministry of the Interior — Citizenship (Staatsbürgerschaftswesen)", "url": "https://www.bmi.gv.at/406/start.html", "keywords": ["Staatsbürgerschaftswesen"] }
+    }
+  },
+  "by": {
+    "govDomains": [
+      { "domain": "gov.by", "why": "restricted: Belarusian government institutions domain suffix" },
+      { "domain": "e-pasluga.by", "why": "linked from https://mfa.gov.by/en/visa/general/evisa/ — state e-services portal operated by Republican Unitary Enterprise \"National Centre of E-Services\"" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of the Republic of Belarus — Visas", "url": "https://mfa.gov.by/en/visa/" },
+      "apply": { "name": "e-Pasluga — E-visa issuance (service 3.04.01)", "url": "https://e-pasluga.by/en_US/home.html", "linkedFrom": "https://mfa.gov.by/en/visa/general/evisa/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Belarusian diplomatic missions abroad", "url": "https://mfa.gov.by/en/bilateral/belarus/" }
+    }
+  },
+  "be": {
+    "govDomains": [
+      { "domain": "belgium.be", "why": "restricted: Belgian federal government portal" },
+      { "domain": "ibz.be", "why": "self-verified official site of Belgium's Federal Public Service (FPS) Home Affairs (displays Belgian Federal Authorities branding); links to dofi.ibz.be as the Immigration Office" }
+    ],
+    "links": {
+      "authority": { "name": "FPS Home Affairs — Immigration Office (Ausländeramt / Office des Étrangers)", "url": "https://www.ibz.be/de/unsere-unternehmenskultur/unser-foed/unsere-generaldirektionen/auslaenderamt", "keywords": ["Ausländeramt", "Migrationsströme"] },
+      "embassies": { "name": "FPS Foreign Affairs — Embassies and consulates", "url": "https://diplomatie.belgium.be/en/embassies-and-consulates" }
+    }
+  },
+  "ba": {
+    "govDomains": [
+      { "domain": "gov.ba", "why": "restricted: Bosnia and Herzegovina government institutions domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Služba za poslove sa strancima (Service for Foreigners' Affairs)", "url": "https://sps.gov.ba/", "keywords": ["Služba za poslove sa strancima"] },
+      "apply": { "notApplicable": "No online e-application portal confirmed; SPS provides downloadable paper forms (submitted in person) at sps.gov.ba/informacije-za-strance/elektronski-obrasci/" },
+      "work": { "name": "SPS — Residence of foreigners in BiH (incl. work-based temporary residence)", "url": "https://sps.gov.ba/informacije-za-strance/boravak-stranaca-u-bih/", "keywords": ["Rada sa radnom dozvolom", "Privremeni boravak"] },
+      "study": { "name": "SPS — Residence of foreigners in BiH (incl. education-based temporary residence)", "url": "https://sps.gov.ba/informacije-za-strance/boravak-stranaca-u-bih/", "keywords": ["Obrazovanja", "Privremeni boravak"] },
+      "citizenship": { "name": "Ministry of Civil Affairs — Citizenship and Travel Documents Sector", "url": "https://mcp.gov.ba/bs/o-sektoru-za-drzavljanstvo-i-putne-isprave", "keywords": ["Državljanstvo", "prijem u državljanstvo"] }
+    }
+  },
+  "bg": {
+    "govDomains": [
+      { "domain": "government.bg", "why": "restricted: Bulgarian state institutions domain (used by ministries/agencies, e.g. az.government.bg)" },
+      { "domain": "mvr.bg", "why": "self-verified official site of Bulgaria's Ministry of Interior (МВР)" },
+      { "domain": "mjs.bg", "why": "self-verified official site of Bulgaria's Ministry of Justice" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior — Migration Directorate (Направление „Миграция\")", "url": "https://www.mvr.bg/%D1%81%D0%BF%D0%B8%D1%81%D1%8A%D0%BA-%D1%81-%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8/%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BD%D0%B0-%D0%B4%D0%B5%D0%B9%D0%BD%D0%BE%D1%81%D1%82-%D0%B4%D0%B8%D1%80%D0%B5%D0%BA%D1%86%D0%B8%D1%8F%D0%BC%D0%B8%D0%B3%D1%80", "keywords": ["Направление на дейност Миграция"] },
+      "work": { "name": "Employment Agency — Employment of foreigners (Q&A)", "url": "https://www.az.government.bg/bg/pages/zaetost-na-shuzdentsi-faq", "keywords": ["Заетост на чужденци"] },
+      "citizenship": { "name": "Ministry of Justice — Bulgarian citizenship", "url": "https://www.mjs.bg/home/index/dbg?top=1", "keywords": ["българско гражданство"] }
+    }
+  },
+  "hr": {
+    "govDomains": [
+      { "domain": "gov.hr", "why": "restricted: Croatian government institutions domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of the Interior — Aliens", "url": "https://mup.gov.hr/aliens-281621/281621" },
+      "apply": { "notApplicable": "No unified online e-visa/residence portal; applications are submitted via diplomatic missions/consular posts abroad or police administrations/stations in Croatia" },
+      "embassies": { "name": "Ministry of Foreign and European Affairs — Diplomatic representations", "url": "https://mvep.gov.hr/predstavnistva/50", "keywords": ["Diplomatska predstavništva"] },
+      "work": { "name": "Ministry of the Interior — Work of third-country nationals", "url": "https://mup.gov.hr/aliens-281621/stay-and-work/work-of-third-country-nationals/281663" },
+      "study": { "name": "Ministry of the Interior — Temporary stay of third-country nationals (incl. study)", "url": "https://mup.gov.hr/aliens-281621/stay-and-work/temporary-stay-of-third-country-nationals/281661" },
+      "citizenship": { "name": "Ministry of the Interior — Citizenship", "url": "https://mup.gov.hr/aliens-281621/citizenship/281629" }
+    }
+  },
+  "cy": {
+    "govDomains": [
+      { "domain": "gov.cy", "why": "restricted: Cyprus government institutions domain suffix (covers www.gov.cy and its service.gov.cy subdomain)" }
+    ],
+    "links": {
+      "authority": { "name": "Deputy Ministry of Migration and International Protection", "url": "https://www.gov.cy/mip/en/" },
+      "apply": { "name": "Residence documents online application portal (Migration Department)", "url": "https://residence-documents.service.gov.cy/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Diplomatic missions of Cyprus abroad", "url": "https://www.gov.cy/mfa/en/diplomatic-missions-of-cyprus-abroad/embassies-and-consulates-by-country/" },
+      "work": { "name": "Residence documents portal — Remunerated employment residence permit", "url": "https://residence-documents.service.gov.cy/RemuneratedEmployment/Start" },
+      "citizenship": { "name": "Gov.cy — Apply for Cypriot citizenship", "url": "https://www.gov.cy/en/service/apply-for-cypriot-citizenship/" }
+    }
+  },
+  "cz": {
+    "govDomains": [
+      { "domain": "gov.cz", "why": "restricted: Czech government institutions domain suffix (covers ipc.gov.cz, mv.gov.cz, mzv.gov.cz)" }
+    ],
+    "links": {
+      "authority": { "name": "Information Portal for Foreigners (Ministry of the Interior)", "url": "https://ipc.gov.cz/en/" },
+      "apply": { "name": "Information Portal for Foreigners — Appointment reservation for applications", "url": "https://ipc.gov.cz/en/new-reservation" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Diplomatic Missions", "url": "https://mzv.gov.cz/jnp/en/diplomatic_missions/index.html" },
+      "work": { "name": "Information Portal for Foreigners — For Employers", "url": "https://ipc.gov.cz/en/for-employers/" },
+      "study": { "name": "Information Portal for Foreigners — Educational Institutions", "url": "https://ipc.gov.cz/en/educational-institutions/" },
+      "citizenship": { "name": "Ministry of the Interior — State Citizenship of the Czech Republic", "url": "https://mv.gov.cz/statni-obcanstvi-ceske-republiky", "keywords": ["Státní občanství"] }
+    }
+  },
+  "dk": {
+    "govDomains": [
+      { "domain": "nyidanmark.dk", "why": "self-verified: official portal run jointly by the Danish Immigration Service (Udlændingestyrelsen) and SIRI, per its own meta description" },
+      { "domain": "um.dk", "why": "self-verified: official site of the Danish Ministry of Foreign Affairs" },
+      { "domain": "uim.dk", "why": "self-verified: official site of the Ministry of Immigration and Integration" },
+      { "domain": "workindenmark.dk", "why": "self-verified: operated by STAR (Danish Agency for Labour Market and Recruitment), registered in the Danish government's digst.dk web-accessibility registry" },
+      { "domain": "studyindenmark.dk", "why": "self-verified: references the Ministry of Higher Education and Science (ufm.dk), registered in the Danish government's digst.dk web-accessibility registry" }
+    ],
+    "links": {
+      "authority": { "name": "New to Denmark (Udlændingestyrelsen / SIRI)", "url": "https://www.nyidanmark.dk/en-GB/" },
+      "apply": { "name": "New to Denmark — You want to apply", "url": "https://www.nyidanmark.dk/en-GB/You-want-to-apply" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Find Danish embassies and consulates abroad", "url": "https://um.dk/en/about-us/organisation/find-us-abroad/" },
+      "work": { "name": "Workindenmark (SIRI/STAR)", "url": "https://www.workindenmark.dk/" },
+      "study": { "name": "Study in Denmark", "url": "https://studyindenmark.dk/" },
+      "citizenship": { "name": "Ministry of Immigration and Integration — Statsborgerskab (Citizenship)", "url": "https://uim.dk/statsborgerskab/", "keywords": ["Statsborgerskab"] }
+    }
+  },
+  "ee": {
+    "govDomains": [
+      { "domain": "politsei.ee", "why": "self-verified: official site of the Police and Border Guard Board (PPA)" },
+      { "domain": "vm.ee", "why": "self-verified: official site of the Estonian Ministry of Foreign Affairs" },
+      { "domain": "workinestonia.com", "why": "self-verified: operated by EAS (Enterprise Estonia, a state agency), per its own page content" },
+      { "domain": "studyinestonia.ee", "why": "self-verified: operated by Harno (Education and Youth Board, a state agency), per its own page content" }
+    ],
+    "links": {
+      "authority": { "name": "Police and Border Guard Board (PPA)", "url": "https://www.politsei.ee/en" },
+      "apply": { "name": "PPA — Self-service portal", "url": "https://www.politsei.ee/en/self-service-portal" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Estonian representations around the world", "url": "https://www.vm.ee/en/consular-visa-and-travel-information/estonian-representations-around-world" },
+      "work": { "name": "Work in Estonia (EAS)", "url": "https://workinestonia.com/" },
+      "study": { "name": "Study in Estonia (Harno)", "url": "https://www.studyinestonia.ee/" }
+    }
+  },
+  "fi": {
+    "govDomains": [
+      { "domain": "migri.fi", "why": "self-verified: official site of the Finnish Immigration Service (Maahanmuuttovirasto)" },
+      { "domain": "um.fi", "why": "self-verified: official site of Finland's Ministry for Foreign Affairs" },
+      { "domain": "enterfinland.fi", "why": "linked from https://migri.fi/en/home — Migri's own e-service application portal" }
+    ],
+    "links": {
+      "authority": { "name": "Finnish Immigration Service (Migri)", "url": "https://migri.fi/en/home" },
+      "apply": { "name": "Enter Finland — Migri e-Services", "url": "https://enterfinland.fi/eServices", "linkedFrom": "https://migri.fi/en/home" },
+      "embassies": { "name": "Ministry for Foreign Affairs — Finland's embassies, consulates general and honorary consulates by country", "url": "https://um.fi/finland-s-representation-abroad-by-country" },
+      "work": { "name": "Migri — Work in Finland", "url": "https://migri.fi/en/work-in-finland" },
+      "study": { "name": "Migri — Studying in Finland", "url": "https://migri.fi/en/studying-in-finland" },
+      "citizenship": { "name": "Migri — Finnish citizenship", "url": "https://migri.fi/en/finnish-citizenship" }
+    }
+  },
+  "fr": {
+    "govDomains": [
+      { "domain": "gouv.fr", "why": "restricted: French government institutions domain suffix (covers service-public.gouv.fr, diplomatie.gouv.fr, and interieur.gouv.fr subdomains)" }
+    ],
+    "links": {
+      "authority": { "name": "ANEF — Administration numérique des étrangers en France (Ministry of the Interior)", "url": "https://administration-etrangers-en-france.interieur.gouv.fr/particuliers/", "keywords": ["Administration numérique pour les étrangers en France"] },
+      "apply": { "name": "ANEF online portal — residence permit procedures", "url": "https://administration-etrangers-en-france.interieur.gouv.fr/particuliers/", "keywords": ["Administration numérique pour les étrangers en France"] },
+      "embassies": { "name": "France Diplomatie — Ambassades (French embassies abroad)", "url": "https://www.diplomatie.gouv.fr/fr/le-ministere/reseau-diplomatique/ambassades", "keywords": ["Ambassades"] },
+      "work": { "name": "Service-Public.fr — Autorisation de travail d'un salarié étranger en France", "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2728", "keywords": ["Autorisation de travail", "salarié étranger"] },
+      "citizenship": { "name": "Service-Public.fr — Naturalisation française par décret", "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2213", "keywords": ["Naturalisation française"] }
+    }
+  },
+  "de": {
+    "govDomains": [
+      { "domain": "bamf.de", "why": "self-verified: official site of the Bundesamt für Migration und Flüchtlinge (Federal Office for Migration and Refugees)" },
+      { "domain": "auswaertiges-amt.de", "why": "self-verified: official site of the German Federal Foreign Office" }
+    ],
+    "links": {
+      "authority": { "name": "BAMF — Bundesamt für Migration und Flüchtlinge", "url": "https://www.bamf.de/EN/Startseite/startseite_node.html" },
+      "apply": { "name": "Federal Foreign Office — Consular Services Portal (apply for visas online)", "url": "https://www.auswaertiges-amt.de/en/visa-service/consular-services-portal" },
+      "embassies": { "name": "Federal Foreign Office — German Missions Abroad", "url": "https://www.auswaertiges-amt.de/en/about-us/auslandsvertretungen/deutsche-auslandsvertretungen" },
+      "work": { "name": "BAMF — Work (Immigrants from third countries)", "url": "https://www.bamf.de/EN/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Arbeit/arbeit-node.html" },
+      "study": { "name": "BAMF — Education (Immigrants from third countries)", "url": "https://www.bamf.de/EN/Themen/MigrationAufenthalt/ZuwandererDrittstaaten/Bildung/bildung-node.html" },
+      "citizenship": { "name": "BAMF — Naturalisation", "url": "https://www.bamf.de/EN/Themen/Integration/ZugewanderteTeilnehmende/Einbuergerung/einbuergerung-node.html" }
+    }
+  },
+  "gr": {
+    "govDomains": [
+      { "domain": "migration.gov.gr", "why": "restricted: gov.gr suffix reserved for Greek government institutions (Ministry of Migration and Asylum)" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Migration and Asylum", "url": "https://migration.gov.gr/en/" },
+      "apply": { "name": "Ministry of Migration and Asylum — Applications", "url": "https://migration.gov.gr/en/applications/" },
+      "work": { "name": "Ministry of Migration and Asylum — Categories of residence permits for third-country nationals (incl. dependent employment)", "url": "https://migration.gov.gr/en/migration-policy/metanasteusi-stin-ellada/katigories-adeion-diamonis-politon-triton-choron-dikaiologitika%e2%80%8b/", "keywords": ["Άδεια διαμονής για εξαρτημένη εργασία"] },
+      "study": { "name": "Ministry of Migration and Asylum — Categories of residence permits for third-country nationals (incl. studies)", "url": "https://migration.gov.gr/en/migration-policy/metanasteusi-stin-ellada/katigories-adeion-diamonis-politon-triton-choron-dikaiologitika%e2%80%8b/", "keywords": ["Σπουδές"] }
+    }
+  },
+  "hu": {
+    "govDomains": [
+      { "domain": "gov.hu", "why": "restricted: Hungarian government institutions domain suffix (covers oif.gov.hu, enterhungary.gov.hu, and the mfa.gov.hu subdomain konzinfo.mfa.gov.hu)" }
+    ],
+    "links": {
+      "authority": { "name": "National Directorate-General for Aliens Policing (OIF) — Residence in Hungary", "url": "https://oif.gov.hu/tartozkodas-magyarorszagon", "keywords": ["Tartózkodás Magyarországon"] },
+      "apply": { "name": "Enter Hungary — online application portal", "url": "https://enterhungary.gov.hu/eh/" },
+      "embassies": { "name": "Consular Information Portal (MFA) — Foreign representations (Hungarian missions abroad)", "url": "https://konzinfo.mfa.gov.hu/kulkepviseletek/osszes", "keywords": ["Külképviseletek"] },
+      "work": { "name": "OIF — Employment with higher/university education", "url": "https://oif.gov.hu/munkavallalas-felsofokuegyetemi-vegzettseggel", "keywords": ["Munkavállalás felsőfokú/egyetemi végzettséggel"] },
+      "study": { "name": "OIF — Residence of student/pupil", "url": "https://oif.gov.hu/tajekoztatok/a-hallgato-tanulo-tartozkodasa", "keywords": ["A hallgató, tanuló tartózkodása"] }
+    }
+  }
+}

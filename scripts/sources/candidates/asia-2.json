@@ -1,0 +1,165 @@
+{
+  "la": {
+    "govDomains": [
+      { "domain": "gov.la", "why": "restricted: Lao PDR government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Immigration of Lao PDR", "url": "https://www.immigration.gov.la/" },
+      "apply": { "name": "Lao eVisa (official online visa)", "url": "https://laoevisa.gov.la/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Lao PDR diplomatic missions abroad", "url": "https://mofa.gov.la/index.php?r=site/detail&id=945" }
+    }
+  },
+  "my": {
+    "govDomains": [
+      { "domain": "gov.my", "why": "restricted: Malaysia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Jabatan Imigresen Malaysia (Immigration Department of Malaysia)", "url": "https://www.imi.gov.my/index.php/en/" },
+      "apply": { "name": "MYVISA — Official Malaysia Visa Facilitation & Service (eVISA/eNTRI)", "url": "https://malaysiavisa.imi.gov.my/", "linkedFrom": "https://www.imi.gov.my/index.php/en/" },
+      "work": { "name": "Employment Pass — Jabatan Imigresen Malaysia", "url": "https://www.imi.gov.my/index.php/en/main-services/pass/employment-pass/" },
+      "study": { "name": "Student Pass — Jabatan Imigresen Malaysia", "url": "https://www.imi.gov.my/index.php/en/main-services/pass/student-pass/" },
+      "citizenship": { "name": "National Registration Department (JPN) — Citizenship", "url": "https://www.jpn.gov.my/en/citizenship/" }
+    }
+  },
+  "mv": {
+    "govDomains": [
+      { "domain": "gov.mv", "why": "restricted: Maldives government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Maldives Immigration", "url": "https://www.immigration.gov.mv/" },
+      "apply": { "name": "IMUGA — Maldives Immigration online visa/passport/traveller portal", "url": "https://imuga.immigration.gov.mv/", "linkedFrom": "https://www.immigration.gov.mv/" },
+      "work": { "name": "Work Visa — Maldives Immigration", "url": "https://www.immigration.gov.mv/visa/work-visa" }
+    }
+  },
+  "mn": {
+    "govDomains": [
+      { "domain": "gov.mn", "why": "restricted: Mongolia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Agency of Mongolia", "url": "https://immigration.gov.mn/en/" },
+      "apply": { "name": "Mongolia Electronic Visa Application System", "url": "https://www.evisa.mn/en/apply", "linkedFrom": "https://immigration.gov.mn/en/visa-total/" }
+    }
+  },
+  "mm": {
+    "govDomains": [
+      { "domain": "gov.mm", "why": "restricted: Myanmar government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Immigration and Population (MOIP)", "url": "https://moip.gov.mm/" },
+      "apply": { "name": "Myanmar eVisa (Official Government)", "url": "https://evisa.moip.gov.mm/", "linkedFrom": "https://moip.gov.mm/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Myanmar embassies abroad", "url": "https://www.mofa.gov.mm/" }
+    }
+  },
+  "np": {
+    "govDomains": [
+      { "domain": "gov.np", "why": "restricted: Nepal government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Immigration, Nepal", "url": "https://immigration.gov.np/index.php" },
+      "apply": { "name": "NepaliPort — Online Visa Application (ETA/Visa on Arrival)", "url": "https://nepaliport.immigration.gov.np/onlinevisa-mission/application", "linkedFrom": "https://immigration.gov.np/index.php" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Nepal diplomatic missions abroad", "url": "https://mofa.gov.np/pages/diplomatic-missions-25" }
+    }
+  },
+  "pk": {
+    "govDomains": [
+      { "domain": "gov.pk", "why": "restricted: Pakistan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Directorate General of Immigration & Passports (DGI&P)", "url": "https://dgip.gov.pk/home/" },
+      "apply": { "name": "e-Visa Pakistan (NADRA online visa system)", "url": "https://visa.nadra.gov.pk/", "linkedFrom": "https://dgip.gov.pk/home/" },
+      "citizenship": { "name": "Grant of Pakistan Citizenship — DGI&P", "url": "https://dgip.gov.pk/immigration/citizenship.php" }
+    }
+  },
+  "ph": {
+    "govDomains": [
+      { "domain": "gov.ph", "why": "restricted: Philippines government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Bureau of Immigration, Republic of the Philippines", "url": "https://immigration.gov.ph/" },
+      "apply": { "notApplicable": "No general online e-visa application; the Bureau's eServices portal (e-services.immigration.gov.ph) covers specific transactions like extensions/waivers, not initial visa issuance, which is done via Philippine missions abroad or visa-free/visa-on-arrival policy." },
+      "work": { "name": "Pre-arranged Employment Visa (9G) — Bureau of Immigration", "url": "https://immigration.gov.ph/pre-4-arranged-employment-visa-9g" },
+      "study": { "name": "Student Visa (9F) — Bureau of Immigration", "url": "https://immigration.gov.ph/student-visa-9f" },
+      "citizenship": { "name": "Recognition as Filipino Citizen — Bureau of Immigration", "url": "https://immigration.gov.ph/recognition-as-filipino-citizen/" }
+    }
+  },
+  "sg": {
+    "govDomains": [
+      { "domain": "gov.sg", "why": "restricted: Singapore government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration & Checkpoints Authority (ICA)", "url": "https://www.ica.gov.sg/" },
+      "apply": { "notApplicable": "Singapore has no general self-service e-visa portal; nationals who require a visa apply through Singapore overseas missions or authorised visa agents." },
+      "work": { "name": "Ministry of Manpower — Work Passes and Permits", "url": "https://www.mom.gov.sg/passes-and-permits" },
+      "study": { "name": "Student's Pass — ICA", "url": "https://www.ica.gov.sg/reside/STP/apply" },
+      "citizenship": { "name": "Apply for Singapore Citizenship — ICA", "url": "https://www.ica.gov.sg/reside/citizenship/apply" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Find an Overseas Mission", "url": "https://www.mfa.gov.sg/i-need-help-overseas/find-an-overseas-mission/" }
+    }
+  },
+  "lk": {
+    "govDomains": [
+      { "domain": "gov.lk", "why": "restricted: Sri Lanka government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Immigration and Emigration, Sri Lanka", "url": "https://www.immigration.gov.lk/index_e.php" },
+      "apply": { "name": "Sri Lanka Electronic Travel Authorization (ETA)", "url": "https://www.eta.gov.lk/", "linkedFrom": "https://www.immigration.gov.lk/index_e.php" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Sri Lanka Diplomatic Missions Abroad", "url": "https://www.mfa.gov.lk/diplomatic-missions/sri-lanka-diplomatic-abroad" },
+      "citizenship": { "name": "Citizenship — Department of Immigration and Emigration", "url": "https://www.immigration.gov.lk/pages_e.php?id=3" }
+    }
+  },
+  "tj": {
+    "govDomains": [
+      { "domain": "mfa.tj", "why": "restricted: Tajikistan Ministry of Foreign Affairs official domain" }
+    ],
+    "links": {
+      "apply": { "name": "Tajikistan e-Visa Application System", "url": "https://www.evisa.tj/", "linkedFrom": "https://www.mfa.tj/en/main/view/1471/electronic-visa-application-system" }
+    }
+  },
+  "th": {
+    "govDomains": [
+      { "domain": "go.th", "why": "restricted: Thailand government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Bureau, Royal Thai Police", "url": "https://www.immigration.go.th/" },
+      "apply": { "name": "Thailand Electronic Visa (Official)", "url": "https://thaievisa.go.th/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Diplomatic and Consular List", "url": "https://www.mfa.go.th/en/page/diplomatic-and-consular-list" }
+    }
+  },
+  "tl": {
+    "govDomains": [
+      { "domain": "gov.tl", "why": "restricted: Timor-Leste government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Service of Timor-Leste (Serviço de Migração)", "url": "https://migracao.gov.tl/" },
+      "apply": { "notApplicable": "No online e-visa application system found; visas are issued on arrival or through Timor-Leste missions abroad." },
+      "work": { "name": "Working Visa — Immigration Service of Timor-Leste", "url": "https://migracao.gov.tl/wp/working-visa/" }
+    }
+  },
+  "tm": {
+    "govDomains": [
+      { "domain": "gov.tm", "why": "restricted: Turkmenistan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of Turkmenistan", "url": "https://www.mfa.gov.tm/en" },
+      "apply": { "notApplicable": "No online e-visa system; Turkmenistan visas require an invitation letter processed through the Ministry of Foreign Affairs, a licensed travel agency, or a Turkmen embassy/consulate, with visa-on-arrival available only for pre-approved invitation holders." },
+      "embassies": { "name": "Diplomatic Missions and Consular Offices of Turkmenistan Abroad", "url": "https://mfa.gov.tm/en/consulates" }
+    }
+  },
+  "uz": {
+    "govDomains": [
+      { "domain": "gov.uz", "why": "restricted: Uzbekistan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of the Republic of Uzbekistan (visa authority)", "url": "https://gov.uz/mfa/en" },
+      "apply": { "name": "Official Electronic Visa Portal of the Republic of Uzbekistan", "url": "https://e-visa.gov.uz/", "linkedFrom": "https://gov.uz/en/mfa/activity_page/o-zbekiston-respublikasi-vizasi" }
+    }
+  },
+  "vn": {
+    "govDomains": [
+      { "domain": "gov.vn", "why": "restricted: Vietnam government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Vietnam Immigration Department — National Portal on Immigration", "url": "https://immigration.gov.vn/" },
+      "apply": { "name": "Vietnam National Electronic Visa System", "url": "https://evisa.xuatnhapcanh.gov.vn/trang-chu-ttdt" }
+    }
+  }
+}

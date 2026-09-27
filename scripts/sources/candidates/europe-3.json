@@ -1,0 +1,144 @@
+{
+  "pt": {
+    "govDomains": [
+      { "domain": "gov.pt", "why": "restricted: Portuguese government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "AIMA — Agência para a Integração, Migrações e Asilo", "url": "https://aima.gov.pt/en" },
+      "embassies": { "name": "Portal Diplomático (MNE) — Mapa da Rede Diplomática", "url": "https://portaldiplomatico.mne.gov.pt/rede-diplomatica/mapa-da-rede-diplomatica", "keywords": ["Mapa da Rede Diplomática"] },
+      "work": { "name": "AIMA — Working in Portugal", "url": "https://aima.gov.pt/en/trabalhar" },
+      "study": { "name": "AIMA — Studying in Portugal", "url": "https://aima.gov.pt/en/estudar" }
+    }
+  },
+  "ro": {
+    "govDomains": [
+      { "domain": "gov.ro", "why": "restricted: Romanian government domain suffix (mai.gov.ro is the Ministry of Internal Affairs)" }
+    ],
+    "links": {
+      "authority": { "name": "General Inspectorate for Immigration (IGI)", "url": "https://igi.mai.gov.ro/en/" },
+      "apply": { "name": "IGI — Portal Public Solicitări Online (online application portal)", "url": "https://portaligi.mai.gov.ro/portaligi/", "linkedFrom": "https://igi.mai.gov.ro/en/", "keywords": ["Portal Public Solicitări Online"] },
+      "work": { "name": "IGI — Work", "url": "https://igi.mai.gov.ro/en/work/" },
+      "study": { "name": "IGI — Studies", "url": "https://igi.mai.gov.ro/en/studies/" }
+    }
+  },
+  "ru": {
+    "govDomains": [
+      { "domain": "kdmid.ru", "why": "restricted: dedicated domain of the Consular Department (KD) of the Russian Ministry of Foreign Affairs; pages self-consistently identify as run by 'Consular department of MFA of the Russian Federation'" }
+    ],
+    "links": {
+      "authority": { "name": "Consular Information Portal — Ministry of Foreign Affairs of Russia (Consular Department)", "url": "https://www.kdmid.ru/", "keywords": ["Консульский информационный портал"] },
+      "apply": { "name": "Processing of an e-visa — Consular Department of MFA of Russia", "url": "https://evisa.kdmid.ru/" },
+      "citizenship": { "name": "MFA Consular Department — Issues of Citizenship", "url": "https://www.kdmid.ru/cons/issues-of-citizenship/", "keywords": ["Вопросы гражданства"] }
+    }
+  },
+  "sm": {
+    "govDomains": [
+      { "domain": "gov.sm", "why": "restricted: San Marino government portal domain suffix" },
+      { "domain": "esteri.sm", "why": "linked from https://www.gov.sm/pub1/GovSM/Dipartimenti/Dipartimento-Affari-Esteri.html" }
+    ],
+    "links": {
+      "authority": { "name": "Segreteria di Stato per gli Affari Esteri (Secretary of State for Foreign Affairs)", "url": "https://www.esteri.sm/", "keywords": ["Segreteria di Stato per gli Affari Esteri"] },
+      "embassies": { "name": "Rete Diplomatica e Consolare di San Marino (Diplomatic and Consular Network)", "url": "https://www.esteri.sm/pub1/EsteriSM/Dipartimento/Rete-Diplomatica-e-Consolare-RSM.html", "keywords": ["Rete Diplomatica e Consolare"] },
+      "citizenship": { "name": "Permessi di Soggiorno, Residenze e Cittadinanza (Stay Permits, Residency and Citizenship)", "url": "https://www.esteri.sm/pub1/EsteriSM/Servizi-per-utenza/Permessi-di-Soggiorno-e-Residenze.html", "keywords": ["Permessi di Soggiorno, Residenze e Cittadinanza"] }
+    }
+  },
+  "rs": {
+    "govDomains": [
+      { "domain": "gov.rs", "why": "restricted: Serbian government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of the Interior of the Republic of Serbia (MUP)", "url": "https://www.mup.gov.rs/wps/portal/en" },
+      "apply": { "name": "eVisa Serbia (Welcome to Serbia)", "url": "https://evisa.welcometoserbia.gov.rs/", "linkedFrom": "https://welcometoserbia.gov.rs/home" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Serbian Diplomatic Missions (Embassies)", "url": "https://www.mfa.gov.rs/en/diplomatic-missions/serbian-diplomatic-missions/embassies" },
+      "work": { "name": "Welcome to Serbia — Residence and Work Permit", "url": "https://welcometoserbia.gov.rs/residence-and-work-permit" },
+      "study": { "name": "Welcome to Serbia — Reasons to Study in the Republic of Serbia", "url": "https://welcometoserbia.gov.rs/reasons-to-study-in-the-republic-of-serbia" }
+    }
+  },
+  "sk": {
+    "govDomains": [
+      { "domain": "gov.sk", "why": "restricted: Slovak government domain suffix" },
+      { "domain": "minv.sk", "why": "restricted: official domain of the Ministry of Interior of the Slovak Republic" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior of the Slovak Republic — Residence of Foreigners", "url": "https://www.minv.sk/?residence-of-an-foreigner=" },
+      "apply": { "name": "Elektronické služby MV SR (Electronic Services of the Ministry of Interior)", "url": "https://pes.minv.sk/", "keywords": ["Elektronické služby MV SR"] },
+      "work": { "name": "Ministry of Labour — Employment of Foreigners in Slovakia", "url": "https://www.employment.gov.sk/en/information-foreigners/employment/" },
+      "study": { "name": "Ministry of Labour — Education of Foreigners in the Slovak Republic", "url": "https://www.employment.gov.sk/en/information-foreigners/education/" },
+      "citizenship": { "name": "Ministry of Interior — Štátne občianstvo (State Citizenship)", "url": "https://www.minv.sk/?statne-obcianstvo", "keywords": ["Štátne občianstvo"] }
+    }
+  },
+  "si": {
+    "govDomains": [
+      { "domain": "gov.si", "why": "restricted: Slovenian government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of the Interior and Public Administration", "url": "https://www.gov.si/en/state-authorities/ministries/ministry-of-the-interior-and-public-administration/" },
+      "embassies": { "name": "Slovenia's Representations Abroad", "url": "https://www.gov.si/en/representations/" },
+      "work": { "name": "GOV.SI — Entry and Residence (incl. employment purposes)", "url": "https://www.gov.si/en/topics/entry-and-residence/" },
+      "study": { "name": "GOV.SI — Entry and Residence (incl. study/vocational training)", "url": "https://www.gov.si/en/topics/entry-and-residence/" },
+      "citizenship": { "name": "GOV.SI — Citizenship, Documents, Registers", "url": "https://www.gov.si/en/policies/state-and-society/citizenship-documents-registers/" }
+    }
+  },
+  "es": {
+    "govDomains": [
+      { "domain": "gob.es", "why": "restricted: Spanish government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministerio de Asuntos Exteriores, Unión Europea y Cooperación", "url": "https://www.exteriores.gob.es" },
+      "embassies": { "name": "Ministerio de Asuntos Exteriores — Embajadas y Consulados", "url": "https://www.exteriores.gob.es/en/EmbajadasConsulados/Paginas/index.aspx" },
+      "citizenship": { "name": "Ministerio de Justicia — Nacionalidad", "url": "https://www.mjusticia.gob.es/es/ciudadania/nacionalidad", "keywords": ["Nacionalidad"] }
+    }
+  },
+  "se": {
+    "govDomains": [
+      { "domain": "migrationsverket.se", "why": "restricted: Sweden's national migration agency domain (Migrationsverket) — the sole Swedish authority for visas and residence permits" },
+      { "domain": "swedenabroad.se", "why": "restricted: official Sweden Abroad domain for Swedish embassies and consulates, operated by the Swedish Ministry for Foreign Affairs" }
+    ],
+    "links": {
+      "authority": { "name": "Swedish Migration Agency (Migrationsverket)", "url": "https://www.migrationsverket.se/en.html" },
+      "embassies": { "name": "Sweden Abroad — Swedish Embassies and Consulates", "url": "https://www.swedenabroad.se" },
+      "work": { "name": "Migrationsverket — Work permit or residence permit to work in Sweden", "url": "https://www.migrationsverket.se/en/you-want-to-apply/work.html" },
+      "study": { "name": "Migrationsverket — Residence permit for studies in Sweden", "url": "https://www.migrationsverket.se/en/you-want-to-apply/study.html" },
+      "citizenship": { "name": "Migrationsverket — Swedish citizenship", "url": "https://www.migrationsverket.se/en/you-want-to-apply/swedish-citizenship.html" }
+    }
+  },
+  "ch": {
+    "govDomains": [
+      { "domain": "admin.ch", "why": "restricted: Swiss federal administration domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "State Secretariat for Migration (SEM)", "url": "https://www.sem.admin.ch/sem/en/home.html" },
+      "apply": { "name": "Swiss Online Visa Portal (swiss-visa.ch)", "url": "https://www.swiss-visa.ch", "linkedFrom": "https://www.sem.admin.ch/sem/en/home/themen/einreise.html" },
+      "embassies": { "name": "FDFA — Contact details for Swiss representations abroad", "url": "https://www.eda.admin.ch/en/swiss-representations-abroad" },
+      "work": { "name": "SEM — Working in Switzerland", "url": "https://www.sem.admin.ch/sem/en/home/themen/arbeit.html" },
+      "citizenship": { "name": "SEM — How do I become a Swiss citizen?", "url": "https://www.sem.admin.ch/sem/en/home/integration-einbuergerung/schweizer-werden.html" }
+    }
+  },
+  "ua": {
+    "govDomains": [
+      { "domain": "gov.ua", "why": "restricted: Ukrainian government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "State Migration Service of Ukraine", "url": "https://dmsu.gov.ua/en-home.html" },
+      "work": { "name": "State Migration Service — Issuance of Temporary Residence Permit", "url": "https://dmsu.gov.ua/en-home/services/documenting-foreigners/issuance-of-temporary-residence-permit.html" },
+      "citizenship": { "name": "State Migration Service — Acquisition of Ukrainian Citizenship", "url": "https://dmsu.gov.ua/en-home/services/acquisition-of-ukrainian-citizenship.html" }
+    }
+  },
+  "gb": {
+    "govDomains": [
+      { "domain": "gov.uk", "why": "restricted: UK government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "UK Visas and Immigration", "url": "https://www.gov.uk/government/organisations/uk-visas-and-immigration" },
+      "apply": { "name": "How to apply for a visa to come to the UK", "url": "https://www.gov.uk/apply-to-come-to-the-uk" },
+      "embassies": { "name": "GOV.UK — Help and services around the world (British embassies, high commissions and consulates)", "url": "https://www.gov.uk/world" },
+      "work": { "name": "Work in the UK", "url": "https://www.gov.uk/browse/visas-immigration/work-visas" },
+      "study": { "name": "Study in the UK", "url": "https://www.gov.uk/browse/visas-immigration/student-visas" },
+      "citizenship": { "name": "Citizenship and living in the UK", "url": "https://www.gov.uk/browse/citizenship" }
+    }
+  },
+  "va": {
+    "govDomains": [],
+    "links": {}
+  }
+}

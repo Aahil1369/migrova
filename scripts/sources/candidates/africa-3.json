@@ -1,0 +1,174 @@
+{
+  "na": {
+    "govDomains": [
+      { "domain": "gov.na", "why": "restricted: Republic of Namibia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Home Affairs, Immigration, Safety and Security (MHAISS)", "url": "https://mha.gov.na/" },
+      "apply": { "name": "MHAISS E-Services Portal", "url": "https://eservices.mhaiss.gov.na/" },
+      "work": { "name": "Employment and Renewal Permit – MHAISS", "url": "https://mha.gov.na/employment-and-renewal-permit" },
+      "citizenship": { "name": "Citizenship (Namibian Citizenship Act, Act No 14 of 1990) – MHAISS", "url": "https://mha.gov.na/citizenship-namibian-citizenship-act-act-no-14-of-1990-" }
+    }
+  },
+  "ne": {
+    "govDomains": [
+      { "domain": "gouv.ne", "why": "restricted: Republic of Niger government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministère des Affaires Étrangères, de la Coopération, de l'Intégration Africaine et des Nigériens de l'Extérieur — Entrée au Niger", "url": "https://diplomatie.gouv.ne/index.php/services-aux-usagers/entree-au-niger", "keywords": ["visa", "entrée"] },
+      "apply": { "notApplicable": "No online e-visa system found; Niger's Ministry of Foreign Affairs states visas are obtained through Niger's diplomatic missions abroad (processing ~15 days), with exceptional issuance at border posts requiring Ministry of Interior authorization" },
+      "embassies": { "name": "Ministère des Affaires Étrangères — Adresses des missions diplomatiques du Niger", "url": "https://diplomatie.gouv.ne/index.php/representations-diplomatiques/les-ambassades", "keywords": ["ambassades", "missions diplomatiques"] }
+    }
+  },
+  "ng": {
+    "govDomains": [
+      { "domain": "gov.ng", "why": "restricted: Federal Republic of Nigeria government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Nigeria Immigration Service (NIS)", "url": "https://immigration.gov.ng/" },
+      "apply": { "name": "Nigeria Immigration Service e-Visa Portal", "url": "https://evisa.immigration.gov.ng/", "linkedFrom": "https://immigration.gov.ng/visa/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Diplomatic Missions", "url": "https://www.foreignaffairs.gov.ng/diplomatic-missions/" },
+      "work": { "name": "Temporary Work Permit (TWP) – Nigeria Immigration Service", "url": "https://twp.immigration.gov.ng/", "linkedFrom": "https://immigration.gov.ng/visa/" },
+      "study": { "name": "Nigeria Student Visa – Nigeria Immigration Service", "url": "https://immigration.gov.ng/nigerian-visa/" },
+      "citizenship": { "name": "Citizenship and Business Department – Ministry of Interior", "url": "https://candb.interior.gov.ng/home-2/", "linkedFrom": "https://interior.gov.ng/citizenship-and-business/" }
+    }
+  },
+  "rw": {
+    "govDomains": [
+      { "domain": "gov.rw", "why": "restricted: Republic of Rwanda government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Rwanda Directorate General of Immigration and Emigration", "url": "https://www.migration.gov.rw/" },
+      "embassies": { "name": "Ministry of Foreign Affairs and Cooperation — Diplomatic Missions", "url": "https://www.minaffet.gov.rw/diplomatic-missions" },
+      "work": { "name": "Employment Permits – Directorate General of Immigration and Emigration", "url": "https://www.migration.gov.rw/our-services/permit/employment", "linkedFrom": "https://www.migration.gov.rw/" },
+      "study": { "name": "Study & Research Permits – Directorate General of Immigration and Emigration", "url": "https://www.migration.gov.rw/our-services/permit/study-research" },
+      "citizenship": { "name": "Citizenship – Directorate General of Immigration and Emigration", "url": "https://www.migration.gov.rw/our-services/citizenshipss" }
+    }
+  },
+  "st": {
+    "govDomains": [
+      { "domain": "gov.st", "why": "restricted: Democratic Republic of São Tomé and Príncipe government suffix" }
+    ]
+  },
+  "sn": {
+    "govDomains": [
+      { "domain": "gouv.sn", "why": "restricted: Republic of Senegal government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministère de l'Intérieur et de la Sécurité publique (Sénégal)", "url": "https://www.interieur.gouv.sn/", "keywords": ["intérieur", "sécurité publique"] },
+      "apply": { "notApplicable": "No centralized online e-visa portal found; Senegal's Ministry of Foreign Affairs directs visa applicants to Senegalese embassies/consulates abroad (e.g. consulsen-paris.gouv.sn)" },
+      "embassies": { "name": "Ministère de l'Intégration Africaine et des Affaires Étrangères — Missions diplomatiques et postes consulaires", "url": "https://www.diplomatie.gouv.sn/missions-diplomatiques-et-postes-consulaires", "keywords": ["missions diplomatiques", "postes consulaires"] }
+    }
+  },
+  "sc": {
+    "govDomains": [
+      { "domain": "gov.sc", "why": "restricted: Republic of Seychelles government suffix" },
+      { "domain": "govtas.com", "why": "linked from https://www.ics.gov.sc/visa-and-travel/visiting-seychelles" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration and Civil Status Seychelles (ICS)", "url": "https://www.ics.gov.sc/" },
+      "apply": { "name": "Seychelles Travel Authorisation / Immigration e-Forms", "url": "https://seychelles.govtas.com/", "linkedFrom": "https://www.ics.gov.sc/visa-and-travel/visiting-seychelles" },
+      "embassies": { "name": "Ministry of Foreign Affairs and the Diaspora — Seychelles Diplomatic Missions Abroad", "url": "https://mfa.gov.sc/diplomatic-directory-2/seychelles-representative-overseas/seychelles-diplomatic-missions/" },
+      "work": { "name": "Gainful Occupation Permit (GOP) – ICS", "url": "https://www.ics.gov.sc/permits/gainful-occupation-permit" },
+      "study": { "name": "Student Permit – ICS", "url": "https://www.ics.gov.sc/permits/student-permit" },
+      "citizenship": { "name": "Acquisition of Citizenship – ICS", "url": "https://www.ics.gov.sc/citizenship/aquisition-of-citizenship" }
+    }
+  },
+  "sl": {
+    "govDomains": [
+      { "domain": "gov.sl", "why": "restricted: Republic of Sierra Leone government suffix" }
+    ]
+  },
+  "so": {
+    "govDomains": [
+      { "domain": "gov.so", "why": "restricted: Federal Republic of Somalia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs & International Cooperation (Somalia)", "url": "https://web.mfa.gov.so/" },
+      "apply": { "notApplicable": "Somalia's e-Visa portal (Ministry of Information, Culture & Tourism, moi.gov.so/tourism.php) is announced but explicitly states it is not yet operational (\"Full e-visa portal launching in 2026 — register your interest\"), with no live application link" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Find our Embassy Abroad", "url": "https://web.mfa.gov.so/find-our-embassy-abroad/" }
+    }
+  },
+  "za": {
+    "govDomains": [
+      { "domain": "gov.za", "why": "restricted: Republic of South Africa government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Home Affairs (DHA)", "url": "https://www.dha.gov.za/" },
+      "apply": { "name": "DHA ePermits (eHome Affairs)", "url": "https://ehome.dha.gov.za/epermit/home", "linkedFrom": "https://www.dha.gov.za/index.php/immigration-services" },
+      "embassies": { "name": "Department of International Relations and Cooperation (DIRCO) — Mission Websites", "url": "https://www.dirco.gov.za/websites-of-sa-mission/" },
+      "work": { "name": "General Work Visa – DHA Immigration Services", "url": "https://www.dha.gov.za/index.php/immigration-services/types-of-visas#generalwork-visa" },
+      "study": { "name": "Study Visa – DHA Immigration Services", "url": "https://www.dha.gov.za/index.php/immigration-services/types-of-visas#study-visa" }
+    }
+  },
+  "ss": {
+    "govDomains": [
+      { "domain": "gov.ss", "why": "restricted: Republic of South Sudan government suffix" }
+    ]
+  },
+  "sd": {
+    "govDomains": [
+      { "domain": "gov.sd", "why": "restricted: Republic of the Sudan government suffix" },
+      { "domain": "mofasudan.website", "why": "linked from https://sudan.gov.sd/ (Prime Minister's official government portal, related links section)" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of the Republic of Sudan", "url": "https://mofasudan.website/", "linkedFrom": "https://sudan.gov.sd/", "keywords": ["وزارة الخارجية", "السودان"] }
+    }
+  },
+  "tz": {
+    "govDomains": [
+      { "domain": "go.tz", "why": "restricted: United Republic of Tanzania government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Service Department (Tanzania)", "url": "https://www.immigration.go.tz/" }
+    }
+  },
+  "tg": {
+    "govDomains": [
+      { "domain": "gouv.tg", "why": "restricted: Togolese Republic government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Direction Générale de la Documentation Nationale (DGDN) — Voyage Togo", "url": "https://voyage.gouv.tg/", "linkedFrom": "https://service-public.gouv.tg/category/papiers-citoyennete/62197bd333c0179346497418" },
+      "apply": { "name": "Voyage Togo — e-Visa and immigration formalities portal", "url": "https://voyage.gouv.tg/", "linkedFrom": "https://service-public.gouv.tg/category/papiers-citoyennete/62197bd333c0179346497418" }
+    }
+  },
+  "tn": {
+    "govDomains": [
+      { "domain": "gov.tn", "why": "restricted: Republic of Tunisia government suffix" }
+    ]
+  },
+  "ug": {
+    "govDomains": [
+      { "domain": "go.ug", "why": "restricted: Republic of Uganda government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "National Citizenship and Immigration Control (NCIC), Uganda", "url": "https://immigration.go.ug/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Missions Abroad", "url": "https://www.mofa.go.ug/", "keywords": ["missions abroad"] },
+      "work": { "name": "Work Permit – NCIC", "url": "https://immigration.go.ug/services/work-permit" },
+      "study": { "name": "Student Pass – NCIC", "url": "https://immigration.go.ug/services/student-pass" },
+      "citizenship": { "name": "Citizenship by Naturalisation – NCIC", "url": "https://immigration.go.ug/citizenship/naturalisation" }
+    }
+  },
+  "zm": {
+    "govDomains": [
+      { "domain": "gov.zm", "why": "restricted: Republic of Zambia government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Zambia Immigration Department", "url": "https://www.zambiaimmigration.gov.zm/" },
+      "apply": { "name": "Zambia Immigration e-Services (Apply for a Visa Online)", "url": "https://eservices.zambiaimmigration.gov.zm/", "linkedFrom": "https://www.zambiaimmigration.gov.zm/" },
+      "work": { "name": "Permit Types (incl. Employment Permit) – Zambia Immigration Department", "url": "https://www.zambiaimmigration.gov.zm/permit-types/" },
+      "study": { "name": "Permit Types (incl. Study Permit) – Zambia Immigration Department", "url": "https://www.zambiaimmigration.gov.zm/permit-types/" }
+    }
+  },
+  "zw": {
+    "govDomains": [
+      { "domain": "gov.zw", "why": "restricted: Republic of Zimbabwe government suffix" },
+      { "domain": "zimimmigration.gov.zw", "why": "official domain of Zimbabwe's Department of Immigration" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Immigration, Zimbabwe", "url": "https://www.zimimmigration.gov.zw/" },
+      "apply": { "name": "Zimbabwe eVisa Portal", "url": "https://evisa.gov.zw/", "linkedFrom": "https://www.zimimmigration.gov.zw/" },
+      "work": { "name": "e-Permits (work/residence permits) – Department of Immigration", "url": "https://www.epermits.zimimmigration.gov.zw", "linkedFrom": "https://www.zimimmigration.gov.zw/" }
+    }
+  }
+}

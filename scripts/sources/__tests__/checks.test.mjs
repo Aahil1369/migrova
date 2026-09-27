@@ -91,6 +91,8 @@ test('non-gov host allowed only when a verified gov page links to it', () => {
 
 test('contentMatches uses type keywords, candidate name and candidate keywords', () => {
   assert.ok(contentMatches('embassies', { name: 'x' }, 'Nos ambassades et consulats'));
+  assert.ok(contentMatches('embassies', { name: 'x' }, 'Swiss representations abroad'));
+  assert.ok(contentMatches('embassies', { name: 'x' }, 'Deutsche Auslandsvertretungen'));
   assert.ok(contentMatches('citizenship', { name: 'x' }, 'Einbürgerung in Deutschland'));
   assert.ok(contentMatches('authority', { name: 'x', keywords: ['extranjería'] }, 'Portal de Extranjería'));
   assert.ok(contentMatches('authority', { name: 'Útlendingastofnun (Directorate of Immigration)' }, 'Útlendingastofnun forsíða'));

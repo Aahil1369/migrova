@@ -15,6 +15,7 @@ export const KEYWORDS = {
   apply: [...AUTHORITY, 'e-visa', 'evisa', 'eta', 'application', 'apply', 'solicitud', 'demande', 'antrag'],
   embassies: [
     'embassy', 'embassies', 'consulate', 'consular', 'mission', 'high commission',
+    'representation', 'diplomatic', 'représentation', 'vertretung', 'rappresentanz', 'representación', 'representação',
     'ambassade', 'consulat', 'embajada', 'consulado', 'botschaft', 'konsulat', 'ambasciata',
     'büyükelçilik', 'konsolosluk', 'посольств', 'консульств', 'سفارة', 'قنصلية',
     '大使馆', '领事', '大使館', '領事', '대사관', '영사', 'embaixada',

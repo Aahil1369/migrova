@@ -1,0 +1,145 @@
+{
+  "dz": {
+    "govDomains": [
+      { "domain": "gov.dz", "why": "restricted: Algeria government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of Algeria", "url": "https://www.mfa.gov.dz/" },
+      "apply": { "notApplicable": "No online e-visa; Algeria's Ministry of Foreign Affairs states foreigners must obtain visas from Algerian diplomatic/consular posts abroad" },
+      "embassies": { "name": "Représentations diplomatiques et consulaires algériennes à l'étranger", "url": "https://www.mfa.gov.dz/fr/embassys-locations-list", "keywords": ["ambassades", "consulaires", "étranger"] },
+      "work": { "name": "Travail et résidence en Algérie", "url": "https://www.mfa.gov.dz/fr/services-for-foreigners/work-and-residence-in-algeria", "keywords": ["travail", "résidence"] }
+    }
+  },
+  "ao": {
+    "govDomains": [
+      { "domain": "gov.ao", "why": "restricted: Angola government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Serviço de Migração e Estrangeiros (SME)", "url": "https://www.sme.gov.ao/ao/" },
+      "apply": { "name": "SME eVISA", "url": "https://www.sme.gov.ao/ao/evisa/" },
+      "citizenship": { "name": "SEPE — Aquisição de Nacionalidade", "url": "https://sepe.gov.ao/catalogo/mais-servicos/relacoes-internacionais/aquisicao-de-nacionalidade", "keywords": ["nacionalidade", "aquisição"] }
+    }
+  },
+  "bj": {
+    "govDomains": [
+      { "domain": "gouv.bj", "why": "restricted: Benin government portal suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Direction de l'Émigration et de l'Immigration (DEI)", "url": "https://dei.gouv.bj/" },
+      "apply": { "name": "e-Visa Bénin — official visa application platform", "url": "https://evisa.bj/", "linkedFrom": "https://gouv.bj/" }
+    }
+  },
+  "bw": {
+    "govDomains": [
+      { "domain": "gov.bw", "why": "restricted: Botswana government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Nationality, Immigration and Gender Affairs", "url": "https://www.gov.bw/ministries/ministry-nationality-immigration-and-gender-affairs" },
+      "apply": { "name": "Botswana e-Visa", "url": "https://evisa.gov.bw" },
+      "work": { "name": "Work Permit Application", "url": "https://www.gov.bw/residency-and-work/work-permit-application" },
+      "study": { "name": "Visa Application – Study Visa", "url": "https://www.gov.bw/visa-applications/visa-application-study-visa" },
+      "citizenship": { "name": "Citizenship Application – Naturalization", "url": "https://www.gov.bw/citizenship/citizenship-application-naturalization" }
+    }
+  },
+  "bf": {
+    "govDomains": [
+      { "domain": "gov.bf", "why": "restricted: Burkina Faso government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministère des Affaires Étrangères et de la Coopération Régionale", "url": "https://diplomatie.gov.bf/" },
+      "apply": { "name": "eVisaBurkina", "url": "https://www.visaburkina.bf/en/home/", "linkedFrom": "https://diplomatie.gov.bf/" }
+    }
+  },
+  "bi": {
+    "govDomains": [
+      { "domain": "gov.bi", "why": "restricted: Burundi government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Commissariat Général des Migrations (CGM)", "url": "https://migration.gov.bi/" },
+      "apply": { "name": "Formulaire de demande de visa en ligne", "url": "https://migration.gov.bi/Apply/step1/3" },
+      "embassies": { "name": "Burundi Embassies Abroad", "url": "https://www.mae.gov.bi/en/burundi-embassies-abroad/" }
+    }
+  },
+  "cv": {
+    "govDomains": [
+      { "domain": "gov.cv", "why": "restricted: Cabo Verde government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Alta Autoridade para a Imigração (AAI)", "url": "https://aai.gov.cv/" },
+      "apply": { "notApplicable": "No confirmed online visa application; AAI/Direção de Estrangeiros e Fronteiras (DEF) process visas at consulates/DEF offices, with some services (e.g. residence titles) requested via SNIAC" },
+      "work": { "name": "Acesso ao mercado de trabalho", "url": "https://aai.gov.cv/imigrantes/acesso-ao-mercado-de-trabalho", "keywords": ["mercado de trabalho", "estrangeiros"] },
+      "study": { "name": "Acesso à educação", "url": "https://aai.gov.cv/imigrantes/acesso-a-educacao", "keywords": ["educação", "acesso"] },
+      "citizenship": { "name": "Nacionalidade Cabo-verdiana", "url": "https://aai.gov.cv/imigrantes/nacionalidade-cabo-verdiana", "keywords": ["nacionalidade", "naturalização"] }
+    }
+  },
+  "cm": {
+    "govDomains": [],
+    "links": {}
+  },
+  "cf": {
+    "govDomains": [
+      { "domain": "gouv.cf", "why": "restricted: Central African Republic government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "Visa court séjour — Ambassade de la RCA à Paris", "url": "https://paris.diplomatie.gouv.cf/services/24/visa-court-sejour/", "keywords": ["visa", "court séjour"] }
+    }
+  },
+  "td": {
+    "govDomains": [],
+    "links": {}
+  },
+  "km": {
+    "govDomains": [],
+    "links": {}
+  },
+  "cg": {
+    "govDomains": [],
+    "links": {}
+  },
+  "cd": {
+    "govDomains": [
+      { "domain": "gouv.cd", "why": "restricted: DR Congo government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "e-Visa RDC", "url": "https://evisa.gouv.cd" }
+    }
+  },
+  "ci": {
+    "govDomains": [
+      { "domain": "gouv.ci", "why": "restricted: Côte d'Ivoire government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministère des Affaires Étrangères, de l'Intégration Africaine et de la Diaspora", "url": "https://www.diplomatie.gouv.ci/accueil" }
+    }
+  },
+  "dj": {
+    "govDomains": [
+      { "domain": "gouv.dj", "why": "restricted: Djibouti government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "e-Visa Djibouti", "url": "https://www.evisa.gouv.dj/" }
+    }
+  },
+  "eg": {
+    "govDomains": [
+      { "domain": "gov.eg", "why": "restricted: Egypt government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of Egypt", "url": "https://www.mfa.gov.eg/en" },
+      "apply": { "name": "Visa2Egypt — official e-Visa portal", "url": "https://visa2egypt.gov.eg", "linkedFrom": "https://www.mfa.gov.eg/en" },
+      "embassies": { "name": "Egyptian Diplomatic Missions Abroad", "url": "https://www.mfa.gov.eg/en/EgyptianAbroad/EmbassiesAbroad" }
+    }
+  },
+  "gq": {
+    "govDomains": [
+      { "domain": "gob.gq", "why": "restricted: Equatorial Guinea government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministerio de Asuntos Exteriores y de Cooperación Internacional y Diaspora", "url": "https://minexteriores.gob.gq", "keywords": ["asuntos exteriores", "embajadas"] }
+    }
+  },
+  "er": {
+    "govDomains": [],
+    "links": {}
+  }
+}

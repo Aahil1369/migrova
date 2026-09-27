@@ -1,0 +1,134 @@
+{
+  "au": {
+    "govDomains": [
+      { "domain": "gov.au", "why": "restricted: Australian Government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Department of Home Affairs — Immigration and citizenship", "url": "https://immi.homeaffairs.gov.au/" },
+      "apply": { "name": "ImmiAccount — applying online for Australian visas", "url": "https://immi.homeaffairs.gov.au/help-support/applying-online-or-on-paper/online" },
+      "embassies": { "name": "DFAT — Australia's embassies and consulates overseas", "url": "https://www.dfat.gov.au/about-us/our-locations/missions/our-embassies-and-consulates-overseas" }
+    }
+  },
+  "fj": {
+    "govDomains": [
+      { "domain": "gov.fj", "why": "restricted: Fiji Government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Fiji Ministry of Immigration", "url": "https://immigration.gov.fj/" },
+      "apply": { "name": "ImmiHub — Fiji Immigration online visa portal", "url": "https://immihub.immigration.gov.fj/FIDPortal/welcome", "linkedFrom": "https://immigration.gov.fj/" },
+      "embassies": { "name": "Fiji Ministry of Foreign Affairs — Fiji Missions", "url": "https://www.foreignaffairs.gov.fj/" },
+      "work": { "name": "Work in Fiji — Ministry of Immigration", "url": "https://immigration.gov.fj/work-in-fiji/" },
+      "study": { "name": "Study in Fiji — Ministry of Immigration", "url": "https://immigration.gov.fj/study-in-fiji/" },
+      "citizenship": { "name": "Citizenship By Birth — Ministry of Immigration", "url": "https://immigration.gov.fj/citizenship-by-birth/" }
+    }
+  },
+  "ki": {
+    "govDomains": [
+      { "domain": "gov.ki", "why": "restricted: Government of Kiribati suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Kiribati Ministry of Foreign Affairs & Immigration", "url": "https://www.mfa.gov.ki/" },
+      "apply": { "notApplicable": "No online visa portal found; visa forms are downloaded as PDFs and submitted by email to the Immigration Division" },
+      "embassies": { "name": "Kiribati Ministry of Foreign Affairs & Immigration — Missions", "url": "https://www.mfa.gov.ki/missions/" },
+      "work": { "name": "Immigration — Kiribati Ministry of Foreign Affairs & Immigration", "url": "https://www.mfa.gov.ki/immigration/" },
+      "study": { "name": "Immigration — Kiribati Ministry of Foreign Affairs & Immigration", "url": "https://www.mfa.gov.ki/immigration/" }
+    }
+  },
+  "mh": {
+    "govDomains": [],
+    "links": {}
+  },
+  "fm": {
+    "govDomains": [
+      { "domain": "gov.fm", "why": "restricted: Federated States of Micronesia national government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "FSM National Government (immigration functions under Dept. of Justice / Dept. of Foreign Affairs)", "url": "https://gov.fm/" },
+      "embassies": { "name": "FSM National Government — Embassies & Consulate Offices", "url": "https://gov.fm/mission-abroad/" }
+    }
+  },
+  "nr": {
+    "govDomains": [],
+    "links": {}
+  },
+  "nz": {
+    "govDomains": [
+      { "domain": "govt.nz", "why": "restricted: New Zealand Government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration New Zealand", "url": "https://www.immigration.govt.nz/" },
+      "apply": { "name": "NZeTA application — New Zealand Electronic Travel Authority", "url": "https://nzeta.immigration.govt.nz/" },
+      "embassies": { "name": "New Zealand Ministry of Foreign Affairs and Trade — Embassies", "url": "https://www.mfat.govt.nz/en/embassies" },
+      "work": { "name": "Work — Immigration New Zealand", "url": "https://www.immigration.govt.nz/work/" },
+      "study": { "name": "Study — Immigration New Zealand", "url": "https://www.immigration.govt.nz/study/" },
+      "citizenship": { "name": "Where to apply for New Zealand citizenship and a passport — Immigration New Zealand", "url": "https://www.immigration.govt.nz/live/where-to-apply-for-new-zealand-citizenship-and-a-passport/" }
+    }
+  },
+  "pw": {
+    "govDomains": [
+      { "domain": "palaugov.pw", "why": "restricted: Republic of Palau government portal domain" }
+    ],
+    "links": {
+      "authority": { "name": "Palau Ministry of Justice — Bureau of Immigration", "url": "https://www.palaugov.pw/moj" },
+      "apply": { "name": "Palau Entry Form — pre-arrival travel declaration", "url": "https://palautravel.pw/", "linkedFrom": "https://www.palaugov.pw/" },
+      "embassies": { "name": "Palau Ministry of State — Embassies & Consulates", "url": "https://www.palaugov.pw/executive-branch/ministries/state/" }
+    }
+  },
+  "pg": {
+    "govDomains": [
+      { "domain": "gov.pg", "why": "restricted: Papua New Guinea Government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "PNG Immigration and Citizenship Authority (ICA)", "url": "https://www.ica.gov.pg/", "linkedFrom": "https://dfa.gov.pg/" },
+      "embassies": { "name": "PNG Department of Foreign Affairs — Missions/Posts", "url": "https://dfa.gov.pg/mission-post/" }
+    }
+  },
+  "ws": {
+    "govDomains": [
+      { "domain": "gov.ws", "why": "restricted: Government of Samoa suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Samoa Immigration — Ministry of the Prime Minister and Cabinet", "url": "https://mpmc.gov.ws/divisions/immigration/" },
+      "apply": { "notApplicable": "No online visa/permit application portal found; applications are submitted with forms and fees in person or by mail" },
+      "embassies": { "name": "Samoa Ministry of Foreign Affairs and Trade — Diplomatic Missions", "url": "https://www.mfat.gov.ws/embassies/" },
+      "work": { "name": "Permit Services (Temporary Resident Permit for Employment) — Samoa Immigration", "url": "https://mpmc.gov.ws/divisions/immigration/permits-2/" },
+      "study": { "name": "Permit Services (Temporary Resident Permit for Study) — Samoa Immigration", "url": "https://mpmc.gov.ws/divisions/immigration/permits-2/" },
+      "citizenship": { "name": "Citizenship Services — Ministry of the Prime Minister and Cabinet", "url": "https://mpmc.gov.ws/divisions/immigration/citizenship-services/" }
+    }
+  },
+  "sb": {
+    "govDomains": [
+      { "domain": "gov.sb", "why": "restricted: Solomon Islands Government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Solomon Islands Immigration Division", "url": "https://immigration.gov.sb/" },
+      "apply": { "name": "Solomon Islands eVisa online application", "url": "https://immigration.sig.gov.sb/evisa/account/login", "linkedFrom": "https://immigration.gov.sb/" },
+      "work": { "name": "Working visas — Solomon Islands Immigration Division", "url": "https://immigration.gov.sb/working/" },
+      "study": { "name": "Student visa — Solomon Islands Immigration Division", "url": "https://immigration.gov.sb/student-visa-main-applicant-or-dependent/" }
+    }
+  },
+  "to": {
+    "govDomains": [
+      { "domain": "gov.to", "why": "restricted: Kingdom of Tonga Government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Tonga Ministry of Foreign Affairs (handles passport and visa services)", "url": "https://www.gov.to/ministry-of-foreign-affairs/" }
+    }
+  },
+  "tv": {
+    "govDomains": [],
+    "links": {}
+  },
+  "vu": {
+    "govDomains": [
+      { "domain": "gov.vu", "why": "restricted: Vanuatu Government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Vanuatu Department of Immigration and Passport Services", "url": "https://immigration.gov.vu/" },
+      "apply": { "name": "Vanuatu eVisa Application Portal", "url": "https://evisa.gov.vu/", "linkedFrom": "https://immigration.gov.vu/" },
+      "work": { "name": "Work In Vanuatu — Department of Immigration", "url": "https://immigration.gov.vu/work/" },
+      "study": { "name": "Study in Vanuatu — Department of Immigration", "url": "https://immigration.gov.vu/study/" },
+      "citizenship": { "name": "Vanuatu Citizenship Office and Commission", "url": "https://vancitizenship.gov.vu/" }
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "bh": {
+    "govDomains": [
+      { "domain": "gov.bh", "why": "restricted: Bahrain government suffix" },
+      { "domain": "bahrain.bh", "why": "restricted: Kingdom of Bahrain National eGovernment Portal" }
+    ],
+    "links": {
+      "authority": { "name": "Nationality, Passports and Residence Affairs (NPRA)", "url": "https://www.npra.gov.bh/en/", "linkedFrom": "https://www.bahrain.bh/wps/portal/en/BNP/HereInBahrain/NationalIdentificationAndVisas" },
+      "apply": { "name": "Bahrain eVisa (NPRA online visa system)", "url": "https://www.evisa.gov.bh/VISA/visaInput?nav=A0S&A0S=a", "linkedFrom": "https://www.bahrain.bh/wps/portal/en/BNP/HereInBahrain/NationalIdentificationAndVisas" },
+      "work": { "name": "Labour Market Regulatory Authority (LMRA) — New Work Permit", "url": "https://www.lmra.gov.bh/en/page/show/106" }
+    }
+  },
+  "ir": {
+    "govDomains": [
+      { "domain": "gov.ir", "why": "restricted: Iran government suffix" }
+    ],
+    "links": {
+      "apply": { "name": "Iran Electronic Visa (Ministry of Foreign Affairs)", "url": "https://evisa.mfa.ir/en/", "linkedFrom": "https://karachi.mfa.gov.ir/en/newsview/689876/Electronic-Visa-system-of-the-Ministry-of-Foreign-Affairs-of-IRIran" }
+    }
+  },
+  "iq": {
+    "govDomains": [
+      { "domain": "gov.iq", "why": "restricted: Iraq government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs of the Republic of Iraq — Visa Information", "url": "https://mofa.gov.iq/visa/" },
+      "embassies": { "name": "Iraqi Missions Abroad — Ministry of Foreign Affairs", "url": "https://mofa.gov.iq/البعثات-العراقية-في-الخارج/", "keywords": ["البعثات العراقية", "في الخارج"] }
+    }
+  },
+  "il": {
+    "govDomains": [
+      { "domain": "gov.il", "why": "restricted: Israel government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Population and Immigration Authority (PIBA) — Official Entry Procedures", "url": "https://israel-entry.piba.gov.il/" },
+      "apply": { "name": "ETA-IL — Electronic Travel Authorization (PIBA)", "url": "https://israel-entry.piba.gov.il/etail/" }
+    }
+  },
+  "jo": {
+    "govDomains": [
+      { "domain": "gov.jo", "why": "restricted: Jordan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior — E-Applications for Visa and Residence Permits", "url": "https://moi.gov.jo/En/Pages/E_Applications_for_Visa_and_Residence_Permits" },
+      "apply": { "name": "Jordan Visa E-Applications (Ministry of Interior)", "url": "https://moi.gov.jo/EN/Pages/Visa_E_Applications", "linkedFrom": "https://jordan.gov.jo/EN/Pages/Travel_Visas" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Jordanian Missions Abroad", "url": "https://www.mfa.gov.jo/en/content/jordanian-missions-abroad" }
+    }
+  },
+  "kw": {
+    "govDomains": [
+      { "domain": "gov.kw", "why": "restricted: Kuwait government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior — Kuwait", "url": "https://www.moi.gov.kw/main?culture=en" },
+      "apply": { "name": "Kuwait e-Visa (Ministry of Interior)", "url": "https://evisa.moi.gov.kw/evisakgo/home_e.do" },
+      "work": { "name": "General Directorate of Residency Affairs — Ministry of Interior", "url": "https://www.moi.gov.kw/main/eservices/residence?culture=en" }
+    }
+  },
+  "lb": {
+    "govDomains": [
+      { "domain": "gov.lb", "why": "restricted: Lebanon government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "General Directorate of General Security", "url": "https://www.general-security.gov.lb/en" },
+      "apply": { "notApplicable": "No online e-visa application system; entry visas are obtained through Lebanese embassies/consulates abroad or on arrival, per General Security's visa information page" },
+      "work": { "name": "General Security — Entry Visas (incl. work-visa authorization requirements)", "url": "https://www.general-security.gov.lb/en/posts/37" }
+    }
+  },
+  "om": {
+    "govDomains": [
+      { "domain": "gov.om", "why": "restricted: Oman government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Royal Oman Police — Visa Services", "url": "https://www.rop.gov.om/english/visaservices_mainpage.html" },
+      "apply": { "name": "Oman eVisa (Royal Oman Police)", "url": "https://evisa.rop.gov.om/", "linkedFrom": "https://www.fm.gov.om/en/visitors/entry-visas/" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Embassies and Consulates Abroad", "url": "https://www.fm.gov.om/ministry/embassies/embassies-and-consulates-abroad/" }
+    }
+  },
+  "ps": {
+    "govDomains": [
+      { "domain": "pna.ps", "why": "restricted: Palestinian National Authority government domain suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior — State of Palestine", "url": "https://www.moi.pna.ps/" },
+      "apply": { "notApplicable": "The Palestinian Authority does not operate an independent visa/entry system; entry to the Palestinian territories (West Bank/Gaza) is governed by Israel's visa and entry policy" }
+    }
+  },
+  "qa": {
+    "govDomains": [
+      { "domain": "gov.qa", "why": "restricted: Qatar government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior — Qatar Visas", "url": "https://portal.moi.gov.qa/qatarvisas/index.html" },
+      "apply": { "name": "Hayya — Qatar's official e-Visa platform", "url": "https://www.hayya.qa/", "linkedFrom": "https://portal.moi.gov.qa/qatarvisas/index.html" }
+    }
+  },
+  "sa": {
+    "govDomains": [
+      { "domain": "gov.sa", "why": "restricted: Saudi Arabia government suffix" },
+      { "domain": "absher.sa", "why": "restricted: Saudi Arabia's official digital-government identity platform (Ministry of Interior / Digital Government Authority)" }
+    ],
+    "links": {
+      "authority": { "name": "Absher (Ministry of Interior e-government platform, incl. Jawazat/passport-residency services)", "url": "https://www.absher.sa/wps/portal/individuals/main" }
+    }
+  },
+  "sy": {
+    "govDomains": [
+      { "domain": "gov.sy", "why": "restricted: Syria government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Interior — Syria", "url": "https://moi.gov.sy/", "keywords": ["وزارة الداخلية"] },
+      "embassies": { "name": "Ministry of Foreign Affairs and Expatriates — Diplomatic Missions", "url": "https://mofaex.gov.sy/diplomatic-missions", "keywords": ["البعثات الدبلوماسية"] }
+    }
+  },
+  "tr": {
+    "govDomains": [
+      { "domain": "gov.tr", "why": "restricted: Turkey government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Presidency of Migration Management (Göç İdaresi Başkanlığı)", "url": "https://en.goc.gov.tr/" },
+      "apply": { "name": "Turkey e-Visa (Republic of Türkiye)", "url": "https://www.evisa.gov.tr/en/", "linkedFrom": "https://en.goc.gov.tr/visa" },
+      "embassies": { "name": "Ministry of Foreign Affairs — Turkish Representations Abroad", "url": "https://www.mfa.gov.tr/turkish-representations.en.mfa" },
+      "work": { "name": "Ministry of Labor and Social Security — Foreign Work Permits (e-İzin)", "url": "https://www.csgb.gov.tr/", "keywords": ["Yabancıların Çalışma İzni", "e-İzin"] },
+      "citizenship": { "name": "General Directorate of Population and Citizenship Affairs (NVİ) — Acquiring Turkish Citizenship", "url": "https://www.nvi.gov.tr/", "keywords": ["Türk Vatandaşlığının Kazanılması"] }
+    }
+  },
+  "ae": {
+    "govDomains": [
+      { "domain": "gov.ae", "why": "restricted: United Arab Emirates government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Federal Authority for Identity, Citizenship, Customs & Port Security (ICP)", "url": "https://icp.gov.ae/en/" },
+      "apply": { "name": "GDRFA Dubai — Visa Services", "url": "https://gdrfad.gov.ae/en" }
+    }
+  },
+  "ye": {
+    "govDomains": [
+      { "domain": "gov.ye", "why": "restricted: Yemen government suffix" }
+    ],
+    "links": {}
+  }
+}

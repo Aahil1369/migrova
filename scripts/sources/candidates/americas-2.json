@@ -1,0 +1,189 @@
+{
+  "gt": {
+    "govDomains": [
+      { "domain": "gob.gt", "why": "restricted: Guatemalan government portal suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Instituto Guatemalteco de Migración (IGM)", "url": "https://igm.gob.gt/" },
+      "apply": { "name": "IGM Extranjería - portal de servicios (visas y residencias)", "url": "https://servicios.igm.gob.gt/web/servicios/extranjeria", "keywords": ["extranjería", "visas"] },
+      "embassies": { "name": "MINEX - Embajadas de Guatemala", "url": "https://www.minex.gob.gt/gt_exterior/B1", "keywords": ["embajadas"] },
+      "work": { "name": "Ministerio de Trabajo y Previsión Social - Permisos de Trabajo a Extranjeros", "url": "https://www.mintrabajo.gob.gt/index.php/dge/permisos-de-trabajo-a-extranjeros", "keywords": ["permisos de trabajo", "extranjeros"] },
+      "citizenship": { "name": "Catálogo de Trámites - Nacionalidad guatemalteca por naturalización", "url": "https://tramites.gob.gt/servicio/2488/", "keywords": ["naturalización", "nacionalidad"] }
+    }
+  },
+  "gy": {
+    "govDomains": [
+      { "domain": "gov.gy", "why": "restricted: Guyana government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Home Affairs (Immigration Support Services)", "url": "https://moha.gov.gy/" },
+      "apply": { "name": "Immigration Support Services - Visa Online Application Portal", "url": "https://eservices.iss.gov.gy/" },
+      "embassies": { "name": "Ministry of Foreign Affairs and International Cooperation - Overseas Missions", "url": "https://www.minfor.gov.gy/diplomatic-and-consular-services/missions" },
+      "work": { "name": "Requirements for Employment Visa on Arrival (Ministry of Home Affairs)", "url": "https://moha.gov.gy/wp-content/uploads/2021/12/REQUIREMENTS-FOR-EMPLOYMENT-VISA-ON-ARRIVAL.pdf" },
+      "study": { "name": "Requirements for Student Visa on Arrival (Ministry of Home Affairs)", "url": "https://moha.gov.gy/wp-content/uploads/2021/12/REQUIREMENTS-FOR-STUDENT-VISA-ON-ARRIVAL.pdf" },
+      "citizenship": { "name": "Naturalisation as a Citizen of Guyana (Ministry of Home Affairs)", "url": "https://moha.gov.gy/wp-content/uploads/2021/12/NATURALISATION-AS-A-CITIZEN-OF-GUYANA.pdf" }
+    }
+  },
+  "ht": {
+    "govDomains": [
+      { "domain": "gouv.ht", "why": "restricted: Haitian government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Direction de l'Immigration et de l'Émigration (DIE)", "url": "https://immigration.mict.gouv.ht/", "keywords": ["immigration", "émigration"] },
+      "apply": { "notApplicable": "No online visa/e-visa application portal found on DIE's site; only a passport request form is online, residence permits require an in-person process." },
+      "work": { "name": "DIE - Obtention d'un permis de séjour en Haïti", "url": "https://immigration.mict.gouv.ht/informations-utiles/obtention-dun-permis-de-sejour-en-haiti/", "keywords": ["permis de séjour"] }
+    }
+  },
+  "hn": {
+    "govDomains": [
+      { "domain": "gob.hn", "why": "restricted: Honduran government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Instituto Nacional de Migración (INM) Honduras", "url": "https://inm.gob.hn/", "keywords": ["migración", "instituto nacional"] }
+    }
+  },
+  "jm": {
+    "govDomains": [
+      { "domain": "gov.jm", "why": "restricted: Jamaica government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Passport, Immigration and Citizenship Agency (PICA)", "url": "https://www.pica.gov.jm/" },
+      "apply": { "notApplicable": "PICA's entry-visa-requirements page confirms there is no online visa self-application system; visas are obtained via Jamaican missions or on arrival." },
+      "embassies": { "name": "Ministry of Foreign Affairs and Foreign Trade - Jamaican Representatives Overseas", "url": "https://mfaft.gov.jm/site/high-commission-embassies/" },
+      "work": { "name": "Ministry of Labour and Social Security - Work Permit", "url": "https://www.mlss.gov.jm/departments/work-permit/" },
+      "citizenship": { "name": "PICA - Jamaican Citizenship", "url": "https://www.pica.gov.jm/citizenship" }
+    }
+  },
+  "mx": {
+    "govDomains": [
+      { "domain": "gob.mx", "why": "restricted: Mexican federal government portal suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Instituto Nacional de Migración (INM)", "url": "https://www.gob.mx/inm" },
+      "apply": { "name": "INM - Forma Migratoria Múltiple (FMM), solicitud en línea", "url": "https://www.inm.gob.mx/fmme/publico/en/solicitud.html", "keywords": ["forma migratoria", "múltiple"] }
+    }
+  },
+  "ni": {
+    "govDomains": [
+      { "domain": "gob.ni", "why": "restricted: Nicaraguan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección General de Migración y Extranjería (DGME) - Trámites", "url": "https://www.migob.gob.ni/migracion/tramites/", "keywords": ["migración", "extranjería"] }
+    }
+  },
+  "pa": {
+    "govDomains": [
+      { "domain": "gob.pa", "why": "restricted: Panamanian government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Servicio Nacional de Migración de Panamá", "url": "https://www.migracion.gob.pa/" },
+      "embassies": { "name": "Ministerio de Relaciones Exteriores - Embajadas y Consulados", "url": "https://mire.gob.pa/embajadas-y-consulados/", "keywords": ["embajadas", "consulados"] },
+      "work": { "name": "Migración Panamá - Permisos Migratorios", "url": "https://www.migracion.gob.pa/permisos-migratorios/", "keywords": ["permisos migratorios"] },
+      "citizenship": { "name": "Migración Panamá - Trámites de Naturalización", "url": "https://www.migracion.gob.pa/tramites-de-naturalizacion/", "keywords": ["naturalización"] }
+    }
+  },
+  "py": {
+    "govDomains": [
+      { "domain": "gov.py", "why": "restricted: Paraguayan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección Nacional de Migraciones", "url": "https://migraciones.gov.py/" },
+      "apply": { "name": "Migraciones - Trámites en Línea", "url": "https://migraciones.gov.py/tramites-en-linea/", "keywords": ["trámites en línea"] }
+    }
+  },
+  "pe": {
+    "govDomains": [
+      { "domain": "gob.pe", "why": "restricted: Peruvian government portal suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Superintendencia Nacional de Migraciones (MIGRACIONES)", "url": "https://www.gob.pe/migraciones", "keywords": ["migraciones"] }
+    }
+  },
+  "kn": {
+    "govDomains": [
+      { "domain": "gov.kn", "why": "restricted: St Kitts and Nevis government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Foreign Affairs (Immigration Department)", "url": "https://www.mofa.gov.kn/" },
+      "citizenship": { "name": "St. Kitts and Nevis Citizenship by Investment Unit", "url": "https://ciu.gov.kn/" }
+    }
+  },
+  "lc": {
+    "govDomains": [
+      { "domain": "govt.lc", "why": "restricted: Saint Lucia government portal suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of Home Affairs and National Security", "url": "https://www.govt.lc/ministries/home-affairs-and-national-security" },
+      "apply": { "name": "Saint Lucia Online Immigration & Customs Portal", "url": "https://travelslu.govt.lc/en" },
+      "citizenship": { "name": "Citizenship - Ministry of Home Affairs and National Security", "url": "https://www.govt.lc/ministries/home-affairs-and-national-security/citizenship" }
+    }
+  },
+  "vc": {
+    "govDomains": [
+      { "domain": "gov.vc", "why": "restricted: Saint Vincent and the Grenadines government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Ministry of National Security - Passport & Immigration", "url": "https://security.gov.vc/security/index.php?option=com_content&view=article&id=77&Itemid=104" },
+      "embassies": { "name": "Ministry of Foreign Affairs - Missions & Consulates", "url": "https://foreign.gov.vc/foreign/index.php/diplomatic-relations" },
+      "work": { "name": "Work Permit Form to be Employed by an Employer (PM's Office)", "url": "https://pmoffice.gov.vc/pmoffice/images/stories/Forms/Work_Permit_Form_to_be_employed_by_an_Employer.pdf" },
+      "citizenship": { "name": "Residence, Work Permit and Citizenship Requirements (PM's Office)", "url": "https://pmoffice.gov.vc/pmoffice/images/stories/Forms/Residence_Work_Permit_and_Citizenship_Requirements.pdf" }
+    }
+  },
+  "sr": {
+    "govDomains": [
+      { "domain": "gov.sr", "why": "restricted: Suriname government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Directoraat Burgerzaken - Vreemdelingen Registratie", "url": "https://burgerzaken.gov.sr/vreemdelingen-registratie", "keywords": ["vreemdelingen", "registratie"] },
+      "apply": { "name": "Suriname E-Visa (VFS Global)", "url": "https://suriname.vfsevisa.com/suriname/online/login", "linkedFrom": "https://gov.sr/ministeries/ministerie-van-buitenlandse-zaken-internationale-handel-samenwerking/reizen-naar-suriname/" },
+      "embassies": { "name": "Suriname Diplomatic Missions Abroad", "url": "https://embassies.gov.sr/" },
+      "citizenship": { "name": "Burgerzaken - Nationaliteit (Naturalisatie)", "url": "https://burgerzaken.gov.sr/nationaliteit", "keywords": ["naturalisatie", "nationaliteit"] }
+    }
+  },
+  "tt": {
+    "govDomains": [
+      { "domain": "gov.tt", "why": "restricted: Trinidad and Tobago government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Immigration Division - Ministry of Homeland Security", "url": "https://homelandsecurity.gov.tt/divisions/immigrationdivision/" },
+      "apply": { "name": "Immigration Division - eVisa Online Services", "url": "https://homelandsecurity.gov.tt/divisions/immigrationdivision/evisa-online/" },
+      "embassies": { "name": "Ministry of Foreign and CARICOM Affairs - Diplomatic Missions Abroad", "url": "https://foreign.gov.tt/missions-consuls/tt-missions-abroad/diplomatic-missions/" },
+      "work": { "name": "ttconnect - Work Permit", "url": "https://ttconnect.gov.tt/work-permit" },
+      "study": { "name": "ttconnect - Visa & Student Permit", "url": "https://ttconnect.gov.tt/visa-student-permit" },
+      "citizenship": { "name": "ttconnect - Restoration of Citizenship", "url": "https://ttconnect.gov.tt/restoration-of-citizenship" }
+    }
+  },
+  "us": {
+    "govDomains": [
+      { "domain": "gov", "why": "restricted: US federal government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "U.S. Citizenship and Immigration Services (USCIS)", "url": "https://www.uscis.gov/" },
+      "apply": { "name": "ESTA - Electronic System for Travel Authorization (CBP)", "url": "https://esta.cbp.dhs.gov/" },
+      "work": { "name": "USCIS - Working in the United States", "url": "https://www.uscis.gov/working-in-the-united-states" },
+      "study": { "name": "Study in the States (DHS / SEVP)", "url": "https://studyinthestates.dhs.gov/" },
+      "citizenship": { "name": "USCIS - Citizenship", "url": "https://www.uscis.gov/citizenship" }
+    }
+  },
+  "uy": {
+    "govDomains": [
+      { "domain": "gub.uy", "why": "restricted: Uruguayan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Dirección Nacional de Migración", "url": "https://www.gub.uy/migracion", "keywords": ["migración"] },
+      "apply": { "name": "Residencia Legal - trámite en línea", "url": "https://www.gub.uy/tramites/residencia-legal", "keywords": ["residencia legal"] },
+      "embassies": { "name": "Representaciones uruguayas en el exterior", "url": "https://www.gub.uy/ministerio-relaciones-exteriores/representaciones-uruguayas-exterior", "keywords": ["representaciones", "exterior"] },
+      "citizenship": { "name": "Carta de Ciudadanía", "url": "https://www.gub.uy/tramites/carta-ciudadania", "keywords": ["carta de ciudadanía"] }
+    }
+  },
+  "ve": {
+    "govDomains": [
+      { "domain": "gob.ve", "why": "restricted: Venezuelan government suffix" }
+    ],
+    "links": {
+      "authority": { "name": "Servicio Administrativo de Identificación, Migración y Extranjería (SAIME)", "url": "https://www.saime.gob.ve/", "keywords": ["migración", "extranjería"] },
+      "apply": { "name": "SAIME - Trámites en línea", "url": "https://www.saime.gob.ve/tramites-en-linea/", "keywords": ["trámites en línea"] },
+      "embassies": { "name": "MPPRE - Embajadas de Venezuela", "url": "https://mppre.gob.ve/embajadas", "keywords": ["embajadas"] }
+    }
+  }
+}
