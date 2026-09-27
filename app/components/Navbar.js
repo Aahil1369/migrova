@@ -16,6 +16,7 @@ const TOOL_LINKS = [
   { href: '/visa',     label: 'Visa Intelligence' },
   { href: '/relocate', label: 'Relocation Guide' },
   { href: '/lawyer',   label: 'Lawyer Guide' },
+  { href: '/sources',  label: 'Official Sources' },
 ];
 
 function UserAvatar({ user, size = 'sm' }) {

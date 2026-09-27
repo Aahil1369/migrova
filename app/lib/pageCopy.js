@@ -4,6 +4,7 @@ export const FOOTNOTES = {
   visa:      'Visa policy is a moving target. We mark every report with a timestamp. This is information, not legal advice.',
   relocate:  'Rent numbers come from listings, not brochures. Assume +15% in the first month.',
   lawyer:    'We never list or recommend specific lawyers. We show you how to find and choose one safely.',
+  sources:   'Governments move their websites. Before you pay any fee, check that the address bar matches an official domain listed here.',
   stories:   "Real people, real moves. Submit yours — we'll read it.",
   legal:     'Last updated June 2026. If anything here is unclear, ask a licensed immigration attorney.',
   profile:   'Your profile stays on this device unless you check the Remember box.',
@@ -46,6 +47,13 @@ export const HERO_COPY = {
     italic: 'without',
     tail: ' getting burned.',
     sub: 'Typical fees, the questions to ask, the red flags to walk away from, and where to find free or low-cost legal aid. We link real directories — we never invent listings.',
+  },
+  sources: {
+    kicker: '§ Tool 05 · Official Sources',
+    title: 'Only the',
+    italic: 'official',
+    tail: ' sites.',
+    sub: 'Verified government immigration websites for every country — the authority, where to apply, embassies, work, study and citizenship. Checked by us, dated, and never guessed.',
   },
   stories: {
     kicker: '§ Archive · Stories',

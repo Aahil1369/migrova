@@ -16,6 +16,7 @@ const TOOLS = [
   { n: '02', tag: 'VISA',  href: '/visa',     glyph: 'passport', name: 'Visa Intelligence', desc: 'Checklists, timelines, embassy tips — by country.' },
   { n: '03', tag: 'RLC',   href: '/relocate', glyph: 'suitcase', name: 'Relocation Guide',  desc: 'Cost, housing, SIM, expat community, step-by-step.' },
   { n: '04', tag: 'LAW',   href: '/lawyer',   glyph: 'document', name: 'Lawyer Guide',      desc: 'Fees, questions, red flags, free legal aid — and real directories.' },
+  { n: '05', tag: 'SRC',   href: '/sources',  glyph: 'globe-wire', name: 'Official Sources', desc: 'Verified government sites for every country — no look-alikes.' },
 ];
 
 const HOW_IT_WORKS = [
@@ -58,9 +59,9 @@ export default function Home() {
           number={1}
           kicker="TOOLS"
           title="Your move, mapped."
-          sub="Four tools. Each one answers a question families ask before they move."
+          sub="Five tools. Each one answers a question families ask before they move."
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 mt-14 border-t border-l border-paper-rule">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-0 mt-14 border-t border-l border-paper-rule">
           {TOOLS.map((t) => (
             <Link key={t.href} href={t.href}
               className="group block p-8 border-r border-b border-paper-rule bg-paper-bg hover:bg-paper-bg-alt transition-colors">
