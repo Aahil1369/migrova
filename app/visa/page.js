@@ -8,7 +8,7 @@ import Footnote from '../components/ui/Footnote';
 import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { NATIONALITIES } from '../data/countries';
-import { COUNTRIES_195, countryByCode } from '../data/countries195';
+import { COUNTRIES_195 } from '../data/countries195';
 import { countryParam } from '../components/passport/search';
 import OfficialSourcesBlock from '../components/OfficialSourcesBlock';
 import VisaProbabilityMeter from '../components/VisaProbabilityMeter';
