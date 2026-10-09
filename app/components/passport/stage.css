@@ -1,0 +1,307 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Homepage stage (PassportStage): skip link, hero + finale copy, the tall scroll section with
+   its sticky stage, the reduced-motion stack, and JourneySearch. Prefixes: ps-, js-.
+   PassportStage writes opacity/transform to the hero, finale and book wrapper each frame;
+   the CSS defaults below are the pose at p = 0.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.ps-skip {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  z-index: 60;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--lime);
+  color: var(--night-1);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transform: translateY(-160%);
+  opacity: 0;
+}
+.ps-skip:focus,
+.ps-skip:focus-visible {
+  transform: none;
+  opacity: 1;
+  outline: 3px solid #ece6d2;
+  outline-offset: 2px;
+}
+
+/* ── Scroll section + sticky stage ─────────────────────────────────────────── */
+
+.ps-section {
+  position: relative;
+  background: var(--night-0);
+}
+.ps-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100lvh; /* the sky also fills the strip behind a collapsing mobile URL bar */
+  overflow: hidden;
+  overflow: clip; /* clip, not a scroll container: focus never scrolls the stage itself */
+}
+.ps-frame {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+}
+.ps-bookwrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+/* Phones / lite: the book appears as the hero fades (PassportStage writes opacity). */
+.ps-bookwrap--notepad,
+.ps-bookwrap--lite {
+  opacity: 0;
+}
+
+/* ── Hero and finale copy ──────────────────────────────────────────────────── */
+
+.ps-hero,
+.ps-finale {
+  position: absolute;
+  z-index: 2;
+  left: 6vw;
+  top: 50%;
+  width: min(44vw, 560px);
+  transform: translateY(-50%);
+}
+.ps-hero {
+  color: #ece6d2;
+}
+.ps-finale {
+  color: var(--page-ink);
+  opacity: 0;
+  pointer-events: none;
+}
+.ps-h1,
+.ps-h2 {
+  margin: 0 0 16px;
+  font-weight: 800;
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.ps-h2 {
+  font-size: clamp(34px, 4.8vw, 68px);
+}
+.ps-grad {
+  background: linear-gradient(90deg, var(--lime), var(--peach));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.ps-finale .ps-grad {
+  /* darker lime -> terracotta: >= 5:1 on the daylight sky */
+  background: linear-gradient(90deg, #4f6b10, #9a4a1c);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.ps-sub {
+  max-width: 470px;
+  margin: 0 0 22px;
+  font-size: clamp(16px, 1.2vw, 17px);
+  line-height: 1.6;
+  color: rgba(236, 230, 210, 0.8);
+}
+.ps-finale .ps-sub {
+  color: #3d4a43;
+}
+.ps-trust {
+  max-width: 470px;
+  margin: 16px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(236, 230, 210, 0.78);
+}
+.ps-hint {
+  margin: 24px 0 0;
+  font-family: var(--font-jb-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(236, 230, 210, 0.66);
+}
+.ps-hint span {
+  display: inline-block;
+  margin-right: 6px;
+  animation: ps-bob 1.6s ease-in-out infinite;
+}
+@keyframes ps-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+@media (max-width: 767px) {
+  .ps-hero,
+  .ps-finale {
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+  .ps-trust {
+    font-size: 16px;
+  }
+  .ps-hint {
+    margin-top: 18px;
+  }
+}
+
+/* ── Reduced motion: no sticky stage, a static night -> dawn backdrop ──────── */
+
+.ps-reduced {
+  position: relative;
+  padding: 0 16px 64px;
+  background: linear-gradient(
+    180deg,
+    var(--night-0) 0%,
+    var(--night-1) 18%,
+    #1d2b52 40%,
+    var(--dawn-1) 58%,
+    #c7766a 74%,
+    var(--dawn-2) 84%,
+    var(--dawn-3) 93%,
+    var(--page) 100%
+  );
+}
+.ps-reduced .ps-hero,
+.ps-reduced .ps-finale {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  width: auto;
+  max-width: 640px;
+  margin: 0 auto;
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+.ps-reduced .ps-hero {
+  padding: 56px 0 24px;
+}
+.ps-reduced .ps-finale {
+  padding: 48px 0 0;
+}
+.ps-reduced [id] {
+  scroll-margin-top: 84px;
+}
+.ps-reduced .ps-hint {
+  display: none;
+}
+
+/* ── JourneySearch (From / To / Explore) ───────────────────────────────────── */
+
+.js {
+  display: flex;
+  align-items: stretch;
+  max-width: 500px;
+  padding: 7px;
+  border-radius: 18px;
+  background: var(--page);
+  color: var(--page-ink);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+}
+.js--finale {
+  box-shadow: 0 14px 40px rgba(31, 42, 36, 0.18), 0 0 0 1px rgba(31, 42, 36, 0.08);
+}
+.js-field {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 6px 14px;
+  border-radius: 12px;
+}
+.js-field + .js-field::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  border-left: 1px solid #e3dccd;
+}
+.js-field:focus-within {
+  box-shadow: inset 0 0 0 2px #2f5139;
+}
+.js-field label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--page-ink);
+}
+.js-field select {
+  width: 100%;
+  min-height: 30px;
+  margin: 0;
+  padding: 2px 20px 2px 0;
+  border: 0;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%231f2a24' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 2px center / 12px 12px;
+  color: var(--page-ink);
+  font: inherit;
+  font-size: 16px; /* never < 16px: no iOS zoom */
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.js-go {
+  flex: 0 0 auto;
+  min-height: 52px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 13px;
+  background: var(--lime);
+  color: var(--night-1);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(184, 207, 93, 0.45);
+  transition: filter 0.2s ease;
+}
+.js-go:hover {
+  filter: brightness(1.05);
+}
+.js-go:focus-visible {
+  outline: 3px solid #f3e3a0;
+  outline-offset: 3px;
+}
+.js--finale .js-go:focus-visible {
+  outline-color: #2f5139;
+}
+@media (max-width: 519px) {
+  .js {
+    flex-wrap: wrap;
+  }
+  .js-field {
+    flex: 1 1 40%;
+  }
+  .js-go {
+    flex: 1 1 100%;
+    margin-top: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ps-hint span {
+    animation: none;
+  }
+}
