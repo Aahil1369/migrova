@@ -17,6 +17,7 @@ const finitePositive = (n) => typeof n === 'number' && Number.isFinite(n) && n >
  *   phoneCopy    the shortest phone frame whose hero (at load and once the stage sticks) and
  *                finale + boarding pass fit below the navbar (stage.css short-phone rules):
  *                fits at 500px, overflows at 480px
+ *   shortPhone   phone frames up to this tall get those short-phone rules (SHORT_PHONE_QUERY)
  */
 export const FRAME = Object.freeze({
   navbar: 73,
@@ -27,6 +28,7 @@ export const FRAME = Object.freeze({
   spread: 330,
   minScale: 13 / 16,
   phoneCopy: 500,
+  shortPhone: 610,
 });
 
 const CLEAR = FRAME.navbar + 2 * FRAME.gap; // frame height the books never use
@@ -52,6 +54,17 @@ export const FRAME_QUERIES = Object.freeze({
     `(max-width: ${TINY_W}px), (max-width: ${PHONE_MAX_W}px) and (max-height: ${TINY_H}px), ` +
     `(min-width: ${PHONE_MAX_W + 1}px) and (max-height: ${TINY_H_WIDE}px)`,
 });
+
+/**
+ * The phone frames whose hero / finale copy gets the tight short-phone type on the sticky stage
+ * (stage.css, `.ps-stage ...`). Starts just past the tiny phone frames (too narrow or too short):
+ * those stack, and the stack has no .ps-stage, so tight type there would apply only until the
+ * layout settles and the hero would reflow when it does. Not part of FRAME_QUERIES (useLayoutMode
+ * subscribes to those): no layout decision depends on it.
+ */
+export const SHORT_PHONE_QUERY =
+  `(min-width: ${TINY_W + 1}px) and (max-width: ${PHONE_MAX_W}px) and ` +
+  `(min-height: ${TINY_H + 1}px) and (max-height: ${FRAME.shortPhone}px)`;
 
 /** FRAME_QUERIES evaluated for a viewport of `width` x `height` CSS px. Pure. */
 export function frameFlags(width, height) {

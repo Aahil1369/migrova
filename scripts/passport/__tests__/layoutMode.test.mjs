@@ -8,6 +8,7 @@ import {
   FRAME_QUERIES,
   frameFlags,
   onePageScale,
+  SHORT_PHONE_QUERY,
 } from '../../../app/components/passport/motionMode.js';
 
 // ---- decideLayout ----------------------------------------------------------------------------
@@ -134,6 +135,58 @@ test('FRAME_QUERIES: the stylesheets style the server HTML with the same frame d
     'passport.css: pre-settle spread only where it stays',
   );
   assert.ok(read('stage.css').includes(`@media ${FRAME_QUERIES.tiny} {`), 'stage.css: pre-settle stack on tiny frames');
+});
+
+// Top-level `@media <query> { ... }` blocks of a stylesheet.
+function mediaBlocks(css) {
+  const out = [];
+  for (let i = css.indexOf('@media'); i !== -1; i = css.indexOf('@media', i + 1)) {
+    const open = css.indexOf('{', i);
+    let depth = 0;
+    let end = open;
+    for (; end < css.length; end++) {
+      if (css[end] === '{') depth++;
+      else if (css[end] === '}' && --depth === 0) break;
+    }
+    out.push({ query: css.slice(i + 6, open).trim(), body: css.slice(open + 1, end) });
+    i = end;
+  }
+  return out;
+}
+
+test('SHORT_PHONE_QUERY: the tight short-phone copy is for phones that keep the sticky stage, never a tiny frame', () => {
+  // Tiny frames stack, and the stack has no .ps-stage: tight type there would only apply before
+  // the layout settles, so the hero would reflow when it does.
+  for (let w = 260; w <= 900; w += w < 300 || (w >= 760 && w < 775) ? 1 : 13) {
+    for (let h = 300; h <= 1000; h++) {
+      const flags = frameFlags(w, h);
+      const want = flags.phone && !flags.tiny && h <= FRAME.shortPhone;
+      assert.equal(matches(SHORT_PHONE_QUERY, w, h), want, `${w}x${h}`);
+    }
+  }
+  for (const [w, h] of [[375, 548], [360, 560], [360, 500]]) assert.ok(matches(SHORT_PHONE_QUERY, w, h), `${w}x${h}`);
+  for (const [w, h] of [[375, 480], [667, 323], [720, 450], [280, 600], [375, 629], [390, 664]]) {
+    assert.ok(!matches(SHORT_PHONE_QUERY, w, h), `${w}x${h}`);
+  }
+});
+
+test('stage.css: hero type scoped to the sticky stage never applies to a tiny frame (no reflow when it stacks)', () => {
+  const css = readFileSync(new URL('../../../app/components/passport/stage.css', import.meta.url), 'utf8');
+  const heroType = /\.ps-stage\b[^{},]*\.(ps-h1|ps-sub|ps-trust)\b/;
+  const blocks = mediaBlocks(css).filter((b) => heroType.test(b.body));
+  assert.ok(blocks.length > 0, 'the short-phone hero rules exist');
+  for (const { query } of blocks) {
+    // every width around the tiny width / phone thresholds, every 7px elsewhere; every height
+    for (let w = 260; w <= 1400; w += w < 300 || (w >= 760 && w < 775) ? 1 : 7) {
+      for (let h = 300; h <= 1000; h++) {
+        if (frameFlags(w, h).tiny) assert.ok(!matches(query, w, h), `@media ${query} matches tiny ${w}x${h}`);
+      }
+    }
+  }
+  assert.ok(
+    blocks.some((b) => b.query === SHORT_PHONE_QUERY),
+    `stage.css: @media ${SHORT_PHONE_QUERY} { .ps-stage .ps-h1 ... }`,
+  );
 });
 
 test('FRAME: the CSS uses the same measured design widths and navbar clearance', () => {

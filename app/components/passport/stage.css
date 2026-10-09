@@ -700,8 +700,10 @@
 /* Short phones (iPhone SE class with the toolbars shown): the hero has to fit between the 73px
    navbar and the frame bottom both at load (the stage starts 73px down) and once the stage is
    stuck (the navbar covers its top), and the finale + boarding pass below the navbar: the
-   decorative bits go and the type tightens. */
-@media (max-width: 767px) and (max-height: 610px) {
+   decorative bits go and the type tightens. Only phones that keep the sticky stage
+   (SHORT_PHONE_QUERY in motionMode.js): tiny frames stack, and the stack has no .ps-stage, so
+   tight type there would apply only until the layout settles and the hero would reflow. */
+@media (min-width: 292px) and (max-width: 767px) and (min-height: 500px) and (max-height: 610px) {
   .ps-stage .ps-hint,
   .ps-stage .bp-kicker,
   .ps-stage .bp-meta {
