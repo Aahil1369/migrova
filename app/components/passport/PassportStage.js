@@ -1,9 +1,10 @@
 'use client';
 
-import { createRef, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { createRef, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import Book from './Book';
 import NightSky from './NightSky';
 import JourneySearch from './JourneySearch';
+import BoardingPass from './BoardingPass';
 import { PassportProvider, useActive, usePassport } from './PassportContext';
 import { ANCHORS, PAGES, buildTimeline, localT, progressForPage } from './timeline';
 import { desktopPose, notepadPose, easeInOutCubic } from './pose';
@@ -115,7 +116,8 @@ export function SkipToTools() {
   );
 }
 
-function HeroCopy({ copyRef, verifiedCount }) {
+// Memoised: page changes re-render StageInner, never the hero / finale copy (or their searches).
+const HeroCopy = memo(function HeroCopy({ copyRef, verifiedCount }) {
   return (
     <div ref={copyRef} className="ps-hero" data-stage-part="hero">
       <h1 className="ps-h1">
@@ -133,9 +135,9 @@ function HeroCopy({ copyRef, verifiedCount }) {
       </p>
     </div>
   );
-}
+});
 
-function FinaleCopy({ copyRef }) {
+const FinaleCopy = memo(function FinaleCopy({ copyRef, passRef, still = false }) {
   return (
     <div ref={copyRef} className="ps-finale" data-stage-part="finale">
       <h2 className="ps-h2">
@@ -146,9 +148,10 @@ function FinaleCopy({ copyRef }) {
         official sites.
       </p>
       <JourneySearch variant="finale" />
+      <BoardingPass passRef={passRef} still={still} />
     </div>
   );
-}
+});
 
 // UV beat: how dark the page around the flap gets (the entries page, left of it), x uvDim.
 const SURROUND_DIM = 0.5;
@@ -185,6 +188,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
   const sectionRef = useRef(null);
   const heroRef = useRef(null);
   const finaleRef = useRef(null);
+  const passRef = useRef(null);
   const wrapRef = useRef(null);
   const bookRefs = useMemo(
     () => ({
@@ -257,6 +261,17 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
 
       writeCopy(heroRef.current, pose.heroOpacity, -1);
       writeCopy(finaleRef.current, pose.finaleOpacity, 1);
+      // The boarding pass slides out of the book once the finale copy is in: from the book's
+      // side on the desktop spread, up from below on phones / lite.
+      const pass = passRef.current;
+      if (pass) {
+        const f = clamp01((pose.finaleOpacity - 0.3) / 0.7);
+        pass.style.opacity = String(+f.toFixed(3));
+        pass.style.transform =
+          layout === 'spread'
+            ? `translate3d(${((1 - f) * 140).toFixed(1)}px, 0, 0)`
+            : `translate3d(0, ${((1 - f) * 32).toFixed(1)}px, 0)`;
+      }
 
       const m = metrics.current;
 
@@ -479,7 +494,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
           <div key={layout} ref={wrapRef} className={`ps-bookwrap ps-bookwrap--${layout}`}>
             <Book leaves={leaves} base={base} layout={layout} refs={bookRefs} />
           </div>
-          <FinaleCopy copyRef={finaleRef} />
+          <FinaleCopy copyRef={finaleRef} passRef={passRef} />
         </div>
       </div>
     </div>
@@ -508,7 +523,7 @@ function Reduced({ verifiedCount, leaves, base }) {
     <div className="ps-reduced">
       <HeroCopy verifiedCount={verifiedCount} />
       <Book leaves={leaves} base={base} layout="stack" />
-      <FinaleCopy />
+      <FinaleCopy still />
     </div>
   );
 }

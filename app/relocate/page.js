@@ -8,6 +8,9 @@ import Footnote from '../components/ui/Footnote';
 import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { findCountryInText } from '../data/countries195';
+import { relocateDestination } from '../components/passport/search';
+import { readRoute } from '../components/passport/routeStore';
+import { deviceStorage } from '../components/passport/useSavedRoute';
 import OfficialSourcesBlock from '../components/OfficialSourcesBlock';
 
 const POPULAR_DESTINATIONS = [
@@ -46,10 +49,14 @@ export default function RelocatePage() {
   const [profilePrefilled, setProfilePrefilled] = useState(false);
   const [searchedDest, setSearchedDest] = useState('');
 
-  // Deep link from /sources/[code]: /relocate?dest=Portugal pre-fills the destination.
+  // Deep link from /sources/[code]: /relocate?dest=Portugal pre-fills the destination; without
+  // one, the To country of the route saved on this device (homepage boarding-pass stub) does.
   useEffect(() => {
-    const dest = new URLSearchParams(window.location.search).get('dest');
-    if (dest) setDestination(dest.slice(0, 120));
+    const dest = relocateDestination(
+      new URLSearchParams(window.location.search).get('dest'),
+      readRoute(deviceStorage()),
+    );
+    if (dest) setDestination(dest);
   }, []);
 
   useEffect(() => {

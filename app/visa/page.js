@@ -9,7 +9,9 @@ import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { NATIONALITIES } from '../data/countries';
 import { COUNTRIES_195 } from '../data/countries195';
-import { countryParam } from '../components/passport/search';
+import { visaPrefill } from '../components/passport/search';
+import { readRoute } from '../components/passport/routeStore';
+import { deviceStorage } from '../components/passport/useSavedRoute';
 import OfficialSourcesBlock from '../components/OfficialSourcesBlock';
 import VisaProbabilityMeter from '../components/VisaProbabilityMeter';
 import DisclaimerBlock from '../components/DisclaimerBlock';
@@ -91,13 +93,17 @@ export default function VisaPage() {
   const [resultCountry, setResultCountry] = useState('');
 
   // Deep links: /visa?to=ca (from /sources/[code]) pre-selects the destination;
-  // /visa?from=pk&to=ca (homepage search) also sets the nationality. An explicit ?from= wins:
-  // the saved-profile prefill below never overwrites it.
+  // /visa?from=pk&to=ca (homepage search) also sets the nationality. Whatever the link leaves
+  // empty comes from the route saved on this device (the homepage boarding-pass stub; To only
+  // when it is a country, not "anywhere"). Both win over the saved profile, which only fills a
+  // still-empty nationality and never overwrites them.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const to = countryParam(params.get('to'));
+    const { nationality: from, destination: to } = visaPrefill(
+      { from: params.get('from'), to: params.get('to') },
+      readRoute(deviceStorage()),
+    );
     if (to) setTargetCountry(to);
-    const from = countryParam(params.get('from'));
     if (from) { setNationality(from); return; }
 
     // Pre-fill nationality from saved profile

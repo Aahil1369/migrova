@@ -281,10 +281,22 @@
   white-space: nowrap;
   cursor: pointer;
   box-shadow: 0 0 22px rgba(184, 207, 93, 0.45);
-  transition: filter 0.2s ease;
+  position: relative;
+  isolation: isolate;
 }
-.js-go:hover {
-  filter: brightness(1.05);
+.js-go::before {
+  /* hover: a light wash fades in (opacity only, no filter) */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.16);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.js-go:hover::before {
+  opacity: 1;
 }
 .js-go:focus-visible {
   outline: 3px solid #f3e3a0;
@@ -309,5 +321,386 @@
 @media (prefers-reduced-motion: reduce) {
   .ps-hint span {
     animation: none;
+  }
+}
+
+/* ── Boarding pass (finale) ─────────────────────────────────────────────────── */
+/* Main card + perforated stub. The stub is the one opt-in that saves the route; tearing plays
+   a 700ms flight (transform/opacity keyframes). PassportStage slides the whole pass out of the
+   book with the finale (opacity/transform on .bp). */
+
+.bp {
+  --bp-bg: var(--page); /* the daylight sky behind the pass: colour of the notches */
+  margin-top: 18px;
+  max-width: 520px;
+  color: var(--page-ink);
+}
+.bp-ticket {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+.bp-main {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 14px 18px 16px;
+  border-radius: 16px 4px 4px 16px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(31, 42, 36, 0.14), 0 1px 3px rgba(31, 42, 36, 0.1);
+}
+/* the two notches at the perforation */
+.bp-main::before,
+.bp-main::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  right: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bp-bg);
+}
+.bp-main::before {
+  top: -9px;
+}
+.bp-main::after {
+  bottom: -9px;
+}
+.bp-kicker,
+.bp-stub-kicker {
+  margin: 0;
+  font-family: var(--font-jb-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: #5f6a63; /* 5.6:1 on white */
+}
+.bp-codes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0 6px;
+  font-weight: 800;
+  font-size: 38px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.bp-plane {
+  font-size: 0.5em;
+  color: #6b8a1e;
+}
+.bp-meta {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #3d4a43;
+}
+.bp-meta b {
+  font-weight: 700;
+  color: var(--page-ink);
+}
+.bp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.bp-btn,
+.bp-remember {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 2px solid var(--page-ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--page-ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.bp-btn::before,
+.bp-remember::before {
+  /* hover: opacity only */
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: #2f5139;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.bp-btn:hover::before,
+.bp-remember:hover::before {
+  opacity: 0.1;
+}
+.bp-btn--primary {
+  background: var(--page-ink);
+  color: var(--page);
+}
+.bp-btn--primary:hover::before {
+  opacity: 1;
+}
+.bp-remember[aria-disabled='true'] {
+  cursor: not-allowed;
+  border-color: #8a948e;
+  color: #4f5c55;
+}
+.bp-btn:focus-visible,
+.bp-remember:focus-visible,
+.bp-stub:focus-visible,
+.bp-note:focus-visible {
+  outline: 3px solid #2f5139;
+  outline-offset: 3px;
+}
+.bp-stubslot {
+  position: relative;
+  flex: 0 0 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.bp-stub {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 12px 14px 12px 16px;
+  border: 0;
+  border-left: 2px dashed #d3cab8;
+  border-radius: 4px 16px 16px 4px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(31, 42, 36, 0.14), 0 1px 3px rgba(31, 42, 36, 0.1);
+  color: var(--page-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.bp-stub[aria-disabled='true'] {
+  cursor: not-allowed;
+}
+.bp-stub[aria-disabled='true'] .bp-stub-cta {
+  color: #5f6a63;
+}
+.bp-stub-codes {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.bp-stub-cta {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.bp-stub--flying {
+  pointer-events: none;
+  animation: bp-tear 700ms cubic-bezier(0.3, 0.7, 0.3, 1) forwards;
+}
+@keyframes bp-tear {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translate(60px, -90px) rotate(24deg);
+    opacity: 0;
+  }
+}
+.bp-stub-done {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 2px dashed #cfc6b3;
+  border-radius: 4px 16px 16px 4px;
+  color: #1f6f47; /* 5.8:1 on --page */
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.bp-hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #4f5c55; /* 6.6:1 on --page */
+}
+.bp-note {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #1f6f47; /* 5.8:1 */
+  outline: none;
+}
+.bp-note[data-ok='false'] {
+  color: #a94a1f; /* 5.4:1 */
+}
+.bp-note:not(:empty) {
+  margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+  .bp {
+    margin-top: 14px;
+  }
+  .bp-ticket {
+    flex-direction: column;
+  }
+  .bp-main {
+    padding: 12px 16px 14px;
+    border-radius: 16px 16px 4px 4px;
+  }
+  .bp-main::before,
+  .bp-main::after {
+    top: auto;
+    bottom: -9px;
+  }
+  .bp-main::before {
+    right: auto;
+    left: -9px;
+  }
+  .bp-codes {
+    font-size: 30px;
+    margin-bottom: 4px;
+  }
+  .bp-meta,
+  .bp-stub-cta,
+  .bp-stub-done,
+  .bp-hint,
+  .bp-note,
+  .bp-btn,
+  .bp-remember {
+    font-size: 16px;
+  }
+  .bp-meta {
+    margin-bottom: 10px;
+  }
+  .bp-btn {
+    padding: 0 14px;
+  }
+  .bp-stubslot {
+    flex: 0 0 auto;
+  }
+  .bp-stub {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 8px 16px;
+    border-left: 0;
+    border-top: 2px dashed #d3cab8;
+    border-radius: 4px 4px 16px 16px;
+  }
+  .bp-stub-codes {
+    display: none;
+  }
+  .bp-stub-done {
+    border-radius: 4px 4px 16px 16px;
+  }
+  .bp-stub--flying {
+    animation-name: bp-tear-up;
+  }
+}
+@keyframes bp-tear-up {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translate(24px, -80px) rotate(-10deg);
+    opacity: 0;
+  }
+}
+/* The finale copy + pass must fit the stage frame (it is centred, and the sticky navbar covers
+   the top ~70px). Phones centre it in the space under the navbar; short screens drop the
+   finale's sub-line and tighten the pass. */
+@media (max-width: 767px) {
+  .ps-stage .ps-finale {
+    top: calc(50% + 32px);
+  }
+}
+@media (max-width: 767px) and (max-height: 760px) {
+  .ps-finale .ps-sub {
+    display: none;
+  }
+}
+@media (max-width: 767px) and (max-height: 700px) {
+  .ps-finale .ps-h2 {
+    margin-bottom: 12px;
+    font-size: 30px;
+  }
+  .bp {
+    margin-top: 12px;
+  }
+  .bp-main {
+    padding: 10px 14px 12px;
+  }
+  .bp-codes {
+    font-size: 26px;
+  }
+  .bp-meta {
+    margin-bottom: 8px;
+  }
+  .bp-stub {
+    min-height: 48px;
+  }
+}
+@media (min-width: 768px) and (max-height: 700px) {
+  .ps-stage .ps-finale {
+    top: calc(50% + 32px);
+  }
+  .ps-finale .ps-sub {
+    display: none;
+  }
+  .ps-finale .ps-h2 {
+    margin-bottom: 12px;
+    font-size: clamp(28px, 3.8vw, 48px);
+  }
+  .bp {
+    margin-top: 12px;
+  }
+  .bp-main {
+    padding: 10px 14px 12px;
+  }
+  .bp-codes {
+    font-size: 28px;
+  }
+  .bp-meta {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 768px) and (max-height: 480px) {
+  .bp-kicker,
+  .bp-meta {
+    display: none;
+  }
+  .ps-finale .ps-h2 {
+    font-size: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bp-stub--flying {
+    animation: none;
+    opacity: 0;
+  }
+  .bp-btn::before,
+  .bp-remember::before {
+    transition: none;
   }
 }

@@ -7,6 +7,7 @@ import { createClient } from '../../lib/supabase-browser';
 import { NAV_LINKS, TOOL_LINKS } from '../lib/siteLinks';
 import AuthModal from './AuthModal';
 import ProfileModal from './ProfileModal';
+import RoutePill from './RoutePill';
 import Wordmark from './Wordmark';
 
 // Colour roles per tone. 'paper' is the cream look used by every tool page;
@@ -140,7 +141,8 @@ export default function Navbar({ tone = 'paper' }) {
   const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Account';
   const progressPct = Math.min(100, (toolsUsed / TOOL_LINKS.length) * 100);
   const isToolActive = TOOL_LINKS.some((x) => pathname === x.href);
-  const routeSlot = <></>;
+  // The route saved by tearing the homepage boarding-pass stub (renders nothing until read).
+  const routeSlot = <RoutePill tone={tone === 'night' ? 'night' : 'paper'} />;
 
   return (
     <>
@@ -185,6 +187,7 @@ export default function Navbar({ tone = 'paper' }) {
                 <Link key={l.href} href={l.href}
                   className={`block py-2.5 ${pathname === l.href ? t.active : t.hover}`}>{l.label}</Link>
               ))}
+              <RoutePill tone={tone === 'night' ? 'night' : 'paper'} variant="drawer" />
             </div>
             <div className={`px-5 py-4 border-t ${t.menuRule}`}>
               {user ? (
@@ -211,7 +214,7 @@ export default function Navbar({ tone = 'paper' }) {
       )}
 
       <header className={`sticky top-0 z-30 border-b ${t.header}`}>
-        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-3.5 flex items-center justify-between gap-6">
+        <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-3.5 flex items-center justify-between gap-4 min-[400px]:gap-6">
           <Link href="/" className={`transition-colors ${t.logo}`}>
             <Wordmark className="text-[22px]" />
           </Link>
@@ -247,7 +250,7 @@ export default function Navbar({ tone = 'paper' }) {
             </div>
           </nav>
 
-          <div className="flex items-center gap-3 text-[14px] font-medium">
+          <div className="flex items-center gap-2 min-[400px]:gap-3 text-[14px] font-medium">
             {routeSlot}
             {user ? (
               <div className="relative hidden md:block" ref={userMenuRef}>
@@ -273,7 +276,7 @@ export default function Navbar({ tone = 'paper' }) {
               </div>
             ) : (
               <button onClick={() => setShowAuth(true)}
-                className={`rounded-full border px-4 py-1.5 text-[14px] font-medium transition-colors ${t.signIn}`}>
+                className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-1.5 text-[14px] font-medium transition-colors ${t.signIn}`}>
                 Sign in
               </button>
             )}

@@ -3,6 +3,8 @@
 import { countryByCode } from '../../data/countries195.js';
 
 export const ROUTE_KEY = 'migrova_route';
+// Window event fired after the route is saved or forgotten on this page (RoutePill, BoardingPass).
+export const ROUTE_EVENT = 'migrova:route';
 
 // A valid country code (lowercased) or null.
 const asCode = (value) => {
@@ -64,8 +66,36 @@ const iso3Of = (value) => {
   return country ? country.iso3 : 'ANY';
 };
 
+/** { from: 'PAK', to: 'CAN' } ISO3 codes for the boarding pass; unset, 'any' or invalid -> 'ANY'. */
+export function routeCodes(route) {
+  const { from, to } = route || {};
+  return { from: iso3Of(from), to: iso3Of(to) };
+}
+
 /** 'PAK ✈ CAN' | 'PAK ✈ ANY' | 'ANY ✈ ANY' (missing or invalid codes read as ANY). */
 export function routeLabel(route) {
+  const codes = routeCodes(route);
+  return `${codes.from} ✈ ${codes.to}`;
+}
+
+/** 'Pakistan to Canada' | 'Pakistan to anywhere' | 'anywhere to anywhere' (for screen readers). */
+export function routeSpoken(route) {
   const { from, to } = route || {};
-  return `${iso3Of(from)} ✈ ${iso3Of(to)}`;
+  const nameOf = (value) => {
+    const code = asCode(value);
+    return code ? countryByCode(code).name : 'anywhere';
+  };
+  return `${nameOf(from)} to ${nameOf(to)}`;
+}
+
+/** Worth remembering: a valid From, or a valid (non-'any') To. */
+export function hasRoute(route) {
+  const { from, to } = route || {};
+  return asCode(from) !== null || asCode(to) !== null;
+}
+
+/** Same From and To (valid codes compared case-insensitively; unset/invalid == unset, 'any' != unset). */
+export function sameRoute(a, b) {
+  if (!a || !b) return false;
+  return asCode(a.from) === asCode(b.from) && asDestination(a.to) === asDestination(b.to);
 }
