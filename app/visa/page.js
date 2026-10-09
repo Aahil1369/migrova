@@ -9,6 +9,7 @@ import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { NATIONALITIES } from '../data/countries';
 import { COUNTRIES_195, countryByCode } from '../data/countries195';
+import { countryParam } from '../components/passport/search';
 import OfficialSourcesBlock from '../components/OfficialSourcesBlock';
 import VisaProbabilityMeter from '../components/VisaProbabilityMeter';
 import DisclaimerBlock from '../components/DisclaimerBlock';
@@ -89,27 +90,36 @@ export default function VisaPage() {
   const [showAck, setShowAck] = useState(false);
   const [resultCountry, setResultCountry] = useState('');
 
-  // Deep link from /sources/[code]: /visa?to=ca pre-selects the destination.
+  // Deep links: /visa?to=ca (from /sources/[code]) pre-selects the destination;
+  // /visa?from=pk&to=ca (homepage search) also sets the nationality. An explicit ?from= wins:
+  // the saved-profile prefill below never overwrites it.
   useEffect(() => {
-    const to = new URLSearchParams(window.location.search).get('to');
-    if (to && countryByCode(to)) setTargetCountry(to.toLowerCase());
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const to = countryParam(params.get('to'));
+    if (to) setTargetCountry(to);
+    const from = countryParam(params.get('from'));
+    if (from) { setNationality(from); return; }
 
-  // Pre-fill nationality from saved profile
-  useEffect(() => {
+    // Pre-fill nationality from saved profile
+    let cancelled = false;
     const loadProfile = async () => {
       try {
         const res = await fetch('/api/user-profile');
         const { profile } = await res.json();
+        if (cancelled) return;
         if (profile?.nationality) { setNationality(profile.nationality); setProfileLoaded(true); return; }
       } catch {}
-      const saved = localStorage.getItem('opportumap_profile');
-      if (saved) {
-        const p = JSON.parse(saved);
-        if (p.nationality) { setNationality(p.nationality); setProfileLoaded(true); }
-      }
+      if (cancelled) return;
+      try {
+        const saved = localStorage.getItem('opportumap_profile');
+        if (saved) {
+          const p = JSON.parse(saved);
+          if (p.nationality) { setNationality(p.nationality); setProfileLoaded(true); }
+        }
+      } catch {}
     };
     loadProfile();
+    return () => { cancelled = true; };
   }, []);
 
   const handleSearch = async () => {
