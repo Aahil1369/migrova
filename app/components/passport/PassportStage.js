@@ -11,6 +11,7 @@ import { desktopPose, notepadPose, easeInOutCubic } from './pose';
 import {
   bookTransform,
   closedShiftPx,
+  fadePageStyle,
   flapStyle,
   inlineFlapStyle,
   leafStyle,
@@ -37,16 +38,20 @@ import './stage.css';
 
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 const TIMELINE = buildTimeline();
+const SECTION_STYLE = { height: `calc(${TIMELINE.viewports} * 100svh)` };
+const PAGE_STYLE = { notepad: notepadPageStyle, lite: litePageStyle, fade: fadePageStyle };
+const ALL_KEY = activeKey(new Set(PAGES));
 const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN -> 0
 
 const poseFor = (layout, p) => (layout === 'spread' ? desktopPose(TIMELINE, p) : notepadPose(TIMELINE, p));
 
 // Programmatic jumps (anchors, focus) are instant: the eased book animates the change itself.
-function scrollInstant(top) {
+function scrollInstant(top, el) {
   const root = document.documentElement;
   const previous = root.style.scrollBehavior;
   root.style.scrollBehavior = 'auto';
-  window.scrollTo(0, Math.max(0, Math.round(top)));
+  if (el) el.scrollIntoView({ block: 'start' });
+  else window.scrollTo(0, Math.max(0, Math.round(top)));
   root.style.scrollBehavior = previous;
 }
 
@@ -63,37 +68,43 @@ const progressNow = (section) =>
     viewportHeight: window.innerHeight,
   });
 
-/** Hash anchors (#tools, #how-it-works, #sources, #stories): on load once, then on hashchange. */
-function useAnchors(goToPage) {
+function goToHash(go, focus) {
+  let key = '';
+  try {
+    key = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    return;
+  }
+  const page = ANCHORS[key];
+  if (!page) return;
+  go(page);
+  if (focus) document.getElementById(page)?.focus({ preventScroll: true });
+}
+
+/**
+ * Hash anchors (#tools, #how-it-works, #sources, #stories): once the layout has settled (`ready`:
+ * the stack's geometry differs from the stage's), and again after load; then on hashchange.
+ */
+function useAnchors(goToPage, ready) {
   const goRef = useRef(goToPage);
   useIsoLayoutEffect(() => {
     goRef.current = goToPage;
   }, [goToPage]);
 
   useEffect(() => {
-    const go = (focus) => {
-      let key = '';
-      try {
-        key = decodeURIComponent(window.location.hash.slice(1));
-      } catch {
-        return;
-      }
-      const page = ANCHORS[key];
-      if (!page) return;
-      goRef.current(page);
-      if (focus) document.getElementById(page)?.focus({ preventScroll: true });
-    };
-    go(false);
-    // The browser may scroll to the #fragment itself once loading finishes; land after it.
-    const onLoad = () => go(false);
-    if (document.readyState !== 'complete') window.addEventListener('load', onLoad, { once: true });
-    const onHash = () => go(true);
+    const onHash = () => goToHash(goRef.current, true);
     window.addEventListener('hashchange', onHash);
-    return () => {
-      window.removeEventListener('load', onLoad);
-      window.removeEventListener('hashchange', onHash);
-    };
+    return () => window.removeEventListener('hashchange', onHash);
   }, []);
+
+  useEffect(() => {
+    if (!ready) return undefined;
+    goToHash(goRef.current, false);
+    // The browser may scroll to the #fragment itself once loading finishes; land after it.
+    const onLoad = () => goToHash(goRef.current, false);
+    if (document.readyState !== 'complete') window.addEventListener('load', onLoad, { once: true });
+    return () => window.removeEventListener('load', onLoad);
+  }, [ready]);
 }
 
 /** "Skip to tools": the first focusable element on the page (rendered by app/page.js). */
@@ -164,6 +175,7 @@ function flicker(el) {
   }
 }
 
+/** `direction` -1 slides up as it fades, 1 down, 0 (fade layout) fades in place. */
 function writeCopy(el, opacity, direction) {
   if (!el) return;
   const o = clamp01(opacity);
@@ -173,12 +185,15 @@ function writeCopy(el, opacity, direction) {
 }
 
 /**
- * The tall scroll section with the sticky stage (spread / notepad / lite only). Hosts the scroll
- * hook, so it is mounted only in stage modes. Every frame writes styles to refs; React state
- * changes only when the set of pages on screen changes.
+ * The homepage stage in every layout. Spread / notepad / lite / fade: the tall scroll section
+ * with the sticky stage; every frame writes styles to refs, and React state changes only when
+ * the set of pages on screen changes. Stack (tiny frames): the same tree in normal flow
+ * (section.ps-reduced), so switching layouts never replaces the hero / finale nodes.
  */
-function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
+function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
   const { setActive } = useActive();
+  const flow = layout === 'stack';
+  const calm = layout === 'fade'; // reduced motion: opacity only, nothing moves
   const sectionRef = useRef(null);
   const heroRef = useRef(null);
   const finaleRef = useRef(null);
@@ -230,7 +245,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       m.dims = bookRefs.pages.map((r) => (r.current ? r.current.querySelector('[data-dim]') : null));
       m.surround = null;
     }
-    // Phones / lite: the UV check folds out over the sources page body (see inlineFlapStyle).
+    // One page at a time: the UV check folds out over the sources page body (see inlineFlapStyle).
     const sourcesPage = layout === 'spread' ? null : bookRefs.pages[SOURCES_INDEX]?.current;
     m.inlineFlap = sourcesPage?.querySelector('.jb-flap-inline') ?? null;
     m.sourcesBody = sourcesPage?.querySelector('.jbp-sources') ?? null;
@@ -242,10 +257,18 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
     m.coverState = '';
   }, [layout, bookRefs]);
 
-  // onFrame: keyed on the mounted DOM (layout from motion + phone), so a switch re-poses at once.
+  // onFrame: keyed on the mounted DOM (layout from motion + frame), so a switch re-poses at once.
   const render = useCallback(
     (p) => {
       lastP.current = p;
+      if (flow) {
+        // Pages in normal flow: nothing to pose, and every page counts as on screen.
+        if (shownKey.current !== ALL_KEY) {
+          shownKey.current = ALL_KEY;
+          setActive(new Set(PAGES));
+        }
+        return;
+      }
       const pose = poseFor(layout, p);
 
       const sky = skyLayers(pose.sky);
@@ -253,16 +276,17 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       if (skyRefs.sunrise.current) skyRefs.sunrise.current.style.opacity = String(sky.sunrise);
       if (skyRefs.day.current) skyRefs.day.current.style.opacity = String(sky.day);
 
-      writeCopy(heroRef.current, pose.heroOpacity, -1);
-      writeCopy(finaleRef.current, pose.finaleOpacity, 1);
+      writeCopy(heroRef.current, pose.heroOpacity, calm ? 0 : -1);
+      writeCopy(finaleRef.current, pose.finaleOpacity, calm ? 0 : 1);
       // The boarding pass slides out of the book once the finale copy is in: from the book's
-      // side on the desktop spread, up from below on phones / lite.
+      // side on the desktop spread, up from below on phones / lite; fades in place in fade.
       const pass = passRef.current;
       if (pass) {
         const f = clamp01((pose.finaleOpacity - 0.3) / 0.7);
         pass.style.opacity = String(+f.toFixed(3));
-        pass.style.transform =
-          layout === 'spread'
+        pass.style.transform = calm
+          ? 'none'
+          : layout === 'spread'
             ? `translate3d(${((1 - f) * 140).toFixed(1)}px, 0, 0)`
             : `translate3d(0, ${((1 - f) * 32).toFixed(1)}px, 0)`;
       }
@@ -270,13 +294,13 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       const m = metrics.current;
 
       // UV check: the sky dims; as it lifts again the lamp clicks off with a warm flicker
-      // (once per exit: uvFlickerStep arms at >= 0.6 and fires once below 0.5).
+      // (once per exit: uvFlickerStep arms at >= 0.6 and fires once below 0.5). No flicker in fade.
       const dim = skyRefs.dim.current;
       if (dim) {
         dim.style.opacity = String(+pose.uvDim.toFixed(3));
         const step = uvFlickerStep(m.flickerArmed, pose.uvDim);
         m.flickerArmed = step.armed;
-        if (step.fire) flicker(dim);
+        if (step.fire && !calm) flicker(dim);
       }
       // Closing: BON VOYAGE lands on the cover, then the cover word becomes the blessing.
       // Pose-driven booleans -> data attributes, written only when they change.
@@ -315,7 +339,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
         }
         if (bookRefs.light.current) bookRefs.light.current.style.opacity = String(pose.coverLight);
       } else {
-        const styleOf = layout === 'lite' ? litePageStyle : notepadPageStyle;
+        const styleOf = PAGE_STYLE[layout] || notepadPageStyle;
         const flip = easeInOutCubic(pose.flip);
         bookRefs.pages.forEach((ref, i) => {
           const el = ref.current;
@@ -329,7 +353,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
         });
         if (m.inlineFlap && m.sourcesBody) {
           // 'auto' -> inherit (''), so a hidden page's pointer-events:none still wins.
-          const fs = inlineFlapStyle(pose.flap);
+          const fs = inlineFlapStyle(pose.flap, calm);
           m.sourcesBody.style.opacity = String(fs.pageOpacity);
           m.sourcesBody.style.pointerEvents = fs.pagePointerEvents === 'none' ? 'none' : '';
           m.inlineFlap.style.opacity = String(fs.opacity);
@@ -343,7 +367,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
         if (wrap) {
           const shown = padShown(pose);
           wrap.style.opacity = String(+shown.toFixed(3));
-          wrap.style.transform = `translate3d(0, ${((1 - shown) * 24).toFixed(1)}px, 0)`;
+          wrap.style.transform = calm ? 'none' : `translate3d(0, ${((1 - shown) * 24).toFixed(1)}px, 0)`;
           const inert = shown < 0.5 ? '1' : '';
           if (wrap.dataset.inert !== inert) wrap.dataset.inert = inert;
         }
@@ -356,16 +380,25 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
         setActive(set);
       }
     },
-    // motion/phone are listed with layout on purpose: they decide which DOM is mounted.
+    // motion is listed with layout on purpose: together they decide which DOM is mounted.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [layout, motion, phone, bookRefs, skyRefs, setActive],
+    [layout, motion, flow, calm, bookRefs, skyRefs, setActive],
   );
 
-  // Before useScrollProgress (layout effects run in order): measure the DOM the next frame writes to.
+  // Before useScrollProgress (layout effects run in order): measure the DOM the next frame writes
+  // to. Entering the stack, drop the stage styles the pose wrote on the (kept) hero/finale nodes.
   useIsoLayoutEffect(() => {
     measure();
     shownKey.current = '';
-  }, [measure]);
+    if (flow) {
+      for (const el of [heroRef.current, finaleRef.current, passRef.current]) {
+        if (!el) continue;
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.style.pointerEvents = '';
+      }
+    }
+  }, [measure, flow]);
 
   useScrollProgress(sectionRef, render);
 
@@ -378,7 +411,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
     return () => window.removeEventListener('resize', onResize);
   }, [measure, render]);
 
-  // Where each part is fully showing. Phones/lite show the cover only once the hero has gone.
+  // Where each part is fully showing. One-page layouts show the cover only once the hero has gone.
   const progressFor = useCallback(
     (part) => {
       if (part === 'hero') return 0;
@@ -396,7 +429,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
   const isShowing = useCallback(
     (part) => {
       const section = sectionRef.current;
-      if (!section) return true;
+      if (!section || flow) return true;
       const pose = poseFor(layout, progressNow(section));
       if (part === 'hero') return pose.heroOpacity > 0.5;
       if (part === 'finale') return pose.finaleOpacity > 0.5;
@@ -404,18 +437,27 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       if (layout !== 'spread' && padShown(pose) < 0.5) return false;
       return activePages(layout, pose).has(part);
     },
-    [layout],
+    [layout, flow],
   );
 
   const goTo = useCallback(
     (part) => {
       const section = sectionRef.current;
-      if (section) scrollInstant(topForProgress(section, progressFor(part)));
+      if (!section) return;
+      if (!flow) {
+        scrollInstant(topForProgress(section, progressFor(part)));
+        return;
+      }
+      // Stack: everything is in flow; scroll the part's element to the top (scroll-margin clears
+      // the navbar).
+      const el =
+        part === 'hero' ? heroRef.current : part === 'finale' ? finaleRef.current : document.getElementById(part);
+      if (el) scrollInstant(0, el);
     },
-    [progressFor],
+    [progressFor, flow],
   );
 
-  useAnchors(goTo);
+  useAnchors(goTo, settled);
 
   // Keyboard / assistive tech: focus landing in a page (or hero/finale, or the UV flap) that is not
   // on screen brings it on screen. Focus that follows a pointer press (click/tap) never jumps, so a
@@ -471,65 +513,50 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
     window.__passportRender = (p) => {
       const q = clamp01(Number(p));
       const section = sectionRef.current;
-      if (section) scrollInstant(topForProgress(section, q));
+      if (section && !flow) scrollInstant(topForProgress(section, q));
       render(q);
-      return { layout, p: q, active: [...activePages(layout, poseFor(layout, q))] };
+      return { layout, p: q, active: flow ? [...PAGES] : [...activePages(layout, poseFor(layout, q))] };
     };
     return () => {
       delete window.__passportRender;
     };
-  }, [render, layout]);
+  }, [render, layout, flow]);
 
+  // Same element types at the same positions in every layout: only the keyed book wrapper
+  // remounts when the layout changes; the hero (the LCP element) and finale nodes are kept.
   return (
-    <div ref={sectionRef} className="ps-section" style={{ height: `calc(${TIMELINE.viewports} * 100svh)` }}>
-      <div className="ps-stage">
-        <NightSky refs={skyRefs} className={layout === 'lite' ? 'jb-sky--still' : ''} />
-        <div className="ps-frame">
+    <div
+      ref={sectionRef}
+      className={flow ? 'ps-reduced' : 'ps-section'}
+      style={flow ? undefined : SECTION_STYLE}
+      data-layout={layout}
+      data-motion={motion}
+      data-settled={settled ? '' : undefined}
+    >
+      <div className={flow ? undefined : 'ps-stage'}>
+        {flow ? null : (
+          <NightSky refs={skyRefs} className={layout === 'lite' || calm ? 'jb-sky--still' : ''} />
+        )}
+        <div className={flow ? undefined : 'ps-frame'}>
           <HeroCopy copyRef={heroRef} verifiedCount={verifiedCount} />
           <div key={layout} ref={wrapRef} className={`ps-bookwrap ps-bookwrap--${layout}`}>
             <Book leaves={leaves} base={base} layout={layout} refs={bookRefs} />
           </div>
-          <FinaleCopy copyRef={finaleRef} passRef={passRef} />
+          <FinaleCopy copyRef={finaleRef} passRef={passRef} still={flow || calm} />
         </div>
       </div>
     </div>
   );
 }
 
-/** Reduced motion: hero, the pages as a stack of paper cards, finale. No sticky stage, no pose. */
-function Reduced({ verifiedCount, leaves, base }) {
-  const { setActive } = useActive();
-  useEffect(() => {
-    setActive(new Set(PAGES));
-  }, [setActive]);
-
-  const goTo = useCallback((page) => {
-    const el = document.getElementById(page);
-    if (!el) return;
-    const root = document.documentElement;
-    const previous = root.style.scrollBehavior;
-    root.style.scrollBehavior = 'auto';
-    el.scrollIntoView({ block: 'start' });
-    root.style.scrollBehavior = previous;
-  }, []);
-  useAnchors(goTo);
-
-  return (
-    <div className="ps-reduced">
-      <HeroCopy verifiedCount={verifiedCount} />
-      <Book leaves={leaves} base={base} layout="stack" />
-      <FinaleCopy still />
-    </div>
-  );
-}
-
 function StageInner({ stories, verifiedCount, authorities, note }) {
   const mode = useLayoutMode();
-  // reduced motion or a short frame -> stack (no stage); lite -> lite; phone -> notepad; else spread.
+  // tiny frame -> stack; reduced motion -> fade; lite -> lite; phone / no room -> notepad; else spread.
   const layout = decideLayout(mode);
   const { active, setRoute } = usePassport();
   // UV lamp: pointer lamp on the desktop spread, scanner band on phones / lite, none when reduced.
-  const lamp = layout === 'spread' ? 'cursor' : layout === 'stack' ? 'off' : 'scan';
+  const lamp = layout === 'spread' ? 'cursor' : layout === 'stack' || layout === 'fade' ? 'off' : 'scan';
+  const still = layout === 'stack' || layout === 'fade';
 
   // Start the search from the saved route, else the saved profile's nationality (never saves).
   useEffect(() => {
@@ -546,7 +573,7 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
   const on = (id) => active.has(id);
   const leaves = [
     { front: <Cover active={on('cover')} pointerFoil={layout === 'spread'} />, back: <Notice active={on('notice')} /> },
-    { front: <DataPage active={on('data')} still={layout === 'stack'} verifiedCount={verifiedCount} />, back: <VisasOne active={on('visas1')} /> },
+    { front: <DataPage active={on('data')} still={still} verifiedCount={verifiedCount} />, back: <VisasOne active={on('visas1')} /> },
     { front: <VisasTwo active={on('visas2')} />, back: <Entries active={on('entries')} /> },
     {
       front: <UvSources active={on('sources')} verifiedCount={verifiedCount} />,
@@ -556,12 +583,11 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
   ];
   const base = <Observations active={on('observations')} note={note} />;
 
-  if (layout === 'stack') return <Reduced verifiedCount={verifiedCount} leaves={leaves} base={base} />;
   return (
     <Stage
       layout={layout}
       motion={mode.motion}
-      phone={mode.phone}
+      settled={mode.settled}
       verifiedCount={verifiedCount}
       leaves={leaves}
       base={base}
@@ -571,8 +597,9 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
 
 /**
  * The homepage Journey Book: hero (H1, search, trust line), the scroll-driven passport with
- * its nine pages, and the finale. Layout follows useLayoutMode: reduced -> stack, lite -> lite,
- * phone -> notepad, else the 3D spread.
+ * its nine pages, and the finale. Layout follows useLayoutMode + decideLayout: tiny frame ->
+ * stack, reduced motion -> fade, lite -> lite, phone / no room for the spread -> notepad, else
+ * the 3D spread.
  *   stories       [{ id, from_country, current_country, story_text }] (≤ 2, approved)
  *   verifiedCount number of verified official links (computed from OFFICIAL_SOURCES)
  *   authorities   { [code]: { name, url, domain } } verified immigration authorities

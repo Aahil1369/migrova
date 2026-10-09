@@ -1,14 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { decideMotion, FRAME_QUERIES } from './motionMode.js';
 
 export { decideMotion };
 
 const MOTIONS = ['full', 'lite', 'reduced'];
+const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 // SSR / first client render: identical on server and client, so hydration never mismatches.
-const DEFAULT_MODE = Object.freeze({ motion: 'full', phone: false, tiny: false, short: false });
+// (Until `settled`, stage.css / passport.css lay the server HTML out with FRAME_QUERIES.)
+const DEFAULT_MODE = Object.freeze({ motion: 'full', phone: false, roomy: true, tiny: false, settled: false });
 
 function readOverride() {
   try {
@@ -29,48 +31,32 @@ function listen(mql, handler) {
 }
 
 /**
- * `{ motion: 'full' | 'lite' | 'reduced', phone: boolean, tiny: boolean, short: boolean }`
- * (tiny / short: FRAME_QUERIES). Renders `{ motion: 'full', phone: false, tiny: false, short: false }`
- * on the server and for the first
- * client render, then settles on the real values after mount and tracks changes (rotate,
- * resize across 768px or the short-frame height, zoom, OS motion preference) without
- * remounting. Pick the Book layout with decideLayout(mode) (motionMode.js).
+ * `{ motion: 'full' | 'lite' | 'reduced', phone, roomy, tiny, settled }` (phone / roomy / tiny:
+ * FRAME_QUERIES). Renders DEFAULT_MODE on the server and for the hydration render, then settles
+ * on the real values in a layout effect — before the hydrated page is painted again — and tracks
+ * changes (rotate, resize across a frame threshold, zoom, OS motion preference). Pick the Book
+ * layout with decideLayout(mode) (motionMode.js). `settled` turns true with the first real values.
  */
 export function useLayoutMode() {
   const [mode, setMode] = useState(DEFAULT_MODE);
 
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     const override = readOverride(); // read once
-    const phoneQuery = window.matchMedia('(max-width: 767px)');
     const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const coarseQuery = window.matchMedia('(pointer: coarse)');
-    const tinyQuery = window.matchMedia(FRAME_QUERIES.tiny);
-    const shortQuery = window.matchMedia(FRAME_QUERIES.short);
+    const queries = Object.entries(FRAME_QUERIES).map(([key, query]) => [key, window.matchMedia(query)]);
 
     const evaluate = () => {
       const nav = typeof navigator === 'undefined' ? {} : navigator;
       const next = {
-        motion: decideMotion({
-          override,
-          reducedMotion: reducedQuery.matches,
-          saveData: nav.connection?.saveData,
-          deviceMemory: nav.deviceMemory,
-          coarsePointer: coarseQuery.matches,
-          hardwareConcurrency: nav.hardwareConcurrency,
-        }),
-        phone: phoneQuery.matches,
-        tiny: tinyQuery.matches,
-        short: shortQuery.matches,
+        motion: decideMotion({ override, reducedMotion: reducedQuery.matches, deviceMemory: nav.deviceMemory }),
+        settled: true,
       };
-      setMode((prev) =>
-        prev.motion === next.motion && prev.phone === next.phone && prev.tiny === next.tiny && prev.short === next.short
-          ? prev
-          : next,
-      );
+      for (const [key, mql] of queries) next[key] = mql.matches;
+      setMode((prev) => (Object.keys(next).every((k) => prev[k] === next[k]) ? prev : next));
     };
 
     evaluate();
-    const stops = [phoneQuery, reducedQuery, coarseQuery, tinyQuery, shortQuery].map((mql) => listen(mql, evaluate));
+    const stops = [reducedQuery, ...queries.map(([, mql]) => mql)].map((mql) => listen(mql, evaluate));
     return () => stops.forEach((stop) => stop());
   }, []);
 

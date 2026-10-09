@@ -92,7 +92,7 @@ function FamilyPhoto() {
  * p2, the data page: holder, From -> To from the current search (defaults "Your country" /
  * "Your 5 best matches"), a line-art family photo, "Find my countries →" and the two MRZ lines
  * built from the route (ANY when unset), which decode into plain English on arrival.
- * `still`: the reduced-motion stack (raw + plain lines together). `verifiedCount`: the computed
+ * `still`: the reduced-motion layouts, fade and stack (raw + plain lines together). `verifiedCount`: the computed
  * verified-link count, printed in the MRZ (never hard-coded).
  */
 export default function DataPage({ active = false, still = false, verifiedCount }) {

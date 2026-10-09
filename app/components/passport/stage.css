@@ -56,9 +56,11 @@
   z-index: 1;
   pointer-events: none;
 }
-/* Phones / lite: the book appears as the hero fades (PassportStage writes opacity). */
+/* One page at a time (notepad / lite / fade): the book appears as the hero fades
+   (PassportStage writes opacity). */
 .ps-bookwrap--notepad,
-.ps-bookwrap--lite {
+.ps-bookwrap--lite,
+.ps-bookwrap--fade {
   opacity: 0;
 }
 /* While the one-page book is (nearly) invisible behind the hero / finale, nothing in it takes
@@ -161,7 +163,39 @@
   }
 }
 
-/* ── Reduced motion: no sticky stage, a static night -> dawn backdrop ──────── */
+/* ── Stack (tiny frames): no sticky stage, a static night -> dawn backdrop ────── */
+/* PassportStage renders the stack as a mode of the same tree (section.ps-reduced), so the hero
+   node is never replaced. Until the layout settles (hydration), the server's stage markup
+   already looks stacked on the frames that will stack (FRAME_QUERIES.tiny in motionMode.js). */
+
+@media (max-width: 291px), (max-width: 767px) and (max-height: 499px), (min-width: 768px) and (max-height: 535px) {
+  .ps-section:not([data-settled]) {
+    height: auto !important; /* beats the inline scroll height */
+    padding: 0 16px 64px;
+  }
+  .ps-section:not([data-settled]) :is(.ps-stage, .ps-frame) {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .ps-section:not([data-settled]) :is(.jb-sky, .ps-bookwrap, .ps-finale, .ps-hint) {
+    display: none;
+  }
+  .ps-section:not([data-settled]) .ps-hero {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    width: auto;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 56px 0 24px;
+    transform: none;
+  }
+}
+.ps-reduced .ps-bookwrap {
+  position: static;
+}
 
 .ps-reduced {
   position: relative;
@@ -322,6 +356,9 @@
   .ps-hint span {
     animation: none;
   }
+}
+.ps-section[data-layout='fade'] .ps-hint span {
+  animation: none; /* fade = reduced motion, also when forced with ?motion=reduced */
 }
 
 /* ── Boarding pass (finale) ─────────────────────────────────────────────────── */
@@ -658,6 +695,27 @@
   }
   .bp-stub {
     min-height: 48px;
+  }
+}
+/* Short phones (iPhone SE class with the toolbars shown): the hero has to fit between the 73px
+   navbar and the frame bottom both at load (the stage starts 73px down) and once the stage is
+   stuck (the navbar covers its top), and the finale + boarding pass below the navbar: the
+   decorative bits go and the type tightens. */
+@media (max-width: 767px) and (max-height: 610px) {
+  .ps-stage .ps-hint,
+  .ps-stage .bp-kicker,
+  .ps-stage .bp-meta {
+    display: none;
+  }
+  .ps-stage .ps-h1 {
+    font-size: 30px;
+  }
+  .ps-stage .ps-hero .ps-sub {
+    margin-bottom: 14px;
+    line-height: 1.45;
+  }
+  .ps-stage .ps-trust {
+    margin-top: 10px;
   }
 }
 @media (min-width: 768px) and (max-height: 700px) {

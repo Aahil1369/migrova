@@ -304,7 +304,8 @@
   letter-spacing: 0.04em;
   line-height: 1.05;
 }
-.jb-lite .jbp-bv {
+.jb-lite .jbp-bv,
+.jb-fade .jbp-bv {
   transform: rotate(-14deg);
   transition: opacity 200ms ease;
 }
@@ -356,6 +357,7 @@
   75%, 100% { transform: translateX(380%) skewX(-12deg); }
 }
 .jb-lite .jbp-sheen,
+.jb-fade .jbp-sheen,
 .jb-stack .jbp-sheen {
   display: none;
 }
@@ -930,9 +932,9 @@ a.uvc-body:focus-visible {
   outline: 3px solid #2f5139;
   outline-offset: 3px;
 }
-.jb-stack .uvc-uv--lamp,
-.jb-stack .jbp-uv-band,
-.jb-stack .jbp-uv-glow {
+:is(.jb-stack, .jb-fade) .uvc-uv--lamp,
+:is(.jb-stack, .jb-fade) .jbp-uv-band,
+:is(.jb-stack, .jb-fade) .jbp-uv-glow {
   display: none;
 }
 .jb-stack .uvc-uv--full {
@@ -960,11 +962,13 @@ a.uvc-body:focus-visible {
 /* One page at a time (phones / lite): the UV check has the page body to itself, but on the
    shortest one-page frames it must still fit, so the fake "Apply now" buttons go. */
 .jb-notepad .jb-flap-inline .uvc-cta,
-.jb-lite .jb-flap-inline .uvc-cta {
+.jb-lite .jb-flap-inline .uvc-cta,
+.jb-fade .jb-flap-inline .uvc-cta {
   display: none;
 }
 .jb-notepad .jb-flap-inline .jbp-uv-cards,
-.jb-lite .jb-flap-inline .jbp-uv-cards {
+.jb-lite .jb-flap-inline .jbp-uv-cards,
+.jb-fade .jb-flap-inline .jbp-uv-cards {
   gap: calc(var(--u) * 2.6);
 }
 .jbp-uv-cards {

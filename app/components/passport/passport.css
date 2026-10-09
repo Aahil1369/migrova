@@ -164,15 +164,24 @@
 .jb-spread {
   position: absolute;
   inset: 0;
-  --pw: min(36vw, calc(80vh / 1.42), 470px); /* spread <= min(72vw, 80vh/1.42*2, 940px) */
+  /* Never narrower than its design width (FRAME.spread in motionMode.js: the narrowest page
+     whose content, UV flap included, fits at the 12px floor); decideLayout only picks the
+     spread where that fits below the navbar, and .jb-book scales it down if it ever doesn't. */
+  --jb-design-pw: 330px;
+  --pw: max(var(--jb-design-pw), min(36vw, calc(80vh / 1.42), 470px)); /* spread <= 940px */
   --jb-closed-x: max(0px, min(13vw, calc(50vw - var(--pw) * 1.08)));
   pointer-events: none;
 }
-/* Phones never use the spread (they get notepad once the layout mode resolves);
-   hide it before hydration so a 375px screen never flashes a tiny 3D book. */
-@media (max-width: 767px) {
-  .jb-spread {
-    visibility: hidden;
+/* The server always renders the spread. Until the layout settles (hydration), show it only
+   where it will stay: a frame with room for it (FRAME_QUERIES.roomy in motionMode.js) and motion
+   allowed. So no phone, short window or reduced-motion visitor ever sees a 3D book flash. Pure
+   CSS on purpose: a parser-blocking boot script measurably delayed the hero's first paint. */
+.ps-section:not([data-settled]) .jb-spread {
+  visibility: hidden;
+}
+@media (min-width: 894px) and (min-height: 566px) and (prefers-reduced-motion: no-preference) {
+  .ps-section:not([data-settled]) .jb-spread {
+    visibility: visible;
   }
 }
 .jb-scene {
@@ -190,6 +199,16 @@
   transform-style: preserve-3d;
   /* closed, right of centre, lying on a desk: the pose at p = 0 (PassportStage overrides) */
   transform: translate3d(var(--jb-closed-x), 0, 0) rotateX(8deg) rotateY(-14deg) scale(0.92);
+}
+/* Fit: the book's centre sits low enough for a page to clear the 73px navbar (+12px), and the
+   whole book scales down if a page is taller than the frame below the navbar (100svh - 97px).
+   tan(atan2(a, b)) = a / b as a number. Without CSS trig the book stays centred and unscaled. */
+@supports (scale: tan(atan2(1px, 2px))) {
+  .jb-book {
+    --jb-fit: min(1, tan(atan2(100svh - 97px, var(--ph))));
+    top: max(50%, calc(85px + var(--ph) * var(--jb-fit) / 2));
+    scale: var(--jb-fit);
+  }
 }
 .jb-leaf,
 .jb-base,
@@ -300,15 +319,27 @@
   min-height: 0;
 }
 
-/* ── notepad (phones) and lite: one page at a time ─────────────────────────── */
+/* ── notepad (phones), lite and fade (reduced motion): one page at a time ──── */
 
 .jb-notepad,
-.jb-lite {
+.jb-lite,
+.jb-fade {
   position: absolute;
   inset: 0;
-  --pw: min(calc(100vw - 32px), calc(70svh / 1.42));
+  /* Laid out no narrower than the design width (FRAME.onePage / onePageWide in motionMode.js:
+     the narrowest page whose content fits at the 16px floor), then scaled to fit (.jb-pad), so
+     on short frames the text shrinks with the page instead of being clipped. */
+  --jb-design-pw: 320px;
+  --pw: max(var(--jb-design-pw), min(calc(100vw - 32px), calc(70svh / 1.42)));
   --jb-body-min: 16px;
   pointer-events: none;
+}
+@media (min-width: 768px) {
+  .jb-notepad,
+  .jb-lite,
+  .jb-fade {
+    --jb-design-pw: 380px; /* the desktop page rhythm (7-line stories) needs a wider page */
+  }
 }
 .jb-pad {
   position: absolute;
@@ -316,6 +347,17 @@
   top: calc(50% - var(--ph) / 2);
   width: var(--pw);
   height: var(--ph);
+}
+/* Fit: scale the page (top-centre origin) into the frame below the 73px navbar with 12px clear
+   above and below (100svh - 97px), and between the 16px side gutters. svh, so the iOS toolbar
+   collapsing never changes it. Centred in the frame, but never higher than 85px. */
+@supports (scale: tan(atan2(1px, 2px))) {
+  .jb-pad {
+    --jb-fit: min(1, tan(atan2(100svh - 97px, var(--ph))), tan(atan2(100vw - 32px, var(--pw))));
+    top: max(calc(50% - var(--ph) * var(--jb-fit) / 2), 85px);
+    transform-origin: 50% 0;
+    scale: var(--jb-fit);
+  }
 }
 .jb-npage {
   position: absolute;
@@ -341,10 +383,12 @@
 .jb-npage .jb-leather .jb-shade {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0) 8%);
 }
-.jb-lite .jb-npage {
+.jb-lite .jb-npage,
+.jb-fade .jb-npage {
   opacity: 0; /* page 0 shows first; PassportStage crossfades the rest */
 }
-.jb-lite .jb-npage[data-index='0'] {
+.jb-lite .jb-npage[data-index='0'],
+.jb-fade .jb-npage[data-index='0'] {
   opacity: 1;
 }
 .jb-notepad .jb-npage {
@@ -361,7 +405,8 @@
 /* One page at a time: the UV check folds out OVER the sources page body (PassportStage
    crossfades the two with pose.flap via inlineFlapStyle), so each gets the whole page. */
 .jb-notepad .jb-pgbody > .jb-flap-inline,
-.jb-lite .jb-pgbody > .jb-flap-inline {
+.jb-lite .jb-pgbody > .jb-flap-inline,
+.jb-fade .jb-pgbody > .jb-flap-inline {
   position: absolute;
   inset: 0;
   margin: 0;
@@ -372,8 +417,12 @@
   transform: translate3d(0, 24px, 0);
   pointer-events: none;
 }
+.jb-fade .jb-pgbody > .jb-flap-inline {
+  transform: none; /* fade: it crossfades in place */
+}
 .jb-notepad .jb-flap-inline > .jbp-uv,
-.jb-lite .jb-flap-inline > .jbp-uv {
+.jb-lite .jb-flap-inline > .jbp-uv,
+.jb-fade .jb-flap-inline > .jbp-uv {
   flex: 0 1 auto;
 }
 
@@ -884,20 +933,21 @@
 .jb-lite .jb-stamp::before,
 .jb-lite .jb-seal-ring { animation: none; }
 
-/* Stack (reduced-motion layout) and the OS preference: final state, no motion. */
-.jb-stack .jb-vignette,
-.jb-stack .jb-vignette[data-applied='false'] {
+/* Stack and fade (the reduced-motion layouts) and the OS preference: final state, no motion. */
+:is(.jb-stack, .jb-fade) .jb-vignette,
+:is(.jb-stack, .jb-fade) .jb-vignette[data-applied='false'] {
   transform: none;
   transition: none;
 }
-.jb-stack .jb-vignette-shadow { opacity: 0 !important; transition: none; }
-.jb-stack .jb-stamp {
+:is(.jb-stack, .jb-fade) .jb-vignette-shadow { opacity: 0 !important; transition: none; }
+:is(.jb-stack, .jb-fade) .jb-vignette:is(:hover, :focus-visible) .jb-vignette-holo > span { animation: none; }
+:is(.jb-stack, .jb-fade) .jb-stamp {
   opacity: 1;
   transform: rotate(var(--r));
   transition: none;
 }
-.jb-stack .jb-stamp::before,
-.jb-stack .jb-seal-ring { animation: none; }
+:is(.jb-stack, .jb-fade) .jb-stamp::before,
+:is(.jb-stack, .jb-fade) .jb-seal-ring { animation: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .jb-vignette,
@@ -984,14 +1034,15 @@
   0% { transform: scale(0.6); opacity: 0.8; }
   100% { transform: scale(2); opacity: 0; }
 }
-/* Reduced motion / stack: the whole route, already drawn. */
-.jb-stack .jb-founder-leg,
-.jb-stack .jb-founder-stop {
+/* Reduced motion / stack / fade: the whole route, already drawn. */
+:is(.jb-stack, .jb-fade) .jb-founder-leg,
+:is(.jb-stack, .jb-fade) .jb-founder-stop {
   stroke-dashoffset: 0;
   opacity: 1;
   transition: none;
 }
-.jb-stack .jb-founder-pulse {
+:is(.jb-stack, .jb-fade) .jb-founder-pulse,
+:is(.jb-stack, .jb-fade) .jb-founder[data-drawn] .jb-founder-pulse {
   animation: none;
   opacity: 0.45;
 }

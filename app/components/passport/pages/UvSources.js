@@ -53,7 +53,7 @@ export default function UvSources({ active = false, verifiedCount = 0 }) {
     const el = numberRef.current;
     if (!active || !el) return undefined;
     const still =
-      el.closest('.jb-stack') ||
+      el.closest('.jb-stack, .jb-fade') ||
       (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     if (still) return undefined;
     return countUp(el, verifiedCount);
@@ -105,7 +105,7 @@ const HINT = {
  *   lamp 'cursor' (desktop spread, fine pointer): a lamp follows the pointer (CSS mask, --lx/--ly
  *        written in a rAF-throttled pointermove); falls back to 'scan' on touch screens
  *   lamp 'scan'   (phones / lite): a scanner band sweeps automatically (transform/opacity only)
- *   lamp 'off'    (reduced motion): both cards shown revealed, no lamp
+ *   lamp 'off'    (reduced motion: fade / stack): both cards shown revealed, no lamp
  * PassportStage writes data-auto="0|1|2" on the root (cards auto-reveal as the UV beat holds);
  * "Show everything" (aria-pressed) reveals both. Screen readers always get the verdicts.
  */
@@ -132,14 +132,16 @@ export function UvFlap({ active = false, authorities = {}, lamp = 'cursor' }) {
     const paint = () => {
       frame = 0;
       // All layout reads first, then all writes: no read/write interleaving (layout thrash).
+      // Screen px -> the layers' own px: the book may be scaled to fit the frame (passport.css).
       const rects = layers.map((el) => el.getBoundingClientRect());
+      const k = rects[0]?.width && layers[0].offsetWidth ? layers[0].offsetWidth / rects[0].width : 1;
       const rootRect = glow ? root.getBoundingClientRect() : null;
       layers.forEach((el, i) => {
-        el.style.setProperty('--lx', `${(x - rects[i].left).toFixed(1)}px`);
-        el.style.setProperty('--ly', `${(y - rects[i].top).toFixed(1)}px`);
+        el.style.setProperty('--lx', `${((x - rects[i].left) * k).toFixed(1)}px`);
+        el.style.setProperty('--ly', `${((y - rects[i].top) * k).toFixed(1)}px`);
       });
       if (glow) {
-        glow.style.transform = `translate3d(${(x - rootRect.left).toFixed(1)}px, ${(y - rootRect.top).toFixed(1)}px, 0)`;
+        glow.style.transform = `translate3d(${((x - rootRect.left) * k).toFixed(1)}px, ${((y - rootRect.top) * k).toFixed(1)}px, 0)`;
       }
     };
     const onMove = (e) => {

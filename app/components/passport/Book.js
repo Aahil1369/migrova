@@ -186,14 +186,15 @@ function Stack({ nodes, flap }) {
  *         sources/travellers (optional `flap` on leaves[3]: content for the UV fold-out)
  * base:   observations page node
  * layout: 'spread' (3D two-page book) | 'notepad' (phone, top-hinged pages) |
- *         'lite' (crossfading pages, no 3D) | 'stack' (reduced motion: cards in flow)
+ *         'lite' (crossfading pages, no 3D) | 'fade' (reduced motion: opacity-only crossfade) |
+ *         'stack' (tiny frames: cards in flow)
  * refs:   { book, leaves: [4], flap, light, pages: [9] } ref objects owned by the caller;
  *         refs a layout doesn't use stay null (spread: book/leaves/flap/light;
- *         notepad + lite: pages; stack: none).
+ *         notepad / lite / fade: pages; stack: none).
  * Each page node is rendered exactly once per layout. Changing `layout` remounts the book,
  * so no inline style written for one layout survives into another.
  * Flap content: spread -> the fold-out `.jb-flap` (PassportStage swings it with flapStyle);
- * notepad / lite -> `.jb-flap-inline[data-flap]` laid over the sources page body (PassportStage
+ * notepad / lite / fade -> `.jb-flap-inline[data-flap]` laid over the sources page body (PassportStage
  * crossfades it in with pose.flap); stack -> `.jb-flap-inline` in flow below the page.
  */
 export default function Book({ leaves, base, layout = 'spread', refs }) {
@@ -203,7 +204,7 @@ export default function Book({ leaves, base, layout = 'spread', refs }) {
   const flap = leaves?.[3]?.flap ?? null;
 
   if (layout === 'stack') return <Stack key="stack" nodes={nodes} flap={flap} />;
-  if (layout === 'notepad' || layout === 'lite') {
+  if (layout === 'notepad' || layout === 'lite' || layout === 'fade') {
     return <Pad key={layout} layout={layout} nodes={nodes} flap={flap} refs={refs} />;
   }
   return <Spread key="spread" nodes={nodes} flap={flap} refs={refs} />;

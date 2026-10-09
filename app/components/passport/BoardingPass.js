@@ -23,7 +23,7 @@ const ANNOUNCE_MS = 550; // the route pill appears as the stub vanishes
  * "Remember this route") calls saveRoute(localStorage) and fires 'migrova:route' so the navbar
  * pill appears. Storage blocked -> the tear still plays and an aria-live note says so.
  * `passRef`: PassportStage slides the pass out of the book with the finale (opacity/transform).
- * `still`: the reduced-motion stack (no tear animation).
+ * `still`: the reduced-motion layouts, fade and stack (no tear animation).
  */
 function BoardingPass({ passRef, still = false }) {
   // The root stays the same element (PassportStage styles it every frame); the pass itself
