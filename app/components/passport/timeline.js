@@ -72,10 +72,16 @@ export function beatAt(timeline, p) {
   return order[order.length - 1];
 }
 
-/** Progress at the middle of the page's spread beat. 'cover' (and unknown pages) -> 0. */
+/**
+ * Progress at which the page is fully showing. A spread beat holds two pages (ordered as
+ * in PAGES): the left one is shown at 25% of the beat, the right one at 75%, so neither
+ * lands on the phone layout's mid-beat page flip. 'cover' (and unknown pages) -> 0.
+ */
 export function progressForPage(timeline, pageId) {
   const beatId = SPREAD_OF[pageId];
   const range = beatId && timeline.ranges[beatId];
   if (!range) return 0;
-  return (range[0] + range[1]) / 2;
+  const [start, end] = range;
+  const isLeft = PAGES.find((page) => SPREAD_OF[page] === beatId) === pageId;
+  return start + (isLeft ? 0.25 : 0.75) * (end - start);
 }

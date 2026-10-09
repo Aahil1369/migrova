@@ -58,6 +58,25 @@ test('progressForPage: cover is 0, other pages sit inside their spread beat', ()
   }
 });
 
+test('progressForPage: left page at 25% of the spread beat, right page at 75%', () => {
+  const [s, e] = t.ranges.spread1;
+  const len = e - s;
+  const notice = progressForPage(t, 'notice');
+  const data = progressForPage(t, 'data');
+  for (const p of [notice, data]) assert.ok(p > s && p < e, `${p} not strictly inside [${s}, ${e}]`);
+  assert.ok(notice < data);
+  assert.ok(Math.abs(notice - (s + 0.25 * len)) < 1e-12);
+  assert.ok(Math.abs(data - (s + 0.75 * len)) < 1e-12);
+  // Same rule for every spread: earlier page in PAGES is left, later is right.
+  for (const beat of ['spread2', 'spread3', 'spread4']) {
+    const [bs, be] = t.ranges[beat];
+    const [left, right] = PAGES.filter((page) => SPREAD_OF[page] === beat);
+    assert.ok(Math.abs(progressForPage(t, left) - (bs + 0.25 * (be - bs))) < 1e-12, left);
+    assert.ok(Math.abs(progressForPage(t, right) - (bs + 0.75 * (be - bs))) < 1e-12, right);
+  }
+  assert.equal(progressForPage(t, 'nonsense'), 0);
+});
+
 test('every ANCHORS value is a page, every page but cover has a spread', () => {
   for (const page of Object.values(ANCHORS)) assert.ok(PAGES.includes(page), page);
   for (const page of PAGES.filter((x) => x !== 'cover')) assert.ok(SPREAD_OF[page], page);
