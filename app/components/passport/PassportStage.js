@@ -20,6 +20,7 @@ import {
 } from './stageStyle';
 import { scrollTarget, useScrollProgress } from './useScrollProgress';
 import { useLayoutMode } from './useLayoutMode';
+import { decideLayout } from './motionMode';
 import { activeKey, activePages, padShown } from './activePages';
 import { initialRoute } from './search';
 import Cover from './pages/Cover';
@@ -37,13 +38,6 @@ import './stage.css';
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 const TIMELINE = buildTimeline();
 const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN -> 0
-
-/** reduced -> stack (no stage); lite -> lite; phone -> notepad; otherwise the 3D spread. */
-function layoutFor({ motion, phone }) {
-  if (motion === 'reduced') return 'stack';
-  if (motion === 'lite') return 'lite';
-  return phone ? 'notepad' : 'spread';
-}
 
 const poseFor = (layout, p) => (layout === 'spread' ? desktopPose(TIMELINE, p) : notepadPose(TIMELINE, p));
 
@@ -530,7 +524,8 @@ function Reduced({ verifiedCount, leaves, base }) {
 
 function StageInner({ stories, verifiedCount, authorities, note }) {
   const mode = useLayoutMode();
-  const layout = layoutFor(mode);
+  // reduced motion or a short frame -> stack (no stage); lite -> lite; phone -> notepad; else spread.
+  const layout = decideLayout(mode);
   const { active, setRoute } = usePassport();
   // UV lamp: pointer lamp on the desktop spread, scanner band on phones / lite, none when reduced.
   const lamp = layout === 'spread' ? 'cursor' : layout === 'stack' ? 'off' : 'scan';

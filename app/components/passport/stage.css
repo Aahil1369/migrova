@@ -661,6 +661,7 @@
   }
 }
 @media (min-width: 768px) and (max-height: 700px) {
+  .ps-stage .ps-hero,
   .ps-stage .ps-finale {
     top: calc(50% + 32px);
   }

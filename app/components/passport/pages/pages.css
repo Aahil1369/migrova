@@ -957,6 +957,16 @@ a.uvc-body:focus-visible {
 .jb-flap-inline .uvc-desc {
   display: none;
 }
+/* One page at a time (phones / lite): the UV check has the page body to itself, but on the
+   shortest one-page frames it must still fit, so the fake "Apply now" buttons go. */
+.jb-notepad .jb-flap-inline .uvc-cta,
+.jb-lite .jb-flap-inline .uvc-cta {
+  display: none;
+}
+.jb-notepad .jb-flap-inline .jbp-uv-cards,
+.jb-lite .jb-flap-inline .jbp-uv-cards {
+  gap: calc(var(--u) * 2.6);
+}
 .jbp-uv-cards {
   flex: 0 0 auto; /* never squeezed: trim the decoration below instead */
 }

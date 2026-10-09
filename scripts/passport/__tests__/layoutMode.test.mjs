@@ -1,6 +1,42 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { decideMotion } from '../../../app/components/passport/useLayoutMode.js';
+import { decideLayout, FRAME_QUERIES } from '../../../app/components/passport/motionMode.js';
+
+const roomy = { tiny: false, short: false };
+
+test('decideLayout: reduced motion -> stack; lite -> lite; phone -> notepad; else spread', () => {
+  assert.equal(decideLayout({ motion: 'reduced', phone: false, ...roomy }), 'stack');
+  assert.equal(decideLayout({ motion: 'reduced', phone: true, ...roomy }), 'stack');
+  assert.equal(decideLayout({ motion: 'lite', phone: true, ...roomy }), 'lite');
+  assert.equal(decideLayout({ motion: 'full', phone: true, ...roomy }), 'notepad');
+  assert.equal(decideLayout({ motion: 'full', phone: false, ...roomy }), 'spread');
+});
+
+test('decideLayout: tiny frames (<= 560px: landscape phones, 200% zoom) always get the stack', () => {
+  for (const motion of ['full', 'lite', 'reduced']) {
+    for (const phone of [true, false]) {
+      assert.equal(decideLayout({ motion, phone, tiny: true, short: true }), 'stack', `${motion} phone=${phone}`);
+    }
+  }
+});
+
+test('decideLayout: short frames (< 640px) stack the one-page books but keep the desktop spread', () => {
+  const short = { tiny: false, short: true };
+  assert.equal(decideLayout({ motion: 'full', phone: true, ...short }), 'stack', 'small phone (375x553 / 375x620)');
+  assert.equal(decideLayout({ motion: 'lite', phone: false, ...short }), 'stack', 'lite on a short laptop');
+  assert.equal(decideLayout({ motion: 'full', phone: false, ...short }), 'spread', '1024x600 desktop');
+});
+
+test('FRAME_QUERIES: max-height queries, the one-page threshold above the spread one', () => {
+  const px = (q) => Number(/max-height:\s*(\d+)px/.exec(q)[1]);
+  assert.ok(px(FRAME_QUERIES.short) > px(FRAME_QUERIES.tiny));
+});
+
+test('decideLayout: missing / unknown signals fall back to the spread', () => {
+  assert.equal(decideLayout(), 'spread');
+  assert.equal(decideLayout({ motion: 'nope' }), 'spread');
+});
 
 // A capable, motion-happy desktop; individual tests override one signal at a time.
 const base = {
