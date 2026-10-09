@@ -1,0 +1,68 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { decideMotion } from '../../../app/components/passport/useLayoutMode.js';
+
+// A capable, motion-happy desktop; individual tests override one signal at a time.
+const base = {
+  override: null,
+  reducedMotion: false,
+  saveData: false,
+  deviceMemory: 8,
+  coarsePointer: false,
+  hardwareConcurrency: 8,
+};
+const decide = (over = {}) => decideMotion({ ...base, ...over });
+
+test('full by default', () => {
+  assert.equal(decide(), 'full');
+});
+
+test('prefers-reduced-motion -> reduced', () => {
+  assert.equal(decide({ reducedMotion: true }), 'reduced');
+});
+
+test('reduced beats lite', () => {
+  assert.equal(decide({ reducedMotion: true, saveData: true, deviceMemory: 1 }), 'reduced');
+});
+
+test('each lite trigger on its own -> lite', () => {
+  assert.equal(decide({ saveData: true }), 'lite');
+  assert.equal(decide({ deviceMemory: 2 }), 'lite');
+  assert.equal(decide({ deviceMemory: 1 }), 'lite');
+  assert.equal(decide({ deviceMemory: 0.5 }), 'lite');
+  assert.equal(decide({ coarsePointer: true, hardwareConcurrency: 4 }), 'lite');
+  assert.equal(decide({ coarsePointer: true, hardwareConcurrency: 2 }), 'lite');
+});
+
+test('thresholds are inclusive and exclusive where they should be', () => {
+  assert.equal(decide({ deviceMemory: 4 }), 'full');
+  assert.equal(decide({ coarsePointer: true, hardwareConcurrency: 5 }), 'full');
+  assert.equal(decide({ coarsePointer: true, hardwareConcurrency: 8 }), 'full');
+  // few cores alone (fine pointer) is not enough
+  assert.equal(decide({ coarsePointer: false, hardwareConcurrency: 2 }), 'full');
+});
+
+test('missing or unknown navigator fields are treated as unknown, not as lite', () => {
+  assert.equal(decide({ saveData: undefined, deviceMemory: undefined, hardwareConcurrency: undefined }), 'full');
+  assert.equal(decide({ coarsePointer: true, hardwareConcurrency: undefined }), 'full');
+  assert.equal(decide({ coarsePointer: true, hardwareConcurrency: null }), 'full');
+  assert.equal(decide({ deviceMemory: null }), 'full');
+  assert.equal(decide({ deviceMemory: NaN, hardwareConcurrency: NaN, coarsePointer: true }), 'full');
+  assert.equal(decide({ saveData: 'yes' }), 'full'); // only a real `true` counts
+  assert.equal(decideMotion({}), 'full');
+  assert.equal(decideMotion(), 'full');
+});
+
+test('override wins over everything', () => {
+  assert.equal(decide({ override: 'full', reducedMotion: true, saveData: true, deviceMemory: 1 }), 'full');
+  assert.equal(decide({ override: 'lite' }), 'lite');
+  assert.equal(decide({ override: 'reduced' }), 'reduced');
+  assert.equal(decide({ override: 'reduced', saveData: false }), 'reduced');
+});
+
+test('an unrecognised override is ignored', () => {
+  assert.equal(decide({ override: 'turbo' }), 'full');
+  assert.equal(decide({ override: '' }), 'full');
+  assert.equal(decide({ override: 'turbo', reducedMotion: true }), 'reduced');
+  assert.equal(decide({ override: 'FULL', saveData: true }), 'lite');
+});
