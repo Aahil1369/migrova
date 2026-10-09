@@ -27,5 +27,16 @@ export function useMediaQuery(query, serverValue = false) {
   return useSyncExternalStore(subscribe, getSnapshot, () => serverValue);
 }
 
+const noSubscribe = () => () => {};
+
+/**
+ * false on the server and during hydration, true right after (React re-renders once). For
+ * decorative parts that are not visible at load: leaving them out of the server HTML keeps the
+ * first layout (and so the hero's LCP) cheap, and they mount before anyone can scroll to them.
+ */
+export function useHydrated() {
+  return useSyncExternalStore(noSubscribe, () => true, () => false);
+}
+
 export const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
 export const FINE_HOVER = '(hover: hover) and (pointer: fine)';

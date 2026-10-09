@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { countryByCode } from '../../../data/countries195';
 import HologramSeal from '../parts/HologramSeal';
 import { useRoute } from '../PassportContext';
-import { FINE_HOVER, useMediaQuery } from '../useMediaQuery';
+import { FINE_HOVER, useHydrated, useMediaQuery } from '../useMediaQuery';
 import { fakeDomain } from './uv';
 import './pages.css';
 
@@ -112,6 +112,9 @@ const HINT = {
 export function UvFlap({ active = false, authorities = {}, lamp = 'cursor' }) {
   const { route } = useRoute();
   const fineHover = useMediaQuery(FINE_HOVER, true);
+  // The UV layers, scanner band and lamp glow mount right after hydration: the flap is folded
+  // away at load, and leaving them out of the server HTML keeps the first layout cheap.
+  const hydrated = useHydrated();
   const mode = lamp === 'cursor' && !fineHover ? 'scan' : lamp;
   const [all, setAll] = useState(lamp === 'off');
   const rootRef = useRef(null);
@@ -153,7 +156,7 @@ export function UvFlap({ active = false, authorities = {}, lamp = 'cursor' }) {
       }
       if (glow) glow.style.transform = '';
     };
-  }, [mode, active, all]);
+  }, [mode, active, all, hydrated]);
 
   const pick = pickSite(route, authorities);
   if (!pick) return null;
@@ -190,16 +193,22 @@ export function UvFlap({ active = false, authorities = {}, lamp = 'cursor' }) {
               <span className="uvc-desc" aria-hidden="true">Official immigration services for visitors, students and workers.</span>
               <span className="uvc-cta" aria-hidden="true">Apply now →</span>
             </span>
-            <span className="uvc-uv uvc-uv--lamp" aria-hidden="true">
-              <span className="uvc-uvdomain">{site.domain}</span>
-              <b className="uvc-uvname">{site.name}</b>
-              <span className="uvc-seal uvc-seal--ok">✓ VERIFIED</span>
-            </span>
-            <span className="uvc-uv uvc-uv--full">
-              <span className="uvc-uvdomain" aria-hidden="true">{site.domain}</span>
-              <b className="uvc-uvname">{site.name}</b>
-              <span className="uvc-seal uvc-seal--ok">✓ VERIFIED</span>
-            </span>
+            {hydrated ? (
+              <>
+                <span className="uvc-uv uvc-uv--lamp" aria-hidden="true">
+                  <span className="uvc-uvdomain">{site.domain}</span>
+                  <b className="uvc-uvname">{site.name}</b>
+                  <span className="uvc-seal uvc-seal--ok">✓ VERIFIED</span>
+                </span>
+                <span className="uvc-uv uvc-uv--full">
+                  <span className="uvc-uvdomain" aria-hidden="true">{site.domain}</span>
+                  <b className="uvc-uvname">{site.name}</b>
+                  <span className="uvc-seal uvc-seal--ok">✓ VERIFIED</span>
+                </span>
+              </>
+            ) : (
+              <span className="sr-only"> {site.name}, verified official site</span>
+            )}
             <span className="sr-only"> (official site, opens in a new tab)</span>
           </a>
         </div>
@@ -215,24 +224,30 @@ export function UvFlap({ active = false, authorities = {}, lamp = 'cursor' }) {
               <span className="uvc-desc" aria-hidden="true">Official immigration services for visitors, students and workers.</span>
               <span className="uvc-cta" aria-hidden="true">Apply now →</span>
             </span>
-            <span className="uvc-uv uvc-uv--lamp" aria-hidden="true">
-              <span className="uvc-uvdomain">{fake}</span>
-              <b className="uvc-uvname">Not a government site</b>
-              <span className="uvc-seal uvc-seal--bad">✗ NOT OFFICIAL — charges extra fees</span>
-            </span>
-            <span className="uvc-uv uvc-uv--full">
-              <span className="uvc-uvdomain" aria-hidden="true">{fake}</span>
-              <b className="uvc-uvname">Not a government site</b>
-              <span className="uvc-seal uvc-seal--bad">✗ NOT OFFICIAL — charges extra fees</span>
-            </span>
+            {hydrated ? (
+              <>
+                <span className="uvc-uv uvc-uv--lamp" aria-hidden="true">
+                  <span className="uvc-uvdomain">{fake}</span>
+                  <b className="uvc-uvname">Not a government site</b>
+                  <span className="uvc-seal uvc-seal--bad">✗ NOT OFFICIAL — charges extra fees</span>
+                </span>
+                <span className="uvc-uv uvc-uv--full">
+                  <span className="uvc-uvdomain" aria-hidden="true">{fake}</span>
+                  <b className="uvc-uvname">Not a government site</b>
+                  <span className="uvc-seal uvc-seal--bad">✗ NOT OFFICIAL — charges extra fees</span>
+                </span>
+              </>
+            ) : (
+              <span className="sr-only"> Not a government site: not official, charges extra fees</span>
+            )}
           </div>
         </div>
-        <span className="jbp-uv-band" aria-hidden="true" />
+        {hydrated ? <span className="jbp-uv-band" aria-hidden="true" /> : null}
       </div>
       <button type="button" className="jbp-uv-toggle" aria-pressed={all} onClick={() => setAll((on) => !on)}>
         Show everything
       </button>
-      <span ref={glowRef} className="jbp-uv-glow" aria-hidden="true" />
+      {hydrated ? <span ref={glowRef} className="jbp-uv-glow" aria-hidden="true" /> : null}
     </div>
   );
 }

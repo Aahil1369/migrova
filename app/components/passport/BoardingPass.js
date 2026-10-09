@@ -6,7 +6,8 @@ import { useRoute } from './PassportContext';
 import { hasRoute, routeCodes, routeLabel, routeSpoken, sameRoute, saveRoute } from './routeStore';
 import { visaHref } from './search';
 import { announceRouteChange, deviceStorage, useSavedRoute } from './useSavedRoute';
-import { REDUCED_MOTION, useMediaQuery } from './useMediaQuery';
+import { PlaneGlyph, ScissorsGlyph } from './parts/Glyphs';
+import { REDUCED_MOTION, useHydrated, useMediaQuery } from './useMediaQuery';
 import './stage.css';
 
 const TEAR_MS = 700; // the stub's flight (CSS transition)
@@ -26,6 +27,18 @@ const FAILED = "Couldn't save the route on this device: this browser is blocking
  * `still`: the reduced-motion stack (no tear animation).
  */
 function BoardingPass({ passRef, still = false }) {
+  // The root stays the same element (PassportStage styles it every frame); the pass itself
+  // mounts right after hydration (it only shows in the finale), so its markup stays out of the
+  // server HTML, which keeps the first layout, and so the hero's LCP, cheap.
+  const hydrated = useHydrated();
+  return (
+    <div ref={passRef} className="bp">
+      {hydrated ? <Pass still={still} /> : null}
+    </div>
+  );
+}
+
+function Pass({ still }) {
   const { route } = useRoute();
   const saved = useSavedRoute();
   const reducedMotion = useMediaQuery(REDUCED_MOTION, false);
@@ -75,7 +88,9 @@ function BoardingPass({ passRef, still = false }) {
         <span className="bp-stub-codes">
           {codes.from}→{codes.to}
         </span>
-        <span className="bp-stub-cta">Tear to remember this route on this device ✂</span>
+        <span className="bp-stub-cta">
+          Tear to remember this route on this device <ScissorsGlyph />
+        </span>
       </span>
     );
   } else if (torn?.ok || (!torn && remembered)) {
@@ -107,13 +122,15 @@ function BoardingPass({ passRef, still = false }) {
         <span className="bp-stub-codes" aria-hidden="true">
           {codes.from}→{codes.to}
         </span>
-        <span className="bp-stub-cta">Tear to remember this route on this device ✂</span>
+        <span className="bp-stub-cta">
+          Tear to remember this route on this device <ScissorsGlyph />
+        </span>
       </button>
     );
   }
 
   return (
-    <div ref={passRef} className="bp" data-quiet={quiet ? 'true' : 'false'}>
+    <>
       <div className="bp-ticket">
         <div className="bp-main">
           <p className="bp-kicker" aria-hidden="true">
@@ -123,7 +140,7 @@ function BoardingPass({ passRef, still = false }) {
             <span className="sr-only">Boarding pass: {routeSpoken(route)}</span>
             <span aria-hidden="true">{codes.from}</span>
             <span className="bp-plane" aria-hidden="true">
-              ✈
+              <PlaneGlyph />
             </span>
             <span aria-hidden="true">{codes.to}</span>
           </p>
@@ -155,7 +172,7 @@ function BoardingPass({ passRef, still = false }) {
       >
         {torn ? (torn.ok ? SAVED : FAILED) : ''}
       </p>
-    </div>
+    </>
   );
 }
 

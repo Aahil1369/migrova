@@ -193,3 +193,88 @@ body {
   .reveal { opacity: 1; transform: none; }
   .italic-draw { background-size: 100% 1.5px; }
 }
+
+/* ─── Inline glyph icons (components/passport/parts/Glyphs.js) ─── */
+.jb-glyph {
+  display: inline-block;
+  flex: none;
+  vertical-align: -0.125em;
+}
+
+/* ─── Navbar route pill (components/RoutePill.js) ───
+   In the global sheet (not its own file): the navbar is on every page, and a separate CSS
+   chunk would be one more render-blocking request. Dark pill with lime text in both navbar
+   tones (8.5:1); on the night navbar a lime hairline sets it off the dark bar. Only
+   opacity/transform animate (the pop-in after a tear). */
+.route-pill {
+  display: inline-flex;
+  align-items: stretch;
+  flex: 0 0 auto;
+  min-width: 0;
+  border: 1px solid rgba(184, 207, 93, 0.45);
+  border-radius: 999px;
+  background: #1f2a24;
+  color: #b8cf5d;
+  font-family: var(--font-jb-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.route-pill--paper { border-color: #1f2a24; }
+.route-pill--pop { animation: route-pill-in 520ms cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+@keyframes route-pill-in {
+  from { opacity: 0; transform: translateY(-14px) scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+.route-pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 4px 0 12px;
+  border-radius: 999px 0 0 999px;
+  color: inherit;
+  text-decoration: none;
+}
+.route-pill-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.route-pill-icon { display: none; } /* the compact (narrow header) form */
+.route-pill-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0 10px 0 6px;
+  border: 0;
+  border-radius: 0 999px 999px 0;
+  background: transparent;
+  color: #d7e4a3; /* 11:1 on the pill */
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.route-pill-link:hover .route-pill-text { text-decoration: underline; text-underline-offset: 3px; }
+.route-pill-link:focus-visible,
+.route-pill-x:focus-visible { outline: 2px solid #b8cf5d; outline-offset: 2px; }
+.route-pill--paper .route-pill-link:focus-visible,
+.route-pill--paper .route-pill-x:focus-visible { outline-color: #1f2a24; }
+/* Header at narrow widths: just the plane and the ✕, so the bar never overflows. */
+@media (max-width: 399px) {
+  .route-pill--bar .route-pill-text { display: none; }
+  .route-pill--bar .route-pill-icon { display: inline-flex; font-size: 14px; }
+  .route-pill--bar .route-pill-link { padding: 0 2px 0 10px; }
+  .route-pill--bar .route-pill-x { padding: 0 8px 0 4px; }
+}
+/* Mobile drawer: a full-width row. */
+.route-pill--drawer { display: flex; margin-top: 20px; font-size: 14px; }
+.route-pill--drawer .route-pill-link { flex: 1 1 auto; min-height: 44px; padding-left: 14px; }
+.route-pill--drawer .route-pill-x { min-width: 44px; min-height: 44px; font-size: 14px; }
+@media (prefers-reduced-motion: reduce) {
+  .route-pill--pop { animation: none; }
+}

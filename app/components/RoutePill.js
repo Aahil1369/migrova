@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { forgetRoute, hasRoute, routeLabel, routeSpoken, ROUTE_EVENT } from './passport/routeStore';
+import { forgetRoute, hasRoute, routeCodes, routeLabel, routeSpoken, ROUTE_EVENT } from './passport/routeStore';
+import { CrossGlyph, PlaneGlyph } from './passport/parts/Glyphs';
 import { visaHref } from './passport/search';
 import { announceRouteChange, deviceStorage, useSavedRoute } from './passport/useSavedRoute';
-import './RoutePill.css';
 
 /**
  * The route saved on this device (by tearing the homepage boarding-pass stub), as a navbar pill:
@@ -27,6 +27,7 @@ export default function RoutePill({ tone = 'paper', variant = 'bar' }) {
 
   if (!saved || !hasRoute(saved)) return null;
   const label = routeLabel(saved);
+  const codes = routeCodes(saved);
   const forget = () => {
     forgetRoute(deviceStorage());
     announceRouteChange();
@@ -43,14 +44,14 @@ export default function RoutePill({ tone = 'paper', variant = 'bar' }) {
         aria-label={`Your saved route, ${routeSpoken(saved)}: check a visa`}
       >
         <span className="route-pill-icon" aria-hidden="true">
-          ✈
+          <PlaneGlyph />
         </span>
         <span className="route-pill-text" aria-hidden="true">
-          {label}
+          {codes.from} <PlaneGlyph /> {codes.to}
         </span>
       </Link>
       <button type="button" className="route-pill-x" aria-label="Forget my route" onClick={forget}>
-        <span aria-hidden="true">✕</span>
+        <CrossGlyph />
       </button>
     </span>
   );

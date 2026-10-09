@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Noto_Naskh_Arabic } from 'next/font/google';
 import { Stamp } from '../parts/Stamp';
 import { STAMP_INKS } from '../parts/stampInks';
+import { useHydrated } from '../useMediaQuery';
 import './pages.css';
 
 // Only the cover word uses it; not preloaded, so it never competes with the hero H1 (LCP).
@@ -55,6 +56,7 @@ export default function Cover({ active = false, pointerFoil = false }) {
   const wordRef = useRef(null);
   const [showEtym, setShowEtym] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const hydrated = useHydrated(); // the BON VOYAGE label is closing-beat only: kept off the first render
 
   useEffect(() => {
     const el = ref.current;
@@ -141,8 +143,10 @@ export default function Cover({ active = false, pointerFoil = false }) {
             · SAFARI · JOURNEY
           </span>
           <span className="jbp-word-b jbp-foil">
-            <span lang="ur" dir="rtl" className={naskh.className}>
-              سفر بخیر
+            {/* The space stays outside the Naskh spans: a space would pull in the font's
+                Latin subset file just for that one character. */}
+            <span lang="ur" dir="rtl">
+              <span className={naskh.className}>سفر</span> <span className={naskh.className}>بخیر</span>
             </span>{' '}
             · SAFARI NJEMA · SAFE TRAVELS
           </span>
@@ -158,9 +162,11 @@ export default function Cover({ active = false, pointerFoil = false }) {
           ISSUER <b>MGV</b>
         </span>
       </div>
-      <span className="jbp-bv" aria-hidden="true">
-        <Stamp shape="circle" color={STAMP_INKS.terracotta} rotate={0} lines={['MIGROVA', 'BON VOYAGE', '✦ MGV ✦']} />
-      </span>
+      {hydrated ? (
+        <span className="jbp-bv" aria-hidden="true">
+          <Stamp shape="circle" color={STAMP_INKS.terracotta} rotate={0} lines={['MIGROVA', 'BON VOYAGE', '• MGV •']} />
+        </span>
+      ) : null}
       <span className="jbp-sheen" aria-hidden="true" />
     </section>
   );
