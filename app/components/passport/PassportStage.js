@@ -22,6 +22,7 @@ import {
 import { scrollTarget, useScrollProgress } from './useScrollProgress';
 import { useLayoutMode } from './useLayoutMode';
 import { decideLayout } from './motionMode';
+import { createQualityMonitor, frameStats } from './quality';
 import { activeKey, activePages, padShown } from './activePages';
 import { initialRoute } from './search';
 import Cover from './pages/Cover';
@@ -42,6 +43,9 @@ const SECTION_STYLE = { height: `calc(${TIMELINE.viewports} * 100svh)` };
 const PAGE_STYLE = { notepad: notepadPageStyle, lite: litePageStyle, fade: fadePageStyle };
 const ALL_KEY = activeKey(new Set(PAGES));
 const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN -> 0
+
+// The adaptive quality tier never goes back up within a visit (survives client navigation).
+let sessionTier = 'high';
 
 const poseFor = (layout, p) => (layout === 'spread' ? desktopPose(TIMELINE, p) : notepadPose(TIMELINE, p));
 
@@ -185,6 +189,50 @@ function writeCopy(el, opacity, direction) {
 }
 
 /**
+ * Adaptive quality: while the user scrolls the book (from a second after load), sample rAF frame
+ * intervals and step .ps-stage[data-quality] down when they are clearly over budget (quality.js).
+ * One attribute write per step, no React state.
+ */
+function useQualityTier(stageRef, lastP, enabled) {
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!enabled || !stage || typeof window.requestAnimationFrame !== 'function') return undefined;
+    const write = (tier) => {
+      sessionTier = tier;
+      stage.dataset.quality = tier;
+    };
+    write(sessionTier);
+    const monitor = createQualityMonitor({
+      raf: (cb) => window.requestAnimationFrame(cb),
+      caf: (id) => window.cancelAnimationFrame(id),
+      now: () => performance.now(),
+      tier: sessionTier,
+      onChange: write,
+    });
+    let armed = false;
+    let timer = 0;
+    const arm = () => {
+      timer = window.setTimeout(() => {
+        armed = true;
+        monitor.calibrate();
+      }, 1000);
+    };
+    if (document.readyState === 'complete') arm();
+    else window.addEventListener('load', arm, { once: true });
+    const onScroll = () => {
+      if (armed && lastP.current > 0 && lastP.current < 1) monitor.activity();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('load', arm);
+      window.removeEventListener('scroll', onScroll);
+      monitor.stop();
+    };
+  }, [stageRef, lastP, enabled]);
+}
+
+/**
  * The homepage stage in every layout. Spread / notepad / lite / fade: the tall scroll section
  * with the sticky stage; every frame writes styles to refs, and React state changes only when
  * the set of pages on screen changes. Stack (tiny frames): the same tree in normal flow
@@ -195,6 +243,7 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
   const flow = layout === 'stack';
   const calm = layout === 'fade'; // reduced motion: opacity only, nothing moves
   const sectionRef = useRef(null);
+  const stageRef = useRef(null);
   const heroRef = useRef(null);
   const finaleRef = useRef(null);
   const passRef = useRef(null);
@@ -401,6 +450,7 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
   }, [measure, flow]);
 
   useScrollProgress(sectionRef, render);
+  useQualityTier(stageRef, lastP, !flow);
 
   useEffect(() => {
     const onResize = () => {
@@ -533,7 +583,7 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
       data-motion={motion}
       data-settled={settled ? '' : undefined}
     >
-      <div className={flow ? undefined : 'ps-stage'}>
+      <div ref={stageRef} className={flow ? undefined : 'ps-stage'}>
         {flow ? null : (
           <NightSky refs={skyRefs} className={layout === 'lite' || calm ? 'jb-sky--still' : ''} />
         )}
@@ -549,11 +599,29 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
   );
 }
 
+/** `?fps=1`: inject the frame-rate overlay (public/passport-fps.js); nothing is loaded otherwise. */
+function useFpsOverlay() {
+  useEffect(() => {
+    try {
+      if (new URLSearchParams(window.location.search).get('fps') !== '1' || document.getElementById('jb-fps')) return;
+      window.__jbFrameStats = frameStats;
+      const script = document.createElement('script');
+      script.id = 'jb-fps';
+      script.src = '/passport-fps.js';
+      script.async = true;
+      document.head.appendChild(script);
+    } catch {
+      /* no overlay */
+    }
+  }, []);
+}
+
 function StageInner({ stories, verifiedCount, authorities, note }) {
   const mode = useLayoutMode();
   // tiny frame -> stack; reduced motion -> fade; lite -> lite; phone / no room -> notepad; else spread.
   const layout = decideLayout(mode);
   const { active, setRoute } = usePassport();
+  useFpsOverlay();
   // UV lamp: pointer lamp on the desktop spread, scanner band on phones / lite, none when reduced.
   const lamp = layout === 'spread' ? 'cursor' : layout === 'stack' || layout === 'fade' ? 'off' : 'scan';
   const still = layout === 'stack' || layout === 'fade';
@@ -599,7 +667,7 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
  * The homepage Journey Book: hero (H1, search, trust line), the scroll-driven passport with
  * its nine pages, and the finale. Layout follows useLayoutMode + decideLayout: tiny frame ->
  * stack, reduced motion -> fade, lite -> lite, phone / no room for the spread -> notepad, else
- * the 3D spread.
+ * the 3D spread. `?fps=1` adds a frame-rate overlay.
  *   stories       [{ id, from_country, current_country, story_text }] (≤ 2, approved)
  *   verifiedCount number of verified official links (computed from OFFICIAL_SOURCES)
  *   authorities   { [code]: { name, url, domain } } verified immigration authorities

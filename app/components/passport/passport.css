@@ -1061,3 +1061,22 @@
     opacity: 0.45;
   }
 }
+
+/* ── Adaptive quality (quality.js; PassportStage writes .ps-stage[data-quality]) ── */
+/* medium: no sheen / foil shimmer / seal spin. low: also a still sky, no page shading or
+   shadows. The page flip and the book opening / closing always stay. */
+.ps-stage:is([data-quality='medium'], [data-quality='low']) .jbp-sheen {
+  display: none;
+}
+.ps-stage:is([data-quality='medium'], [data-quality='low']) :is(.jb-seal-ring, .jb-vignette-holo > span) {
+  animation: none;
+}
+.ps-stage[data-quality='low'] :is(.jb-star, .jb-globe) {
+  animation: none;
+}
+.ps-stage[data-quality='low'] :is(.jb-shade, .jb-dim) {
+  display: none;
+}
+.ps-stage[data-quality='low'] :is(.jb-npage > .jb-face, .jb-base > .jb-face, .jb-leaf[data-leaf='0'] > .jb-face--back) {
+  box-shadow: none;
+}
