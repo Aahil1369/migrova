@@ -17,6 +17,7 @@ import {
   leafStyle,
   litePageStyle,
   notepadPageStyle,
+  pageLayer,
   skyLayers,
   starsCovered,
 } from './stageStyle';
@@ -288,6 +289,7 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
     coverState: '',
     faces: [],
     showKey: null,
+    turnPage: -1,
     covered: null,
   });
   const lastP = useRef(0);
@@ -319,10 +321,11 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
     // The cover (closing beat: BON VOYAGE stamp + blessing word); fresh DOM -> rewrite its state.
     m.cover = sectionRef.current?.querySelector('.jbp-cover') ?? null;
     m.coverState = '';
-    // Page faces (data-showing: their loops run only on screen) and the sky's covered flag:
-    // fresh DOM -> rewrite them all.
+    // Page faces (data-showing: their loops run only on screen), the page-turn layer hints and
+    // the sky's covered flag: fresh DOM -> rewrite them all.
     m.faces = sectionRef.current ? [...sectionRef.current.querySelectorAll('.jb-face[data-page]')] : [];
     m.showKey = null;
+    m.turnPage = -1;
     m.covered = null;
   }, [layout, bookRefs]);
 
@@ -415,6 +418,18 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
       } else {
         const styleOf = PAGE_STYLE[layout] || notepadPageStyle;
         const flip = easeInOutCubic(pose.flip);
+        // The page turning and the page under it get their own layers (passport.css): written
+        // when the page changes, never per frame.
+        if (pose.page !== m.turnPage) {
+          m.turnPage = pose.page;
+          bookRefs.pages.forEach((ref, i) => {
+            const el = ref.current;
+            if (!el) return;
+            const hint = pageLayer(i, pose.page);
+            if (hint) el.dataset.turn = hint;
+            else delete el.dataset.turn;
+          });
+        }
         bookRefs.pages.forEach((ref, i) => {
           const el = ref.current;
           if (!el) return;

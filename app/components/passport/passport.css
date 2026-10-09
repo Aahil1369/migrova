@@ -398,6 +398,20 @@
 .jb-notepad .jb-npage[data-index='1'] {
   opacity: 1;
 }
+/* Layers: the page turning and the page under it (data-turn, written by PassportStage when the
+   page changes, never per frame; pageLayer() in stageStyle.js) each get their own compositor
+   layer, so the turn never repaints the page beneath; in the notepad their turn dims are
+   composited too (the dims change every frame of a turn). Never every page. */
+.jb-notepad .jb-npage[data-turn],
+.jb-lite .jb-npage[data-turn] {
+  will-change: transform, opacity;
+}
+.jb-fade .jb-npage[data-turn] {
+  will-change: opacity;
+}
+.jb-notepad .jb-npage[data-turn] .jb-dim {
+  will-change: opacity;
+}
 .jb-pgbody > .jb-flap-inline {
   flex: 0 0 auto;
   margin-top: calc(var(--u) * 3);

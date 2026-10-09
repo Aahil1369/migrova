@@ -148,6 +148,18 @@ export function fadePageStyle(index, page, flip, count = 9) {
 }
 
 /**
+ * One-page layouts (notepad / lite / fade): the layer hint for page `index` while `page` shows.
+ * 'turn' is the showing page (it lifts away / fades out), 'under' the page beneath it (page + 1,
+ * or the cover after the last page), '' every other page. PassportStage writes it as
+ * `data-turn` when the page changes (never per frame); passport.css gives just those two pages
+ * their own compositor layers (will-change), so turning one never repaints the other.
+ */
+export function pageLayer(index, page, count = 9) {
+  if (index === page) return 'turn';
+  return index === (page + 1) % count ? 'under' : '';
+}
+
+/**
  * NightSky layer opacities for `pose.sky` (0 night … 1 daylight), Ruling R1: predawn is
  * fully in by 1/3, sunrise by 2/3, day by 0.9. The layers are opaque and stacked
  * night < predawn < (stars, globe) < sunrise < day, so only the upper layers fade in and

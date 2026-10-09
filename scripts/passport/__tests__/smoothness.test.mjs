@@ -1,4 +1,4 @@
-// Unit 2 (smoothness): the cheaper sky and loops that pause while unseen. The pure
+// Unit 2 (smoothness): the cheaper sky, layer hints and loops that pause while unseen. The pure
 // helpers PassportStage / NightSky use, plus guards on the CSS that does the work.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,6 +7,9 @@ import {
   starField,
   starsCovered,
   skyLayers,
+  pageLayer,
+  notepadPageStyle,
+  litePageStyle,
 } from '../../../app/components/passport/stageStyle.js';
 import { activePages, showingPages } from '../../../app/components/passport/activePages.js';
 import { buildTimeline, PAGES } from '../../../app/components/passport/timeline.js';
@@ -56,6 +59,43 @@ test('starsCovered: true exactly once the opaque sunrise layer above the stars a
     assert.equal(starsCovered(pose(TL, 0).sky), false);
     assert.equal(starsCovered(pose(TL, 1).sky), true);
   }
+});
+
+// ---------------------------------------------------------------- layers
+
+test('pageLayer: only the page turning and the page under it get a layer hint (one-page layouts)', () => {
+  for (let page = 0; page < PAGES.length; page++) {
+    const hints = PAGES.map((_, i) => pageLayer(i, page));
+    assert.equal(hints[page], 'turn');
+    assert.equal(hints[(page + 1) % PAGES.length], 'under');
+    assert.equal(hints.filter(Boolean).length, 2, `page ${page}: ${hints}`);
+    // the same pages the styles stack on top (turn z 2, under z 1) and show
+    for (const style of [notepadPageStyle, litePageStyle]) {
+      PAGES.forEach((_, i) => {
+        const z = style(i, page, 0.3).zIndex;
+        assert.equal(hints[i], z === 2 ? 'turn' : z === 1 ? 'under' : '');
+      });
+    }
+  }
+  assert.equal(pageLayer(3, NaN), '');
+  assert.equal(pageLayer(3, undefined), '');
+});
+
+test('will-change: the turning page and the page under it only (plus the notepad turn dim), never every page', () => {
+  const css = read('passport.css');
+  const rules = rulesWith(css, /will-change\s*:/);
+  const pages = rules.filter((r) => /\.jb-npage|\.jb-dim/.test(r.selector));
+  assert.ok(pages.length > 0, 'one-page layouts get layer hints');
+  for (const r of pages) {
+    for (const sel of r.selector.split(',')) {
+      if (/\.jb-spread/.test(sel)) continue; // the 3D spread's dims (existing)
+      assert.match(sel, /\[data-turn\]/, `"${sel.trim()}" hints every page`);
+    }
+  }
+  assert.ok(
+    pages.some((r) => /\.jb-notepad[^,]*\[data-turn\][^,]*\.jb-dim/.test(r.selector) && /opacity/.test(r.body)),
+    'notepad: the turn dim is its own layer',
+  );
 });
 
 // ---------------------------------------------------------------- loops that pause while unseen
