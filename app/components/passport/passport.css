@@ -34,6 +34,16 @@
   transform: rotateY(180deg);
   border-radius: var(--jb-radius) 0 0 var(--jb-radius);
 }
+/* Containment where it is free: a face of the fixed-size books (spread, notepad / lite / fade)
+   is sized by its page (inset: 0) and already clips (overflow: hidden), so a text change inside
+   (MRZ decode, count-up) is laid out from the face instead of the document. Not on .jb-pgbody: a
+   flex item is never a relayout boundary, and isolating it would cut the stamps' multiply blend
+   off the guilloche and clip focus rings and the arrival motion. Not in the stack: its cards
+   grow with their content. */
+.jb-spread .jb-face,
+.jb-pad .jb-face {
+  contain: size layout paint;
+}
 
 .jb-paper {
   background: var(--page);

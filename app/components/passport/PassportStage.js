@@ -5,7 +5,7 @@ import Book from './Book';
 import NightSky from './NightSky';
 import JourneySearch from './JourneySearch';
 import BoardingPass from './BoardingPass';
-import { PassportProvider, useActive, usePassport } from './PassportContext';
+import { PassportProvider, usePageActive, useRoute, useSetActive } from './PassportContext';
 import { ANCHORS, PAGES, buildTimeline, localT, progressForPage } from './timeline';
 import { desktopPose, notepadPose, easeInOutCubic } from './pose';
 import {
@@ -241,11 +241,12 @@ function useQualityTier(stageRef, lastP, enabled) {
 /**
  * The homepage stage in every layout. Spread / notepad / lite / fade: the tall scroll section
  * with the sticky stage; every frame writes styles to refs, and React state changes only when
- * the set of pages on screen changes. Stack (tiny frames): the same tree in normal flow
- * (section.ps-reduced), so switching layouts never replaces the hero / finale nodes.
+ * the set of pages on screen changes (which re-renders just the pages whose flag flipped, see
+ * OnScreen; never this stage, the book or the sky). Stack (tiny frames): the same tree in
+ * normal flow (section.ps-reduced), so switching layouts never replaces the hero / finale nodes.
  */
-function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
-  const { setActive } = useActive();
+const Stage = memo(function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
+  const setActive = useSetActive(); // stable: page-set changes never re-render the stage
   const flow = layout === 'stack';
   const calm = layout === 'fade'; // reduced motion: opacity only, nothing moves
   const sectionRef = useRef(null);
@@ -655,7 +656,7 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
       </div>
     </div>
   );
-}
+});
 
 /** `?fps=1`: inject the frame-rate overlay (public/passport-fps.js); nothing is loaded otherwise. */
 function useFpsOverlay() {
@@ -674,11 +675,31 @@ function useFpsOverlay() {
   }, []);
 }
 
+// Memoised pages. OnScreen is the only part that hears every page-set change: it hands its page
+// the page's own on-screen flag, so a turn re-renders just the page(s) whose flag flipped, never
+// the stage, the book or the sky.
+const PAGE = {
+  cover: memo(Cover),
+  notice: memo(Notice),
+  data: memo(DataPage),
+  visas1: memo(VisasOne),
+  visas2: memo(VisasTwo),
+  entries: memo(Entries),
+  sources: memo(UvSources),
+  flap: memo(UvFlap),
+  travellers: memo(Travellers),
+  observations: memo(Observations),
+};
+function OnScreen({ id, page: Page, ...props }) {
+  const active = usePageActive(id);
+  return <Page active={active} {...props} />;
+}
+
 function StageInner({ stories, verifiedCount, authorities, note }) {
   const mode = useLayoutMode();
   // tiny frame -> stack; reduced motion -> fade; lite -> lite; phone / no room -> notepad; else spread.
   const layout = decideLayout(mode);
-  const { active, setRoute } = usePassport();
+  const { setRoute } = useRoute();
   useFpsOverlay();
   // UV lamp: pointer lamp on the desktop spread, scanner band on phones / lite, none when reduced.
   const lamp = layout === 'spread' ? 'cursor' : layout === 'stack' || layout === 'fade' ? 'off' : 'scan';
@@ -696,18 +717,27 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
     if (route.from || route.to) setRoute(route);
   }, [setRoute]);
 
-  const on = (id) => active.has(id);
-  const leaves = [
-    { front: <Cover active={on('cover')} pointerFoil={layout === 'spread'} />, back: <Notice active={on('notice')} /> },
-    { front: <DataPage active={on('data')} still={still} verifiedCount={verifiedCount} />, back: <VisasOne active={on('visas1')} /> },
-    { front: <VisasTwo active={on('visas2')} />, back: <Entries active={on('entries')} /> },
-    {
-      front: <UvSources active={on('sources')} verifiedCount={verifiedCount} />,
-      back: <Travellers active={on('travellers')} stories={stories} />,
-      flap: <UvFlap active={on('sources')} authorities={authorities} lamp={lamp} />,
-    },
-  ];
-  const base = <Observations active={on('observations')} note={note} />;
+  // Built once per layout (and server props): page-set and route changes never rebuild them.
+  const leaves = useMemo(
+    () => [
+      {
+        front: <OnScreen id="cover" page={PAGE.cover} pointerFoil={layout === 'spread'} />,
+        back: <OnScreen id="notice" page={PAGE.notice} />,
+      },
+      {
+        front: <OnScreen id="data" page={PAGE.data} still={still} verifiedCount={verifiedCount} />,
+        back: <OnScreen id="visas1" page={PAGE.visas1} />,
+      },
+      { front: <OnScreen id="visas2" page={PAGE.visas2} />, back: <OnScreen id="entries" page={PAGE.entries} /> },
+      {
+        front: <OnScreen id="sources" page={PAGE.sources} verifiedCount={verifiedCount} />,
+        back: <OnScreen id="travellers" page={PAGE.travellers} stories={stories} />,
+        flap: <OnScreen id="sources" page={PAGE.flap} authorities={authorities} lamp={lamp} />,
+      },
+    ],
+    [layout, still, lamp, verifiedCount, stories, authorities],
+  );
+  const base = useMemo(() => <OnScreen id="observations" page={PAGE.observations} note={note} />, [note]);
 
   return (
     <Stage

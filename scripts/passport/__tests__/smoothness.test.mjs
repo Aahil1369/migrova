@@ -145,6 +145,27 @@ test('CSS: the star field is a few layers that twinkle by opacity only; no per-s
   assert.ok(lite.length > 0 && lite.every((r) => !/jb-starfield/.test(r.selector)));
 });
 
+test('stage.css: no universal selector under the book wrapper; one shield takes taps while it is inert', () => {
+  const css = read('stage.css');
+  assert.doesNotMatch(css.replace(/\/\*[\s\S]*?\*\//g, ''), /\[data-inert[^\]]*\]\s*\*/);
+  const shield = rulesWith(css, /pointer-events\s*:\s*auto/).find((r) => r.selector === ".ps-bookwrap[data-inert='1']::after");
+  assert.ok(shield, 'the inert shield');
+  assert.match(shield.body, /content\s*:/);
+  assert.match(shield.body, /inset\s*:\s*0/);
+});
+
+test('containment: each page face of the fixed-size books is a layout/paint boundary; never .jb-pgbody, never the stack', () => {
+  const css = read('passport.css');
+  const rules = rulesWith(css, /(^|;)\s*contain\s*:/);
+  const face = rules.find((r) => /\.jb-face/.test(r.selector));
+  assert.ok(face, 'faces are contained');
+  assert.match(face.body, /contain\s*:\s*size layout paint/);
+  for (const sel of face.selector.split(',')) assert.match(sel.trim(), /^\.(jb-spread|jb-pad) \.jb-face$/, sel);
+  // .jb-pgbody is a flex item (never a relayout boundary) and holds the stamps, whose multiply
+  // blend with the guilloche and whose focus rings / arrival motion overflow it.
+  assert.ok(!rules.some((r) => /jb-pgbody|jb-stack/.test(r.selector)));
+});
+
 test('stage.css: the hero hint arrow stops bouncing once the hero has faded out (data-gone)', () => {
   const css = read('stage.css');
   const paused = rulesWith(css, /animation-play-state\s*:\s*paused/).map((r) => r.selector).join(',');
