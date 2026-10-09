@@ -15,14 +15,14 @@ const LEAVES = 4; // cover/notice, data/visas1, visas2/entries, sources/travelle
  *   (back of the last leaf on the left) and, for a turning leaf, the side facing the viewer
  *   (front until -90deg, then back). So a page stays showing until it is fully covered and
  *   counts as arrived as soon as it is uncovered or past half a turn.
- * - 'notepad' / 'lite' (notepadPose): the showing page; while it lifts (0 < flip < 0.5) the
+ * - 'notepad' / 'lite' / 'fade' (notepadPose): the showing page; while it lifts (0 < flip < 0.5) the
  *   page underneath (page + 1, or the cover after the last page) joins it, then takes over.
  * - 'stack' (reduced motion): every page.
  */
 export function activePages(layout, pose) {
   if (layout === 'stack') return new Set(PAGES);
 
-  if (layout === 'notepad' || layout === 'lite') {
+  if (layout === 'notepad' || layout === 'lite' || layout === 'fade') {
     const page = Number.isInteger(pose?.page) && pose.page >= 0 && pose.page <= LAST ? pose.page : 0;
     const flip = Number.isFinite(pose?.flip) ? pose.flip : 0;
     const under = PAGES[(page + 1) % PAGES.length];
@@ -52,7 +52,7 @@ export const activeKey = (set) => [...set].sort().join('|');
 const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN / undefined -> 0
 
 /**
- * Notepad / lite (one page at a time): how much of the book is shown, 0..1. It fades in as the
+ * Notepad / lite / fade (one page at a time): how much of the book is shown, 0..1. It fades in as the
  * hero leaves and out as the finale arrives — (1 - heroOpacity) x (1 - finaleOpacity).
  * Below 0.5 the book is effectively invisible: it must not take taps or count as on screen.
  */

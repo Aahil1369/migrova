@@ -41,6 +41,10 @@ test('activePages notepad/lite: the showing page; the one underneath joins as it
   assert.deepEqual(sorted(activePages('notepad', { page: 2, flip: 0.3 })), ['data', 'visas1']);
   assert.deepEqual(sorted(activePages('lite', { page: 2, flip: 0.5 })), ['visas1']);
   assert.deepEqual(sorted(activePages('notepad', { page: 8, flip: 0.8 })), ['cover']);
+  // fade (reduced motion) is the same one-page book, crossfading
+  assert.deepEqual(sorted(activePages('fade', { page: 2, flip: 0 })), ['data']);
+  assert.deepEqual(sorted(activePages('fade', { page: 2, flip: 0.3 })), ['data', 'visas1']);
+  assert.deepEqual(sorted(activePages('fade', { page: 8, flip: 0.8 })), ['cover']);
 });
 
 test('activePages: progressForPage lands each page in the active set (spread and notepad)', () => {
@@ -49,6 +53,7 @@ test('activePages: progressForPage lands each page in the active set (spread and
     const p = progressForPage(t, page);
     assert.ok(activePages('spread', desktopPose(t, p)).has(page), `spread ${page} @ ${p}`);
     assert.ok(activePages('notepad', notepadPose(t, p)).has(page), `notepad ${page} @ ${p}`);
+    assert.ok(activePages('fade', notepadPose(t, p)).has(page), `fade ${page} @ ${p}`);
   }
 });
 

@@ -1,8 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  leafStyle, closedShiftPx, bookTransform, flapStyle,
-  notepadPageStyle, litePageStyle, skyLayers, FLIP_Z,
+  leafStyle, closedShiftPx, bookTransform, flapStyle, inlineFlapStyle,
+  notepadPageStyle, litePageStyle, fadePageStyle, skyLayers, FLIP_Z,
 } from '../../../app/components/passport/stageStyle.js';
 
 const zOf = (transform) => Number(/translateZ\(([-\d.]+)px\)/.exec(transform)[1]);
@@ -47,8 +47,8 @@ test('flapStyle: hidden when folded, interactive only when open', () => {
   assert.deepEqual(flapStyle(1), { transform: 'rotateY(180deg)', opacity: 1, pointerEvents: 'auto' });
 });
 
-test('notepad/lite: the page underneath is page + 1, or the cover after the last page', () => {
-  for (const fn of [notepadPageStyle, litePageStyle]) {
+test('notepad/lite/fade: the page underneath is page + 1, or the cover after the last page', () => {
+  for (const fn of [notepadPageStyle, litePageStyle, fadePageStyle]) {
     const showing = fn(3, 3, 0.2);
     const under = fn(4, 3, 0.2);
     const other = fn(0, 3, 0.2);
@@ -59,6 +59,33 @@ test('notepad/lite: the page underneath is page + 1, or the cover after the last
   }
   assert.equal(notepadPageStyle(2, 2, 1).transform, 'perspective(1600px) rotateX(180deg)');
   assert.equal(litePageStyle(2, 2, 1).opacity, 0);
+});
+
+test('fadePageStyle (reduced motion): pages crossfade with opacity only, never move', () => {
+  for (const page of [0, 3, 8]) {
+    for (const flip of [0, 0.25, 0.5, 0.75, 1]) {
+      for (let i = 0; i < 9; i++) assert.equal(fadePageStyle(i, page, flip).transform, 'none', `${i} ${page} ${flip}`);
+    }
+  }
+  assert.equal(fadePageStyle(4, 4, 0).opacity, 1);
+  assert.equal(fadePageStyle(4, 4, 0.25).opacity, 0.75);
+  assert.equal(fadePageStyle(5, 4, 0.25).opacity, 1, 'the page underneath is already there');
+  assert.equal(fadePageStyle(4, 4, 1).opacity, 0);
+  assert.equal(fadePageStyle(4, 4, 0.4).pointerEvents, 'auto');
+  assert.equal(fadePageStyle(5, 4, 0.6).pointerEvents, 'auto');
+  assert.equal(fadePageStyle(4, 4, 0.6).pointerEvents, 'none');
+});
+
+test('inlineFlapStyle: the still variant (fade layout) crossfades without the 24px slide', () => {
+  for (const f of [0, 0.3, 0.7, 1]) {
+    const moving = inlineFlapStyle(f);
+    const still = inlineFlapStyle(f, true);
+    assert.equal(still.transform, 'none');
+    assert.equal(still.opacity, moving.opacity);
+    assert.equal(still.pageOpacity, moving.pageOpacity);
+    assert.equal(still.pointerEvents, moving.pointerEvents);
+  }
+  assert.equal(inlineFlapStyle(0.5).transform, 'translate3d(0, 24px, 0)');
 });
 
 test('skyLayers: night always 1, upper layers ramp in order', () => {

@@ -70,14 +70,15 @@ export function flapStyle(flap) {
  * `pose.flap` rises. The page content fades out over the first half, then the UV check fades
  * in and slides up 24px over the second half, so the two are never both half-visible and only
  * one of them takes taps. Returns opacities for both plus the flap's transform/pointer-events.
+ * `still` (the reduced-motion fade layout): the same crossfade without the slide.
  */
-export function inlineFlapStyle(flap) {
+export function inlineFlapStyle(flap, still = false) {
   const f = clamp01(flap);
   const shown = seg(f, 0.5, 1);
   return {
     pageOpacity: +(1 - seg(f, 0, 0.5)).toFixed(3),
     opacity: +shown.toFixed(3),
-    transform: `translate3d(0, ${+((1 - shown) * 24).toFixed(1)}px, 0)`,
+    transform: still ? 'none' : `translate3d(0, ${+((1 - shown) * 24).toFixed(1)}px, 0)`,
     pointerEvents: shown > 0.5 ? 'auto' : 'none',
     pagePointerEvents: f < 0.5 ? 'auto' : 'none',
   };
@@ -133,6 +134,17 @@ export function litePageStyle(index, page, flip, count = 9) {
     return { transform: 'none', opacity: 1, zIndex: 1, pointerEvents: f >= 0.5 ? 'auto' : 'none' };
   }
   return { transform: 'none', opacity: 0, zIndex: 0, pointerEvents: 'none' };
+}
+
+/**
+ * Fade mode page `index` (reduced motion): opacity only, nothing moves. The showing page fades
+ * out over the page underneath, which is already fully there. Same arguments and z-order rules
+ * as notepadPageStyle.
+ */
+export function fadePageStyle(index, page, flip, count = 9) {
+  const s = litePageStyle(index, page, flip, count);
+  s.transform = 'none';
+  return s;
 }
 
 /**
