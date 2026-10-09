@@ -16,6 +16,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const supabase = createClient();
+    if (!supabase) { router.push('/'); return; } // storage blocked: no session to show
     supabase.auth.getUser().then(async ({ data }) => {
       if (!data.user) { router.push('/'); return; }
       setUser(data.user);

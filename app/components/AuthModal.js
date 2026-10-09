@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { createClient } from '../../lib/supabase-browser';
+import { AUTH_UNAVAILABLE, createClient } from '../../lib/supabase-browser';
 import Btn from './ui/Btn';
 
 export default function AuthModal({ onClose, onSuccess }) {
@@ -21,6 +21,7 @@ export default function AuthModal({ onClose, onSuccess }) {
     setLoading(true);
 
     try {
+      if (!supabase) throw new Error(AUTH_UNAVAILABLE);
       if (mode === 'signup') {
         const { error } = await supabase.auth.signUp({
           email,
@@ -48,6 +49,10 @@ export default function AuthModal({ onClose, onSuccess }) {
   };
 
   const handleGoogle = async () => {
+    if (!supabase) {
+      setError(AUTH_UNAVAILABLE);
+      return;
+    }
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: `${window.location.origin}/auth/callback` },

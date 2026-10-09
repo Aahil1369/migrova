@@ -92,6 +92,7 @@ export default function Navbar({ tone = 'paper' }) {
   const supabase = createClient();
 
   useEffect(() => {
+    if (!supabase) return undefined; // storage blocked: stay signed out, never crash the page
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user);
       prevUserRef.current = data.user;
@@ -133,7 +134,7 @@ export default function Navbar({ tone = 'paper' }) {
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    if (supabase) await supabase.auth.signOut();
     setUserMenuOpen(false);
     router.push('/');
   };
@@ -159,8 +160,12 @@ export default function Navbar({ tone = 'paper' }) {
                 body: JSON.stringify({ profile_data: profile }),
               });
             } catch {}
-            if (rememberOnDevice) localStorage.setItem('opportumap_profile', JSON.stringify(profile));
-            else localStorage.removeItem('opportumap_profile');
+            try {
+              if (rememberOnDevice) localStorage.setItem('opportumap_profile', JSON.stringify(profile));
+              else localStorage.removeItem('opportumap_profile');
+            } catch {
+              /* storage blocked: nothing is remembered on this device */
+            }
             setShowProfileSetup(false);
           }}
         />
