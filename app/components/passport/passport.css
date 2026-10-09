@@ -265,7 +265,9 @@
   position: absolute;
   left: 100%;
   top: 0;
-  width: var(--jb-flap-w, calc(var(--pw) * 0.6));
+  /* 0.6 page widths, clamped so spread + open flap <= 96vw (Ruling R11; PassportStage
+     shifts the book left by half the flap width as it opens) */
+  width: min(var(--jb-flap-w, calc(var(--pw) * 0.6)), calc(96vw - 2 * var(--pw)));
   height: 100%;
   transform-origin: left center;
   transform-style: preserve-3d;
@@ -665,7 +667,7 @@
 /* ── Entry stamp ───────────────────────────────────────────────────────────── */
 
 .jb-stamp {
-  --c: #2f8a5a;
+  --c: #1f6f47; /* STAMP_INKS.green; every ink must reach 4.5:1 on --page */
   --r: -6deg;
   position: relative;
   display: inline-flex;
@@ -678,20 +680,28 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   line-height: 1.15;
-  mix-blend-mode: multiply;
+  mix-blend-mode: multiply; /* only darkens: text contrast >= the ink's own */
   opacity: 0;
   transform: rotate(var(--r)) scale(2.2);
   transition: transform 320ms cubic-bezier(0.2, 1.7, 0.4, 1), opacity 180ms ease;
 }
 .jb-stamp[data-applied='true'] {
-  opacity: 0.88;
+  opacity: 1;
   transform: rotate(var(--r)) scale(1);
 }
-/* Ink texture: paper-coloured gaps where the rubber didn't take. */
-.jb-stamp::after {
+/* The decorative ring: faded ink with paper-coloured gaps where the rubber didn't take.
+   Only the ring is faded/textured; the text is painted above it at full ink. */
+.jb-stamp-ink {
+  position: absolute;
+  inset: 0;
+  opacity: 0.88;
+  pointer-events: none;
+}
+.jb-stamp-ink::after {
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   pointer-events: none;
   background:
     radial-gradient(circle at 30% 40%, transparent 55%, rgba(251, 248, 242, 0.6) 56%, transparent 62%),
@@ -716,13 +726,13 @@
   to { opacity: 0; transform: scale(1.12); }
 }
 .jb-stamp-text {
-  position: relative;
+  position: relative; /* after .jb-stamp-ink in the DOM, so painted above the ring */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: calc(var(--u, 4px) * 0.5);
   max-width: 100%;
-  padding: 0 calc(var(--u, 4px) * 2);
+  padding: 0 calc(var(--u, 4px) * 2.6);
 }
 .jb-stamp-text small {
   font-size: max(8px, calc(var(--u, 4px) * 2));
@@ -737,6 +747,8 @@
 .jb-stamp--circle {
   width: calc(var(--u, 4px) * 28);
   height: calc(var(--u, 4px) * 28);
+}
+.jb-stamp--circle .jb-stamp-ink {
   border: calc(var(--u, 4px) * 0.8) solid var(--c);
   border-radius: 50%;
   box-shadow: inset 0 0 0 calc(var(--u, 4px) * 1.2) var(--page), inset 0 0 0 calc(var(--u, 4px) * 1.7) var(--c);
@@ -744,6 +756,8 @@
 .jb-stamp--rect {
   width: calc(var(--u, 4px) * 34);
   height: calc(var(--u, 4px) * 18);
+}
+.jb-stamp--rect .jb-stamp-ink {
   border: calc(var(--u, 4px) * 0.8) solid var(--c);
   border-radius: calc(var(--u, 4px) * 1.6);
   box-shadow: inset 0 0 0 calc(var(--u, 4px) * 1) var(--page), inset 0 0 0 calc(var(--u, 4px) * 1.4) var(--c);
@@ -860,7 +874,7 @@
 }
 .jb-stack .jb-vignette-shadow { opacity: 0 !important; transition: none; }
 .jb-stack .jb-stamp {
-  opacity: 0.88;
+  opacity: 1;
   transform: rotate(var(--r));
   transition: none;
 }
@@ -878,7 +892,7 @@
   .jb-vignette:focus-visible .jb-vignette-holo > span { animation: none; }
   .jb-stamp,
   .jb-stamp[data-applied='false'] {
-    opacity: 0.88;
+    opacity: 1;
     transform: rotate(var(--r));
     transition: none;
   }

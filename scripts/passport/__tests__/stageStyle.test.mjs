@@ -32,6 +32,16 @@ test('closedShiftPx / bookTransform', () => {
   );
 });
 
+test('bookTransform: the open UV flap shifts the book left by flapW/2 x flap', () => {
+  const xOf = (t) => Number(/translate3d\(([-\d.]+)px/.exec(t)[1]);
+  const open = { shift: 0, scale: 1, tiltX: 0, tiltY: 0 };
+  assert.equal(xOf(bookTransform({ ...open, flap: 0 }, 187, 282)), 0, 'flap 0 -> no extra shift');
+  assert.equal(xOf(bookTransform({ ...open, flap: 1 }, 187, 282)), -141, 'flap 1 -> -flapW/2');
+  assert.equal(xOf(bookTransform({ ...open, flap: 0.5 }, 187, 282)), -70.5);
+  assert.equal(xOf(bookTransform({ ...open, flap: 1 }, 187)), 0, 'no flap width -> no shift');
+  assert.equal(xOf(bookTransform({ ...open, shift: 1, flap: 0 }, 187, 282)), 187);
+});
+
 test('flapStyle: hidden when folded, interactive only when open', () => {
   assert.deepEqual(flapStyle(0), { transform: 'rotateY(0deg)', opacity: 0, pointerEvents: 'none' });
   assert.deepEqual(flapStyle(1), { transform: 'rotateY(180deg)', opacity: 1, pointerEvents: 'auto' });

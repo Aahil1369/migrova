@@ -36,9 +36,14 @@ export function closedShiftPx(viewportWidth, pageWidth) {
   return Math.max(0, Math.min(viewportWidth * 0.13, viewportWidth / 2 - pageWidth * 1.08));
 }
 
-/** `refs.book` transform from desktopPose {shift, scale, tiltX, tiltY} and closedShiftPx(). */
-export function bookTransform({ shift = 0, scale = 1, tiltX = 0, tiltY = 0 }, shiftPx) {
-  const x = +(shift * shiftPx).toFixed(2);
+/**
+ * `refs.book` transform from desktopPose {shift, scale, tiltX, tiltY, flap} and closedShiftPx().
+ * `flapPx` = the flap's width (refs.flap.current.offsetWidth, measured on resize): as the UV
+ * flap opens the book slides left by flapPx/2 x pose.flap, so spread + open flap stays
+ * centred (Ruling R11; the CSS clamps spread + flap to <= 96vw).
+ */
+export function bookTransform({ shift = 0, scale = 1, tiltX = 0, tiltY = 0, flap = 0 }, shiftPx, flapPx = 0) {
+  const x = +(shift * shiftPx - (flapPx / 2) * clamp01(flap)).toFixed(2) || 0;
   return `translate3d(${x}px,0,0) rotateX(${+tiltX.toFixed(3)}deg) rotateY(${+tiltY.toFixed(3)}deg) scale(${+scale.toFixed(4)})`;
 }
 
