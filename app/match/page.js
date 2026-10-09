@@ -81,7 +81,7 @@ export default function MatchPage() {
         titleItalic={hero.italic}
         titleTail={hero.tail}
         sub={hero.sub}
-        meta={['100+ COUNTRIES SCANNED', 'RANKED BY VISA + ROLE FIT', '~60 SECONDS']}
+        meta={['195 COUNTRIES SCANNED', 'RANKED BY VISA + ROLE FIT', '~60 SECONDS']}
       />
 
       <main className="max-w-[1280px] mx-auto px-6 sm:px-10 pb-24 border-t border-paper-rule">
@@ -102,7 +102,7 @@ export default function MatchPage() {
           {loading && (
             <div className="py-20 text-center">
               <div className="font-mono text-[11px] tracking-[0.12em] text-paper-ink-sub animate-pulse">
-                ANALYZING YOUR PROFILE ACROSS 100+ COUNTRIES…
+                ANALYZING YOUR PROFILE ACROSS 195 COUNTRIES…
               </div>
             </div>
           )}

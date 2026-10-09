@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Migrova — Passport scroll prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#1f2a24; --paper:#fbf8f2; --lime:#b8cf5d; --peach:#f0a46e; --terra:#c75d2c; --night:#0e1712; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--night); }
+  body { font-family: Inter, system-ui, sans-serif; color: #ece6d2; height: 1000vh; }
+
+  /* ---------- night sky stage (B) ---------- */
+  .stage { position: fixed; inset: 0; overflow: hidden;
+    background: radial-gradient(ellipse at 70% 35%, #2f5139 0%, #15231a 50%, #0b130f 100%); }
+  .stars { position: absolute; inset: -10%; }
+  .star { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #ece6d2; opacity: .5; animation: twinkle 4s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100% { opacity: .15; } 50% { opacity: .75; } }
+  .skyglobe { position: absolute; width: 900px; height: 900px; left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: .12; }
+  .skyglobe svg { width: 100%; height: 100%; animation: spin 120s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- hero + ending copy ---------- */
+  .copy { position: absolute; left: 6vw; top: 50%; transform: translateY(-50%); width: min(44vw, 560px); z-index: 5; }
+  .pill { display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(184,207,93,.35); color: var(--lime); border-radius: 999px; padding: 5px 12px; font-size: 12px; font-weight: 600; margin-bottom: 18px; }
+  .pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); animation: pulse 1.8s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(1.8); } }
+  h1 { font-weight: 800; font-size: clamp(34px, 4.6vw, 64px); line-height: 1.02; letter-spacing: -.035em; margin: 0 0 16px; }
+  .grad { background: linear-gradient(90deg, var(--lime), var(--peach)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(14px, 1.2vw, 17px); line-height: 1.6; color: rgba(236,230,210,.72); max-width: 470px; margin: 0 0 22px; }
+  .search { display: flex; align-items: center; background: var(--paper); border-radius: 18px; padding: 7px; max-width: 470px; box-shadow: 0 14px 40px rgba(0,0,0,.4); color: #7a857f; font-size: 14px; }
+  .search div { flex: 1; padding: 6px 14px; }
+  .search div + div { border-left: 1px solid #ece6db; }
+  .search b { display: block; color: var(--ink); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+  .go { background: var(--lime); color: #15231a; font-weight: 700; border-radius: 13px; padding: 13px 18px; box-shadow: 0 0 22px rgba(184,207,93,.45); white-space: nowrap; }
+  .hint { margin-top: 26px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; color: rgba(236,230,210,.55); }
+  .hint span { display: inline-block; animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+  .ending h1 { font-size: clamp(36px, 5vw, 70px); }
+
+  /* ---------- the passport (3D book) ---------- */
+  .scene { position: absolute; inset: 0; perspective: 2400px; perspective-origin: 50% 45%; }
+  .book { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
+  .leaf, .base { position: absolute; left: 0; width: var(--W); height: var(--H); top: calc(var(--H) / -2); transform-origin: left center; transform-style: preserve-3d; }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 0 calc(var(--u) * 2.4) calc(var(--u) * 2.4) 0; overflow: hidden; }
+  .face.back { transform: rotateY(180deg); border-radius: calc(var(--u) * 2.4) 0 0 calc(var(--u) * 2.4); }
+  .shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(0,0,0,0) 22%); }
+  .face.back .shade { background: linear-gradient(270deg, rgba(0,0,0,.28), rgba(0,0,0,0) 22%); }
+  .dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+
+  /* cover */
+  .cover-out { background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.06), transparent 60%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,.012) 0 2px, transparent 2px 4px),
+      linear-gradient(160deg, #1d3a29, #11231a 70%, #0c1912);
+    box-shadow: inset 0 0 0 calc(var(--u)*.6) rgba(216,194,122,.18); color: #d8c27a; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: calc(var(--u)*11) calc(var(--u)*8) calc(var(--u)*9); text-align: center; }
+  .foil { background: linear-gradient(110deg, #b89a4a 0%, #f3e3a0 calc(var(--mx, 50%) - 12%), #fff6cf var(--mx, 50%), #e7cf80 calc(var(--mx, 50%) + 12%), #a88a3c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cover-out .country { font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: .32em; font-size: calc(var(--u) * 4.4); }
+  .cover-out .crest { width: calc(var(--u) * 46); height: calc(var(--u) * 46); filter: drop-shadow(0 0 calc(var(--u)*2) rgba(243,227,160,.35)); }
+  .cover-out .word { font-family: 'JetBrains Mono', monospace; letter-spacing: .5em; font-size: calc(var(--u) * 5.2); font-weight: 700; }
+  .cover-out .langs { font-size: calc(var(--u) * 2.6); letter-spacing: .3em; opacity: .7; margin-top: calc(var(--u)*1.6); }
+  .chip { width: calc(var(--u)*10); height: calc(var(--u)*6.4); border: calc(var(--u)*.5) solid #d8c27a; border-radius: calc(var(--u)*1.2); position: relative; opacity: .85; }
+  .chip::after { content: ''; position: absolute; left: 50%; top: 50%; width: calc(var(--u)*3); height: calc(var(--u)*3); border: calc(var(--u)*.5) solid #d8c27a; border-radius: 50%; transform: translate(-50%,-50%); }
+  .approved { position: absolute; right: calc(var(--u)*6); bottom: calc(var(--u)*20); width: calc(var(--u)*44); height: calc(var(--u)*44); border: calc(var(--u)*1.2) solid var(--lime); color: var(--lime); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: calc(var(--u)*3.6); letter-spacing: .14em; transform: rotate(-14deg) scale(2.2); opacity: 0; transition: transform .35s cubic-bezier(.2,1.6,.4,1), opacity .2s; box-shadow: inset 0 0 0 calc(var(--u)*1.6) #11231a, inset 0 0 0 calc(var(--u)*2.2) var(--lime); }
+  .approved.in { transform: rotate(-14deg) scale(1); opacity: .95; }
+  .approved big { font-size: calc(var(--u)*6.4); letter-spacing: .08em; }
+
+  /* paper pages (C) */
+  .paper { background: var(--paper); color: var(--ink); }
+  .paper::before { content: ''; position: absolute; inset: 0; background-image: var(--guilloche); background-size: cover; opacity: .55; pointer-events: none; }
+  .pg { position: absolute; inset: 0; padding: calc(var(--u)*7) calc(var(--u)*7) calc(var(--u)*6); display: flex; flex-direction: column; }
+  .pghead { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: calc(var(--u)*2.5); letter-spacing: .18em; color: #6b766f; border-bottom: 1px solid rgba(31,42,36,.12); padding-bottom: calc(var(--u)*2); margin-bottom: calc(var(--u)*4); }
+  .pgnum { position: absolute; bottom: calc(var(--u)*3); font-family: 'JetBrains Mono', monospace; font-size: calc(var(--u)*2.4); color: #9aa39d; }
+  .face.front .pgnum { right: calc(var(--u)*5); } .face.back .pgnum { left: calc(var(--u)*5); }
+  .ptitle { font-weight: 800; letter-spacing: -.03em; font-size: calc(var(--u)*7.2); line-height: 1.05; margin: 0 0 calc(var(--u)*2.5); }
+  .ptext { font-size: calc(var(--u)*3.2); line-height: 1.55; color: #55625b; margin: 0; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* data page */
+  .data { display: grid; grid-template-columns: calc(var(--u)*30) 1fr; gap: calc(var(--u)*4); }
+  .photo { height: calc(var(--u)*38); border-radius: calc(var(--u)*2); background: linear-gradient(160deg, #e7efe0, #d6e5d0); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(31,42,36,.12); }
+  .field { margin-bottom: calc(var(--u)*2.4); }
+  .field small { display: block; font-family: 'JetBrains Mono', monospace; font-size: calc(var(--u)*2.1); letter-spacing: .14em; color: #8a948e; }
+  .field div { font-weight: 700; font-size: calc(var(--u)*3.6); }
+  .field .sel { display: inline-flex; align-items: center; gap: calc(var(--u)*1.4); background: #fff; border: 1px solid #e6dfd2; border-radius: calc(var(--u)*1.8); padding: calc(var(--u)*.8) calc(var(--u)*2); box-shadow: 0 calc(var(--u)*.8) calc(var(--u)*2.4) rgba(31,42,36,.08); }
+  .cta { margin-top: auto; align-self: flex-start; background: var(--ink); color: var(--paper); border-radius: calc(var(--u)*2.4); padding: calc(var(--u)*2.4) calc(var(--u)*4); font-weight: 700; font-size: calc(var(--u)*3.2); }
+  .mrz { margin-top: calc(var(--u)*4); font-family: 'JetBrains Mono', monospace; font-size: calc(var(--u)*2.9); letter-spacing: .12em; color: #3d4a43; line-height: 1.5; white-space: nowrap; overflow: hidden; }
+  .seal { width: calc(var(--u)*40); height: calc(var(--u)*40); border-radius: 50%; margin: calc(var(--u)*4) auto calc(var(--u)*3);
+    background: conic-gradient(from var(--hue, 0deg), #b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d);
+    display: flex; align-items: center; justify-content: center; box-shadow: 0 0 calc(var(--u)*5) rgba(184,207,93,.35); }
+  .seal div { width: 82%; height: 82%; border-radius: 50%; background: rgba(251,248,242,.88); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .seal b { font-size: calc(var(--u)*9); letter-spacing: -.04em; line-height: 1; }
+  .seal span { font-family: 'JetBrains Mono', monospace; font-size: calc(var(--u)*2.1); letter-spacing: .14em; color: #55625b; margin-top: calc(var(--u)*1); }
+  .vtag { display: inline-flex; align-items: center; gap: calc(var(--u)*1.2); background: #fff; border-radius: 999px; padding: calc(var(--u)*1) calc(var(--u)*2.4); font-size: calc(var(--u)*2.7); font-weight: 600; box-shadow: 0 calc(var(--u)*.6) calc(var(--u)*2) rgba(31,42,36,.1); margin: 0 calc(var(--u)*1) calc(var(--u)*1.6) 0; }
+  .vtag i { color: #2fa37a; font-style: normal; font-weight: 800; }
+
+  /* stamps */
+  .stamps { position: relative; flex: 1; }
+  .stamp { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: .1em; color: var(--c); border: calc(var(--u)*.8) solid var(--c); opacity: 0; transform: rotate(var(--r)) scale(2.4); transition: transform .32s cubic-bezier(.2,1.7,.4,1), opacity .18s; text-decoration: none; mix-blend-mode: multiply; }
+  .stamp.in { opacity: .88; transform: rotate(var(--r)) scale(1); }
+  .stamp::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 40%, transparent 55%, rgba(251,248,242,.6) 56%, transparent 62%), radial-gradient(circle at 70% 70%, transparent 40%, rgba(251,248,242,.5) 42%, transparent 48%); pointer-events: none; }
+  .stamp b { font-size: calc(var(--u)*3.6); letter-spacing: .06em; }
+  .stamp small { font-size: calc(var(--u)*2); letter-spacing: .16em; font-weight: 500; }
+  .stamp em { font-style: normal; font-size: calc(var(--u)*5.4); line-height: 1; }
+  .round { border-radius: 50%; box-shadow: inset 0 0 0 calc(var(--u)*1.2) var(--paper), inset 0 0 0 calc(var(--u)*1.8) var(--c); }
+  .rect { border-radius: calc(var(--u)*1.6); }
+  .oct { clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); border-width: 0; background: linear-gradient(var(--paper), var(--paper)) padding-box; box-shadow: inset 0 0 0 calc(var(--u)*.8) var(--c); }
+  .entry { position: relative; display: flex; align-items: center; gap: calc(var(--u)*3); margin-bottom: calc(var(--u)*3.4); }
+  .entry .stamp { position: relative; width: calc(var(--u)*24); height: calc(var(--u)*13); flex: 0 0 auto; }
+  .entry p { margin: 0; font-size: calc(var(--u)*2.9); color: #55625b; line-height: 1.45; opacity: 0; transition: opacity .4s .15s; }
+  .entry .stamp.in + p { opacity: 1; }
+  .entry p b { display: block; color: var(--ink); font-size: calc(var(--u)*3.4); }
+
+  /* progress */
+  .prog { position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 9; display: flex; flex-direction: column; gap: 10px; }
+  .prog i { width: 8px; height: 8px; border-radius: 50%; background: rgba(236,230,210,.2); transition: background .3s, transform .3s; }
+  .prog i.on { background: var(--lime); transform: scale(1.4); box-shadow: 0 0 10px var(--lime); }
+  .label { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 9; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .16em; color: rgba(236,230,210,.5); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="stars" id="stars"></div>
+  <div class="skyglobe"><svg viewBox="0 0 200 200"><g fill="none" stroke="#b8cf5d" stroke-width=".4"><circle cx="100" cy="100" r="96"/><ellipse cx="100" cy="100" rx="48" ry="96"/><ellipse cx="100" cy="100" rx="80" ry="96"/><ellipse cx="100" cy="100" rx="96" ry="32"/><ellipse cx="100" cy="100" rx="96" ry="66"/><line x1="100" y1="4" x2="100" y2="196"/><line x1="4" y1="100" x2="196" y2="100"/></g></svg></div>
+
+  <!-- HERO COPY -->
+  <div class="copy" id="hero">
+    <div class="pill"><i></i> 418 official government links verified</div>
+    <h1>Your family's next country, <span class="grad">made simple.</span></h1>
+    <p class="sub">Free visa guides, moving costs and verified official links — in plain English, for 195 countries.</p>
+    <div class="search"><div><b>From</b>Pakistan</div><div><b>To</b>Canada</div><span class="go">Explore →</span></div>
+    <div class="hint"><span>↓</span>&nbsp; SCROLL TO OPEN YOUR PASSPORT</div>
+  </div>
+
+  <!-- ENDING COPY -->
+  <div class="copy ending" id="ending" style="opacity:0">
+    <div class="pill"><i></i> Free · No sign-up needed</div>
+    <h1>Your journey <span class="grad">begins here.</span></h1>
+    <p class="sub">Tell us where you're from and where you want to go. We'll show you the visas, the costs and the official sites — in 60 seconds.</p>
+    <div class="search"><div><b>From</b>Pakistan</div><div><b>To</b>Canada</div><span class="go">Find my countries →</span></div>
+  </div>
+
+  <div class="scene">
+    <div class="book" id="book">
+      <!-- BASE: right page of the last spread -->
+      <div class="base" id="base">
+        <div class="face front paper"><div class="shade"></div>
+          <div class="pg">
+            <div class="pghead"><span>OFFICIAL SOURCES</span><span>VERIFIED</span></div>
+            <div class="ptitle">Only the real government sites.</div>
+            <p class="ptext">Every link is checked: secure, on the official domain, about the right topic — and confirmed by a second source.</p>
+            <div class="seal" id="seal"><div><b>418</b><span>VERIFIED LINKS</span><span>195 COUNTRIES</span></div></div>
+            <div><span class="vtag"><i>✓</i> ircc.canada.ca</span><span class="vtag"><i>✓</i> gov.uk</span><span class="vtag"><i>✓</i> uscis.gov</span><span class="vtag"><i>✓</i> ind.nl</span></div>
+          </div>
+          <div class="pgnum">06</div>
+        </div>
+      </div>
+
+      <!-- LEAF 2: front = right page of spread 2 (tools stamps), back = left page of spread 3 (entries) -->
+      <div class="leaf" data-i="2">
+        <div class="face front paper"><div class="shade"></div><div class="dim"></div>
+          <div class="pg">
+            <div class="pghead"><span>VISAS · CONTINUED</span><span>STAMPED</span></div>
+            <div class="stamps">
+              <a class="stamp rect" data-at="0.50" style="--c:#2d5bd7;--r:5deg; left:6%; top:2%; width:calc(var(--u)*46); height:calc(var(--u)*24);"><small>ENTRY PERMIT</small><b>RELOCATE</b><small>RENT · BANK · SIM</small></a>
+              <a class="stamp oct" data-at="0.54" style="--c:#7a4fb5;--r:-9deg; right:4%; top:34%; width:calc(var(--u)*36); height:calc(var(--u)*36);"><em>⚖</em><b>LAWYERS</b><small>FEES · RED FLAGS</small></a>
+              <a class="stamp round" data-at="0.57" style="--c:#b08a1e;--r:12deg; left:8%; bottom:4%; width:calc(var(--u)*38); height:calc(var(--u)*38);"><em>✓</em><b>SOURCES</b><small>195 COUNTRIES</small></a>
+            </div>
+          </div>
+          <div class="pgnum">04</div>
+        </div>
+        <div class="face back paper"><div class="shade"></div><div class="dim"></div>
+          <div class="pg">
+            <div class="pghead"><span>ENTRIES</span><span>HOW IT WORKS</span></div>
+            <div class="entry"><span class="stamp rect" data-at="0.71" style="--c:#2f8a5a;--r:-4deg;"><small>ENTRY 01</small><b>TELL US</b><small>60 SECONDS</small></span><p><b>About your family</b>Nationality and where you'd like to go.</p></div>
+            <div class="entry"><span class="stamp rect" data-at="0.74" style="--c:#2d5bd7;--r:3deg;"><small>ENTRY 02</small><b>OPTIONS</b><small>RANKED</small></span><p><b>See your options</b>Countries ranked by real visa access.</p></div>
+            <div class="entry"><span class="stamp rect" data-at="0.77" style="--c:#c75d2c;--r:-2deg;"><small>ENTRY 03</small><b>THE PATH</b><small>DOCS · COSTS</small></span><p><b>Understand the path</b>Documents, timelines and costs in plain English.</p></div>
+            <div class="entry"><span class="stamp rect" data-at="0.80" style="--c:#7a4fb5;--r:4deg;"><small>ENTRY 04</small><b>REAL HELP</b><small>LAWYERS · AID</small></span><p><b>Get real help</b>What lawyers cost and where to find free aid.</p></div>
+          </div>
+          <div class="pgnum">05</div>
+        </div>
+      </div>
+
+      <!-- LEAF 1: front = data page, back = left page of spread 2 (tools intro + 2 stamps) -->
+      <div class="leaf" data-i="1">
+        <div class="face front paper"><div class="shade"></div><div class="dim"></div>
+          <div class="pg">
+            <div class="pghead"><span>PASSPORT · PASSEPORT</span><span>TYPE P · MIG</span></div>
+            <div class="data">
+              <div class="photo"><svg viewBox="0 0 60 60" width="70%"><g fill="none" stroke="#2f5139" stroke-width="1.2"><circle cx="30" cy="30" r="24"/><ellipse cx="30" cy="30" rx="12" ry="24"/><ellipse cx="30" cy="30" rx="24" ry="8"/></g><path d="M14 22 Q30 6 46 20" fill="none" stroke="#c75d2c" stroke-width="1.6" stroke-dasharray="3 3"/></svg></div>
+              <div>
+                <div class="field"><small>HOLDER / TITULAIRE</small><div>Your family</div></div>
+                <div class="field"><small>FROM / DE</small><div><span class="sel">🇵🇰 Pakistan ▾</span></div></div>
+                <div class="field"><small>TO / À</small><div><span class="sel">🇨🇦 Canada ▾</span></div></div>
+                <div class="field"><small>VALID FOR</small><div>195 countries</div></div>
+              </div>
+            </div>
+            <span class="cta" style="margin-top:calc(var(--u)*3)">Find my countries →</span>
+            <div class="mrz">P&lt;MIGYOUR&lt;FAMILY&lt;&lt;NEXT&lt;COUNTRY&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>1950418MIG&lt;&lt;&lt;INFO&lt;NOT&lt;LEGAL&lt;ADVICE&lt;&lt;&lt;&lt;04</div>
+          </div>
+          <div class="pgnum">02</div>
+        </div>
+        <div class="face back paper"><div class="shade"></div><div class="dim"></div>
+          <div class="pg">
+            <div class="pghead"><span>VISAS</span><span>FIVE FREE TOOLS</span></div>
+            <div class="ptitle">Five free tools for the whole move.</div>
+            <p class="ptext">Each stamp is a tool. Each one answers a question families ask before they go.</p>
+            <div class="stamps">
+              <a class="stamp round" data-at="0.45" style="--c:#2f8a5a;--r:-10deg; left:4%; top:10%; width:calc(var(--u)*38); height:calc(var(--u)*38);"><em>🧭</em><b>MATCH</b><small>TOP 5 COUNTRIES</small></a>
+              <a class="stamp rect" data-at="0.48" style="--c:#c75d2c;--r:7deg; right:2%; bottom:6%; width:calc(var(--u)*44); height:calc(var(--u)*26);"><small>VISA GUIDE</small><b>APPROVED</b><small>CHECKLISTS · TIMES</small></a>
+            </div>
+          </div>
+          <div class="pgnum">03</div>
+        </div>
+      </div>
+
+      <!-- LEAF 0: the cover. front = outside, back = inside cover -->
+      <div class="leaf" data-i="0">
+        <div class="face front cover-out" id="cover"><div class="dim"></div>
+          <div class="country foil">MIGROVA</div>
+          <svg class="crest" viewBox="0 0 120 120"><defs><linearGradient id="fg" x1="0" x2="1"><stop offset="0" stop-color="#b89a4a"/><stop offset=".5" stop-color="#f3e3a0"/><stop offset="1" stop-color="#a88a3c"/></linearGradient></defs>
+            <g fill="none" stroke="url(#fg)" stroke-width="1.6"><circle cx="60" cy="60" r="44"/><ellipse cx="60" cy="60" rx="22" ry="44"/><ellipse cx="60" cy="60" rx="38" ry="44"/><ellipse cx="60" cy="60" rx="44" ry="15"/><ellipse cx="60" cy="60" rx="44" ry="31"/><circle cx="60" cy="60" r="54" stroke-dasharray="2 3"/></g>
+            <path d="M30 46 Q60 6 92 40" fill="none" stroke="#b8cf5d" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="46" r="3" fill="#b8cf5d"/><circle cx="92" cy="40" r="3" fill="#b8cf5d"/></svg>
+          <div><div class="word foil">PASSPORT</div><div class="langs foil">PASSEPORT · PASAPORTE · PASAPORTE</div></div>
+          <div class="chip"></div>
+          <div class="approved" id="approved"><span>MIGROVA</span><big>BON VOYAGE</big><span>✦ 2026 ✦</span></div>
+        </div>
+        <div class="face back paper"><div class="shade"></div><div class="dim"></div>
+          <div class="pg">
+            <div class="pghead"><span>NOTICE</span><span>PAGE 01</span></div>
+            <div class="ptitle">This passport opens every border's rules.</div>
+            <p class="ptext">Migrova explains visas, moving costs and the official sites for 195 countries — information you can check, not advice you have to trust.</p>
+            <div style="margin-top:auto" class="mono"><div style="font-size:calc(var(--u)*2.4);letter-spacing:.16em;color:#8a948e">ISSUED BY</div><div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:calc(var(--u)*8);color:#2f5139">Migrova</div></div>
+          </div>
+          <div class="pgnum">01</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="label" id="label">PROTOTYPE · SCROLL SLOWLY</div>
+
+<script>
+(function () {
+  // ---- stars ----
+  const stars = document.getElementById('stars');
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('i'); s.className = 'star';
+    s.style.left = (i * 37.7 % 100) + '%'; s.style.top = (i * 61.3 % 100) + '%';
+    s.style.animationDelay = (i % 7) * 0.6 + 's'; if (i % 5 === 0) { s.style.width = s.style.height = '3px'; }
+    stars.appendChild(s);
+  }
+
+  // ---- guilloche security pattern (passport paper) ----
+  const W0 = 400, H0 = 570; let paths = '';
+  for (let k = 0; k < 26; k++) {
+    let d = ''; const amp = 10 + (k % 5) * 3, freq = 0.035 + (k % 4) * 0.006, ph = k * 0.7, y0 = k * 22;
+    for (let x = 0; x <= W0; x += 6) { const y = y0 + Math.sin(x * freq + ph) * amp + Math.sin(x * freq * 2.3 + ph) * 3; d += (x ? 'L' : 'M') + x + ' ' + y.toFixed(1); }
+    paths += `<path d="${d}" fill="none" stroke="%232f5139" stroke-opacity="0.09" stroke-width="0.8"/>`;
+  }
+  document.documentElement.style.setProperty('--guilloche', `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W0} ${H0}" preserveAspectRatio="none">${paths}</svg>')`);
+
+  // ---- sizing ----
+  const root = document.documentElement;
+  let W, H;
+  function size() {
+    W = Math.min(innerWidth * 0.36, (innerHeight * 0.8) / 1.42, 470);
+    H = W * 1.42;
+    root.style.setProperty('--W', W + 'px'); root.style.setProperty('--H', H + 'px'); root.style.setProperty('--u', (W / 100) + 'px');
+  }
+  size(); addEventListener('resize', size);
+
+  // ---- foil shimmer follows the mouse ----
+  addEventListener('mousemove', (e) => root.style.setProperty('--mx', (e.clientX / innerWidth * 100) + '%'));
+
+  const book = document.getElementById('book');
+  const leaves = [...document.querySelectorAll('.leaf')].sort((a, b) => a.dataset.i - b.dataset.i); // 0 = cover
+  const stamps = [...document.querySelectorAll('.stamp[data-at]')];
+  const hero = document.getElementById('hero'), ending = document.getElementById('ending');
+  const approved = document.getElementById('approved'), seal = document.getElementById('seal');
+  const dots = [...document.querySelectorAll('#prog i')];
+
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const seg = (p, a, b) => clamp((p - a) / (b - a));
+  const ease = (t) => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  // angle (deg) of each leaf for progress p: open phase then closing phase
+  function leafAngle(i, p) {
+    const open = [[0.06, 0.18], [0.34, 0.42], [0.60, 0.68]][i];
+    const close = [[0.90, 0.96], [0.87, 0.93], [0.84, 0.90]][i];
+    const o = ease(seg(p, open[0], open[1]));
+    const c = ease(seg(p, close[0], close[1]));
+    return -180 * o * (1 - c);
+  }
+
+  let target = 0, cur = 0;
+  function readScroll() { target = scrollY / (document.documentElement.scrollHeight - innerHeight); }
+  addEventListener('scroll', readScroll, { passive: true }); readScroll();
+
+  function render(p) {
+
+    // book position: closed on the right (hero) → centered open → closed on the right again (ending)
+    const toCenter = ease(seg(p, 0.06, 0.18));
+    const toRight = ease(seg(p, 0.88, 0.97));
+    const shiftClosed = Math.min(innerWidth * 0.13, innerWidth - W * 1.08 - innerWidth / 2);               // closed book sits right of center, beside the copy
+    const xOpen = 0;                                      // spine centered
+    const x = shiftClosed + (xOpen - shiftClosed) * toCenter + (shiftClosed - xOpen) * toRight;
+    const scale = 0.92 + 0.08 * toCenter - 0.08 * toRight;
+    const tiltX = 8 * (1 - toCenter) + 8 * toRight;      // lying on a desk when closed, faces you when open
+    const tiltY = -14 * (1 - toCenter) - 14 * toRight;
+    book.style.transform = `translate3d(${x}px,0,0) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${scale})`;
+
+    // leaves
+    leaves.forEach((leaf, i) => {
+      const a = leafAngle(i, p);
+      const onLeft = a < -90, flipping = a < -2 && a > -178;
+      const z = flipping ? 6 : onLeft ? i * 1.2 : (leaves.length - i) * 1.2;
+      leaf.style.transform = `translateZ(${z}px) rotateY(${a}deg)`;
+      const shade = Math.sin(Math.abs(a) * Math.PI / 180) * 0.35;
+      leaf.querySelectorAll('.dim').forEach((d) => (d.style.opacity = shade.toFixed(3)));
+    });
+
+    // copy
+    hero.style.opacity = (1 - seg(p, 0.03, 0.10)).toFixed(3);
+    hero.style.transform = `translateY(calc(-50% - ${seg(p, 0.03, 0.10) * 40}px))`;
+    const endIn = seg(p, 0.93, 0.99);
+    ending.style.opacity = endIn.toFixed(3);
+    ending.style.transform = `translateY(calc(-50% + ${(1 - endIn) * 40}px))`;
+    hero.style.pointerEvents = p < 0.08 ? 'auto' : 'none'; ending.style.pointerEvents = endIn > 0.5 ? 'auto' : 'none';
+
+    // stamps thunk in (and lift off when scrolling back)
+    stamps.forEach((s) => s.classList.toggle('in', p >= parseFloat(s.dataset.at)));
+    approved.classList.toggle('in', p > 0.975);
+    seal.style.setProperty('--hue', (p * 1440) + 'deg');
+
+    // progress dots: cover, data, visas, entries, sources, closing
+    const stage = p < 0.18 ? 0 : p < 0.38 ? 1 : p < 0.64 ? 2 : p < 0.86 ? 3 : p < 0.95 ? 4 : 5;
+    dots.forEach((d, i) => d.classList.toggle('on', i === stage));
+  }
+  function frame() { cur += (target - cur) * 0.09; render(cur); requestAnimationFrame(frame); }
+  requestAnimationFrame(frame);
+  // Hidden tabs pause rAF; render straight away so the state is still correct there.
+  addEventListener('scroll', () => { if (document.hidden) { cur = target; render(cur); } }, { passive: true });
+  render(0);
+  window.__render = (p) => { cur = target = p; render(p); }; // test hook
+})();
+</script>
+</body>
+</html>

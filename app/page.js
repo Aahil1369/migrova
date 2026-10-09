@@ -49,7 +49,7 @@ export default function Home() {
         titleItalic={hero.italic}
         titleTail={hero.tail}
         sub={hero.sub}
-        meta={['MIGROVA · EST. 2026', '100 COUNTRIES', 'INFORMATION, NOT LEGAL ADVICE']}
+        meta={['MIGROVA · EST. 2026', '195 COUNTRIES', 'INFORMATION, NOT LEGAL ADVICE']}
         cta={<Btn variant="primary" href="/match" magnetic>Find my countries →</Btn>}
         secondaryCta={<Btn variant="secondary" href="/lawyer">Lawyer guide</Btn>}
       />

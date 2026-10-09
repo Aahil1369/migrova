@@ -4,211 +4,211 @@
 
 export const REGIONS = ['Africa', 'Americas', 'Asia', 'Europe', 'Middle East', 'Oceania'];
 
-// code | name | region | demonym
+// code | name | region | demonym | iso3 (ISO 3166-1 alpha-3)
 const TABLE = `
-dz|Algeria|Africa|Algerian
-ao|Angola|Africa|Angolan
-bj|Benin|Africa|Beninese
-bw|Botswana|Africa|Motswana
-bf|Burkina Faso|Africa|Burkinabé
-bi|Burundi|Africa|Burundian
-cv|Cabo Verde|Africa|Cabo Verdean
-cm|Cameroon|Africa|Cameroonian
-cf|Central African Republic|Africa|Central African
-td|Chad|Africa|Chadian
-km|Comoros|Africa|Comorian
-cg|Republic of the Congo|Africa|Congolese (Republic)
-cd|DR Congo|Africa|Congolese (DRC)
-ci|Côte d'Ivoire|Africa|Ivorian
-dj|Djibouti|Africa|Djiboutian
-eg|Egypt|Africa|Egyptian
-gq|Equatorial Guinea|Africa|Equatoguinean
-er|Eritrea|Africa|Eritrean
-sz|Eswatini|Africa|Swazi
-et|Ethiopia|Africa|Ethiopian
-ga|Gabon|Africa|Gabonese
-gm|Gambia|Africa|Gambian
-gh|Ghana|Africa|Ghanaian
-gn|Guinea|Africa|Guinean
-gw|Guinea-Bissau|Africa|Bissau-Guinean
-ke|Kenya|Africa|Kenyan
-ls|Lesotho|Africa|Basotho
-lr|Liberia|Africa|Liberian
-ly|Libya|Africa|Libyan
-mg|Madagascar|Africa|Malagasy
-mw|Malawi|Africa|Malawian
-ml|Mali|Africa|Malian
-mr|Mauritania|Africa|Mauritanian
-mu|Mauritius|Africa|Mauritian
-ma|Morocco|Africa|Moroccan
-mz|Mozambique|Africa|Mozambican
-na|Namibia|Africa|Namibian
-ne|Niger|Africa|Nigerien
-ng|Nigeria|Africa|Nigerian
-rw|Rwanda|Africa|Rwandan
-st|São Tomé and Príncipe|Africa|São Toméan
-sn|Senegal|Africa|Senegalese
-sc|Seychelles|Africa|Seychellois
-sl|Sierra Leone|Africa|Sierra Leonean
-so|Somalia|Africa|Somali
-za|South Africa|Africa|South African
-ss|South Sudan|Africa|South Sudanese
-sd|Sudan|Africa|Sudanese
-tz|Tanzania|Africa|Tanzanian
-tg|Togo|Africa|Togolese
-tn|Tunisia|Africa|Tunisian
-ug|Uganda|Africa|Ugandan
-zm|Zambia|Africa|Zambian
-zw|Zimbabwe|Africa|Zimbabwean
-ag|Antigua and Barbuda|Americas|Antiguan
-ar|Argentina|Americas|Argentine
-bs|Bahamas|Americas|Bahamian
-bb|Barbados|Americas|Barbadian
-bz|Belize|Americas|Belizean
-bo|Bolivia|Americas|Bolivian
-br|Brazil|Americas|Brazilian
-ca|Canada|Americas|Canadian
-cl|Chile|Americas|Chilean
-co|Colombia|Americas|Colombian
-cr|Costa Rica|Americas|Costa Rican
-cu|Cuba|Americas|Cuban
-dm|Dominica|Americas|Dominican (Dominica)
-do|Dominican Republic|Americas|Dominican
-ec|Ecuador|Americas|Ecuadorian
-sv|El Salvador|Americas|Salvadoran
-gd|Grenada|Americas|Grenadian
-gt|Guatemala|Americas|Guatemalan
-gy|Guyana|Americas|Guyanese
-ht|Haiti|Americas|Haitian
-hn|Honduras|Americas|Honduran
-jm|Jamaica|Americas|Jamaican
-mx|Mexico|Americas|Mexican
-ni|Nicaragua|Americas|Nicaraguan
-pa|Panama|Americas|Panamanian
-py|Paraguay|Americas|Paraguayan
-pe|Peru|Americas|Peruvian
-kn|Saint Kitts and Nevis|Americas|Kittitian
-lc|Saint Lucia|Americas|Saint Lucian
-vc|Saint Vincent and the Grenadines|Americas|Vincentian
-sr|Suriname|Americas|Surinamese
-tt|Trinidad and Tobago|Americas|Trinidadian
-us|United States|Americas|American
-uy|Uruguay|Americas|Uruguayan
-ve|Venezuela|Americas|Venezuelan
-af|Afghanistan|Asia|Afghan
-am|Armenia|Asia|Armenian
-az|Azerbaijan|Asia|Azerbaijani
-bd|Bangladesh|Asia|Bangladeshi
-bt|Bhutan|Asia|Bhutanese
-bn|Brunei|Asia|Bruneian
-kh|Cambodia|Asia|Cambodian
-cn|China|Asia|Chinese
-ge|Georgia|Asia|Georgian
-in|India|Asia|Indian
-id|Indonesia|Asia|Indonesian
-jp|Japan|Asia|Japanese
-kz|Kazakhstan|Asia|Kazakh
-kp|North Korea|Asia|North Korean
-kr|South Korea|Asia|South Korean
-kg|Kyrgyzstan|Asia|Kyrgyz
-la|Laos|Asia|Lao
-my|Malaysia|Asia|Malaysian
-mv|Maldives|Asia|Maldivian
-mn|Mongolia|Asia|Mongolian
-mm|Myanmar|Asia|Burmese
-np|Nepal|Asia|Nepali
-pk|Pakistan|Asia|Pakistani
-ph|Philippines|Asia|Filipino
-sg|Singapore|Asia|Singaporean
-lk|Sri Lanka|Asia|Sri Lankan
-tj|Tajikistan|Asia|Tajik
-th|Thailand|Asia|Thai
-tl|Timor-Leste|Asia|Timorese
-tm|Turkmenistan|Asia|Turkmen
-uz|Uzbekistan|Asia|Uzbek
-vn|Vietnam|Asia|Vietnamese
-al|Albania|Europe|Albanian
-ad|Andorra|Europe|Andorran
-at|Austria|Europe|Austrian
-by|Belarus|Europe|Belarusian
-be|Belgium|Europe|Belgian
-ba|Bosnia and Herzegovina|Europe|Bosnian
-bg|Bulgaria|Europe|Bulgarian
-hr|Croatia|Europe|Croatian
-cy|Cyprus|Europe|Cypriot
-cz|Czechia|Europe|Czech
-dk|Denmark|Europe|Danish
-ee|Estonia|Europe|Estonian
-fi|Finland|Europe|Finnish
-fr|France|Europe|French
-de|Germany|Europe|German
-gr|Greece|Europe|Greek
-hu|Hungary|Europe|Hungarian
-is|Iceland|Europe|Icelandic
-ie|Ireland|Europe|Irish
-it|Italy|Europe|Italian
-lv|Latvia|Europe|Latvian
-li|Liechtenstein|Europe|Liechtensteiner
-lt|Lithuania|Europe|Lithuanian
-lu|Luxembourg|Europe|Luxembourgish
-mt|Malta|Europe|Maltese
-md|Moldova|Europe|Moldovan
-mc|Monaco|Europe|Monégasque
-me|Montenegro|Europe|Montenegrin
-nl|Netherlands|Europe|Dutch
-mk|North Macedonia|Europe|Macedonian
-no|Norway|Europe|Norwegian
-pl|Poland|Europe|Polish
-pt|Portugal|Europe|Portuguese
-ro|Romania|Europe|Romanian
-ru|Russia|Europe|Russian
-sm|San Marino|Europe|Sammarinese
-rs|Serbia|Europe|Serbian
-sk|Slovakia|Europe|Slovak
-si|Slovenia|Europe|Slovenian
-es|Spain|Europe|Spanish
-se|Sweden|Europe|Swedish
-ch|Switzerland|Europe|Swiss
-ua|Ukraine|Europe|Ukrainian
-gb|United Kingdom|Europe|British
-va|Vatican City|Europe|Vatican
-bh|Bahrain|Middle East|Bahraini
-ir|Iran|Middle East|Iranian
-iq|Iraq|Middle East|Iraqi
-il|Israel|Middle East|Israeli
-jo|Jordan|Middle East|Jordanian
-kw|Kuwait|Middle East|Kuwaiti
-lb|Lebanon|Middle East|Lebanese
-om|Oman|Middle East|Omani
-ps|Palestine|Middle East|Palestinian
-qa|Qatar|Middle East|Qatari
-sa|Saudi Arabia|Middle East|Saudi
-sy|Syria|Middle East|Syrian
-tr|Turkey|Middle East|Turkish
-ae|United Arab Emirates|Middle East|Emirati
-ye|Yemen|Middle East|Yemeni
-au|Australia|Oceania|Australian
-fj|Fiji|Oceania|Fijian
-ki|Kiribati|Oceania|I-Kiribati
-mh|Marshall Islands|Oceania|Marshallese
-fm|Micronesia|Oceania|Micronesian
-nr|Nauru|Oceania|Nauruan
-nz|New Zealand|Oceania|New Zealander
-pw|Palau|Oceania|Palauan
-pg|Papua New Guinea|Oceania|Papua New Guinean
-ws|Samoa|Oceania|Samoan
-sb|Solomon Islands|Oceania|Solomon Islander
-to|Tonga|Oceania|Tongan
-tv|Tuvalu|Oceania|Tuvaluan
-vu|Vanuatu|Oceania|Ni-Vanuatu
+dz|Algeria|Africa|Algerian|DZA
+ao|Angola|Africa|Angolan|AGO
+bj|Benin|Africa|Beninese|BEN
+bw|Botswana|Africa|Motswana|BWA
+bf|Burkina Faso|Africa|Burkinabé|BFA
+bi|Burundi|Africa|Burundian|BDI
+cv|Cabo Verde|Africa|Cabo Verdean|CPV
+cm|Cameroon|Africa|Cameroonian|CMR
+cf|Central African Republic|Africa|Central African|CAF
+td|Chad|Africa|Chadian|TCD
+km|Comoros|Africa|Comorian|COM
+cg|Republic of the Congo|Africa|Congolese (Republic)|COG
+cd|DR Congo|Africa|Congolese (DRC)|COD
+ci|Côte d'Ivoire|Africa|Ivorian|CIV
+dj|Djibouti|Africa|Djiboutian|DJI
+eg|Egypt|Africa|Egyptian|EGY
+gq|Equatorial Guinea|Africa|Equatoguinean|GNQ
+er|Eritrea|Africa|Eritrean|ERI
+sz|Eswatini|Africa|Swazi|SWZ
+et|Ethiopia|Africa|Ethiopian|ETH
+ga|Gabon|Africa|Gabonese|GAB
+gm|Gambia|Africa|Gambian|GMB
+gh|Ghana|Africa|Ghanaian|GHA
+gn|Guinea|Africa|Guinean|GIN
+gw|Guinea-Bissau|Africa|Bissau-Guinean|GNB
+ke|Kenya|Africa|Kenyan|KEN
+ls|Lesotho|Africa|Basotho|LSO
+lr|Liberia|Africa|Liberian|LBR
+ly|Libya|Africa|Libyan|LBY
+mg|Madagascar|Africa|Malagasy|MDG
+mw|Malawi|Africa|Malawian|MWI
+ml|Mali|Africa|Malian|MLI
+mr|Mauritania|Africa|Mauritanian|MRT
+mu|Mauritius|Africa|Mauritian|MUS
+ma|Morocco|Africa|Moroccan|MAR
+mz|Mozambique|Africa|Mozambican|MOZ
+na|Namibia|Africa|Namibian|NAM
+ne|Niger|Africa|Nigerien|NER
+ng|Nigeria|Africa|Nigerian|NGA
+rw|Rwanda|Africa|Rwandan|RWA
+st|São Tomé and Príncipe|Africa|São Toméan|STP
+sn|Senegal|Africa|Senegalese|SEN
+sc|Seychelles|Africa|Seychellois|SYC
+sl|Sierra Leone|Africa|Sierra Leonean|SLE
+so|Somalia|Africa|Somali|SOM
+za|South Africa|Africa|South African|ZAF
+ss|South Sudan|Africa|South Sudanese|SSD
+sd|Sudan|Africa|Sudanese|SDN
+tz|Tanzania|Africa|Tanzanian|TZA
+tg|Togo|Africa|Togolese|TGO
+tn|Tunisia|Africa|Tunisian|TUN
+ug|Uganda|Africa|Ugandan|UGA
+zm|Zambia|Africa|Zambian|ZMB
+zw|Zimbabwe|Africa|Zimbabwean|ZWE
+ag|Antigua and Barbuda|Americas|Antiguan|ATG
+ar|Argentina|Americas|Argentine|ARG
+bs|Bahamas|Americas|Bahamian|BHS
+bb|Barbados|Americas|Barbadian|BRB
+bz|Belize|Americas|Belizean|BLZ
+bo|Bolivia|Americas|Bolivian|BOL
+br|Brazil|Americas|Brazilian|BRA
+ca|Canada|Americas|Canadian|CAN
+cl|Chile|Americas|Chilean|CHL
+co|Colombia|Americas|Colombian|COL
+cr|Costa Rica|Americas|Costa Rican|CRI
+cu|Cuba|Americas|Cuban|CUB
+dm|Dominica|Americas|Dominican (Dominica)|DMA
+do|Dominican Republic|Americas|Dominican|DOM
+ec|Ecuador|Americas|Ecuadorian|ECU
+sv|El Salvador|Americas|Salvadoran|SLV
+gd|Grenada|Americas|Grenadian|GRD
+gt|Guatemala|Americas|Guatemalan|GTM
+gy|Guyana|Americas|Guyanese|GUY
+ht|Haiti|Americas|Haitian|HTI
+hn|Honduras|Americas|Honduran|HND
+jm|Jamaica|Americas|Jamaican|JAM
+mx|Mexico|Americas|Mexican|MEX
+ni|Nicaragua|Americas|Nicaraguan|NIC
+pa|Panama|Americas|Panamanian|PAN
+py|Paraguay|Americas|Paraguayan|PRY
+pe|Peru|Americas|Peruvian|PER
+kn|Saint Kitts and Nevis|Americas|Kittitian|KNA
+lc|Saint Lucia|Americas|Saint Lucian|LCA
+vc|Saint Vincent and the Grenadines|Americas|Vincentian|VCT
+sr|Suriname|Americas|Surinamese|SUR
+tt|Trinidad and Tobago|Americas|Trinidadian|TTO
+us|United States|Americas|American|USA
+uy|Uruguay|Americas|Uruguayan|URY
+ve|Venezuela|Americas|Venezuelan|VEN
+af|Afghanistan|Asia|Afghan|AFG
+am|Armenia|Asia|Armenian|ARM
+az|Azerbaijan|Asia|Azerbaijani|AZE
+bd|Bangladesh|Asia|Bangladeshi|BGD
+bt|Bhutan|Asia|Bhutanese|BTN
+bn|Brunei|Asia|Bruneian|BRN
+kh|Cambodia|Asia|Cambodian|KHM
+cn|China|Asia|Chinese|CHN
+ge|Georgia|Asia|Georgian|GEO
+in|India|Asia|Indian|IND
+id|Indonesia|Asia|Indonesian|IDN
+jp|Japan|Asia|Japanese|JPN
+kz|Kazakhstan|Asia|Kazakh|KAZ
+kp|North Korea|Asia|North Korean|PRK
+kr|South Korea|Asia|South Korean|KOR
+kg|Kyrgyzstan|Asia|Kyrgyz|KGZ
+la|Laos|Asia|Lao|LAO
+my|Malaysia|Asia|Malaysian|MYS
+mv|Maldives|Asia|Maldivian|MDV
+mn|Mongolia|Asia|Mongolian|MNG
+mm|Myanmar|Asia|Burmese|MMR
+np|Nepal|Asia|Nepali|NPL
+pk|Pakistan|Asia|Pakistani|PAK
+ph|Philippines|Asia|Filipino|PHL
+sg|Singapore|Asia|Singaporean|SGP
+lk|Sri Lanka|Asia|Sri Lankan|LKA
+tj|Tajikistan|Asia|Tajik|TJK
+th|Thailand|Asia|Thai|THA
+tl|Timor-Leste|Asia|Timorese|TLS
+tm|Turkmenistan|Asia|Turkmen|TKM
+uz|Uzbekistan|Asia|Uzbek|UZB
+vn|Vietnam|Asia|Vietnamese|VNM
+al|Albania|Europe|Albanian|ALB
+ad|Andorra|Europe|Andorran|AND
+at|Austria|Europe|Austrian|AUT
+by|Belarus|Europe|Belarusian|BLR
+be|Belgium|Europe|Belgian|BEL
+ba|Bosnia and Herzegovina|Europe|Bosnian|BIH
+bg|Bulgaria|Europe|Bulgarian|BGR
+hr|Croatia|Europe|Croatian|HRV
+cy|Cyprus|Europe|Cypriot|CYP
+cz|Czechia|Europe|Czech|CZE
+dk|Denmark|Europe|Danish|DNK
+ee|Estonia|Europe|Estonian|EST
+fi|Finland|Europe|Finnish|FIN
+fr|France|Europe|French|FRA
+de|Germany|Europe|German|DEU
+gr|Greece|Europe|Greek|GRC
+hu|Hungary|Europe|Hungarian|HUN
+is|Iceland|Europe|Icelandic|ISL
+ie|Ireland|Europe|Irish|IRL
+it|Italy|Europe|Italian|ITA
+lv|Latvia|Europe|Latvian|LVA
+li|Liechtenstein|Europe|Liechtensteiner|LIE
+lt|Lithuania|Europe|Lithuanian|LTU
+lu|Luxembourg|Europe|Luxembourgish|LUX
+mt|Malta|Europe|Maltese|MLT
+md|Moldova|Europe|Moldovan|MDA
+mc|Monaco|Europe|Monégasque|MCO
+me|Montenegro|Europe|Montenegrin|MNE
+nl|Netherlands|Europe|Dutch|NLD
+mk|North Macedonia|Europe|Macedonian|MKD
+no|Norway|Europe|Norwegian|NOR
+pl|Poland|Europe|Polish|POL
+pt|Portugal|Europe|Portuguese|PRT
+ro|Romania|Europe|Romanian|ROU
+ru|Russia|Europe|Russian|RUS
+sm|San Marino|Europe|Sammarinese|SMR
+rs|Serbia|Europe|Serbian|SRB
+sk|Slovakia|Europe|Slovak|SVK
+si|Slovenia|Europe|Slovenian|SVN
+es|Spain|Europe|Spanish|ESP
+se|Sweden|Europe|Swedish|SWE
+ch|Switzerland|Europe|Swiss|CHE
+ua|Ukraine|Europe|Ukrainian|UKR
+gb|United Kingdom|Europe|British|GBR
+va|Vatican City|Europe|Vatican|VAT
+bh|Bahrain|Middle East|Bahraini|BHR
+ir|Iran|Middle East|Iranian|IRN
+iq|Iraq|Middle East|Iraqi|IRQ
+il|Israel|Middle East|Israeli|ISR
+jo|Jordan|Middle East|Jordanian|JOR
+kw|Kuwait|Middle East|Kuwaiti|KWT
+lb|Lebanon|Middle East|Lebanese|LBN
+om|Oman|Middle East|Omani|OMN
+ps|Palestine|Middle East|Palestinian|PSE
+qa|Qatar|Middle East|Qatari|QAT
+sa|Saudi Arabia|Middle East|Saudi|SAU
+sy|Syria|Middle East|Syrian|SYR
+tr|Turkey|Middle East|Turkish|TUR
+ae|United Arab Emirates|Middle East|Emirati|ARE
+ye|Yemen|Middle East|Yemeni|YEM
+au|Australia|Oceania|Australian|AUS
+fj|Fiji|Oceania|Fijian|FJI
+ki|Kiribati|Oceania|I-Kiribati|KIR
+mh|Marshall Islands|Oceania|Marshallese|MHL
+fm|Micronesia|Oceania|Micronesian|FSM
+nr|Nauru|Oceania|Nauruan|NRU
+nz|New Zealand|Oceania|New Zealander|NZL
+pw|Palau|Oceania|Palauan|PLW
+pg|Papua New Guinea|Oceania|Papua New Guinean|PNG
+ws|Samoa|Oceania|Samoan|WSM
+sb|Solomon Islands|Oceania|Solomon Islander|SLB
+to|Tonga|Oceania|Tongan|TON
+tv|Tuvalu|Oceania|Tuvaluan|TUV
+vu|Vanuatu|Oceania|Ni-Vanuatu|VUT
 `;
 
 const flagOf = (code) =>
   String.fromCodePoint(...[...code.toUpperCase()].map((ch) => 0x1f1e6 + ch.charCodeAt(0) - 65));
 
 export const COUNTRIES_195 = TABLE.trim().split('\n').map((line) => {
-  const [code, name, region, demonym] = line.split('|');
-  return { code, name, region, demonym, flag: flagOf(code) };
+  const [code, name, region, demonym, iso3] = line.split('|');
+  return { code, name, region, demonym, iso3, flag: flagOf(code) };
 });
 
 const BY_CODE = new Map(COUNTRIES_195.map((c) => [c.code, c]));

@@ -18,7 +18,7 @@ export const HERO_COPY = {
     title: 'Moving countries,',
     italic: 'minus',
     tail: ' the guesswork.',
-    sub: 'Visa intelligence, relocation guides, and legal-help navigation for immigrant families — across 100 countries. Information you can check, not advice you have to trust.',
+    sub: 'Visa intelligence, relocation guides, and legal-help navigation for immigrant families — across 195 countries. Information you can check, not advice you have to trust.',
   },
   match: {
     kicker: '§ Tool 01 · Country Match',

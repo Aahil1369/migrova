@@ -36,3 +36,12 @@ test('findCountryInText matches names and aliases, longest first', () => {
   assert.equal(findCountryInText('Atlantis'), null);
   assert.equal(findCountryInText(''), null);
 });
+
+test('every country has a unique ISO3 code', () => {
+  const codes = COUNTRIES_195.map((c) => c.iso3);
+  assert.equal(new Set(codes).size, 195);
+  for (const c of COUNTRIES_195) assert.match(c.iso3, /^[A-Z]{3}$/, c.code);
+  assert.equal(countryByCode('pk').iso3, 'PAK');
+  assert.equal(countryByCode('gb').iso3, 'GBR');
+  assert.equal(countryByCode('ps').iso3, 'PSE');
+});

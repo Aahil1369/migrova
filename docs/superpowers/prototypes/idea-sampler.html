@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Migrova — idea sampler</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Naskh+Arabic:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#1f2a24; --paper:#fbf8f2; --lime:#b8cf5d; --peach:#f0a46e; --night:#0e1712; --uv:#9b7bff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0b120e; color: #ece6d2; font-family: Inter, system-ui, sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 28px 80px; }
+  h1 { font-size: 34px; letter-spacing: -.03em; margin: 0 0 8px; }
+  .lead { color: rgba(236,230,210,.7); font-size: 15px; line-height: 1.6; max-width: 760px; margin: 0 0 30px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: #131d17; border: 1px solid rgba(236,230,210,.1); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; transition: border-color .2s, box-shadow .2s; }
+  .card.selected { border-color: var(--lime); box-shadow: 0 0 0 2px rgba(184,207,93,.35), 0 0 30px rgba(184,207,93,.12); }
+  .card h3 { margin: 0 0 4px; font-size: 17px; letter-spacing: -.01em; }
+  .card .tagline { font-size: 13px; color: rgba(236,230,210,.65); line-height: 1.55; margin: 0 0 14px; }
+  .card .where { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .12em; color: var(--lime); margin-bottom: 8px; }
+  .demo { position: relative; border-radius: 14px; overflow: hidden; height: 250px; margin-bottom: 14px; }
+  .keep { align-self: flex-start; margin-top: auto; background: transparent; color: #ece6d2; border: 1px solid rgba(236,230,210,.25); border-radius: 999px; padding: 8px 14px; font: 600 12.5px Inter, sans-serif; cursor: pointer; }
+  .card.selected .keep { background: var(--lime); color: #15231a; border-color: var(--lime); }
+  .hintline { position: absolute; left: 12px; bottom: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .12em; color: rgba(236,230,210,.55); z-index: 5; pointer-events: none; }
+  .btn { background: rgba(255,255,255,.08); color: #ece6d2; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 6px 12px; font: 600 11.5px Inter, sans-serif; cursor: pointer; }
+
+  /* 1. UV lamp */
+  .uv { background: #1b1430; cursor: none; }
+  .uv .sites, .uv .uvlayer { position: absolute; inset: 0; display: flex; gap: 14px; align-items: center; justify-content: center; padding: 18px; }
+  .site { width: 46%; height: 150px; border-radius: 14px; background: var(--paper); color: var(--ink); padding: 14px; font-size: 12px; position: relative; }
+  .site .url { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: #eee8dc; border-radius: 8px; padding: 6px 8px; margin-bottom: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .site b { display: block; font-size: 15px; margin-bottom: 4px; }
+  .site .apply { display: inline-block; margin-top: 10px; background: #1f2a24; color: var(--paper); border-radius: 8px; padding: 6px 10px; font-weight: 700; font-size: 11px; }
+  .uvlayer { -webkit-mask-image: radial-gradient(circle 95px at var(--lx, -200px) var(--ly, -200px), #000 55%, transparent 100%); mask-image: radial-gradient(circle 95px at var(--lx, -200px) var(--ly, -200px), #000 55%, transparent 100%); }
+  .uvlayer .site { background: #2a1f52; color: #d9ccff; box-shadow: inset 0 0 40px rgba(155,123,255,.35); }
+  .uvlayer .site .url { background: rgba(255,255,255,.08); }
+  .glowseal { position: absolute; right: 12px; bottom: 12px; border: 2px solid #c8ff6e; color: #c8ff6e; border-radius: 10px; padding: 5px 9px; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: .1em; text-shadow: 0 0 10px #c8ff6e; box-shadow: 0 0 18px rgba(200,255,110,.6), inset 0 0 10px rgba(200,255,110,.3); transform: rotate(-6deg); }
+  .deadseal { position: absolute; right: 12px; bottom: 12px; border: 2px dashed #8d849f; color: #8d849f; border-radius: 10px; padding: 5px 9px; font: 700 11px 'JetBrains Mono', monospace; letter-spacing: .1em; transform: rotate(5deg); }
+  .lampdot { position: absolute; width: 190px; height: 190px; border-radius: 50%; left: var(--lx, -300px); top: var(--ly, -300px); transform: translate(-50%,-50%); background: radial-gradient(circle, rgba(155,123,255,.22), transparent 65%); pointer-events: none; mix-blend-mode: screen; }
+  .fakebadge { position: absolute; top: -9px; left: 12px; background: #c75d2c; color: #fff; font: 700 9px 'JetBrains Mono', monospace; letter-spacing: .12em; padding: 3px 7px; border-radius: 6px; }
+
+  /* 2. Boarding pass */
+  .bp { background: linear-gradient(180deg, #f6efe2, #fbf8f2); color: var(--ink); display: flex; align-items: center; justify-content: center; }
+  .navpill { position: absolute; top: 12px; left: 50%; transform: translate(-50%, -60px); background: #1f2a24; color: var(--lime); border-radius: 999px; padding: 7px 14px; font: 700 12px 'JetBrains Mono', monospace; letter-spacing: .08em; transition: transform .5s cubic-bezier(.2,1.4,.4,1); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+  .bp.torn .navpill { transform: translate(-50%, 0); }
+  .pass { display: flex; filter: drop-shadow(0 14px 24px rgba(31,42,36,.18)); margin-top: 22px; }
+  .pmain, .pstub { background: #fff; padding: 14px 16px; height: 140px; }
+  .pmain { width: 290px; border-radius: 14px 0 0 14px; -webkit-mask: radial-gradient(circle 9px at 100% 0, transparent 98%, #000) top right/100% 51% no-repeat, radial-gradient(circle 9px at 100% 100%, transparent 98%, #000) bottom right/100% 51% no-repeat; }
+  .pstub { width: 110px; border-radius: 0 14px 14px 0; border-left: 2px dashed #d9d1c2; transition: transform .7s cubic-bezier(.3,.7,.3,1), opacity .7s; -webkit-mask: radial-gradient(circle 9px at 0 0, transparent 98%, #000) top left/100% 51% no-repeat, radial-gradient(circle 9px at 0 100%, transparent 98%, #000) bottom left/100% 51% no-repeat; cursor: pointer; }
+  .bp.torn .pstub { transform: translate(60px, -90px) rotate(24deg); opacity: 0; }
+  .pk { font: 700 9px 'JetBrains Mono', monospace; letter-spacing: .14em; color: #8a948e; }
+  .codes { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 34px; letter-spacing: -.02em; margin: 2px 0 8px; }
+  .codes span { font-size: 16px; color: var(--lime); filter: brightness(.7); }
+  .prow { display: flex; gap: 16px; font-size: 11px; }
+  .prow b { display: block; font-size: 13px; }
+
+  /* 3. Night to dawn */
+  .sky { background: linear-gradient(90deg, #0b130f 0%, #15231a 18%, #1d2b52 40%, #3a2f63 52%, #c7766a 70%, #f0a46e 80%, #fbe9cf 92%, #fbf8f2 100%); }
+  .sky .plane { position: absolute; top: 46%; left: 4%; font-size: 22px; animation: fly 9s linear infinite; filter: drop-shadow(0 0 6px rgba(255,255,255,.5)); }
+  @keyframes fly { from { left: 3%; } to { left: 92%; } }
+  .sky .trail { position: absolute; top: calc(46% + 13px); left: 3%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.7)); animation: trail 9s linear infinite; }
+  @keyframes trail { from { width: 0; } to { width: 89%; } }
+  .sky .marks { position: absolute; left: 0; right: 0; bottom: 30px; display: flex; justify-content: space-between; padding: 0 14px; font: 600 10px 'JetBrains Mono', monospace; letter-spacing: .08em; }
+  .sky .marks span { color: rgba(255,255,255,.75); } .sky .marks span:nth-last-child(-n+2) { color: #5a4a3a; }
+  .sky .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; opacity: .6; }
+  .sky .sun { position: absolute; right: 8%; bottom: -40px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #ffe2b0, rgba(240,164,110,0) 70%); }
+
+  /* 4. Safar word */
+  .cover { background: linear-gradient(160deg, #e9e1cf, #d8ccb2); color: #5d4f36; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .cover .foilword { font-weight: 800; font-size: 30px; letter-spacing: .08em; background: linear-gradient(100deg, #8aa04a, #b8cf5d 30%, #f3e6b8 50%, #f0a46e 70%, #c7766a); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% 100%; animation: sheen 6s ease-in-out infinite; cursor: help; }
+  .cover .foilword .ar { font-family: 'Noto Naskh Arabic', serif; font-size: 34px; letter-spacing: 0; }
+  @keyframes sheen { 0%,100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
+  .cover .emb { width: 86px; height: 86px; margin-bottom: 12px; opacity: .55; }
+  .cover .etym { position: absolute; left: 16px; right: 16px; bottom: 14px; background: rgba(31,42,36,.9); color: #ece6d2; border-radius: 12px; padding: 10px 12px; font-size: 12px; line-height: 1.5; opacity: 0; transform: translateY(8px); transition: .3s; }
+  .cover:hover .etym, .cover.show .etym { opacity: 1; transform: none; }
+  .cover .spec { position: absolute; top: 12px; font: 500 8px 'JetBrains Mono', monospace; letter-spacing: .3em; opacity: .55; }
+  .swapbtn { position: absolute; top: 10px; right: 10px; z-index: 4; }
+
+  /* 5. Founder route */
+  .route { background: radial-gradient(ellipse at 50% 40%, #1f3a2a, #0d1611); }
+  .route svg { width: 100%; height: 100%; }
+  .leg { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 600; stroke-dashoffset: 600; animation: leg 9s ease-in-out infinite; }
+  .leg2 { animation-delay: 0s; animation-name: leg2; } .leg3 { animation-name: leg3; }
+  @keyframes leg  { 0% { stroke-dashoffset: 600; } 18%, 100% { stroke-dashoffset: 0; } }
+  @keyframes leg2 { 0%, 22% { stroke-dashoffset: 600; } 42%, 100% { stroke-dashoffset: 0; } }
+  @keyframes leg3 { 0%, 46% { stroke-dashoffset: 600; } 70%, 100% { stroke-dashoffset: 0; } }
+  .lbl { font: 600 10px Inter, sans-serif; fill: #ece6d2; }
+  .here { animation: herepulse 9s infinite; }
+  @keyframes herepulse { 0%, 70% { opacity: 0; } 76%, 100% { opacity: 1; } }
+
+  /* 6. MRZ decode */
+  .mrz { background: var(--paper); color: var(--ink); display: flex; flex-direction: column; justify-content: center; padding: 22px; cursor: pointer; }
+  .mrz .line { font: 700 15px 'JetBrains Mono', monospace; letter-spacing: .14em; white-space: nowrap; overflow: hidden; }
+  .mrz .line.decoded { color: #2f6b47; }
+  .mrz .cap { font: 500 10px 'JetBrains Mono', monospace; letter-spacing: .14em; color: #8a948e; margin-bottom: 10px; }
+
+  /* 7. Stamp vs vignette */
+  .sv { background: var(--paper); color: var(--ink); display: grid; grid-template-columns: 1fr 1fr; align-items: center; justify-items: center; gap: 10px; padding: 14px; }
+  .sv .lab { font: 700 9.5px 'JetBrains Mono', monospace; letter-spacing: .14em; color: #8a948e; text-align: center; margin-top: 8px; }
+  .rstamp { width: 130px; height: 130px; border-radius: 50%; border: 3px solid #2f8a5a; color: #2f8a5a; display: flex; flex-direction: column; align-items: center; justify-content: center; font: 700 12px 'JetBrains Mono', monospace; letter-spacing: .1em; transform: rotate(-10deg); box-shadow: inset 0 0 0 6px var(--paper), inset 0 0 0 8px #2f8a5a; opacity: .88; animation: thunk 3s infinite; }
+  @keyframes thunk { 0%, 10% { transform: rotate(-10deg) scale(2.2); opacity: 0; } 18%, 100% { transform: rotate(-10deg) scale(1); opacity: .88; } }
+  .vign { width: 190px; height: 120px; border-radius: 8px; background: linear-gradient(135deg, #e7f0d6, #f5e4d4); position: relative; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.08); animation: apply 3s infinite; padding: 10px; font-family: 'JetBrains Mono', monospace; }
+  @keyframes apply { 0%, 10% { transform: translate(8px,-14px) rotate(4deg); box-shadow: 0 24px 30px rgba(0,0,0,.25); } 30%, 100% { transform: none; box-shadow: 0 2px 4px rgba(0,0,0,.08); } }
+  .vign .holo { position: absolute; right: 0; top: 0; bottom: 0; width: 26px; background: linear-gradient(180deg, #b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e); background-size: 100% 300%; animation: holo 3s linear infinite; opacity: .8; }
+  @keyframes holo { to { background-position: 0 300%; } }
+  .vign .t { font-size: 8px; letter-spacing: .14em; color: #6b766f; }
+  .vign b { display: block; font: 800 15px Inter, sans-serif; margin: 2px 0; }
+  .vign .ros { position: absolute; left: 96px; top: 30px; width: 60px; height: 60px; opacity: .45; }
+  .vign .foot { position: absolute; left: 10px; bottom: 8px; font-size: 7.5px; letter-spacing: .1em; color: #55625b; }
+
+  .alts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px; }
+  @media (max-width: 900px) { .alts { grid-template-columns: 1fr; } }
+  .alt { background: #131d17; border: 1px dashed rgba(236,230,210,.18); border-radius: 16px; padding: 16px; font-size: 13px; line-height: 1.55; color: rgba(236,230,210,.75); }
+  .alt b { display: block; color: #ece6d2; font-size: 15px; margin-bottom: 6px; }
+  h2 { font-size: 22px; letter-spacing: -.02em; margin: 44px 0 6px; }
+  .protect { background: #131d17; border-radius: 16px; padding: 16px 20px; margin-top: 12px; font-size: 13.5px; line-height: 1.7; color: rgba(236,230,210,.8); }
+  .protect b { color: var(--lime); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ideas to make your passport even better</h1>
+  <p class="lead">Six creative angles produced 18 ideas; a judge scored them on wow, fit for families, buildability and phone speed. These are the ones that best upgrade your passport-scroll. Each demo below is live — try them. Hit <b>✓ Keep</b> on the ones you want in the build.</p>
+
+  <div class="grid" data-multiselect>
+
+    <!-- 1 UV LAMP -->
+    <div class="card" id="c-uv">
+      <div class="where">PEAK OF THE SCROLL · OFFICIAL SOURCES · JUDGE'S #1</div>
+      <h3>The UV lamp check</h3>
+      <p class="tagline">At the widest point of the open passport the lights go down and your cursor becomes a UV lamp — like border officers use. Two sites look identical… under the lamp the real government site lights up VERIFIED; the look-alike stays dead. "Migrova is your lamp."</p>
+      <div class="demo uv" id="uv">
+        <div class="sites">
+          <div class="site"><div class="url">🔒 www.canada.ca/immigration</div><b>Apply for a visa</b>Official immigration services for visitors, students and workers.<div class="apply">Apply now →</div></div>
+          <div class="site"><span class="fakebadge">FAKE EXAMPLE</span><div class="url">🔒 canada-visa-fastpass.example</div><b>Apply for a visa</b>Official immigration services for visitors, students and workers.<div class="apply">Apply now →</div></div>
+        </div>
+        <div class="uvlayer">
+          <div class="site"><div class="url">www.canada.ca/immigration</div><b>Government of Canada</b>Domain: canada.ca — government only.<div class="glowseal">✓ VERIFIED</div></div>
+          <div class="site"><div class="url">canada-visa-fastpass.example</div><b>Not a government site</b>Charges extra "processing" fees.<div class="deadseal">✗ NOT OFFICIAL</div></div>
+        </div>
+        <div class="lampdot"></div>
+        <div class="hintline">MOVE YOUR MOUSE OVER THE SITES ↑ (AUTO-SWEEPS ON PHONES)</div>
+      </div>
+      <button class="keep" data-choice="uv-lamp">✓ Keep</button>
+    </div>
+
+    <!-- 2 BOARDING PASS -->
+    <div class="card" id="c-bp">
+      <div class="where">THE ENDING · AFTER THE PASSPORT CLOSES</div>
+      <h3>A boarding pass slides out — tear the stub</h3>
+      <p class="tagline">When the passport closes, a boarding pass slides out from its pages: your From → To, "Gate /match". Tear the stub and it flies into the navbar as a little route pill that pre-fills every tool, so families never re-type it.</p>
+      <div class="demo bp" id="bp">
+        <div class="navpill">✈ PAK → CAN · saved</div>
+        <div class="pass">
+          <div class="pmain"><div class="pk">BOARDING PASS · MIGROVA</div><div class="codes">PAK <span>✈</span> CAN</div>
+            <div class="prow"><div><span class="pk">GATE</span><b>/match</b></div><div><span class="pk">SEAT</span><b>1A</b></div><div><span class="pk">BOARDING</span><b>When you're ready</b></div></div></div>
+          <div class="pstub" title="Tear me"><div class="pk">STUB</div><b style="font-size:20px;letter-spacing:-.02em">PAK→CAN</b><div class="pk" style="margin-top:22px">TAP TO TEAR ✂</div></div>
+        </div>
+        <button class="btn" style="position:absolute;right:10px;bottom:10px" onclick="document.getElementById('bp').classList.remove('torn')">↺ reset</button>
+      </div>
+      <button class="keep" data-choice="boarding-pass">✓ Keep</button>
+    </div>
+
+    <!-- 3 NIGHT TO DAWN -->
+    <div class="card" id="c-sky">
+      <div class="where">WHOLE PAGE · THE BACKGROUND SKY</div>
+      <h3>Night → dawn: the scroll is an overnight flight</h3>
+      <p class="tagline">The sky behind the passport starts as night (your direction B) and slowly turns to sunrise and warm daylight (direction C) by the end — the feeling of landing somewhere new. The B + C blend, told as a story.</p>
+      <div class="demo sky" id="sky">
+        <div class="sun"></div>
+        <span class="plane">✈</span><div class="trail"></div>
+        <div class="marks"><span>COVER</span><span>VISAS</span><span>UV LAMP</span><span>STORIES</span><span>CLOSE</span><span>BOARDING</span></div>
+      </div>
+      <button class="keep" data-choice="night-to-dawn">✓ Keep</button>
+    </div>
+
+    <!-- 4 SAFAR -->
+    <div class="card" id="c-safar">
+      <div class="where">THE COVER · OPENING AND CLOSING</div>
+      <h3>"سفر · SAFARI · JOURNEY" — a word that crossed borders too</h3>
+      <p class="tagline">The cover title is one word in three languages. Hover it: Arabic <i>safar</i> → Urdu <i>safar</i> → Swahili <i>safari</i> → English. That's your own route (Gilgit-Baltistan → Uganda → US) hidden in a word. At the end it becomes a blessing.</p>
+      <div class="demo cover" id="safar">
+        <div class="spec">JOURNEY BOOK · SPECIMEN · NOT A TRAVEL DOCUMENT</div>
+        <button class="btn swapbtn" id="swap">Show the ending ↻</button>
+        <svg class="emb" viewBox="0 0 120 120"><g fill="none" stroke="#7d6c4b" stroke-width="2"><circle cx="60" cy="60" r="46"/><ellipse cx="60" cy="60" rx="23" ry="46"/><ellipse cx="60" cy="60" rx="46" ry="16"/><ellipse cx="60" cy="60" rx="46" ry="32"/></g><path d="M28 48 Q60 8 94 42" fill="none" stroke="#8aa04a" stroke-width="2.4"/></svg>
+        <div class="foilword" id="word"><span class="ar">سفر</span> · SAFARI · JOURNEY</div>
+        <div class="etym" id="etym">The word for journey crossed borders too: Arabic <b>safar</b> → Urdu <b>safar</b> → Swahili <b>safari</b> → English <b>safari</b>.</div>
+      </div>
+      <button class="keep" data-choice="safar-word">✓ Keep</button>
+    </div>
+
+    <!-- 5 FOUNDER ROUTE -->
+    <div class="card" id="c-route">
+      <div class="where">LAST OPEN PAGE · "OBSERVATIONS"</div>
+      <h3>Your own route, drawn in foil</h3>
+      <p class="tagline">Real passports have an "Observations" page. Yours carries a short note in your words and your three legs drawing one by one — Gilgit-Baltistan → Kampala → USA — ending at a dot: "here, building this". The founder story without an About page.</p>
+      <div class="demo route">
+        <svg viewBox="0 0 520 250">
+          <g stroke="rgba(236,230,210,.08)">
+            <line x1="0" y1="62" x2="520" y2="62"/><line x1="0" y1="125" x2="520" y2="125"/><line x1="0" y1="188" x2="520" y2="188"/>
+            <line x1="87" y1="0" x2="87" y2="250"/><line x1="173" y1="0" x2="173" y2="250"/><line x1="260" y1="0" x2="260" y2="250"/><line x1="347" y1="0" x2="347" y2="250"/><line x1="433" y1="0" x2="433" y2="250"/>
+          </g>
+          <path class="leg" stroke="#b8cf5d" d="M368 75 Q350 60 307 124"/>
+          <path class="leg leg2" stroke="#d6b866" d="M307 124 Q200 20 149 70"/>
+          <path class="leg leg3" stroke="#f0a46e" d="M149 70 Q140 64 138 66"/>
+          <circle cx="368" cy="75" r="5" fill="#b8cf5d"/><text class="lbl" x="376" y="72">Gilgit-Baltistan</text>
+          <circle cx="307" cy="124" r="5" fill="#d6b866"/><text class="lbl" x="315" y="140">Kampala, Uganda</text>
+          <g class="here"><circle cx="149" cy="70" r="7" fill="#f0a46e"/><circle cx="149" cy="70" r="14" fill="none" stroke="#f0a46e" stroke-opacity=".5"/><text class="lbl" x="60" y="98">USA — here, building this</text></g>
+        </svg>
+      </div>
+      <button class="keep" data-choice="founder-route">✓ Keep</button>
+    </div>
+
+    <!-- 6 MRZ DECODE -->
+    <div class="card" id="c-mrz">
+      <div class="where">THE DATA PAGE · RIGHT AFTER THE COVER OPENS</div>
+      <h3>Passport code that decodes into plain English</h3>
+      <p class="tagline">The bottom of a passport has that unreadable machine code. On Migrova's data page it scrambles and decodes into a promise a non-native reader can trust. Bureaucracy → plain English, which is literally what Migrova does.</p>
+      <div class="demo mrz" id="mrz">
+        <div class="cap">MACHINE-READABLE ZONE · CLICK TO REPLAY</div>
+        <div class="line" id="m1">P&lt;MGV&lt;&lt;YOUR&lt;FAMILY&lt;&lt;PAK&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+        <div class="line" id="m2">1950418MGV&lt;&lt;NEXT&lt;STOP&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;04</div>
+      </div>
+      <button class="keep" data-choice="mrz-decode">✓ Keep</button>
+    </div>
+
+    <!-- 7 STAMP VS VIGNETTE -->
+    <div class="card" id="c-sv" style="grid-column: 1 / -1">
+      <div class="where">THE 5 TOOLS · ONE DECISION</div>
+      <h3>Rubber stamps, or stick-on visa stickers?</h3>
+      <p class="tagline">My prototype uses rubber stamps for the tools. The judge flagged that OpportuMap's hero already has a rubber visa stamp — so Migrova could use stick-on visa <i>vignettes</i> instead (the full-page stickers real visas are printed on, with a hologram stripe), applied with a lift-and-settle motion. Keeps the two apps distinct: "OpportuMap stamps; Migrova inspects."</p>
+      <div class="demo sv" style="height:210px">
+        <div><div class="rstamp"><span style="font-size:9px">TOOL 01</span>MATCH<span style="font-size:8px">TOP 5</span></div><div class="lab">A · RUBBER STAMP (prototype)</div></div>
+        <div><div class="vign"><div class="t">VISA TYPE M-MATCH</div><b>Country Match</b><div class="t">TOP 5 COUNTRIES · FREE</div>
+          <svg class="ros" viewBox="0 0 100 100"><g fill="none" stroke="#2f6b47" stroke-width=".8" id="ros"></g></svg>
+          <div class="foot">M&lt;MATCH&lt;&lt;TOP5&lt;COUNTRIES&lt;&lt;&lt;</div><div class="holo"></div></div><div class="lab">B · VISA VIGNETTE (judge's pick)</div></div>
+      </div>
+      <div style="display:flex;gap:10px"><button class="keep" style="margin-top:0" data-choice="tools-as-stamps">✓ Stamps</button><button class="keep" style="margin-top:0" data-choice="tools-as-vignettes">✓ Vignettes</button></div>
+    </div>
+  </div>
+
+  <h2>Bigger alternatives (if you'd rather not do the passport)</h2>
+  <div class="alts">
+    <div class="alt"><b>Under the Lamp</b>No page-turning: the homepage is one security document — guilloche that prints itself, microprint you read with a loupe, and a UV lamp that reveals the hidden truth on every topic (the real fee, the lawyer red flag, the fake site).</div>
+    <div class="alt"><b>Red-Eye to Daylight</b>The scroll is one overnight flight. A little plane flies past the 5 tools as waypoints, a window-shade opens on dawn, your 3-leg route is the climax, and it lands on a prefilled From → To search.</div>
+    <div class="alt"><b>Unfold the World</b>Honours the 1922 Nansen passports for stateless refugees: a long folded sheet unfolds panel by panel as you scroll, flips into a night map where 418 official sources light up like sunrise, then refolds into the button.</div>
+  </div>
+
+  <h2>Things I'll protect no matter what</h2>
+  <div class="protect">
+    <b>Readable &amp; normal to scroll</b> — the passport is the <i>background</i> (as you asked); all text stays real, scrollable, searchable content on top — no trapped scrolling.<br>
+    <b>Fast on cheap phones</b> — a lighter mode on low-end devices; phones see one passport page at a time.<br>
+    <b>Never looks like a fake government document</b> — called a "Journey Book" issued by Migrova, no national crest, tiny "SPECIMEN · NOT A TRAVEL DOCUMENT" print. (Important: Migrova's whole promise is "no fakes".)<br>
+    <b>Heavy effects on the homepage only</b> — visa/relocation reports get light echoes (a hologram ✓ badge on official links, a page-number tab), not scroll effects.<br>
+    <b>Copy fix</b> — "100 countries" → 195 everywhere.
+  </div>
+</div>
+
+<script>
+  // Keep buttons: toggle selection on the card (helper.js also records the click)
+  document.querySelectorAll('.keep').forEach((b) => b.addEventListener('click', () => {
+    const card = b.closest('.card');
+    if (card.id === 'c-sv') { card.querySelectorAll('.keep').forEach((x) => x.style.background = ''); b.style.background = '#b8cf5d'; b.style.color = '#15231a'; card.classList.add('selected'); return; }
+    card.classList.toggle('selected');
+  }));
+
+  // 1. UV lamp follows the mouse, sweeps automatically when idle / on touch
+  const uv = document.getElementById('uv'); let lastMove = 0;
+  const setLamp = (x, y) => { uv.style.setProperty('--lx', x + 'px'); uv.style.setProperty('--ly', y + 'px'); };
+  uv.addEventListener('pointermove', (e) => { const r = uv.getBoundingClientRect(); lastMove = performance.now(); setLamp(e.clientX - r.left, e.clientY - r.top); });
+  (function sweep(t) { if (performance.now() - lastMove > 2500) { const r = uv.getBoundingClientRect(); const k = (Math.sin(t / 1400) + 1) / 2; setLamp(r.width * (0.12 + 0.76 * k), r.height * (0.45 + 0.08 * Math.sin(t / 600))); } requestAnimationFrame(sweep); })(0);
+
+  // 2. tear the stub
+  document.querySelector('.pstub').addEventListener('click', () => document.getElementById('bp').classList.add('torn'));
+
+  // 3. stars on the night side
+  const sky = document.getElementById('sky');
+  for (let i = 0; i < 26; i++) { const s = document.createElement('i'); s.className = 'star'; s.style.left = (i * 19.7 % 45) + '%'; s.style.top = (i * 37.3 % 70) + '%'; sky.appendChild(s); }
+
+  // 4. safar → safe travels
+  let ending = false;
+  document.getElementById('swap').addEventListener('click', () => {
+    ending = !ending;
+    document.getElementById('word').innerHTML = ending ? '<span class="ar">سفر بخیر</span> · SAFARI NJEMA · SAFE TRAVELS' : '<span class="ar">سفر</span> · SAFARI · JOURNEY';
+    document.getElementById('etym').innerHTML = ending ? 'At the very end the cover word becomes a farewell: Urdu <b>safar bakhair</b>, Swahili <b>safari njema</b>, English <b>safe travels</b>. (Native speakers will double-check wording.)' : 'The word for journey crossed borders too: Arabic <b>safar</b> → Urdu <b>safar</b> → Swahili <b>safari</b> → English <b>safari</b>.';
+    document.getElementById('swap').textContent = ending ? 'Show the opening ↻' : 'Show the ending ↻';
+  });
+  document.getElementById('safar').addEventListener('click', (e) => { if (e.target.id !== 'swap') e.currentTarget.classList.toggle('show'); });
+
+  // 6. MRZ scramble → decode
+  const CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<';
+  const rawA = 'P<MGV<<YOUR<FAMILY<<PAK<<<<<<<<', rawB = '1950418MGV<<NEXT<STOP<<<<<<<<04';
+  const outA = 'PLAIN ENGLISH. OFFICIAL SOURCES.', outB = 'NO SCAMS. NO GUESSWORK.        ';
+  function decode() {
+    const m1 = document.getElementById('m1'), m2 = document.getElementById('m2');
+    m1.classList.remove('decoded'); m2.classList.remove('decoded');
+    let f = 0;
+    const id = setInterval(() => {
+      f++;
+      const mix = (raw, out) => raw.split('').map((c, i) => (f > 18 + i * 0.9 ? out[i] || ' ' : f > 6 ? CH[(i * 7 + f * 3) % CH.length] : c)).join('');
+      m1.textContent = mix(rawA, outA); m2.textContent = mix(rawB, outB);
+      if (f > 18 + 32) { clearInterval(id); m1.classList.add('decoded'); m2.classList.add('decoded'); setTimeout(() => { m1.textContent = rawA; m2.textContent = rawB; m1.classList.remove('decoded'); m2.classList.remove('decoded'); }, 2600); }
+    }, 45);
+  }
+  document.getElementById('mrz').addEventListener('click', decode);
+  setInterval(decode, 6000); setTimeout(decode, 800);
+
+  // 7. guilloche rosette for the vignette
+  let d = ''; for (let t = 0; t <= Math.PI * 2 * 7; t += 0.05) { const R = 30, r = 11, k = 19; const x = 50 + (R - r) * Math.cos(t) + k * Math.cos(((R - r) / r) * t); const y = 50 + (R - r) * Math.sin(t) - k * Math.sin(((R - r) / r) * t); d += (t ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
+  document.getElementById('ros').innerHTML = `<path d="${d}"/>`;
+</script>
+</body>
+</html>
