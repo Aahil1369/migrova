@@ -63,3 +63,7 @@ export const HERO_COPY = {
     sub: 'Submitted by readers. Edited for length, never for honesty.',
   },
 };
+
+// Observations page (homepage Journey Book). Default until Aahil supplies his own words.
+export const FOUNDER_NOTE =
+  "My family carried our whole life in one folder of papers, across three countries. Migrova is the guide I wish we'd had.";

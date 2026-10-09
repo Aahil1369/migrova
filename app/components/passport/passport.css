@@ -901,3 +901,25 @@
   .jb-star,
   .jb-globe { animation: none; }
 }
+
+/* ── Founder route (Observations page) ─────────────────────────────────────── */
+
+.jb-founder {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.jb-founder-lbl text {
+  font-family: var(--jb-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  fill: #4f5c55; /* 6.6:1 on --page */
+}
+.jb-founder-lbl .jb-founder-here {
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  fill: #a94a1f; /* 5.4:1 on --page */
+}
