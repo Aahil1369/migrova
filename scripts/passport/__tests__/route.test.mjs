@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   ROUTE_KEY, readRoute, saveRoute, forgetRoute, routeLabel,
-} from '../../../app/components/passport/route.js';
+} from '../../../app/components/passport/routeStore.js';
 
 function fakeStorage(initial = {}) {
   const data = { ...initial };
