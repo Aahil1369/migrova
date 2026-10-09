@@ -2,12 +2,21 @@ import '../passport.css';
 
 const LABEL = "Founder's route: Gilgit-Baltistan, then Kampala, then the USA: here, building this.";
 
+// The three legs (lime -> gold -> peach), drawn one after the other.
+const LEGS = [
+  { d: 'M272 30 Q238 34 182 70', color: '#b8cf5d' },
+  { d: 'M182 70 Q132 6 96 28', color: '#d6b866' },
+  { d: 'M96 28 Q62 30 52 54', color: '#f0a46e' },
+];
+
 /**
- * The founder's route on the Observations page, drawn in foil: Gilgit-Baltistan -> Kampala ->
- * USA, ending at a dot "here, building this". Static SVG for now; `animate` (draw the legs one
- * by one) is accepted and ignored until the Step-2 animation task. One image to assistive tech.
+ * The founder's route on the Observations page: Gilgit-Baltistan -> Kampala -> USA -> a dot
+ * "here, building this". `animate` (Observations on screen): the legs draw in sequence with
+ * stroke-dashoffset (0.8s each, 2.4s in all), each stop appears as its leg arrives and the final
+ * dot pulses; turning it off resets instantly so the next arrival draws again. Reduced motion /
+ * the stack layout: fully drawn, no pulse. One image to assistive tech.
  */
-export function FounderRoute({ className = '' }) {
+export function FounderRoute({ animate = false, className = '' }) {
   return (
     <svg
       className={`jb-founder${className ? ` ${className}` : ''}`}
@@ -15,27 +24,35 @@ export function FounderRoute({ className = '' }) {
       role="img"
       aria-label={LABEL}
       focusable="false"
+      data-drawn={animate ? 'true' : 'false'}
     >
-      <defs>
-        <linearGradient id="jb-founder-foil" x1="0" x2="1">
-          <stop offset="0" stopColor="#a88a3c" />
-          <stop offset=".5" stopColor="#c9a94f" />
-          <stop offset="1" stopColor="#8a6d1f" />
-        </linearGradient>
-      </defs>
-      <g fill="none" stroke="url(#jb-founder-foil)" strokeWidth="2" strokeLinecap="round" strokeDasharray="5 5">
-        <path d="M272 30 Q238 34 182 70" />
-        <path d="M182 70 Q118 6 58 38" />
+      <g fill="none" strokeWidth="2.4" strokeLinecap="round">
+        {LEGS.map((leg, i) => (
+          <path key={leg.d} className={`jb-founder-leg jb-founder-leg--${i + 1}`} d={leg.d} stroke={leg.color} pathLength="1" />
+        ))}
       </g>
-      <circle cx="272" cy="30" r="4.5" fill="#7a5c12" />
-      <circle cx="182" cy="70" r="4.5" fill="#7a5c12" />
-      <circle cx="58" cy="38" r="12" fill="none" stroke="#a94a1f" strokeOpacity=".45" />
-      <circle cx="58" cy="38" r="6" fill="#a94a1f" />
+      <circle cx="272" cy="30" r="4.5" fill="#6b8a1e" />
+      <g className="jb-founder-stop jb-founder-stop--1">
+        <circle cx="182" cy="70" r="4.5" fill="#a88a3c" />
+      </g>
+      <g className="jb-founder-stop jb-founder-stop--2">
+        <circle cx="96" cy="28" r="4.5" fill="#b8642f" />
+      </g>
+      <g className="jb-founder-stop jb-founder-stop--3">
+        <circle className="jb-founder-pulse" cx="52" cy="54" r="12" fill="none" stroke="#a94a1f" strokeWidth="1.4" />
+        <circle cx="52" cy="54" r="6" fill="#a94a1f" />
+      </g>
       <g className="jb-founder-lbl" aria-hidden="true">
         <text x="272" y="16" textAnchor="middle">Gilgit-Baltistan</text>
-        <text x="182" y="92" textAnchor="middle">Kampala</text>
-        <text x="58" y="20" textAnchor="middle">USA</text>
-        <text x="58" y="66" textAnchor="middle" className="jb-founder-here">here, building this</text>
+        <text x="182" y="92" textAnchor="middle" className="jb-founder-stop jb-founder-stop--1">
+          Kampala
+        </text>
+        <text x="96" y="14" textAnchor="middle" className="jb-founder-stop jb-founder-stop--2">
+          USA
+        </text>
+        <text x="8" y="82" className="jb-founder-here jb-founder-stop jb-founder-stop--3">
+          here, building this
+        </text>
       </g>
     </svg>
   );

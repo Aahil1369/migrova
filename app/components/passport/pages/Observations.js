@@ -3,7 +3,8 @@ import './pages.css';
 
 /**
  * p8, Observations (the static base page): the founder's note, his route
- * (Gilgit-Baltistan → Kampala → USA, "here, building this") and the endorsement box.
+ * (Gilgit-Baltistan → Kampala → USA, "here, building this"; it draws leg by leg each time the
+ * page comes on screen, fully drawn under reduced motion) and the endorsement box.
  */
 export default function Observations({ active = false, note = '' }) {
   return (
