@@ -384,17 +384,34 @@ test('notepad: pages advance one at a time and each change follows a completed f
 
 // ---------------------------------------------------------------- parity
 
-test('mode switch must not jump the sky or copy: shared fields equal in both poses', () => {
+test('mode switch must not jump the sky, copy, cover light or closing stamp: shared fields equal in both poses', () => {
   for (let i = 0; i < 200; i++) {
     const p = i / 199;
     const d = desktopPose(t, p);
     const n = notepadPose(t, p);
-    for (const k of ['sky', 'heroOpacity', 'finaleOpacity', 'flap', 'uvDim']) {
+    for (const k of ['sky', 'heroOpacity', 'finaleOpacity', 'flap', 'uvDim', 'coverLight', 'bonVoyage', 'blessing']) {
       assert.equal(n[k], d[k], `${k} differs at p=${p}`);
     }
   }
   // and notepadPose returns exactly the documented fields
-  assert.deepEqual(Object.keys(notepadPose(t, 0.5)).sort(), ['finaleOpacity', 'flap', 'flip', 'heroOpacity', 'page', 'sky', 'uvDim']);
+  assert.deepEqual(
+    Object.keys(notepadPose(t, 0.5)).sort(),
+    ['blessing', 'bonVoyage', 'coverLight', 'finaleOpacity', 'flap', 'flip', 'heroOpacity', 'page', 'sky', 'uvDim'],
+  );
+});
+
+test('notepad: cover light, closing stamp and blessing follow the same schedule as desktop', () => {
+  assert.equal(notepadPose(t, 0).coverLight, 0);
+  assert.ok(near(notepadPose(t, mid('ajar')).coverLight, 0.5));
+  assert.equal(notepadPose(t, R.ajar[1]).coverLight, 1);
+  assert.equal(notepadPose(t, R.open[1]).coverLight, 0);
+  const f = (lc) => notepadPose(t, at('closing', lc));
+  assert.deepEqual([f(0.89).bonVoyage, f(0.89).blessing], [false, false]);
+  assert.deepEqual([f(0.92).bonVoyage, f(0.92).blessing], [true, false]);
+  assert.deepEqual([f(0.96).bonVoyage, f(0.96).blessing], [true, true]);
+  const end = notepadPose(t, 1);
+  assert.ok(end.bonVoyage && end.blessing);
+  assert.equal(typeof notepadPose(t, 0.3).bonVoyage, 'boolean');
 });
 
 test('easeInOutCubic: endpoints, midpoint, symmetry', () => {

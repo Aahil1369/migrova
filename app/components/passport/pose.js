@@ -22,8 +22,9 @@ const CLOSED_TILT_Y = -14;
 const CLOSED_SCALE = 0.92;
 
 /**
- * Fields that are identical in the desktop and phone layouts (sky, hero/finale copy, UV
- * torch). Both poses call this, so switching layout mid-scroll can never jump them.
+ * Fields that are identical in the desktop and phone layouts: sky, hero/finale copy, cover
+ * light-leak and closing stamp/blessing, UV torch. Both poses call this, so switching layout
+ * mid-scroll can never jump them.
  */
 function sharedPose(timeline, q) {
   const { ranges } = timeline;
@@ -32,14 +33,19 @@ function sharedPose(timeline, q) {
   // UV: rise over the first 20% of `uv`, hold, fall over the last 15%; 0 outside the beat.
   const u = lt('uv');
   const uv = u > 0 && u < 1 ? clamp01(Math.min(u / 0.2, (1 - u) / 0.15)) : 0;
+  const closing = lt('closing'); // 1 throughout finale
 
   return {
     // 0 night -> 1 daylight, linear from the start of spread3 to the end of closing.
     sky: seg(q, ranges.spread3[0], ranges.closing[1]),
     heroOpacity: 1 - clamp01(lt('ajar') / 0.7),
     finaleOpacity: clamp01(lt('finale') / 0.6),
+    // Cover light-leak: up through ajar, back down through open.
+    coverLight: lt('ajar') * (1 - lt('open')),
     flap: uv,
     uvDim: uv,
+    bonVoyage: closing >= 0.9,
+    blessing: closing >= 0.95,
   };
 }
 
@@ -73,19 +79,13 @@ export function desktopPose(timeline, p) {
   const returning = easeInOutCubic(seg(closing, 0.5, 1));
   const shift = 1 - opening + returning;
 
-  // Cover light-leak: up through ajar, back down through open.
-  const coverLight = lt('ajar') * (1 - lt('open'));
-
   return {
     shift,
     scale: noNegZero(1 - (1 - CLOSED_SCALE) * shift),
     tiltX: noNegZero(CLOSED_TILT_X * shift),
     tiltY: noNegZero(CLOSED_TILT_Y * shift),
     leaves,
-    coverLight,
     ...sharedPose(timeline, q),
-    bonVoyage: closing >= 0.9, // localT(closing) is 1 throughout finale
-    blessing: closing >= 0.95,
   };
 }
 
