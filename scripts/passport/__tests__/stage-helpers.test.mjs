@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { activePages } from '../../../app/components/passport/activePages.js';
+import { activePages, padShown } from '../../../app/components/passport/activePages.js';
 import { initialRoute, exploreHref, countryParam } from '../../../app/components/passport/search.js';
 import { countVerifiedLinks, verifiedAuthorities } from '../../../app/components/passport/sourcesSummary.js';
 import { buildTimeline, progressForPage, PAGES } from '../../../app/components/passport/timeline.js';
@@ -56,6 +56,20 @@ test('activePages: unknown layouts and missing poses never throw', () => {
   assert.deepEqual(sorted(activePages('stack', {})), [...PAGES].sort());
   assert.deepEqual(sorted(activePages('spread', null)), ['cover']);
   assert.deepEqual(sorted(activePages('notepad', undefined)), ['cover']);
+});
+
+test('padShown: the one-page book is hidden behind the hero and the finale, shown in between', () => {
+  const t = buildTimeline();
+  assert.equal(padShown(notepadPose(t, 0)), 0, 'hero showing');
+  assert.ok(padShown(notepadPose(t, 0.06)) < 0.5, 'hero still mostly showing');
+  assert.ok(padShown(notepadPose(t, 0.98)) < 0.5, 'finale showing');
+  assert.equal(padShown(notepadPose(t, 1)), 0, 'finale fully in');
+  for (const page of PAGES.filter((id) => id !== 'cover')) {
+    assert.equal(padShown(notepadPose(t, progressForPage(t, page))), 1, page);
+  }
+  assert.equal(padShown(notepadPose(t, t.ranges.open[0])), 1, 'cover target (start of open)');
+  assert.equal(padShown(null), 1);
+  assert.equal(padShown({ heroOpacity: NaN, finaleOpacity: 2 }), 0);
 });
 
 // ---- search: initial route, Explore href, ?from= ----------------------------------------------

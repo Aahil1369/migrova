@@ -48,3 +48,14 @@ export function activePages(layout, pose) {
 
 /** Stable string key for a page set (cheap change detection). */
 export const activeKey = (set) => [...set].sort().join('|');
+
+const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN / undefined -> 0
+
+/**
+ * Notepad / lite (one page at a time): how much of the book is shown, 0..1. It fades in as the
+ * hero leaves and out as the finale arrives — (1 - heroOpacity) x (1 - finaleOpacity).
+ * Below 0.5 the book is effectively invisible: it must not take taps or count as on screen.
+ */
+export function padShown(pose) {
+  return (1 - clamp01(pose?.heroOpacity)) * (1 - clamp01(pose?.finaleOpacity));
+}

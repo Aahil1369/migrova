@@ -83,7 +83,7 @@ export default function UvSources({ active = false, verifiedCount = 0, authoriti
         <>
           <p className="jbp-label jbp-site-cap">
             {wantedCountry
-              ? `NO VERIFIED LINK FOR ${wantedCountry.name.toUpperCase()} YET · EXAMPLE: ${country.name.toUpperCase()}`
+              ? `NO VERIFIED IMMIGRATION AUTHORITY LINK FOR ${wantedCountry.name.toUpperCase()} YET · EXAMPLE: ${country.name.toUpperCase()}`
               : `REAL SITE · ${country.name.toUpperCase()}`}
           </p>
           <a className="jbp-site" href={site.url} target="_blank" rel="noopener noreferrer">

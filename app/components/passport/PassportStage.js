@@ -10,7 +10,7 @@ import { desktopPose, notepadPose, easeInOutCubic } from './pose';
 import { bookTransform, closedShiftPx, leafStyle, litePageStyle, notepadPageStyle, skyLayers } from './stageStyle';
 import { scrollTarget, useScrollProgress } from './useScrollProgress';
 import { useLayoutMode } from './useLayoutMode';
-import { activeKey, activePages } from './activePages';
+import { activeKey, activePages, padShown } from './activePages';
 import { initialRoute } from './search';
 import Cover from './pages/Cover';
 import Notice from './pages/Notice';
@@ -232,12 +232,14 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
           if (layout === 'notepad' && m.dims[i]) m.dims[i].style.opacity = String(s.dim);
         });
         // One page at a time leaves no room beside the hero/finale: the book fades in as the
-        // hero leaves and out as the finale arrives.
+        // hero leaves and out as the finale arrives. While it is (nearly) invisible its pages
+        // ignore taps (data-inert, see stage.css) but stay keyboard-reachable.
         const wrap = wrapRef.current;
         if (wrap) {
-          const shown = (1 - pose.heroOpacity) * (1 - pose.finaleOpacity);
+          const shown = padShown(pose);
           wrap.style.opacity = String(+shown.toFixed(3));
           wrap.style.transform = `translate3d(0, ${((1 - shown) * 24).toFixed(1)}px, 0)`;
+          wrap.dataset.inert = shown < 0.5 ? '1' : '';
         }
       }
 
@@ -288,7 +290,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       const pose = poseFor(layout, progressNow(section));
       if (part === 'hero') return pose.heroOpacity > 0.5;
       if (part === 'finale') return pose.finaleOpacity > 0.5;
-      if (layout !== 'spread' && (1 - pose.heroOpacity) * (1 - pose.finaleOpacity) < 0.5) return false;
+      if (layout !== 'spread' && padShown(pose) < 0.5) return false;
       return activePages(layout, pose).has(part);
     },
     [layout],
@@ -305,18 +307,34 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
   useAnchors(goTo);
 
   // Keyboard: focus landing in a page (or hero/finale) that is not on screen brings it on screen.
+  // Only keyboard focus: focus that follows a pointer press (click/tap) never jumps, so a stray
+  // tap can never rewind the page. Any key press re-arms the jump.
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
+    let pointerFocus = false;
+    const onPointerDown = () => {
+      pointerFocus = true;
+    };
+    const onKeyDown = () => {
+      pointerFocus = false;
+    };
     const onFocusIn = (e) => {
+      if (pointerFocus) return;
       const target = e.target instanceof Element ? e.target : null;
       const part =
         target?.closest('[data-stage-part]')?.getAttribute('data-stage-part') ||
         target?.closest('[data-page]')?.getAttribute('data-page');
       if (part && !isShowing(part)) goTo(part);
     };
+    window.addEventListener('pointerdown', onPointerDown, true);
+    window.addEventListener('keydown', onKeyDown, true);
     section.addEventListener('focusin', onFocusIn);
-    return () => section.removeEventListener('focusin', onFocusIn);
+    return () => {
+      window.removeEventListener('pointerdown', onPointerDown, true);
+      window.removeEventListener('keydown', onKeyDown, true);
+      section.removeEventListener('focusin', onFocusIn);
+    };
   }, [isShowing, goTo]);
 
   // Dev-only test hook: the automated browser pane is a hidden tab (rAF paused), so tests pose

@@ -61,6 +61,12 @@
 .ps-bookwrap--lite {
   opacity: 0;
 }
+/* While the one-page book is (nearly) invisible behind the hero / finale, nothing in it takes
+   a tap or a click; keyboard focus still reaches it. PassportStage sets data-inert every frame
+   (the first frame is written before paint), so it beats the pages' inline pointer-events. */
+.ps-bookwrap[data-inert='1'] * {
+  pointer-events: none !important;
+}
 
 /* ── Hero and finale copy ──────────────────────────────────────────────────── */
 
