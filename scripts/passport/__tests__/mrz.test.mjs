@@ -25,9 +25,23 @@ test('empty route yields defaults, never undefined/null', () => {
 });
 
 test('line construction matches the spec exactly', () => {
-  const [l1, l2] = buildMrz({ fromIso3: 'PAK', toIso3: 'CAN' });
+  const [l1, l2] = buildMrz({ fromIso3: 'PAK', toIso3: 'CAN', count: 418 });
   assert.equal(l1, 'P<MGVYOUR<FAMILY<<PAK'.padEnd(44, '<'));
   assert.equal(l2, '1950418MGV<<CAN<<NEXT<STOP'.padEnd(44, '<'));
+});
+
+test('the verified-link count is passed in, never hard-coded (4 digits, filler when unknown)', () => {
+  const line2 = (count) => buildMrz({ toIso3: 'CAN', count })[1];
+  assert.ok(line2(418).startsWith('1950418MGV'));
+  assert.ok(line2(523).startsWith('1950523MGV'));
+  assert.ok(line2(7).startsWith('1950007MGV'));
+  assert.ok(line2(12345).startsWith('1959999MGV'), 'capped at 4 digits');
+  assert.ok(line2(41.8).startsWith('1950041MGV'));
+  for (const bad of [undefined, null, NaN, -3, 'abc', Infinity]) {
+    assert.ok(line2(bad).startsWith('195<<<<MGV'), String(bad));
+    assert.match(line2(bad), MRZ_RE);
+  }
+  assert.ok(!buildMrz({}).join('').includes('0418'), 'no count -> no made-up number');
 });
 
 test('route codes appear in the lines', () => {

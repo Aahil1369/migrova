@@ -17,6 +17,11 @@ export default function Observations({ active = false, note = '' }) {
         </blockquote>
       ) : null}
       <FounderRoute animate={active} className="jbp-founder-route" />
+      {/* Phones: the drawing's place labels would be ~7px, so a readable caption replaces them
+          (the drawing already carries the same words as its accessible name). */}
+      <p className="jbp-founder-caption" aria-hidden="true">
+        Gilgit-Baltistan → Kampala → USA — <span>here, building this</span>
+      </p>
       <p className="jbp-endorse">
         <small aria-hidden="true">ENDORSEMENT</small>
         INFORMATION, NOT LEGAL ADVICE. ALWAYS CONFIRM ON THE OFFICIAL SITE.

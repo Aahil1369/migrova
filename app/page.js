@@ -19,6 +19,7 @@ export const metadata = {
 };
 
 // Up to two approved stories for the "Fellow travellers" page; any failure -> none (invite page).
+// Capped at 4s so a slow database can never hold up the page render (timeout -> error -> []).
 async function getStories() {
   if (!hasSupabase || !supabase) return [];
   try {
@@ -27,7 +28,8 @@ async function getStories() {
       .select('id, from_country, current_country, story_text')
       .eq('approved', true)
       .order('created_at', { ascending: false })
-      .limit(2);
+      .limit(2)
+      .abortSignal(AbortSignal.timeout(4000));
     if (error || !Array.isArray(data)) return [];
     return data.map((s) => ({
       id: s.id,

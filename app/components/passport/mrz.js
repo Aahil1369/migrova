@@ -13,15 +13,24 @@ const sanitize = (value) => String(value ?? '').toUpperCase().replace(/[^A-Z0-9<
 // Truncate or pad a string to exactly MRZ_LEN characters.
 const fit = (value, filler) => String(value ?? '').slice(0, MRZ_LEN).padEnd(MRZ_LEN, filler);
 
+// The verified-link count as 4 MRZ digits (capped at 9999); '<<<<' when unknown, so the strip
+// never shows a made-up number.
+function countField(count) {
+  const n = typeof count === 'number' ? count : Number.NaN;
+  if (!Number.isFinite(n) || n < 0) return '<<<<';
+  return String(Math.min(9999, Math.floor(n))).padStart(4, '0');
+}
+
 /**
- * Build the two MRZ lines. Both inputs are optional ISO3 codes; with no route the
- * strip reads "YOUR<FAMILY" and "ANY".
+ * Build the two MRZ lines. `fromIso3` / `toIso3` are optional ISO3 codes; with no route the
+ * strip reads "YOUR<FAMILY" and "ANY". `count` is the verified official-link count
+ * (computed from OFFICIAL_SOURCES on the server and passed down), shown after the 195.
  */
-export function buildMrz({ fromIso3, toIso3 } = {}) {
+export function buildMrz({ fromIso3, toIso3, count } = {}) {
   const from = sanitize(fromIso3);
   const to = toIso3 == null || toIso3 === '' ? 'ANY' : sanitize(toIso3);
   const line1 = `P<MGVYOUR<FAMILY<<${from}`;
-  const line2 = `1950418MGV<<${to}<<NEXT<STOP`;
+  const line2 = `195${countField(count)}MGV<<${to}<<NEXT<STOP`;
   return [fit(line1, '<'), fit(line2, '<')];
 }
 

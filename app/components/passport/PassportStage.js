@@ -546,7 +546,7 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
   const on = (id) => active.has(id);
   const leaves = [
     { front: <Cover active={on('cover')} pointerFoil={layout === 'spread'} />, back: <Notice active={on('notice')} /> },
-    { front: <DataPage active={on('data')} still={layout === 'stack'} />, back: <VisasOne active={on('visas1')} /> },
+    { front: <DataPage active={on('data')} still={layout === 'stack'} verifiedCount={verifiedCount} />, back: <VisasOne active={on('visas1')} /> },
     { front: <VisasTwo active={on('visas2')} />, back: <Entries active={on('entries')} /> },
     {
       front: <UvSources active={on('sources')} verifiedCount={verifiedCount} />,

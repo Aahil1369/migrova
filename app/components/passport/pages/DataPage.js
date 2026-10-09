@@ -92,13 +92,14 @@ function FamilyPhoto() {
  * p2, the data page: holder, From -> To from the current search (defaults "Your country" /
  * "Your 5 best matches"), a line-art family photo, "Find my countries →" and the two MRZ lines
  * built from the route (ANY when unset), which decode into plain English on arrival.
- * `still`: the reduced-motion stack (raw + plain lines together).
+ * `still`: the reduced-motion stack (raw + plain lines together). `verifiedCount`: the computed
+ * verified-link count, printed in the MRZ (never hard-coded).
  */
-export default function DataPage({ active = false, still = false }) {
+export default function DataPage({ active = false, still = false, verifiedCount }) {
   const { route } = useRoute();
   const from = countryByCode(route?.from);
   const to = route?.to && route.to !== 'any' ? countryByCode(route.to) : null;
-  const [line1, line2] = buildMrz({ fromIso3: from?.iso3, toIso3: to?.iso3 });
+  const [line1, line2] = buildMrz({ fromIso3: from?.iso3, toIso3: to?.iso3, count: verifiedCount });
 
   return (
     <section id="data" aria-labelledby="data-h" tabIndex={-1} className="jbp jbp-data">
