@@ -4,6 +4,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRoute } from './PassportContext';
 import { hasRoute, routeCodes, routeLabel, routeSpoken, sameRoute, saveRoute } from './routeStore';
+import { stubState } from './passStub';
 import { visaHref } from './search';
 import { announceRouteChange, deviceStorage, useSavedRoute } from './useSavedRoute';
 import { PlaneGlyph, ScissorsGlyph } from './parts/Glyphs';
@@ -13,8 +14,6 @@ import './stage.css';
 const TEAR_MS = 700; // the stub's flight (CSS transition)
 const ANNOUNCE_MS = 550; // the route pill appears as the stub vanishes
 
-const SAVED = "Route saved. It's in the top bar on every page.";
-const FAILED = "Couldn't save the route on this device: this browser is blocking storage.";
 
 /**
  * The finale's boarding pass, from the current search (PassportContext): big ISO3 codes
@@ -60,20 +59,20 @@ function Pass({ still }) {
   const codes = routeCodes(route);
   const worth = hasRoute(route);
   const remembered = worth && sameRoute(saved, route);
-  const torn = tear && tear.key === key ? tear : null;
+  const state = stubState({ tear, key, remembered, routeComplete: worth, reduced: quiet });
 
   const save = (e) => {
-    if (!worth || torn) return;
+    if (state.disabled || (state.view !== 'stub' && state.view !== 'button')) return;
+    // The clicked button is about to be replaced (flying copy / "remembered" / the note): keep
+    // keyboard focus on the note next to it, without scrolling the page.
     const hadFocus = typeof document !== 'undefined' && document.activeElement === e.currentTarget;
     const ok = saveRoute(deviceStorage(), route);
+    setTear({ key, ok, done: quiet });
+    if (hadFocus) noteRef.current?.focus({ preventScroll: true });
     if (quiet) {
-      setTear({ key, ok, done: true });
       if (ok) announceRouteChange();
       return;
     }
-    setTear({ key, ok, done: false });
-    // The stub button is about to be replaced by its flying copy: keep keyboard focus nearby.
-    if (hadFocus) noteRef.current?.focus({ preventScroll: true });
     if (ok) timers.current.push(window.setTimeout(announceRouteChange, ANNOUNCE_MS));
     timers.current.push(
       window.setTimeout(() => setTear((t) => (t && t.key === key ? { ...t, done: true } : t)), TEAR_MS),
@@ -81,7 +80,7 @@ function Pass({ still }) {
   };
 
   let stub;
-  if (torn && !torn.done) {
+  if (state.view === 'flying') {
     stub = (
       <span className="bp-stub bp-stub--flying" aria-hidden="true">
         <span className="bp-stub-kicker">STUB</span>
@@ -93,17 +92,23 @@ function Pass({ still }) {
         </span>
       </span>
     );
-  } else if (torn?.ok || (!torn && remembered)) {
+  } else if (state.view === 'remembered') {
     stub = (
       <span className="bp-stub-done">
         <b aria-hidden="true">✓</b> Remembered on this device
       </span>
     );
-  } else if (torn && !torn.ok) {
+  } else if (state.view === 'failed') {
     stub = null; // the note explains
-  } else if (quiet) {
+  } else if (state.view === 'button') {
     stub = (
-      <button type="button" className="bp-remember" onClick={save} aria-disabled={!worth} aria-describedby={worth ? undefined : 'bp-hint'}>
+      <button
+        type="button"
+        className="bp-remember"
+        onClick={save}
+        aria-disabled={state.disabled}
+        aria-describedby={state.hint ? 'bp-hint' : undefined}
+      >
         Remember this route
       </button>
     );
@@ -113,8 +118,8 @@ function Pass({ still }) {
         type="button"
         className="bp-stub"
         onClick={save}
-        aria-disabled={!worth}
-        aria-describedby={worth ? undefined : 'bp-hint'}
+        aria-disabled={state.disabled}
+        aria-describedby={state.hint ? 'bp-hint' : undefined}
       >
         <span className="bp-stub-kicker" aria-hidden="true">
           STUB
@@ -158,7 +163,7 @@ function Pass({ still }) {
         </div>
         <div className="bp-stubslot">{stub}</div>
       </div>
-      {!worth && !torn ? (
+      {state.hint ? (
         <p id="bp-hint" className="bp-hint">
           To remember a route, choose where you&apos;re from or going above.
         </p>
@@ -167,10 +172,10 @@ function Pass({ still }) {
         ref={noteRef}
         tabIndex={-1}
         className="bp-note"
-        data-ok={torn ? (torn.ok ? 'true' : 'false') : undefined}
+        data-ok={state.noteOk === null ? undefined : String(state.noteOk)}
         aria-live="polite"
       >
-        {torn ? (torn.ok ? SAVED : FAILED) : ''}
+        {state.note}
       </p>
     </>
   );
