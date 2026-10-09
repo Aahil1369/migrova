@@ -358,6 +358,24 @@
   flex: 0 0 auto;
   margin-top: calc(var(--u) * 3);
 }
+/* One page at a time: the UV check folds out OVER the sources page body (PassportStage
+   crossfades the two with pose.flap via inlineFlapStyle), so each gets the whole page. */
+.jb-notepad .jb-pgbody > .jb-flap-inline,
+.jb-lite .jb-pgbody > .jb-flap-inline {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  pointer-events: none;
+}
+.jb-notepad .jb-flap-inline > .jbp-uv,
+.jb-lite .jb-flap-inline > .jbp-uv {
+  flex: 0 1 auto;
+}
 
 /* ── stack (reduced motion): paper cards in normal flow ────────────────────── */
 

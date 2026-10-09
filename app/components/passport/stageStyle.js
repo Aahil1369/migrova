@@ -47,16 +47,39 @@ export function bookTransform({ shift = 0, scale = 1, tiltX = 0, tiltY = 0, flap
   return `translate3d(${x}px,0,0) rotateX(${+tiltX.toFixed(3)}deg) rotateY(${+tiltY.toFixed(3)}deg) scale(${+scale.toFixed(4)})`;
 }
 
+// The flap fades in over the first 15% of its swing, so its blank back face never pops in
+// over the sources page.
+const FLAP_FADE = 0.15;
+
 /**
  * Fold-out flap on the sources page, from `pose.flap` (0 folded away … 1 fully open to the
- * right of the page). The flap only takes pointer events once it is (nearly) open.
+ * right of the page). Opacity ramps 0 -> 1 over the first 15% of the swing; the flap only
+ * takes pointer events once it is (nearly) open.
  */
 export function flapStyle(flap) {
   const f = clamp01(flap);
   return {
     transform: `rotateY(${+(f * 180).toFixed(2)}deg)`,
-    opacity: f > 0.001 ? 1 : 0,
+    opacity: +clamp01(f / FLAP_FADE).toFixed(3),
     pointerEvents: f > 0.98 ? 'auto' : 'none',
+  };
+}
+
+/**
+ * Phones / lite: the UV check (`.jb-flap-inline`) folds out over the sources page body as
+ * `pose.flap` rises. The page content fades out over the first half, then the UV check fades
+ * in and slides up 24px over the second half, so the two are never both half-visible and only
+ * one of them takes taps. Returns opacities for both plus the flap's transform/pointer-events.
+ */
+export function inlineFlapStyle(flap) {
+  const f = clamp01(flap);
+  const shown = seg(f, 0.5, 1);
+  return {
+    pageOpacity: +(1 - seg(f, 0, 0.5)).toFixed(3),
+    opacity: +shown.toFixed(3),
+    transform: `translate3d(0, ${+((1 - shown) * 24).toFixed(1)}px, 0)`,
+    pointerEvents: shown > 0.5 ? 'auto' : 'none',
+    pagePointerEvents: f < 0.5 ? 'auto' : 'none',
   };
 }
 

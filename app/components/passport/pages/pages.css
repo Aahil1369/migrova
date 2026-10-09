@@ -56,14 +56,25 @@
   font-size: max(var(--jb-body-min), calc(var(--u) * 3.2));
   line-height: 1.2;
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  position: relative;
+  isolation: isolate;
 }
-.jbp-cta:hover {
+.jbp-cta::before {
+  /* hover: fade a lighter green in (opacity only) */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
   background: #2f5139;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.jbp-cta:hover::before {
+  opacity: 1;
 }
 .jbp-cta:focus-visible,
-.jbp-more:focus-visible,
-.jbp-site:focus-visible {
+.jbp-more:focus-visible {
   outline: 3px solid #2f5139;
   outline-offset: 3px;
 }
@@ -503,59 +514,364 @@
   color: var(--page-ink);
   font-variant-numeric: tabular-nums;
 }
-.jbp-site-cap {
-  margin: 0 0 calc(var(--u) * -1);
+/* ── p6 UV check (the fold-out flap; inline below the page in notepad / lite / stack) ──
+   Two identical-looking site cards. Each card stacks its normal face, a lamp copy of the UV
+   face (masked by the cursor lamp, or flashed by the scanner band) and a full UV face that
+   fades in when the card is revealed (auto-reveal, "Show everything", reduced motion). */
+
+.jbp-uv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 1.6);
+  min-height: 0;
 }
-.jbp-site {
-  display: block;
+.jbp-uv-h,
+.jbp-uv-cap {
+  margin: 0;
+}
+.jbp-uv-h {
+  color: #4b2f7f; /* 9.4:1 on --page */
+}
+.jbp-uv-cards {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 3.2);
+  margin: 0 calc(var(--u) * -1);
+  padding: calc(var(--u) * 1.8) calc(var(--u) * 1) calc(var(--u) * 1.2);
+  overflow: hidden; /* clips the scanner band */
+}
+.uvc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.uvc-body {
+  display: grid;
   overflow: hidden;
-  border: 1px solid #e3dccd;
-  border-radius: calc(var(--u) * 2.4);
+  border-radius: calc(var(--u) * 2.2);
   background: #fff;
-  box-shadow: 0 calc(var(--u) * 0.8) calc(var(--u) * 2.4) rgba(31, 42, 36, 0.08);
+  box-shadow: 0 calc(var(--u) * 0.6) calc(var(--u) * 2) rgba(31, 42, 36, 0.1), 0 0 0 1px #e3dccd;
   color: var(--page-ink);
   text-decoration: none;
-  transition: border-color 0.2s ease;
 }
-.jbp-site:hover {
-  border-color: #2f5139;
+.uvc-body > * {
+  grid-area: 1 / 1;
+  min-width: 0;
 }
-.jbp-site-bar {
+a.uvc-body {
+  position: relative;
+}
+a.uvc-body::after {
+  /* hover ring: opacity only */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px #2f5139;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+a.uvc-body:hover::after {
+  opacity: 1;
+}
+a.uvc-body:focus-visible {
+  outline: 3px solid #2f5139;
+  outline-offset: 3px;
+}
+.uvc-face {
   display: flex;
-  align-items: center;
-  gap: calc(var(--u) * 1.2);
-  padding: calc(var(--u) * 1.1) calc(var(--u) * 2.4);
+  flex-direction: column;
+  gap: calc(var(--u) * 0.8);
+  padding-bottom: calc(var(--u) * 1.8);
+}
+.uvc-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--u) * 1);
+  padding: calc(var(--u) * 1) calc(var(--u) * 2);
   border-bottom: 1px solid #ebe5d8;
   background: #f3efe6;
   font-family: var(--jb-mono);
-  font-size: max(12px, calc(var(--u) * 2.6));
+  font-size: max(11px, calc(var(--u) * 2.3));
   line-height: 1.3;
   color: #3d4a43; /* 8.1:1 */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.jbp-site-bar svg {
+.uvc-bar svg {
   flex: 0 0 auto;
   width: 1em;
-  height: 1em;
+  height: 1.3em;
+  color: #1f6f47;
 }
-.jbp-site-body {
-  display: block;
-  padding: calc(var(--u) * 1.6) calc(var(--u) * 2.4) calc(var(--u) * 1.8);
+.uvc-domain,
+.uvc-uvdomain {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
-.jbp-site-name {
-  display: block;
+.uvc-title {
+  padding: 0 calc(var(--u) * 2);
+  font-weight: 800;
+  font-size: max(15px, calc(var(--u) * 3.4));
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.uvc-desc {
+  padding: 0 calc(var(--u) * 2);
+  font-size: max(12px, calc(var(--u) * 2.5));
+  line-height: 1.4;
+  color: #4f5c55; /* 6.6:1 on white */
+}
+.uvc-cta {
+  align-self: flex-start;
+  margin: 0 calc(var(--u) * 2);
+  padding: calc(var(--u) * 0.5) calc(var(--u) * 1.8);
+  border-radius: calc(var(--u) * 1);
+  background: var(--page-ink);
+  color: var(--page);
   font-weight: 700;
-  line-height: 1.25;
-}
-.jbp-site-ok {
-  display: block;
-  margin-top: calc(var(--u) * 0.6);
-  font-weight: 600;
+  font-size: max(11px, calc(var(--u) * 2.3));
   line-height: 1.3;
-  color: #1f6f47; /* 6.1:1 on white */
 }
+.uvc-badge {
+  position: relative; /* in flow above the card, overlapping only its top edge */
+  z-index: 4;
+  align-self: flex-end;
+  margin: 0 calc(var(--u) * 2) calc(var(--u) * -1.1);
+  padding: calc(var(--u) * 0.4) calc(var(--u) * 1.2);
+  border-radius: calc(var(--u) * 0.9);
+  background: #a94a1f;
+  color: #fff; /* 5.7:1 */
+  font-family: var(--jb-mono);
+  font-weight: 700;
+  font-size: max(10px, calc(var(--u) * 1.9));
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+}
+.uvc-uv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: calc(var(--u) * 0.8);
+  padding: calc(var(--u) * 1.4) calc(var(--u) * 2) calc(var(--u) * 1.8);
+  background: radial-gradient(ellipse at 28% 18%, #3a2a72 0%, #241a4d 55%, #1a1338 100%);
+  color: #e4dbff;
+  pointer-events: none;
+}
+.uvc-uvdomain {
+  font-family: var(--jb-mono);
+  font-size: max(11px, calc(var(--u) * 2.3));
+  line-height: 1.3;
+  color: #c9bdf5; /* 9:1 on the UV violet */
+}
+.uvc-uvname {
+  font-weight: 800;
+  font-size: max(14px, calc(var(--u) * 3));
+  line-height: 1.2;
+  color: #f4f0ff;
+}
+.uvc-seal {
+  padding: calc(var(--u) * 0.5) calc(var(--u) * 1.4);
+  border-radius: calc(var(--u) * 1);
+  font-family: var(--jb-mono);
+  font-weight: 700;
+  font-size: max(11px, calc(var(--u) * 2.3));
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+.uvc-seal--ok {
+  border: 2px solid #c8ff6e;
+  color: #dcff9c;
+  text-shadow: 0 0 10px rgba(200, 255, 110, 0.75);
+  box-shadow: 0 0 16px rgba(200, 255, 110, 0.45), inset 0 0 8px rgba(200, 255, 110, 0.25);
+  transform: rotate(-4deg);
+}
+.uvc-seal--bad {
+  border: 2px dashed #8d849f;
+  color: #c2bad4; /* 8:1, no glow: it does not fluoresce */
+  letter-spacing: 0.04em;
+  transform: rotate(2deg);
+}
+
+/* The lamp copy: hidden until the lamp / scanner lights it. */
+.uvc-uv--lamp {
+  --lx: -9999px;
+  --ly: -9999px;
+  opacity: 0;
+}
+.jbp-uv[data-mode='cursor'][data-active='true'] .uvc-uv--lamp {
+  opacity: 1;
+  -webkit-mask-image: radial-gradient(circle 95px at var(--lx) var(--ly), #000 55%, transparent 100%);
+  mask-image: radial-gradient(circle 95px at var(--lx) var(--ly), #000 55%, transparent 100%);
+}
+.jbp-uv[data-mode='scan'][data-active='true'] .uvc-uv--lamp {
+  animation: jbp-uv-scan-a 3.2s linear infinite alternate;
+}
+.jbp-uv[data-mode='scan'][data-active='true'] .uvc--fake .uvc-uv--lamp {
+  animation-name: jbp-uv-scan-b;
+}
+/* Scanner band: a full-height layer whose violet stripe sits in its top 14%; it travels by
+   transform only, in step with the two cards' lamp copies above (same duration/direction). */
+.jbp-uv-band {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(155, 123, 255, 0) 0%,
+    rgba(155, 123, 255, 0.45) 5.5%,
+    rgba(214, 200, 255, 0.95) 7%,
+    rgba(155, 123, 255, 0.45) 8.5%,
+    rgba(155, 123, 255, 0) 14%,
+    rgba(155, 123, 255, 0) 100%
+  );
+  transform: translateY(-14%);
+}
+.jbp-uv[data-mode='scan'][data-active='true'] .jbp-uv-band {
+  display: block;
+  animation: jbp-uv-band 3.2s linear infinite alternate;
+}
+@keyframes jbp-uv-band {
+  from { transform: translateY(-14%); }
+  to { transform: translateY(100%); }
+}
+@keyframes jbp-uv-scan-a {
+  0%, 5% { opacity: 0; }
+  12%, 43% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes jbp-uv-scan-b {
+  0%, 50% { opacity: 0; }
+  57%, 88% { opacity: 1; }
+  95%, 100% { opacity: 0; }
+}
+/* Revealed: auto (data-auto, written by PassportStage as the UV beat holds), "Show everything",
+   the reduced-motion stack. */
+.uvc-uv--full {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.jbp-uv[data-all='true'] .uvc-uv--full,
+.jbp-uv[data-auto='1'] .uvc--real .uvc-uv--full,
+.jbp-uv[data-auto='2'] .uvc-uv--full,
+.jb-stack .uvc-uv--full {
+  opacity: 1;
+}
+.jbp-uv-glow {
+  display: none;
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  top: 0;
+  width: 190px;
+  height: 190px;
+  margin: -95px 0 0 -95px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(155, 123, 255, 0.26), rgba(155, 123, 255, 0) 65%);
+  transform: translate3d(-9999px, -9999px, 0);
+}
+.jbp-uv[data-mode='cursor'][data-active='true'][data-all='false'] .jbp-uv-glow {
+  display: block;
+}
+.jbp-uv-toggle {
+  position: relative;
+  isolation: isolate;
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 calc(var(--u) * 3.4);
+  border: 2px solid #6a43a8;
+  border-radius: 999px;
+  background: transparent;
+  color: #4b2f7f;
+  font: inherit;
+  font-weight: 700;
+  font-size: max(var(--jb-body-min), calc(var(--u) * 2.8));
+  line-height: 1.2;
+  cursor: pointer;
+}
+.jbp-uv-toggle::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: #6a43a8;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.jbp-uv-toggle:hover::before {
+  opacity: 0.12;
+}
+.jbp-uv-toggle[aria-pressed='true'] {
+  color: #fff; /* 6.65:1 on the purple */
+}
+.jbp-uv-toggle[aria-pressed='true']::before {
+  opacity: 1;
+}
+.jbp-uv-toggle:focus-visible {
+  outline: 3px solid #2f5139;
+  outline-offset: 3px;
+}
+.jb-stack .uvc-uv--lamp,
+.jb-stack .jbp-uv-band,
+.jb-stack .jbp-uv-glow {
+  display: none;
+}
+.jb-stack .uvc-uv--full {
+  transition: none;
+}
+/* In the desktop flap there is room: bigger, vertically centred cards. Inline (phones / lite /
+   stack) the cards stay compact so the sources page fits its card. */
+.jb-flap-body > .jbp-uv {
+  justify-content: center;
+  gap: calc(var(--u) * 2.4);
+}
+.jb-flap-body .uvc-face {
+  gap: calc(var(--u) * 1.3);
+  padding-bottom: calc(var(--u) * 2.6);
+}
+.jb-flap-body .uvc-bar {
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2);
+}
+.jb-flap-body .jbp-uv-cards {
+  gap: calc(var(--u) * 4);
+}
+.jb-flap-inline .uvc-desc {
+  display: none;
+}
+.jbp-uv-cards {
+  flex: 0 0 auto; /* never squeezed: trim the decoration below instead */
+}
+/* Short flaps (short desktop windows): drop the decorative description line, tighten up. */
+.jb-flap-body {
+  container-type: size;
+  container-name: jb-flap;
+}
+@container jb-flap (max-height: 560px) {
+  .uvc-desc {
+    display: none;
+  }
+  .jb-flap-body .uvc-face {
+    gap: calc(var(--u) * 0.8);
+    padding-bottom: calc(var(--u) * 1.8);
+  }
+  .jb-flap-body .uvc-bar {
+    padding: calc(var(--u) * 1) calc(var(--u) * 2);
+  }
+  .jb-flap-body .jbp-uv-cards {
+    gap: calc(var(--u) * 3);
+  }
+}
+
 .jbp-uvline {
   margin: 0;
   line-height: 1.4;
@@ -743,5 +1059,14 @@
   }
   .jbp-etym {
     transition: none;
+  }
+  .uvc-uv--full {
+    opacity: 1;
+    transition: none;
+  }
+  .uvc-uv--lamp,
+  .jbp-uv-band,
+  .jbp-uv-glow {
+    display: none !important;
   }
 }

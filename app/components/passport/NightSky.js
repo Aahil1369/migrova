@@ -18,7 +18,8 @@ const STARS = Array.from({ length: 64 }, (_, i) => ({
  * Stacking, bottom -> top: night, predawn, [stars, globe], sunrise, day, dim. Every layer is
  * opaque, so fade the upper ones in over night (see skyLayers() in stageStyle.js).
  * Defaults: night opacity 1, the rest 0. PassportStage writes `style.opacity` to
- * refs { night, predawn, sunrise, day, dim }; dim at 1 is the full UV darkness.
+ * refs { night, predawn, sunrise, day, dim }; dim at 1 is the full UV darkness (pose.uvDim),
+ * and as it lifts past 0.5 PassportStage flickers it once (two 60ms WAAPI opacity pulses).
  * `className`: e.g. 'jb-sky--still' stops the star/globe animations (lite mode);
  * prefers-reduced-motion stops them anyway.
  */

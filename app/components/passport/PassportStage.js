@@ -4,10 +4,19 @@ import { createRef, useCallback, useEffect, useLayoutEffect, useMemo, useRef } f
 import Book from './Book';
 import NightSky from './NightSky';
 import JourneySearch from './JourneySearch';
-import { PassportProvider, usePassport } from './PassportContext';
-import { ANCHORS, PAGES, buildTimeline, progressForPage } from './timeline';
+import { PassportProvider, useActive, usePassport } from './PassportContext';
+import { ANCHORS, PAGES, buildTimeline, localT, progressForPage } from './timeline';
 import { desktopPose, notepadPose, easeInOutCubic } from './pose';
-import { bookTransform, closedShiftPx, leafStyle, litePageStyle, notepadPageStyle, skyLayers } from './stageStyle';
+import {
+  bookTransform,
+  closedShiftPx,
+  flapStyle,
+  inlineFlapStyle,
+  leafStyle,
+  litePageStyle,
+  notepadPageStyle,
+  skyLayers,
+} from './stageStyle';
 import { scrollTarget, useScrollProgress } from './useScrollProgress';
 import { useLayoutMode } from './useLayoutMode';
 import { activeKey, activePages, padShown } from './activePages';
@@ -18,7 +27,8 @@ import DataPage from './pages/DataPage';
 import VisasOne from './pages/VisasOne';
 import VisasTwo from './pages/VisasTwo';
 import Entries from './pages/Entries';
-import UvSources from './pages/UvSources';
+import UvSources, { UvFlap } from './pages/UvSources';
+import { FLICKER_KEYFRAMES, FLICKER_MS, uvFlickerStep, uvRevealLevel } from './pages/uv';
 import Travellers from './pages/Travellers';
 import Observations from './pages/Observations';
 import './stage.css';
@@ -140,6 +150,23 @@ function FinaleCopy({ copyRef }) {
   );
 }
 
+// UV beat: how dark the page around the flap gets (the entries page, left of it), x uvDim.
+const SURROUND_DIM = 0.5;
+const SOURCES_INDEX = PAGES.indexOf('sources');
+// Where keyboard focus inside the fold-out flap lands: the UV beat, flap open, lamp still on.
+const FLAP_FOCUS_AT = 0.35;
+
+/** The lamp clicks off: two quick opacity pulses of the sky's dim layer (WAAPI overrides the
+ *  per-frame inline opacity only while it runs, then the scroll pose takes over again). */
+function flicker(el) {
+  if (typeof el.animate !== 'function') return;
+  try {
+    el.animate(FLICKER_KEYFRAMES, { duration: FLICKER_MS, easing: 'linear' });
+  } catch {
+    /* an old engine without offset keyframes: no flicker, nothing else changes */
+  }
+}
+
 function writeCopy(el, opacity, direction) {
   if (!el) return;
   const o = clamp01(opacity);
@@ -154,7 +181,7 @@ function writeCopy(el, opacity, direction) {
  * changes only when the set of pages on screen changes.
  */
 function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
-  const { setActive } = usePassport();
+  const { setActive } = useActive();
   const sectionRef = useRef(null);
   const heroRef = useRef(null);
   const finaleRef = useRef(null);
@@ -173,7 +200,17 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
     () => ({ night: createRef(), predawn: createRef(), sunrise: createRef(), day: createRef(), dim: createRef() }),
     [],
   );
-  const metrics = useRef({ shiftPx: 0, dims: [] });
+  const metrics = useRef({
+    shiftPx: 0,
+    flapPx: 0,
+    dims: [],
+    surround: null,
+    inlineFlap: null,
+    sourcesBody: null,
+    uv: [],
+    uvLevel: '',
+    flickerArmed: false,
+  });
   const lastP = useRef(0);
   const shownKey = useRef('');
 
@@ -183,11 +220,23 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
     if (layout === 'spread') {
       const leaf = bookRefs.leaves[0].current;
       m.shiftPx = closedShiftPx(window.innerWidth, leaf ? leaf.offsetWidth : 0);
+      m.flapPx = bookRefs.flap.current ? bookRefs.flap.current.offsetWidth : 0; // ignores transforms
       m.dims = bookRefs.leaves.map((r) => (r.current ? [...r.current.querySelectorAll('[data-dim]')] : []));
+      // The entries page (left of the sources page) darkens with the sky during the UV check.
+      m.surround = bookRefs.leaves[2].current?.querySelector(':scope > .jb-face--back > [data-dim]') ?? null;
     } else {
       m.shiftPx = 0;
+      m.flapPx = 0;
       m.dims = bookRefs.pages.map((r) => (r.current ? r.current.querySelector('[data-dim]') : null));
+      m.surround = null;
     }
+    // Phones / lite: the UV check folds out over the sources page body (see inlineFlapStyle).
+    const sourcesPage = layout === 'spread' ? null : bookRefs.pages[SOURCES_INDEX]?.current;
+    m.inlineFlap = sourcesPage?.querySelector('.jb-flap-inline') ?? null;
+    m.sourcesBody = sourcesPage?.querySelector('.jbp-sources') ?? null;
+    // UV check roots (flap content in the spread, inline elsewhere); fresh DOM -> rewrite data-auto.
+    m.uv = sectionRef.current ? [...sectionRef.current.querySelectorAll('[data-uv]')] : [];
+    m.uvLevel = '';
   }, [layout, bookRefs]);
 
   // onFrame: keyed on the mounted DOM (layout from motion + phone), so a switch re-poses at once.
@@ -205,18 +254,43 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       writeCopy(finaleRef.current, pose.finaleOpacity, 1);
 
       const m = metrics.current;
+
+      // UV check: the sky dims; as it lifts again the lamp clicks off with a warm flicker
+      // (once per exit: uvFlickerStep arms at >= 0.6 and fires once below 0.5).
+      const dim = skyRefs.dim.current;
+      if (dim) {
+        dim.style.opacity = String(+pose.uvDim.toFixed(3));
+        const step = uvFlickerStep(m.flickerArmed, pose.uvDim);
+        m.flickerArmed = step.armed;
+        if (step.fire) flicker(dim);
+      }
+      // The two site cards reveal themselves one after the other as the beat holds (on change only).
+      const level = String(uvRevealLevel(localT(TIMELINE, 'uv', p)));
+      if (level !== m.uvLevel) {
+        m.uvLevel = level;
+        for (const el of m.uv) el.dataset.auto = level;
+      }
+
       if (layout === 'spread') {
-        // Step 1: no UV flap yet, so the book never shifts for it (flapPx 0) and the flap stays folded.
+        // The open flap would overhang the right edge: the book slides left by half its width.
         const book = bookRefs.book.current;
-        if (book) book.style.transform = bookTransform(pose, m.shiftPx, 0);
+        if (book) book.style.transform = bookTransform(pose, m.shiftPx, m.flapPx);
+        const surround = pose.uvDim * SURROUND_DIM;
         bookRefs.leaves.forEach((ref, i) => {
           const el = ref.current;
           if (!el) return;
           const s = leafStyle(i, pose.leaves[i]);
           el.style.transform = s.transform;
           const dims = m.dims[i];
-          if (dims) for (const d of dims) d.style.opacity = String(s.dim);
+          if (dims) for (const d of dims) d.style.opacity = String(d === m.surround ? Math.max(s.dim, surround) : s.dim);
         });
+        const flapEl = bookRefs.flap.current;
+        if (flapEl) {
+          const fs = flapStyle(pose.flap);
+          flapEl.style.transform = fs.transform;
+          flapEl.style.opacity = String(fs.opacity);
+          flapEl.style.pointerEvents = fs.pointerEvents;
+        }
         if (bookRefs.light.current) bookRefs.light.current.style.opacity = String(pose.coverLight);
       } else {
         const styleOf = layout === 'lite' ? litePageStyle : notepadPageStyle;
@@ -231,6 +305,15 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
           el.style.pointerEvents = s.pointerEvents;
           if (layout === 'notepad' && m.dims[i]) m.dims[i].style.opacity = String(s.dim);
         });
+        if (m.inlineFlap && m.sourcesBody) {
+          // 'auto' -> inherit (''), so a hidden page's pointer-events:none still wins.
+          const fs = inlineFlapStyle(pose.flap);
+          m.sourcesBody.style.opacity = String(fs.pageOpacity);
+          m.sourcesBody.style.pointerEvents = fs.pagePointerEvents === 'none' ? 'none' : '';
+          m.inlineFlap.style.opacity = String(fs.opacity);
+          m.inlineFlap.style.transform = fs.transform;
+          m.inlineFlap.style.pointerEvents = fs.pointerEvents === 'none' ? 'none' : '';
+        }
         // One page at a time leaves no room beside the hero/finale: the book fades in as the
         // hero leaves and out as the finale arrives. While it is (nearly) invisible its pages
         // ignore taps (data-inert, see stage.css) but stay keyboard-reachable.
@@ -239,7 +322,8 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
           const shown = padShown(pose);
           wrap.style.opacity = String(+shown.toFixed(3));
           wrap.style.transform = `translate3d(0, ${((1 - shown) * 24).toFixed(1)}px, 0)`;
-          wrap.dataset.inert = shown < 0.5 ? '1' : '';
+          const inert = shown < 0.5 ? '1' : '';
+          if (wrap.dataset.inert !== inert) wrap.dataset.inert = inert;
         }
       }
 
@@ -278,6 +362,10 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       if (part === 'hero') return 0;
       if (part === 'finale') return 1;
       if (part === 'cover' && layout !== 'spread') return TIMELINE.ranges.open[0];
+      if (part === 'flap') {
+        const [start, end] = TIMELINE.ranges.uv;
+        return start + FLAP_FOCUS_AT * (end - start);
+      }
       return progressForPage(TIMELINE, part);
     },
     [layout],
@@ -290,6 +378,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       const pose = poseFor(layout, progressNow(section));
       if (part === 'hero') return pose.heroOpacity > 0.5;
       if (part === 'finale') return pose.finaleOpacity > 0.5;
+      if (part === 'flap') return pose.flap > 0.98;
       if (layout !== 'spread' && padShown(pose) < 0.5) return false;
       return activePages(layout, pose).has(part);
     },
@@ -306,33 +395,48 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
 
   useAnchors(goTo);
 
-  // Keyboard: focus landing in a page (or hero/finale) that is not on screen brings it on screen.
-  // Only keyboard focus: focus that follows a pointer press (click/tap) never jumps, so a stray
-  // tap can never rewind the page. Any key press re-arms the jump.
+  // Keyboard / assistive tech: focus landing in a page (or hero/finale, or the UV flap) that is not
+  // on screen brings it on screen. Focus that follows a pointer press (click/tap) never jumps, so a
+  // stray tap can never rewind the page: the flag is set on pointerdown and cleared once that
+  // press is over (after its click, or when it is cancelled) or on any key press, so later
+  // screen-reader focus moves (no key events) still sync the book.
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
     let pointerFocus = false;
+    let clearTimer = 0;
+    const clear = () => {
+      pointerFocus = false;
+    };
     const onPointerDown = () => {
+      window.clearTimeout(clearTimer);
       pointerFocus = true;
     };
-    const onKeyDown = () => {
-      pointerFocus = false;
+    // After the click (focus from a tap lands before it): clear on the next task.
+    const onPressEnd = () => {
+      window.clearTimeout(clearTimer);
+      clearTimer = window.setTimeout(clear, 0);
     };
     const onFocusIn = (e) => {
       if (pointerFocus) return;
       const target = e.target instanceof Element ? e.target : null;
       const part =
         target?.closest('[data-stage-part]')?.getAttribute('data-stage-part') ||
+        (target?.closest('[data-flap]') ? 'flap' : null) ||
         target?.closest('[data-page]')?.getAttribute('data-page');
       if (part && !isShowing(part)) goTo(part);
     };
     window.addEventListener('pointerdown', onPointerDown, true);
-    window.addEventListener('keydown', onKeyDown, true);
+    window.addEventListener('click', onPressEnd, true);
+    window.addEventListener('pointercancel', onPressEnd, true);
+    window.addEventListener('keydown', clear, true);
     section.addEventListener('focusin', onFocusIn);
     return () => {
+      window.clearTimeout(clearTimer);
       window.removeEventListener('pointerdown', onPointerDown, true);
-      window.removeEventListener('keydown', onKeyDown, true);
+      window.removeEventListener('click', onPressEnd, true);
+      window.removeEventListener('pointercancel', onPressEnd, true);
+      window.removeEventListener('keydown', clear, true);
       section.removeEventListener('focusin', onFocusIn);
     };
   }, [isShowing, goTo]);
@@ -371,7 +475,7 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
 
 /** Reduced motion: hero, the pages as a stack of paper cards, finale. No sticky stage, no pose. */
 function Reduced({ verifiedCount, leaves, base }) {
-  const { setActive } = usePassport();
+  const { setActive } = useActive();
   useEffect(() => {
     setActive(new Set(PAGES));
   }, [setActive]);
@@ -400,6 +504,8 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
   const mode = useLayoutMode();
   const layout = layoutFor(mode);
   const { active, setRoute } = usePassport();
+  // UV lamp: pointer lamp on the desktop spread, scanner band on phones / lite, none when reduced.
+  const lamp = layout === 'spread' ? 'cursor' : layout === 'stack' ? 'off' : 'scan';
 
   // Start the search from the saved route, else the saved profile's nationality (never saves).
   useEffect(() => {
@@ -419,8 +525,9 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
     { front: <DataPage active={on('data')} />, back: <VisasOne active={on('visas1')} /> },
     { front: <VisasTwo active={on('visas2')} />, back: <Entries active={on('entries')} /> },
     {
-      front: <UvSources active={on('sources')} verifiedCount={verifiedCount} authorities={authorities} />,
+      front: <UvSources active={on('sources')} verifiedCount={verifiedCount} />,
       back: <Travellers active={on('travellers')} stories={stories} />,
+      flap: <UvFlap active={on('sources')} authorities={authorities} lamp={lamp} />,
     },
   ];
   const base = <Observations active={on('observations')} note={note} />;

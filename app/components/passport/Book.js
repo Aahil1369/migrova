@@ -134,7 +134,13 @@ function Pad({ layout, nodes, flap, refs }) {
               index={i}
               side="single"
               dim={layout === 'notepad'}
-              extra={i === 6 && flap ? <div className="jb-flap-inline">{flap}</div> : null}
+              extra={
+                i === 6 && flap ? (
+                  <div className="jb-flap-inline" data-flap="">
+                    {flap}
+                  </div>
+                ) : null
+              }
             >
               {nodes[i]}
             </Face>
@@ -186,6 +192,9 @@ function Stack({ nodes, flap }) {
  *         notepad + lite: pages; stack: none).
  * Each page node is rendered exactly once per layout. Changing `layout` remounts the book,
  * so no inline style written for one layout survives into another.
+ * Flap content: spread -> the fold-out `.jb-flap` (PassportStage swings it with flapStyle);
+ * notepad / lite -> `.jb-flap-inline[data-flap]` laid over the sources page body (PassportStage
+ * crossfades it in with pose.flap); stack -> `.jb-flap-inline` in flow below the page.
  */
 export default function Book({ leaves, base, layout = 'spread', refs }) {
   const nodes = [];
