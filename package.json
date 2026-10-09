@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test \"scripts/sources/__tests__/*.test.mjs\"",
+    "test": "node --test \"scripts/**/__tests__/*.test.mjs\"",
     "sources:wikidata": "node scripts/sources/fetch-wikidata.mjs",
     "sources:verify": "node scripts/sources/verify.mjs"
   },
