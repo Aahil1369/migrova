@@ -147,6 +147,10 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(5px); }
 }
+/* Once the hero has faded out (PassportStage toggles data-gone on change), the arrow stops. */
+.ps-hero[data-gone] .ps-hint span {
+  animation-play-state: paused;
+}
 
 @media (max-width: 767px) {
   .ps-hero,

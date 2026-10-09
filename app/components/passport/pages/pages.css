@@ -356,6 +356,10 @@
   0%, 25% { transform: translateX(0) skewX(-12deg); }
   75%, 100% { transform: translateX(380%) skewX(-12deg); }
 }
+/* Runs only while the cover is on screen (PassportStage writes data-showing on the faces). */
+.jb-face:not([data-showing]) .jbp-sheen::before {
+  animation-play-state: paused;
+}
 .jb-lite .jbp-sheen,
 .jb-fade .jbp-sheen,
 .jb-stack .jbp-sheen {

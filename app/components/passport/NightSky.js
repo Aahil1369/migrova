@@ -1,42 +1,43 @@
 'use client';
 
+import { memo } from 'react';
+import { starField } from './stageStyle';
 import './passport.css';
 
-// Deterministic star field (no Math.random: server and client must render the same HTML).
-const STARS = Array.from({ length: 64 }, (_, i) => ({
-  left: `${((i * 37.7) % 100).toFixed(2)}%`,
-  top: `${((i * 61.3) % 100).toFixed(2)}%`,
-  delay: `${((i % 7) * 0.6).toFixed(1)}s`,
-  big: i % 5 === 0,
-}));
+// 64 deterministic stars in three layers (stageStyle.js): one SVG each, twinkling as a whole.
+const STAR_LAYERS = starField();
 
 /**
  * The sky behind the Journey Book: four full-size gradient layers (night, predawn, sunrise,
- * day), sparse twinkling stars and a faint slowly turning line globe, plus a `dim` overlay
- * for the UV-check beat. Fills its positioned parent (position:absolute; inset:0).
+ * day), a star field pre-rendered as three SVG layers that twinkle as wholes (opacity only) and
+ * a faint slowly turning line globe, plus a `dim` overlay for the UV-check beat. Fills its
+ * positioned parent (position:absolute; inset:0).
  *
  * Stacking, bottom -> top: night, predawn, [stars, globe], sunrise, day, dim. Every layer is
  * opaque, so fade the upper ones in over night (see skyLayers() in stageStyle.js).
  * Defaults: night opacity 1, the rest 0. PassportStage writes `style.opacity` to
  * refs { night, predawn, sunrise, day, dim }; dim at 1 is the full UV darkness (pose.uvDim),
  * and as it lifts past 0.5 PassportStage flickers it once (two 60ms WAAPI opacity pulses).
- * `className`: e.g. 'jb-sky--still' stops the star/globe animations (lite mode);
+ * On refs.root it toggles, on change only, `data-covered` (the opaque sunrise layer is fully in,
+ * so the stars and globe are hidden) and `data-offscreen` (the stage is scrolled away): either
+ * pauses the star and globe loops (passport.css).
+ * `className`: 'jb-sky--still' stops the star/globe animations (reduced motion: the fade
+ * layout); 'jb-sky--lite' stops only the globe (lite keeps the cheap twinkle);
  * prefers-reduced-motion stops them anyway.
+ * Memoised: its props never change while the book turns, so page changes never re-render it.
  */
-export default function NightSky({ refs, className = '' }) {
+function NightSky({ refs, className = '' }) {
   return (
-    <div className={`jb-sky${className ? ` ${className}` : ''}`} aria-hidden="true">
+    <div ref={refs?.root} className={`jb-sky${className ? ` ${className}` : ''}`} aria-hidden="true">
       <div ref={refs?.night} className="jb-sky-layer jb-sky-night" />
       <div ref={refs?.predawn} className="jb-sky-layer jb-sky-predawn" />
-      <div className="jb-stars">
-        {STARS.map((s, i) => (
-          <i
-            key={i}
-            className={`jb-star${s.big ? ' jb-star--big' : ''}`}
-            style={{ left: s.left, top: s.top, animationDelay: s.delay }}
-          />
-        ))}
-      </div>
+      {STAR_LAYERS.map((stars, layer) => (
+        <svg key={layer} className={`jb-starfield jb-starfield--${layer + 1}`} aria-hidden="true" focusable="false">
+          {stars.map((s, i) => (
+            <circle key={i} cx={`${s.x}%`} cy={`${s.y}%`} r={s.r} />
+          ))}
+        </svg>
+      ))}
       <svg className="jb-globe" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
         <g fill="none" stroke="#b8cf5d" strokeWidth=".4">
           <circle cx="100" cy="100" r="96" />
@@ -55,3 +56,5 @@ export default function NightSky({ refs, className = '' }) {
     </div>
   );
 }
+
+export default memo(NightSky);

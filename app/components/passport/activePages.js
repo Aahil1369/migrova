@@ -59,3 +59,15 @@ const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN / undefined -> 0
 export function padShown(pose) {
   return (1 - clamp01(pose?.heroOpacity)) * (1 - clamp01(pose?.finaleOpacity));
 }
+
+/**
+ * Pages actually on screen, for loops that should run only while seen (the hologram seal's spin,
+ * the cover sheen): activePages, except that the one-page book (notepad / lite / fade) shows
+ * nothing while it is fully hidden behind the hero or the finale (padShown 0). The spread is
+ * always on screen; the stack shows every page. No pose -> nothing.
+ */
+export function showingPages(layout, pose) {
+  if (layout === 'stack') return new Set(PAGES);
+  if (!pose || (layout !== 'spread' && !(padShown(pose) > 0))) return new Set();
+  return activePages(layout, pose);
+}

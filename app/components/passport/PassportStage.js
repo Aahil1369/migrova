@@ -18,12 +18,13 @@ import {
   litePageStyle,
   notepadPageStyle,
   skyLayers,
+  starsCovered,
 } from './stageStyle';
 import { scrollTarget, useScrollProgress } from './useScrollProgress';
 import { useLayoutMode } from './useLayoutMode';
 import { decideLayout } from './motionMode';
 import { createQualityMonitor, frameStats } from './quality';
-import { activeKey, activePages, padShown } from './activePages';
+import { activeKey, activePages, padShown, showingPages } from './activePages';
 import { initialRoute } from './search';
 import Cover from './pages/Cover';
 import Notice from './pages/Notice';
@@ -43,6 +44,8 @@ const SECTION_STYLE = { height: `calc(${TIMELINE.viewports} * 100svh)` };
 const PAGE_STYLE = { notepad: notepadPageStyle, lite: litePageStyle, fade: fadePageStyle };
 const ALL_KEY = activeKey(new Set(PAGES));
 const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN -> 0
+// A boolean data attribute: present ('') or absent.
+const flag = (el, name, on) => (on ? el.setAttribute(name, '') : el.removeAttribute(name));
 
 // The adaptive quality tier never goes back up within a visit (survives client navigation).
 let sessionTier = 'high';
@@ -179,13 +182,15 @@ function flicker(el) {
   }
 }
 
-/** `direction` -1 slides up as it fades, 1 down, 0 (fade layout) fades in place. */
+/** `direction` -1 slides up as it fades, 1 down, 0 (fade layout) fades in place. Fully faded
+ *  out, it gets data-gone (on change only), which pauses its loops (the hero's hint arrow). */
 function writeCopy(el, opacity, direction) {
   if (!el) return;
   const o = clamp01(opacity);
   el.style.opacity = String(o);
   el.style.transform = `translate3d(0, calc(-50% + ${(direction * (1 - o) * 40).toFixed(1)}px), 0)`;
   el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
+  if (el.hasAttribute('data-gone') !== (o === 0)) flag(el, 'data-gone', o === 0);
 }
 
 /**
@@ -259,7 +264,14 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
     [],
   );
   const skyRefs = useMemo(
-    () => ({ night: createRef(), predawn: createRef(), sunrise: createRef(), day: createRef(), dim: createRef() }),
+    () => ({
+      root: createRef(),
+      night: createRef(),
+      predawn: createRef(),
+      sunrise: createRef(),
+      day: createRef(),
+      dim: createRef(),
+    }),
     [],
   );
   const metrics = useRef({
@@ -274,6 +286,9 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
     flickerArmed: false,
     cover: null,
     coverState: '',
+    faces: [],
+    showKey: null,
+    covered: null,
   });
   const lastP = useRef(0);
   const shownKey = useRef('');
@@ -304,6 +319,11 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
     // The cover (closing beat: BON VOYAGE stamp + blessing word); fresh DOM -> rewrite its state.
     m.cover = sectionRef.current?.querySelector('.jbp-cover') ?? null;
     m.coverState = '';
+    // Page faces (data-showing: their loops run only on screen) and the sky's covered flag:
+    // fresh DOM -> rewrite them all.
+    m.faces = sectionRef.current ? [...sectionRef.current.querySelectorAll('.jb-face[data-page]')] : [];
+    m.showKey = null;
+    m.covered = null;
   }, [layout, bookRefs]);
 
   // onFrame: keyed on the mounted DOM (layout from motion + frame), so a switch re-poses at once.
@@ -324,6 +344,13 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
       if (skyRefs.predawn.current) skyRefs.predawn.current.style.opacity = String(sky.predawn);
       if (skyRefs.sunrise.current) skyRefs.sunrise.current.style.opacity = String(sky.sunrise);
       if (skyRefs.day.current) skyRefs.day.current.style.opacity = String(sky.day);
+      const m = metrics.current;
+      // Once the opaque sunrise layer covers the stars and globe, their loops pause (on change).
+      const covered = starsCovered(pose.sky);
+      if (skyRefs.root.current && covered !== m.covered) {
+        m.covered = covered;
+        flag(skyRefs.root.current, 'data-covered', covered);
+      }
 
       writeCopy(heroRef.current, pose.heroOpacity, calm ? 0 : -1);
       writeCopy(finaleRef.current, pose.finaleOpacity, calm ? 0 : 1);
@@ -339,8 +366,6 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
             ? `translate3d(${((1 - f) * 140).toFixed(1)}px, 0, 0)`
             : `translate3d(0, ${((1 - f) * 32).toFixed(1)}px, 0)`;
       }
-
-      const m = metrics.current;
 
       // UV check: the sky dims; as it lifts again the lamp clicks off with a warm flicker
       // (once per exit: uvFlickerStep arms at >= 0.6 and fires once below 0.5). No flicker in fade.
@@ -428,6 +453,13 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
         shownKey.current = key;
         setActive(set);
       }
+      // Loops (seal spin, cover sheen) run only on faces actually on screen (on change).
+      const showing = showingPages(layout, pose);
+      const showKey = activeKey(showing);
+      if (showKey !== m.showKey) {
+        m.showKey = showKey;
+        for (const face of m.faces) flag(face, 'data-showing', showing.has(face.dataset.page));
+      }
     },
     // motion is listed with layout on purpose: together they decide which DOM is mounted.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -445,12 +477,23 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
         el.style.opacity = '';
         el.style.transform = '';
         el.style.pointerEvents = '';
+        el.removeAttribute('data-gone');
       }
     }
   }, [measure, flow]);
 
   useScrollProgress(sectionRef, render);
   useQualityTier(stageRef, lastP, !flow);
+
+  // The sky's loops also pause while the stage is scrolled away (the page below the book).
+  useEffect(() => {
+    const stage = stageRef.current;
+    const root = skyRefs.root.current;
+    if (flow || !stage || !root || typeof IntersectionObserver === 'undefined') return undefined;
+    const observer = new IntersectionObserver(([entry]) => flag(root, 'data-offscreen', !entry.isIntersecting));
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, [flow, skyRefs]);
 
   useEffect(() => {
     const onResize = () => {
@@ -585,7 +628,7 @@ function Stage({ layout, motion, settled, verifiedCount, leaves, base }) {
     >
       <div ref={stageRef} className={flow ? undefined : 'ps-stage'}>
         {flow ? null : (
-          <NightSky refs={skyRefs} className={layout === 'lite' || calm ? 'jb-sky--still' : ''} />
+          <NightSky refs={skyRefs} className={calm ? 'jb-sky--still' : layout === 'lite' ? 'jb-sky--lite' : ''} />
         )}
         <div className={flow ? undefined : 'ps-frame'}>
           <HeroCopy copyRef={heroRef} verifiedCount={verifiedCount} />

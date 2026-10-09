@@ -543,22 +543,25 @@
   /* opacity 1 = full UV-check darkness; write pose.uvDim straight in */
   background: radial-gradient(ellipse at 50% 50%, rgba(22, 12, 48, 0.62), rgba(4, 5, 10, 0.88));
 }
-.jb-stars {
+/* The star field: three pre-rendered SVG layers of 2-3px dots (starField() in stageStyle.js),
+   each twinkling as a whole (opacity only, its own rhythm), instead of 64 animated elements. */
+.jb-starfield {
   position: absolute;
   inset: 0;
-}
-.jb-star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: #ece6d2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: #ece6d2;
   opacity: 0.45;
   animation: jb-twinkle 4s ease-in-out infinite;
 }
-.jb-star--big {
-  width: 3px;
-  height: 3px;
+.jb-starfield--2 {
+  animation-duration: 5.2s;
+  animation-delay: -1.7s;
+}
+.jb-starfield--3 {
+  animation-duration: 6.4s;
+  animation-delay: -3.9s;
 }
 .jb-globe {
   position: absolute;
@@ -577,9 +580,19 @@
 @keyframes jb-spin {
   to { transform: rotate(360deg); }
 }
-.jb-sky--still .jb-star,
+.jb-sky--still .jb-starfield,
 .jb-sky--still .jb-globe {
   animation: none;
+}
+/* Lite keeps the (cheap) twinkle; the big turning globe stays still. */
+.jb-sky--lite .jb-globe {
+  animation: none;
+}
+/* Unseen loops pause: the stars and globe once the opaque sunrise layer covers them
+   (data-covered) or the stage is scrolled away (data-offscreen). PassportStage toggles both on
+   change only. */
+.jb-sky:is([data-covered], [data-offscreen]) :is(.jb-starfield, .jb-globe) {
+  animation-play-state: paused;
 }
 
 /* ── Visa vignette (tool link) ─────────────────────────────────────────────── */
@@ -880,6 +893,10 @@
     conic-gradient(#b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d);
   animation: jb-spin 16s linear infinite;
 }
+/* Spins only while its page is on screen (PassportStage writes data-showing on the faces). */
+.jb-face:not([data-showing]) .jb-seal-ring {
+  animation-play-state: paused;
+}
 .jb-seal-core {
   position: relative;
   width: 82%;
@@ -966,7 +983,7 @@
   }
   .jb-stamp::before,
   .jb-seal-ring,
-  .jb-star,
+  .jb-starfield,
   .jb-globe { animation: none; }
 }
 
@@ -1071,7 +1088,7 @@
 .ps-stage:is([data-quality='medium'], [data-quality='low']) :is(.jb-seal-ring, .jb-vignette-holo > span) {
   animation: none;
 }
-.ps-stage[data-quality='low'] :is(.jb-star, .jb-globe) {
+.ps-stage[data-quality='low'] :is(.jb-starfield, .jb-globe) {
   animation: none;
 }
 .ps-stage[data-quality='low'] :is(.jb-shade, .jb-dim) {
