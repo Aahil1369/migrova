@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Noto_Naskh_Arabic } from 'next/font/google';
+import { Stamp } from '../parts/Stamp';
+import { STAMP_INKS } from '../parts/stampInks';
 import './pages.css';
 
 // Only the cover word uses it; not preloaded, so it never competes with the hero H1 (LCP).
@@ -9,6 +11,8 @@ const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: '600', preload: f
 
 const ETYMOLOGY =
   'The word for journey crossed borders too: Arabic safar → Urdu safar → Swahili safari → English.';
+const FAREWELL =
+  'At the end of the journey the word becomes a farewell: Urdu safar bakhair, Swahili safari njema, English safe travels.';
 
 function Crest() {
   return (
@@ -37,13 +41,20 @@ function Crest() {
 
 /**
  * p0, the outside cover: crest, the cover word "سفر · SAFARI · JOURNEY" (hover / focus / tap
- * shows its etymology), chip, issuer MGV and the spine microprint.
+ * shows its etymology; Escape or a tap elsewhere closes it), chip, issuer MGV and the spine
+ * microprint.
  * `pointerFoil` (desktop full mode): the foil follows the pointer (--mx); otherwise a slow
  * 8s CSS sheen crosses the cover.
+ * Closing beat (pose-driven, no React state): PassportStage sets data-bon-voyage="1" on this
+ * section -> the BON VOYAGE stamp thunks onto a paper label on the cover (ink from STAMP_INKS:
+ * the inks are made for paper), and data-blessing="1" -> the cover word cross-fades to
+ * "سفر بخیر · SAFARI NJEMA · SAFE TRAVELS".
  */
 export default function Cover({ active = false, pointerFoil = false }) {
   const ref = useRef(null);
+  const wordRef = useRef(null);
   const [showEtym, setShowEtym] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -65,6 +76,30 @@ export default function Cover({ active = false, pointerFoil = false }) {
     };
   }, [pointerFoil, active]);
 
+  // Escape hides the tooltip (hover, focus or tap-opened) until the pointer / focus comes back.
+  useEffect(() => {
+    if (!active) return undefined;
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return;
+      setShowEtym(false);
+      setDismissed(true);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [active]);
+
+  // A tap-opened tooltip closes on a tap anywhere else.
+  useEffect(() => {
+    if (!showEtym) return undefined;
+    const onDown = (e) => {
+      if (!wordRef.current?.contains(e.target)) setShowEtym(false);
+    };
+    document.addEventListener('pointerdown', onDown, true);
+    return () => document.removeEventListener('pointerdown', onDown, true);
+  }, [showEtym]);
+
+  const rearm = () => setDismissed(false);
+
   return (
     <section
       ref={ref}
@@ -78,17 +113,43 @@ export default function Cover({ active = false, pointerFoil = false }) {
         MIGROVA <span>JOURNEY BOOK</span>
       </h2>
       <Crest />
-      <div className="jbp-word-wrap">
+      <div
+        ref={wordRef}
+        className="jbp-word-wrap"
+        data-dismissed={dismissed ? 'true' : 'false'}
+        onMouseEnter={rearm}
+        onMouseLeave={rearm}
+      >
         <button
           type="button"
-          className="jbp-word jbp-foil"
+          className="jbp-word"
           aria-describedby="cover-etym"
-          onClick={() => setShowEtym((open) => !open)}
+          onClick={() => {
+            setDismissed(false);
+            setShowEtym((open) => !open);
+          }}
+          onFocus={rearm}
+          onBlur={() => {
+            rearm();
+            setShowEtym(false);
+          }}
         >
-          <span lang="ar" dir="rtl" className={naskh.className}>سفر</span> · SAFARI · JOURNEY
+          <span className="jbp-word-a jbp-foil">
+            <span lang="ar" dir="rtl" className={naskh.className}>
+              سفر
+            </span>{' '}
+            · SAFARI · JOURNEY
+          </span>
+          <span className="jbp-word-b jbp-foil">
+            <span lang="ur" dir="rtl" className={naskh.className}>
+              سفر بخیر
+            </span>{' '}
+            · SAFARI NJEMA · SAFE TRAVELS
+          </span>
         </button>
         <span id="cover-etym" role="tooltip" className="jbp-etym" data-open={showEtym ? 'true' : 'false'}>
-          {ETYMOLOGY}
+          <span className="jbp-etym-a">{ETYMOLOGY}</span>
+          <span className="jbp-etym-b">{FAREWELL}</span>
         </span>
       </div>
       <div className="jbp-cover-foot">
@@ -97,6 +158,9 @@ export default function Cover({ active = false, pointerFoil = false }) {
           ISSUER <b>MGV</b>
         </span>
       </div>
+      <span className="jbp-bv" aria-hidden="true">
+        <Stamp shape="circle" color={STAMP_INKS.terracotta} rotate={0} lines={['MIGROVA', 'BON VOYAGE', '✦ MGV ✦']} />
+      </span>
       <span className="jbp-sheen" aria-hidden="true" />
     </section>
   );

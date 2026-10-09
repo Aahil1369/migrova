@@ -1,10 +1,71 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { countryByCode } from '../../../data/countries195';
-import { buildMrz, MRZ_PLAIN } from '../mrz';
-import { usePassport } from '../PassportContext';
+import { buildMrz, decodeFrame, DECODE_FRAMES, MRZ_PLAIN } from '../mrz';
+import { useRoute } from '../PassportContext';
+import { REDUCED_MOTION, useMediaQuery } from '../useMediaQuery';
 import './pages.css';
+
+const FRAME_MS = 45;
+const START_MS = 250; // let the page land first
+// What the MRZ decodes to (MRZ_PLAIN), in sentence case for screen readers.
+const MRZ_MEANING = 'Machine-readable zone: Plain English. Official sources. No scams. No guesswork.';
+
+/**
+ * The two MRZ lines. On each arrival (`active` turning true) they scramble-decode into
+ * MRZ_PLAIN, one decodeFrame every 45ms (setTimeout chain, cancelled on deactivation and
+ * unmount), and stay decoded; leaving resets them to the raw lines. Tap / click / Enter replays.
+ * `still` (stack layout) or prefers-reduced-motion: raw and plain lines shown together, no motion.
+ * Visually 2 x 44 characters; assistive tech gets the plain-English meaning instead.
+ */
+function MrzDecode({ lines, active, still }) {
+  const reducedMotion = useMediaQuery(REDUCED_MOTION, false);
+  const quiet = still || reducedMotion;
+  const [frame, setFrame] = useState(0);
+  const [run, setRun] = useState(0);
+
+  useEffect(() => {
+    if (!active || quiet) return undefined;
+    let f = 0;
+    let timer = 0;
+    const tick = () => {
+      f += 1;
+      setFrame(f);
+      if (f < DECODE_FRAMES) timer = window.setTimeout(tick, FRAME_MS);
+    };
+    timer = window.setTimeout(tick, run ? 0 : START_MS);
+    return () => {
+      window.clearTimeout(timer);
+      setFrame(0); // back to the raw lines: the next arrival (or replay) decodes again
+    };
+  }, [active, quiet, run]);
+
+  if (quiet) {
+    return (
+      <div className="jbp-mrz jbp-mrz--still" role="img" aria-label={MRZ_MEANING}>
+        <span>{lines[0]}</span>
+        <span>{lines[1]}</span>
+        <span className="jbp-mrz-plain">{MRZ_PLAIN[0]}</span>
+        <span className="jbp-mrz-plain">{MRZ_PLAIN[1]}</span>
+      </div>
+    );
+  }
+  const done = frame >= DECODE_FRAMES;
+  return (
+    <button
+      type="button"
+      className="jbp-mrz"
+      data-decoded={done ? 'true' : 'false'}
+      aria-label={`${MRZ_MEANING} Replay the decode.`}
+      onClick={() => setRun((n) => n + 1)}
+    >
+      <span aria-hidden="true">{decodeFrame(lines[0], MRZ_PLAIN[0], frame)}</span>
+      <span aria-hidden="true">{decodeFrame(lines[1], MRZ_PLAIN[1], frame)}</span>
+    </button>
+  );
+}
 
 // Line-art family photo: two adults and a child, no faces.
 function FamilyPhoto() {
@@ -29,11 +90,12 @@ function FamilyPhoto() {
 
 /**
  * p2, the data page: holder, From -> To from the current search (defaults "Your country" /
- * "Your 5 best matches"), a line-art family photo, "Find my countries →" and the two static
- * MRZ lines built from the route (ANY when unset).
+ * "Your 5 best matches"), a line-art family photo, "Find my countries →" and the two MRZ lines
+ * built from the route (ANY when unset), which decode into plain English on arrival.
+ * `still`: the reduced-motion stack (raw + plain lines together).
  */
-export default function DataPage() {
-  const { route } = usePassport();
+export default function DataPage({ active = false, still = false }) {
+  const { route } = useRoute();
   const from = countryByCode(route?.from);
   const to = route?.to && route.to !== 'any' ? countryByCode(route.to) : null;
   const [line1, line2] = buildMrz({ fromIso3: from?.iso3, toIso3: to?.iso3 });
@@ -92,10 +154,7 @@ export default function DataPage() {
       <Link href="/match" className="jbp-cta">
         Find my countries →
       </Link>
-      <div className="jbp-mrz" role="img" aria-label={`Machine-readable zone: ${MRZ_PLAIN.join(' ')}`}>
-        <span>{line1}</span>
-        <span>{line2}</span>
-      </div>
+      <MrzDecode lines={[line1, line2]} active={active} still={still} />
     </section>
   );
 }

@@ -145,6 +145,11 @@
 }
 .jbp-word {
   appearance: none;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background: none;
+  color: inherit;
   border: 0;
   margin: 0;
   padding: calc(var(--u) * 1.2) calc(var(--u) * 2);
@@ -156,10 +161,44 @@
   line-height: 1.3;
   cursor: help;
 }
-.jbp-word [lang='ar'] {
+.jbp-word [lang='ar'],
+.jbp-word [lang='ur'] {
   font-size: 1.3em;
   letter-spacing: 0;
   line-height: 1;
+}
+/* The cover word and its farewell share one grid cell and cross-fade on data-blessing
+   (written by PassportStage). Visibility flips after the fade, so assistive tech only ever
+   reads the word that is showing. */
+.jbp-word-a,
+.jbp-word-b {
+  grid-area: 1 / 1;
+}
+.jbp-word-a {
+  transition: opacity 0.6s ease, visibility 0s;
+}
+.jbp-word-b {
+  font-size: 0.82em;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+}
+.jbp-cover[data-blessing='1'] .jbp-word-a {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+}
+.jbp-cover[data-blessing='1'] .jbp-word-b {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease, visibility 0s;
+}
+.jbp-etym-b,
+.jbp-cover[data-blessing='1'] .jbp-etym-a {
+  display: none;
+}
+.jbp-cover[data-blessing='1'] .jbp-etym-b {
+  display: inline;
 }
 .jbp-word:focus-visible {
   outline: 2px solid #f3e3a0;
@@ -189,6 +228,11 @@
 .jbp-etym[data-open='true'] {
   opacity: 1;
   transform: none;
+}
+/* Escape dismissed it: stays hidden until the pointer / focus comes back (WCAG 1.4.13). */
+.jbp-word-wrap[data-dismissed='true'] .jbp-etym {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 .jbp-cover-foot {
   display: flex;
@@ -223,6 +267,48 @@
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
+/* BON VOYAGE: a paper label stamped as the book closes (data-bon-voyage, written by
+   PassportStage). The stamp inks are made for paper (>= 4.5:1), so it lands on a label rather
+   than straight on the dark leather. Thunk = transform + opacity only. */
+.jbp-bv {
+  position: absolute;
+  z-index: 1;
+  right: calc(var(--u) * 5);
+  top: calc(var(--u) * 27); /* across the crest's corner, clear of the cover word below */
+  width: calc(var(--u) * 33);
+  height: calc(var(--u) * 33);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fffdf7 0%, var(--page) 55%, #efe6d3 100%);
+  box-shadow: 0 calc(var(--u) * 0.8) calc(var(--u) * 2.4) rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(31, 42, 36, 0.08);
+  opacity: 0;
+  transform: rotate(-14deg) scale(2.2);
+  transition: transform 350ms cubic-bezier(0.2, 1.6, 0.4, 1), opacity 200ms ease;
+  pointer-events: none;
+}
+.jbp-cover[data-bon-voyage='1'] .jbp-bv {
+  opacity: 1;
+  transform: rotate(-14deg) scale(1);
+}
+.jbp-bv .jb-stamp {
+  width: calc(var(--u) * 28);
+  height: calc(var(--u) * 28);
+}
+.jbp-bv .jb-stamp-text {
+  padding: 0 calc(var(--u) * 3);
+}
+.jbp-bv .jb-stamp-text b {
+  font-size: max(10px, calc(var(--u) * 3.6));
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+}
+.jb-lite .jbp-bv {
+  transform: rotate(-14deg);
+  transition: opacity 200ms ease;
+}
+
 /* Spine microprint, running up the hinge edge. */
 .jbp-spine {
   position: absolute;
@@ -388,6 +474,29 @@
   color: #3d4a43;
   white-space: pre;
   overflow: hidden;
+}
+/* The MRZ is a button (tap / click / Enter replays the decode). */
+button.jbp-mrz {
+  appearance: none;
+  width: 100%;
+  margin-bottom: 0;
+  padding-right: 0;
+  padding-bottom: calc(var(--u) * 0.8);
+  padding-left: 0;
+  border: 0;
+  border-top: 1px solid rgba(31, 42, 36, 0.12);
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+button.jbp-mrz:focus-visible {
+  outline: 2px solid #2f5139;
+  outline-offset: 2px;
+}
+.jbp-mrz[data-decoded='true'],
+.jbp-mrz-plain {
+  color: #1f6f47; /* 5.8:1: decoded into plain English */
 }
 
 /* ── p3/p4 Visas (vignettes) ───────────────────────────────────────────────── */
@@ -1057,7 +1166,13 @@ a.uvc-body:focus-visible {
   .jbp-sheen {
     display: none;
   }
-  .jbp-etym {
+  .jbp-etym,
+  .jbp-word-a,
+  .jbp-word-b {
+    transition: none;
+  }
+  .jbp-bv {
+    transform: rotate(-14deg);
     transition: none;
   }
   .uvc-uv--full {

@@ -210,6 +210,8 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
     uv: [],
     uvLevel: '',
     flickerArmed: false,
+    cover: null,
+    coverState: '',
   });
   const lastP = useRef(0);
   const shownKey = useRef('');
@@ -237,6 +239,9 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
     // UV check roots (flap content in the spread, inline elsewhere); fresh DOM -> rewrite data-auto.
     m.uv = sectionRef.current ? [...sectionRef.current.querySelectorAll('[data-uv]')] : [];
     m.uvLevel = '';
+    // The cover (closing beat: BON VOYAGE stamp + blessing word); fresh DOM -> rewrite its state.
+    m.cover = sectionRef.current?.querySelector('.jbp-cover') ?? null;
+    m.coverState = '';
   }, [layout, bookRefs]);
 
   // onFrame: keyed on the mounted DOM (layout from motion + phone), so a switch re-poses at once.
@@ -263,6 +268,14 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
         const step = uvFlickerStep(m.flickerArmed, pose.uvDim);
         m.flickerArmed = step.armed;
         if (step.fire) flicker(dim);
+      }
+      // Closing: BON VOYAGE lands on the cover, then the cover word becomes the blessing.
+      // Pose-driven booleans -> data attributes, written only when they change.
+      const coverState = `${pose.bonVoyage ? 1 : 0}${pose.blessing ? 1 : 0}`;
+      if (m.cover && coverState !== m.coverState) {
+        m.coverState = coverState;
+        m.cover.dataset.bonVoyage = pose.bonVoyage ? '1' : '';
+        m.cover.dataset.blessing = pose.blessing ? '1' : '';
       }
       // The two site cards reveal themselves one after the other as the beat holds (on change only).
       const level = String(uvRevealLevel(localT(TIMELINE, 'uv', p)));
@@ -522,7 +535,7 @@ function StageInner({ stories, verifiedCount, authorities, note }) {
   const on = (id) => active.has(id);
   const leaves = [
     { front: <Cover active={on('cover')} pointerFoil={layout === 'spread'} />, back: <Notice active={on('notice')} /> },
-    { front: <DataPage active={on('data')} />, back: <VisasOne active={on('visas1')} /> },
+    { front: <DataPage active={on('data')} still={layout === 'stack'} />, back: <VisasOne active={on('visas1')} /> },
     { front: <VisasTwo active={on('visas2')} />, back: <Entries active={on('entries')} /> },
     {
       front: <UvSources active={on('sources')} verifiedCount={verifiedCount} />,
