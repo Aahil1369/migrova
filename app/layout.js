@@ -2,7 +2,7 @@ import { Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import PingTracker from './components/PingTracker';
 import PageTransition from './components/ui/PageTransition';
-import LegalFooter from './components/LegalFooter';
+import SiteFooter from './components/SiteFooter';
 import AuthErrorBanner from './components/AuthErrorBanner';
 
 const instrumentSerif = Instrument_Serif({
@@ -16,7 +16,7 @@ const instrumentSerif = Instrument_Serif({
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
         <PingTracker />
         <AuthErrorBanner />
         {children}
-        <LegalFooter />
+        <SiteFooter />
       </body>
     </html>
   );

@@ -23,6 +23,24 @@
   --data:           #b8cf5d;
   --data-dim:       #8aa04a;
 
+  /* Journey Book: night -> dawn sky */
+  --night-0:        #0b130f;
+  --night-1:        #15231a;
+  --night-2:        #2f5139;
+  --dawn-1:         #3a2f63;
+  --dawn-2:         #f0a46e;
+  --dawn-3:         #fbe9cf;
+
+  /* Journey Book: passport paper + accents */
+  --page:           #fbf8f2;
+  --page-ink:       #1f2a24;
+  --lime:           #b8cf5d;
+  --peach:          #f0a46e;
+  --foil-1:         #b89a4a;
+  --foil-2:         #f3e3a0;
+  --foil-3:         #a88a3c;
+  --uv:             #9b7bff;
+
   /* Motion */
   --ease:           cubic-bezier(.22,1,.36,1);
 }
@@ -45,6 +63,21 @@
   --color-accent-hover:   var(--accent-hover);
   --color-data:           var(--data);
   --color-data-dim:       var(--data-dim);
+
+  --color-night-0:        var(--night-0);
+  --color-night-1:        var(--night-1);
+  --color-night-2:        var(--night-2);
+  --color-dawn-1:         var(--dawn-1);
+  --color-dawn-2:         var(--dawn-2);
+  --color-dawn-3:         var(--dawn-3);
+  --color-page:           var(--page);
+  --color-page-ink:       var(--page-ink);
+  --color-lime:           var(--lime);
+  --color-peach:          var(--peach);
+  --color-foil-1:         var(--foil-1);
+  --color-foil-2:         var(--foil-2);
+  --color-foil-3:         var(--foil-3);
+  --color-uv:             var(--uv);
 
   --font-display:         var(--font-instrument-serif), Georgia, serif;
   --font-sans:            var(--font-inter), ui-sans-serif, system-ui, sans-serif;

@@ -120,14 +120,6 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-paper-rule px-6 sm:px-10 py-10 font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub max-w-[1280px] mx-auto">
-        <div className="flex flex-wrap justify-between gap-4 mb-4">
-          <span>© Migrova 2026</span>
-          <span>A sibling of <a href="https://opportumap.netlify.app" className="hover:text-accent underline">OpportuMap</a></span>
-          <span><Link href="/contact" className="hover:text-accent">Contact</Link> · <Link href="/stories" className="hover:text-accent">Stories</Link> · <Link href="/legal" className="hover:text-accent">Legal</Link></span>
-        </div>
-      </footer>
-      {/* site-wide legal one-liner comes from LegalFooter in layout.js (Task 7) */}
     </div>
   );
 }
