@@ -1,0 +1,889 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Journey Book (homepage passport): Book, NightSky and the stamp/vignette/seal parts.
+   Imported by the components that use it, so it ships with the homepage only.
+   Sizes scale with the page: --pw = page width, --ph = page height (1 : 1.42),
+   --u = --pw / 100 (the prototype's unit). Only transform/opacity are ever animated.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.jb {
+  --pw: 400px;
+  --ph: calc(var(--pw) * 1.42);
+  --u: calc(var(--pw) / 100);
+  --jb-body-min: 12px; /* floor for body text on the pages (16px on phones) */
+  --jb-radius: calc(var(--u) * 2.4);
+  --jb-ink: var(--page-ink);
+  --jb-ink-sub: #4f5c55; /* 6.6:1 on --page */
+  --jb-ink-micro: #5f6a63; /* 5.3:1 on --page */
+  --jb-mono: var(--font-jb-mono), ui-monospace, SFMono-Regular, monospace;
+  --jb-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--jb-sans);
+}
+
+/* ── Faces (shared by every layout) ─────────────────────────────────────────── */
+
+.jb-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 0 var(--jb-radius) var(--jb-radius) 0;
+  pointer-events: auto;
+}
+.jb-face--back {
+  transform: rotateY(180deg);
+  border-radius: var(--jb-radius) 0 0 var(--jb-radius);
+}
+
+.jb-paper {
+  background: var(--page);
+  color: var(--jb-ink);
+}
+.jb-guilloche {
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.jb-pg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--u) * 7) calc(var(--u) * 7) calc(var(--u) * 8.5);
+}
+.jb-pghead {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+  flex: 0 0 auto;
+  font-family: var(--jb-mono);
+  font-size: max(8px, calc(var(--u) * 2.5));
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  color: var(--jb-ink-micro);
+  border-bottom: 1px solid rgba(31, 42, 36, 0.12);
+  padding-bottom: calc(var(--u) * 2);
+  margin-bottom: calc(var(--u) * 4);
+  white-space: nowrap;
+}
+.jb-pgbody {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: max(var(--jb-body-min), calc(var(--u) * 3.2));
+  line-height: 1.5;
+}
+.jb-pgbody > * {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.jb-pgfoot {
+  position: absolute;
+  left: calc(var(--u) * 5);
+  right: calc(var(--u) * 5);
+  bottom: calc(var(--u) * 3);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--jb-mono);
+  font-size: max(8px, calc(var(--u) * 2.2));
+  letter-spacing: 0.2em;
+  color: var(--jb-ink-micro);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.jb-pgfoot b {
+  font-weight: 500;
+  font-size: max(9px, calc(var(--u) * 2.5));
+  letter-spacing: 0.08em;
+}
+.jb-face--back .jb-pgfoot {
+  flex-direction: row-reverse;
+}
+
+/* Gutter shade (spine side) and the per-face dim that PassportStage drives. */
+.jb-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0) 20%);
+}
+.jb-face--back .jb-shade {
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0) 20%);
+}
+.jb-dim {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Cover: midnight-green leather with a foil frame. Page content (crest, word…) sits on top. */
+.jb-leather {
+  color: #d8c27a;
+  background:
+    radial-gradient(ellipse at 30% 18%, rgba(255, 255, 255, 0.07), transparent 60%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+    linear-gradient(160deg, #1d3a29, #11231a 70%, #0c1912);
+  box-shadow:
+    inset 0 0 0 calc(var(--u) * 0.6) rgba(216, 194, 122, 0.18),
+    inset 0 0 calc(var(--u) * 8) rgba(0, 0, 0, 0.35);
+}
+.jb-leather::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--u) * 3.2);
+  border: 1px solid rgba(216, 194, 122, 0.3);
+  border-radius: calc(var(--u) * 1.4);
+  pointer-events: none;
+}
+.jb-leather .jb-shade {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0) 9%);
+}
+.jb-cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+.jb-cover > * {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ── spread: the 3D two-page book (desktop, full motion) ───────────────────── */
+
+.jb-spread {
+  position: absolute;
+  inset: 0;
+  --pw: min(36vw, calc(80vh / 1.42), 470px); /* spread <= min(72vw, 80vh/1.42*2, 940px) */
+  --jb-closed-x: max(0px, min(13vw, calc(50vw - var(--pw) * 1.08)));
+  pointer-events: none;
+}
+/* Phones never use the spread (they get notepad once the layout mode resolves);
+   hide it before hydration so a 375px screen never flashes a tiny 3D book. */
+@media (max-width: 767px) {
+  .jb-spread {
+    visibility: hidden;
+  }
+}
+.jb-scene {
+  position: absolute;
+  inset: 0;
+  perspective: 2400px;
+  perspective-origin: 50% 45%;
+}
+.jb-book {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  /* closed, right of centre, lying on a desk: the pose at p = 0 (PassportStage overrides) */
+  transform: translate3d(var(--jb-closed-x), 0, 0) rotateX(8deg) rotateY(-14deg) scale(0.92);
+}
+.jb-leaf,
+.jb-base,
+.jb-light {
+  position: absolute;
+  left: 0;
+  top: calc(var(--ph) / -2);
+  width: var(--pw);
+  height: var(--ph);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+}
+.jb-leaf[data-leaf='0'] { transform: translateZ(4.8px); }
+.jb-leaf[data-leaf='1'] { transform: translateZ(3.6px); }
+.jb-leaf[data-leaf='2'] { transform: translateZ(2.4px); }
+.jb-leaf[data-leaf='3'] { transform: translateZ(1.2px); }
+
+.jb-spread .jb-dim {
+  will-change: opacity; /* solid colour layer: cheap to composite */
+}
+
+/* Page-block edges under the book, and the drop shadow it casts. */
+.jb-base > .jb-face {
+  box-shadow:
+    1px 1px 0 #ebe4d6,
+    2px 2px 0 #fbf8f2,
+    3px 3px 0 #e1d9c8,
+    4px 4px 0 #f6f1e7,
+    5px 5px 0 #d9d0bd,
+    0 calc(var(--u) * 4) calc(var(--u) * 10) rgba(0, 0, 0, 0.45);
+}
+.jb-leaf[data-leaf='0'] > .jb-face--back {
+  box-shadow:
+    -1px 1px 0 #ebe4d6,
+    -2px 2px 0 #fbf8f2,
+    -3px 3px 0 #e1d9c8,
+    -4px 4px 0 #f6f1e7,
+    -5px 5px 0 #d9d0bd,
+    0 calc(var(--u) * 4) calc(var(--u) * 10) rgba(0, 0, 0, 0.45);
+}
+.jb-leaf[data-leaf='0'] > .jb-leather {
+  box-shadow:
+    inset 0 0 0 calc(var(--u) * 0.6) rgba(216, 194, 122, 0.18),
+    inset 0 0 calc(var(--u) * 8) rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+/* Light leak: a warm lime -> peach wedge between the data page and the lifting cover. */
+.jb-light {
+  left: calc(var(--pw) * -0.02);
+  top: calc(var(--ph) * -0.5 - var(--pw) * 0.12);
+  width: calc(var(--pw) * 1.32);
+  height: calc(var(--ph) + var(--pw) * 0.24);
+  transform: translateZ(4.2px);
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 46% 50% at 54% 50%,
+    rgba(255, 236, 200, 0.7) 0%,
+    rgba(240, 164, 110, 0.6) 30%,
+    rgba(184, 207, 93, 0.35) 62%,
+    rgba(184, 207, 93, 0) 100%
+  );
+  /* soft-edged wedge fanning out from the spine */
+  -webkit-mask-image: conic-gradient(from 0deg at 1.5% 50%, transparent 28deg, #000 64deg, #000 116deg, transparent 152deg);
+  mask-image: conic-gradient(from 0deg at 1.5% 50%, transparent 28deg, #000 64deg, #000 116deg, transparent 152deg);
+}
+
+/* Fold-out flap on the sources page (leaf 3 front), hinged on the page's outer edge.
+   The hinge folds it back over the page (-180deg); PassportStage writes rotateY(0 -> 180deg)
+   on .jb-flap to swing it open to the right. Hidden (opacity 0) until then. */
+.jb-flap-hinge {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: var(--jb-flap-w, calc(var(--pw) * 0.6));
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: translateZ(0.6px) rotateY(-180deg);
+  pointer-events: none;
+}
+.jb-flap {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.jb-flap > .jb-face {
+  pointer-events: inherit;
+}
+.jb-flap-body {
+  position: absolute;
+  inset: 0;
+  padding: calc(var(--u) * 6) calc(var(--u) * 5);
+  display: flex;
+  flex-direction: column;
+  font-size: max(var(--jb-body-min), calc(var(--u) * 3));
+  line-height: 1.5;
+}
+.jb-flap-body > * {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ── notepad (phones) and lite: one page at a time ─────────────────────────── */
+
+.jb-notepad,
+.jb-lite {
+  position: absolute;
+  inset: 0;
+  --pw: min(calc(100vw - 32px), calc(70svh / 1.42));
+  --jb-body-min: 16px;
+  pointer-events: none;
+}
+.jb-pad {
+  position: absolute;
+  left: calc(50% - var(--pw) / 2);
+  top: calc(50% - var(--ph) / 2);
+  width: var(--pw);
+  height: var(--ph);
+}
+.jb-npage {
+  position: absolute;
+  inset: 0;
+  z-index: calc(9 - var(--i, 0));
+  transform-origin: top center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+}
+.jb-npage[data-index='0'] {
+  pointer-events: auto;
+}
+.jb-npage > .jb-face {
+  border-radius: var(--jb-radius);
+  pointer-events: inherit;
+  box-shadow: 0 calc(var(--u) * 3) calc(var(--u) * 8) rgba(0, 0, 0, 0.35);
+}
+.jb-npage .jb-shade {
+  /* top binding instead of a side gutter */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0) 9%);
+}
+.jb-npage .jb-leather .jb-shade {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0) 8%);
+}
+.jb-lite .jb-npage {
+  opacity: 0; /* page 0 shows first; PassportStage crossfades the rest */
+}
+.jb-lite .jb-npage[data-index='0'] {
+  opacity: 1;
+}
+.jb-notepad .jb-npage {
+  opacity: 0;
+}
+.jb-notepad .jb-npage[data-index='0'],
+.jb-notepad .jb-npage[data-index='1'] {
+  opacity: 1;
+}
+.jb-pgbody > .jb-flap-inline {
+  flex: 0 0 auto;
+  margin-top: calc(var(--u) * 3);
+}
+
+/* ── stack (reduced motion): paper cards in normal flow ────────────────────── */
+
+.jb-stack {
+  --pw: min(calc(100vw - 32px), 520px);
+  --jb-body-min: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+}
+.jb-stack-spread {
+  display: grid;
+  grid-template-columns: var(--pw);
+  gap: 24px;
+}
+.jb-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: var(--pw);
+  min-height: var(--ph);
+}
+.jb-stack .jb-card > .jb-face {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.jb-stack .jb-pg,
+.jb-stack .jb-cover {
+  flex: 1 1 auto;
+}
+.jb-stack .jb-face {
+  position: relative;
+  inset: auto;
+  min-height: var(--ph);
+  transform: none;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+  border-radius: var(--jb-radius);
+  box-shadow: 0 calc(var(--u) * 2) calc(var(--u) * 6) rgba(0, 0, 0, 0.3);
+}
+.jb-stack .jb-pg {
+  position: relative;
+  inset: auto;
+  min-height: var(--ph);
+}
+.jb-stack .jb-cover {
+  position: relative;
+  min-height: var(--ph);
+}
+.jb-stack .jb-paper .jb-shade {
+  display: none; /* single column: no spine */
+}
+@media (min-width: 768px) {
+  .jb-stack {
+    --pw: min(calc((100vw - 64px) / 2), 470px);
+    --jb-body-min: 13px;
+  }
+  .jb-stack-spread {
+    grid-template-columns: var(--pw) var(--pw);
+    gap: 0;
+    box-shadow: 0 calc(var(--u) * 3) calc(var(--u) * 8) rgba(0, 0, 0, 0.35);
+    border-radius: var(--jb-radius);
+  }
+  .jb-stack-spread .jb-face {
+    box-shadow: none;
+  }
+  .jb-stack-spread .jb-card--left .jb-face {
+    border-radius: var(--jb-radius) 0 0 var(--jb-radius);
+  }
+  .jb-stack-spread .jb-card--right .jb-face {
+    border-radius: 0 var(--jb-radius) var(--jb-radius) 0;
+  }
+  .jb-stack .jb-paper .jb-shade {
+    display: block;
+  }
+}
+
+/* ── NightSky ──────────────────────────────────────────────────────────────── */
+
+.jb-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--night-0);
+}
+.jb-sky-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity;
+}
+.jb-sky-night {
+  opacity: 1;
+  will-change: auto;
+  background: radial-gradient(ellipse at 70% 35%, var(--night-2) 0%, var(--night-1) 50%, var(--night-0) 100%);
+}
+.jb-sky-predawn {
+  background:
+    radial-gradient(ellipse 90% 45% at 60% 112%, rgba(199, 118, 106, 0.45), rgba(199, 118, 106, 0) 70%),
+    linear-gradient(180deg, #0f1a1f 0%, #1d2b52 50%, var(--dawn-1) 100%);
+}
+.jb-sky-sunrise {
+  background:
+    radial-gradient(circle at 78% 104%, rgba(255, 226, 176, 0.95), rgba(240, 164, 110, 0) 42%),
+    linear-gradient(180deg, var(--dawn-1) 0%, #c7766a 40%, var(--dawn-2) 66%, var(--dawn-3) 100%);
+}
+.jb-sky-day {
+  background: linear-gradient(180deg, var(--dawn-3) 0%, var(--page) 58%);
+}
+.jb-sky-dim {
+  /* opacity 1 = full UV-check darkness; write pose.uvDim straight in */
+  background: radial-gradient(ellipse at 50% 50%, rgba(22, 12, 48, 0.62), rgba(4, 5, 10, 0.88));
+}
+.jb-stars {
+  position: absolute;
+  inset: 0;
+}
+.jb-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #ece6d2;
+  opacity: 0.45;
+  animation: jb-twinkle 4s ease-in-out infinite;
+}
+.jb-star--big {
+  width: 3px;
+  height: 3px;
+}
+.jb-globe {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(900px, 130vmax);
+  height: min(900px, 130vmax);
+  margin: calc(min(900px, 130vmax) / -2) 0 0 calc(min(900px, 130vmax) / -2);
+  opacity: 0.12;
+  animation: jb-spin 120s linear infinite;
+}
+@keyframes jb-twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.75; }
+}
+@keyframes jb-spin {
+  to { transform: rotate(360deg); }
+}
+.jb-sky--still .jb-star,
+.jb-sky--still .jb-globe {
+  animation: none;
+}
+
+/* ── Visa vignette (tool link) ─────────────────────────────────────────────── */
+
+.jb-vignette {
+  --vg-a: #e7f0d6;
+  --vg-b: #f5e8d6;
+  --vg-ink: #2f6b47;
+  position: relative;
+  display: block;
+  min-height: max(48px, calc(var(--u, 4px) * 24));
+  color: var(--page-ink);
+  text-decoration: none;
+  border-radius: calc(var(--u, 4px) * 1.6);
+  transform: none;
+  transition: transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.jb-vignette[data-applied='false'] {
+  transform: translate(8px, -14px) rotate(4deg);
+}
+.jb-vignette[data-type='V-VISA'] { --vg-a: #f8e3d2; --vg-b: #eef0dc; --vg-ink: #9a4a22; }
+.jb-vignette[data-type='R-RELOCATE'] { --vg-a: #dde8f2; --vg-b: #f3ead8; --vg-ink: #2d5b8a; }
+.jb-vignette[data-type='L-COUNSEL'] { --vg-a: #e7e0f3; --vg-b: #f4e9df; --vg-ink: #6a4a9c; }
+.jb-vignette[data-type='S-SOURCES'] { --vg-a: #f1e7c6; --vg-b: #e6efda; --vg-ink: #806419; }
+.jb-vignette-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 24px 30px rgba(0, 0, 0, 0.25), 0 8px 12px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transition: opacity 450ms ease;
+  pointer-events: none;
+}
+.jb-vignette[data-applied='false'] .jb-vignette-shadow {
+  opacity: 1;
+}
+.jb-vignette-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: inherit;
+  overflow: hidden;
+  border-radius: inherit;
+  padding: calc(var(--u, 4px) * 2.4) calc(var(--u, 4px) * 11) calc(var(--u, 4px) * 2.4) calc(var(--u, 4px) * 3);
+  background: linear-gradient(135deg, var(--vg-a), var(--vg-b));
+  box-shadow: 0 1px 2px rgba(31, 42, 36, 0.12), inset 0 0 0 1px rgba(31, 42, 36, 0.08);
+}
+.jb-vignette-rosette {
+  position: absolute;
+  right: calc(var(--u, 4px) * 9);
+  top: 50%;
+  width: calc(var(--u, 4px) * 18);
+  height: calc(var(--u, 4px) * 18);
+  margin-top: calc(var(--u, 4px) * -9);
+  background-size: 100% 100%;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.jb-vignette-letter {
+  position: absolute;
+  right: calc(var(--u, 4px) * 11.5);
+  bottom: calc(var(--u, 4px) * -2.5);
+  font-weight: 800;
+  font-size: calc(var(--u, 4px) * 15);
+  line-height: 1;
+  color: var(--vg-ink);
+  opacity: 0.1;
+  pointer-events: none;
+}
+.jb-vignette-type,
+.jb-vignette-mrz {
+  position: relative;
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  color: #4f5c55;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+.jb-vignette-type {
+  font-size: max(9px, calc(var(--u, 4px) * 2.1));
+  letter-spacing: 0.14em;
+}
+.jb-vignette-type b {
+  color: var(--vg-ink);
+  font-weight: 500;
+}
+.jb-vignette-title {
+  position: relative;
+  display: block;
+  margin: calc(var(--u, 4px) * 0.6) 0 calc(var(--u, 4px) * 0.4);
+  font-weight: 800;
+  font-size: max(16px, calc(var(--u, 4px) * 4.2));
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.jb-vignette-desc {
+  position: relative;
+  display: block;
+  font-size: max(var(--jb-body-min, 12px), calc(var(--u, 4px) * 2.8));
+  line-height: 1.4;
+  color: #3d4a43;
+}
+.jb-vignette-mrz {
+  display: block;
+  margin-top: calc(var(--u, 4px) * 1.4);
+  font-size: max(8px, calc(var(--u, 4px) * 1.9));
+  letter-spacing: 0.1em;
+}
+.jb-vignette-go {
+  position: absolute;
+  right: calc(var(--u, 4px) * 9.5);
+  top: calc(var(--u, 4px) * 2.2);
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  font-size: max(9px, calc(var(--u, 4px) * 2.1));
+  letter-spacing: 0.12em;
+  color: var(--vg-ink);
+}
+.jb-vignette-holo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: calc(var(--u, 4px) * 7);
+  overflow: hidden;
+  opacity: 0.85;
+  pointer-events: none;
+}
+.jb-vignette-holo > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 300%;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0) 55%) 0 0 / 100% 33.334%,
+    linear-gradient(180deg, #b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d) 0 0 / 100% 33.334%;
+}
+.jb-vignette:hover .jb-vignette-holo > span,
+.jb-vignette:focus-visible .jb-vignette-holo > span {
+  animation: jb-holo 1.4s linear infinite;
+}
+@keyframes jb-holo {
+  to { transform: translateY(-33.334%); }
+}
+.jb-vignette:focus-visible {
+  outline: 3px solid #2f5139;
+  outline-offset: 3px;
+}
+
+/* ── Entry stamp ───────────────────────────────────────────────────────────── */
+
+.jb-stamp {
+  --c: #2f8a5a;
+  --r: -6deg;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  text-align: center;
+  color: var(--c);
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transform: rotate(var(--r)) scale(2.2);
+  transition: transform 320ms cubic-bezier(0.2, 1.7, 0.4, 1), opacity 180ms ease;
+}
+.jb-stamp[data-applied='true'] {
+  opacity: 0.88;
+  transform: rotate(var(--r)) scale(1);
+}
+/* Ink texture: paper-coloured gaps where the rubber didn't take. */
+.jb-stamp::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 40%, transparent 55%, rgba(251, 248, 242, 0.6) 56%, transparent 62%),
+    radial-gradient(circle at 70% 70%, transparent 40%, rgba(251, 248, 242, 0.5) 42%, transparent 48%),
+    radial-gradient(circle at 82% 22%, rgba(251, 248, 242, 0.45) 0 4%, transparent 5%);
+}
+/* Short ink bleed as it lands. */
+.jb-stamp::before {
+  content: '';
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 30%, transparent), transparent);
+  opacity: 0;
+}
+.jb-stamp[data-applied='true']::before {
+  animation: jb-bleed 520ms ease-out 200ms both;
+}
+@keyframes jb-bleed {
+  from { opacity: 0.55; transform: scale(0.9); }
+  to { opacity: 0; transform: scale(1.12); }
+}
+.jb-stamp-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--u, 4px) * 0.5);
+  max-width: 100%;
+  padding: 0 calc(var(--u, 4px) * 2);
+}
+.jb-stamp-text small {
+  font-size: max(8px, calc(var(--u, 4px) * 2));
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+.jb-stamp-text b {
+  font-size: max(11px, calc(var(--u, 4px) * 3.6));
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+.jb-stamp--circle {
+  width: calc(var(--u, 4px) * 28);
+  height: calc(var(--u, 4px) * 28);
+  border: calc(var(--u, 4px) * 0.8) solid var(--c);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 calc(var(--u, 4px) * 1.2) var(--page), inset 0 0 0 calc(var(--u, 4px) * 1.7) var(--c);
+}
+.jb-stamp--rect {
+  width: calc(var(--u, 4px) * 34);
+  height: calc(var(--u, 4px) * 18);
+  border: calc(var(--u, 4px) * 0.8) solid var(--c);
+  border-radius: calc(var(--u, 4px) * 1.6);
+  box-shadow: inset 0 0 0 calc(var(--u, 4px) * 1) var(--page), inset 0 0 0 calc(var(--u, 4px) * 1.4) var(--c);
+}
+.jb-stamp--triangle {
+  width: calc(var(--u, 4px) * 32);
+  height: calc(var(--u, 4px) * 28);
+  align-items: flex-end;
+  padding-bottom: calc(var(--u, 4px) * 3.4);
+}
+.jb-stamp--triangle .jb-stamp-text {
+  padding: 0 calc(var(--u, 4px) * 6);
+}
+.jb-stamp--hexagon {
+  width: calc(var(--u, 4px) * 32);
+  height: calc(var(--u, 4px) * 27);
+}
+.jb-stamp--hexagon .jb-stamp-text {
+  padding: 0 calc(var(--u, 4px) * 5);
+}
+.jb-stamp-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: var(--c);
+  stroke-linejoin: round;
+}
+.jb-stamp-outline .o { stroke-width: calc(var(--u, 4px) * 0.8); }
+.jb-stamp-outline .i { stroke-width: calc(var(--u, 4px) * 0.4); }
+
+/* ── Hologram seal ─────────────────────────────────────────────────────────── */
+
+.jb-seal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--u, 4px) * 38);
+  height: calc(var(--u, 4px) * 38);
+  border-radius: 50%;
+  box-shadow: 0 0 calc(var(--u, 4px) * 5) rgba(184, 207, 93, 0.35);
+}
+.jb-seal-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    repeating-conic-gradient(rgba(255, 255, 255, 0.22) 0 1deg, rgba(255, 255, 255, 0) 1deg 4deg),
+    conic-gradient(#b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d);
+  animation: jb-spin 16s linear infinite;
+}
+.jb-seal-core {
+  position: relative;
+  width: 82%;
+  height: 82%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(251, 248, 242, 0.92);
+  color: var(--page-ink);
+}
+.jb-seal-rosette {
+  position: absolute;
+  inset: 6%;
+  background-size: 100% 100%;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.jb-seal-core b {
+  position: relative;
+  font-weight: 800;
+  font-size: calc(var(--u, 4px) * 9);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.jb-seal-core span {
+  position: relative;
+  max-width: 78%;
+  margin-top: calc(var(--u, 4px) * 1);
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  font-size: max(8px, calc(var(--u, 4px) * 2.1));
+  letter-spacing: 0.14em;
+  line-height: 1.35;
+  color: #4f5c55;
+}
+
+/* ── Motion preferences ────────────────────────────────────────────────────── */
+
+/* Lite: stamps/vignettes appear without the lift / thunk; no spinning seal. */
+.jb-lite .jb-vignette,
+.jb-lite .jb-vignette-shadow,
+.jb-lite .jb-stamp {
+  transition: opacity 180ms ease;
+}
+.jb-lite .jb-vignette[data-applied='false'] { transform: none; }
+.jb-lite .jb-vignette-shadow { opacity: 0 !important; }
+.jb-lite .jb-stamp { transform: rotate(var(--r)); }
+.jb-lite .jb-stamp::before,
+.jb-lite .jb-seal-ring { animation: none; }
+
+/* Stack (reduced-motion layout) and the OS preference: final state, no motion. */
+.jb-stack .jb-vignette,
+.jb-stack .jb-vignette[data-applied='false'] {
+  transform: none;
+  transition: none;
+}
+.jb-stack .jb-vignette-shadow { opacity: 0 !important; transition: none; }
+.jb-stack .jb-stamp {
+  opacity: 0.88;
+  transform: rotate(var(--r));
+  transition: none;
+}
+.jb-stack .jb-stamp::before,
+.jb-stack .jb-seal-ring { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jb-vignette,
+  .jb-vignette[data-applied='false'] {
+    transform: none;
+    transition: none;
+  }
+  .jb-vignette-shadow { opacity: 0 !important; transition: none; }
+  .jb-vignette:hover .jb-vignette-holo > span,
+  .jb-vignette:focus-visible .jb-vignette-holo > span { animation: none; }
+  .jb-stamp,
+  .jb-stamp[data-applied='false'] {
+    opacity: 0.88;
+    transform: rotate(var(--r));
+    transition: none;
+  }
+  .jb-stamp::before,
+  .jb-seal-ring,
+  .jb-star,
+  .jb-globe { animation: none; }
+}
