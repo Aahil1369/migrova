@@ -1191,7 +1191,8 @@ a.uvc-body:focus-visible {
   }
   .uvc-uv--lamp,
   .jbp-uv-band,
-  .jbp-uv-glow {
-    display: none !important;
+  .jbp-uv-glow,
+  .jbp-uv-toggle {
+    display: none !important; /* both cards are always revealed: nothing to toggle */
   }
 }

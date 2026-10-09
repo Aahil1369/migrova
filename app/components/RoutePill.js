@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { forgetRoute, hasRoute, routeCodes, routeLabel, routeSpoken, ROUTE_EVENT } from './passport/routeStore';
+import { forgetRoute, hasRoute, routeCodes, routeLabel, ROUTE_EVENT } from './passport/routeStore';
 import { CrossGlyph, PlaneGlyph } from './passport/parts/Glyphs';
 import { visaHref } from './passport/search';
 import { announceRouteChange, deviceStorage, useSavedRoute } from './passport/useSavedRoute';
@@ -12,10 +12,12 @@ import { announceRouteChange, deviceStorage, useSavedRoute } from './passport/us
  * "✈ PAK ✈ CAN" linking to /visa?from&to, plus ✕ "Forget my route". Renders nothing until the
  * client has read storage (no hydration mismatch), when nothing is saved, or when storage is
  * blocked. Follows 'migrova:route' (this page) and 'storage' (other tabs).
- *   tone    'night' | 'paper' (navbar tones)
- *   variant 'bar' (header; below 400px only the ✈ and ✕ show) | 'drawer' (mobile menu)
+ *   tone     'night' | 'paper' (navbar tones)
+ *   variant  'bar' (header; below 400px only the ✈ and ✕ show) | 'drawer' (mobile menu)
+ *   onForget called after ✕ removed the pill, to move keyboard focus somewhere sensible
+ * The link's accessible name starts with its visible text ("PAK to CAN — …", WCAG 2.5.3).
  */
-export default function RoutePill({ tone = 'paper', variant = 'bar' }) {
+export default function RoutePill({ tone = 'paper', variant = 'bar', onForget }) {
   const saved = useSavedRoute();
   // Pop in only when the route arrives while this page is open (a tear), not on every page load.
   const [pop, setPop] = useState(false);
@@ -31,6 +33,7 @@ export default function RoutePill({ tone = 'paper', variant = 'bar' }) {
   const forget = () => {
     forgetRoute(deviceStorage());
     announceRouteChange();
+    onForget?.();
   };
 
   return (
@@ -41,7 +44,7 @@ export default function RoutePill({ tone = 'paper', variant = 'bar' }) {
       <Link
         href={visaHref(saved)}
         className="route-pill-link"
-        aria-label={`Your saved route, ${routeSpoken(saved)}: check a visa`}
+        aria-label={`${codes.from} to ${codes.to} — your saved route: check a visa`}
       >
         <span className="route-pill-icon" aria-hidden="true">
           <PlaneGlyph />

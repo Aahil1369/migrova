@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createClient } from '../../lib/supabase-browser';
 import { NAV_LINKS, TOOL_LINKS } from '../lib/siteLinks';
 import AuthModal from './AuthModal';
@@ -89,6 +89,11 @@ export default function Navbar({ tone = 'paper' }) {
   const toolsRef = useRef(null);
   const userMenuRef = useRef(null);
   const prevUserRef = useRef(null);
+  const logoRef = useRef(null);
+  const burgerRef = useRef(null);
+  const drawerRef = useRef(null);
+  const closeRef = useRef(null);
+  const restoreFocus = useRef(false);
   const supabase = createClient();
 
   useEffect(() => {
@@ -133,6 +138,46 @@ export default function Navbar({ tone = 'paper' }) {
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
+  // Mobile drawer (a modal dialog): focus its Close button on open, keep Tab inside it, close
+  // on Escape, and give focus back to the burger when it was closed from inside (not when a
+  // link navigated away).
+  const closeMenu = useCallback(() => {
+    restoreFocus.current = true;
+    setMobileOpen(false);
+  }, []);
+  useEffect(() => {
+    if (!mobileOpen) {
+      if (restoreFocus.current) burgerRef.current?.focus();
+      restoreFocus.current = false;
+      return undefined;
+    }
+    closeRef.current?.focus();
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeMenu();
+        return;
+      }
+      if (e.key !== 'Tab' || !drawerRef.current) return;
+      const items = [...drawerRef.current.querySelectorAll('a[href], button:not([disabled])')];
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!drawerRef.current.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [mobileOpen, closeMenu]);
+
   const handleSignOut = async () => {
     if (supabase) await supabase.auth.signOut();
     setUserMenuOpen(false);
@@ -143,7 +188,9 @@ export default function Navbar({ tone = 'paper' }) {
   const progressPct = Math.min(100, (toolsUsed / TOOL_LINKS.length) * 100);
   const isToolActive = TOOL_LINKS.some((x) => pathname === x.href);
   // The route saved by tearing the homepage boarding-pass stub (renders nothing until read).
-  const routeSlot = <RoutePill tone={tone === 'night' ? 'night' : 'paper'} />;
+  // After ✕ the pill is gone: keyboard focus moves to the wordmark (header) or Close (drawer).
+  const pillTone = tone === 'night' ? 'night' : 'paper';
+  const routeSlot = <RoutePill tone={pillTone} onForget={() => logoRef.current?.focus()} />;
 
   return (
     <>
@@ -173,11 +220,11 @@ export default function Navbar({ tone = 'paper' }) {
 
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" aria-label="Menu">
-          <div className={`absolute inset-0 ${t.scrim}`} onClick={() => setMobileOpen(false)} />
-          <div className={`absolute top-0 right-0 h-full w-[280px] max-w-[85vw] border-l flex flex-col ${t.drawer}`}>
+          <div className={`absolute inset-0 ${t.scrim}`} onClick={closeMenu} />
+          <div ref={drawerRef} className={`absolute top-0 right-0 h-full w-[280px] max-w-[85vw] border-l flex flex-col ${t.drawer}`}>
             <div className={`flex items-center justify-between px-5 py-4 border-b ${t.menuRule}`}>
               <Wordmark className="text-[22px]" />
-              <button onClick={() => setMobileOpen(false)}
+              <button ref={closeRef} onClick={closeMenu}
                 className={`min-h-11 px-2 -mr-2 text-[14px] font-medium ${t.sub} ${t.hover}`}>
                 Close
               </button>
@@ -192,7 +239,7 @@ export default function Navbar({ tone = 'paper' }) {
                 <Link key={l.href} href={l.href}
                   className={`block py-2.5 ${pathname === l.href ? t.active : t.hover}`}>{l.label}</Link>
               ))}
-              <RoutePill tone={tone === 'night' ? 'night' : 'paper'} variant="drawer" />
+              <RoutePill tone={pillTone} variant="drawer" onForget={() => closeRef.current?.focus()} />
             </div>
             <div className={`px-5 py-4 border-t ${t.menuRule}`}>
               {user ? (
@@ -220,7 +267,7 @@ export default function Navbar({ tone = 'paper' }) {
 
       <header className={`sticky top-0 z-30 border-b ${t.header}`}>
         <div className="max-w-[1280px] mx-auto px-6 sm:px-10 py-3.5 flex items-center justify-between gap-4 min-[400px]:gap-6">
-          <Link href="/" className={`transition-colors ${t.logo}`}>
+          <Link ref={logoRef} href="/" className={`transition-colors ${t.logo}`}>
             <Wordmark className="text-[22px]" />
           </Link>
 
@@ -234,7 +281,7 @@ export default function Navbar({ tone = 'paper' }) {
             ))}
             <div className="relative" ref={toolsRef}>
               <button onClick={() => setToolsOpen(!toolsOpen)}
-                aria-expanded={toolsOpen} aria-haspopup="true"
+                aria-expanded={toolsOpen}
                 className={`relative inline-flex items-center gap-1 transition-colors ${isToolActive ? t.navActive : t.hover}`}>
                 Tools
                 <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${toolsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -260,7 +307,7 @@ export default function Navbar({ tone = 'paper' }) {
             {user ? (
               <div className="relative hidden md:block" ref={userMenuRef}>
                 <button onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  aria-expanded={userMenuOpen} aria-haspopup="true"
+                  aria-expanded={userMenuOpen}
                   className={`flex items-center gap-2 transition-colors ${t.strong} ${t.hover}`}>
                   <UserAvatar user={user} fallbackClass={t.avatar} />
                   <span className="max-w-[90px] truncate">{userName}</span>
@@ -285,7 +332,7 @@ export default function Navbar({ tone = 'paper' }) {
                 Sign in
               </button>
             )}
-            <button onClick={() => setMobileOpen(true)} aria-label="Open menu"
+            <button ref={burgerRef} onClick={() => setMobileOpen(true)} aria-label="Open menu" aria-expanded={mobileOpen}
               className="md:hidden -mr-2 w-11 h-11 flex flex-col items-center justify-center gap-[5px]">
               <span className={`block w-5 h-[2px] rounded-full ${t.burger}`} />
               <span className={`block w-5 h-[2px] rounded-full ${t.burger}`} />

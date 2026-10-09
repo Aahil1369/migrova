@@ -131,14 +131,15 @@ export function UvFlap({ active = false, authorities = {}, lamp = 'cursor' }) {
     let y = -1e5;
     const paint = () => {
       frame = 0;
-      for (const el of layers) {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty('--lx', `${(x - r.left).toFixed(1)}px`);
-        el.style.setProperty('--ly', `${(y - r.top).toFixed(1)}px`);
-      }
+      // All layout reads first, then all writes: no read/write interleaving (layout thrash).
+      const rects = layers.map((el) => el.getBoundingClientRect());
+      const rootRect = glow ? root.getBoundingClientRect() : null;
+      layers.forEach((el, i) => {
+        el.style.setProperty('--lx', `${(x - rects[i].left).toFixed(1)}px`);
+        el.style.setProperty('--ly', `${(y - rects[i].top).toFixed(1)}px`);
+      });
       if (glow) {
-        const r = root.getBoundingClientRect();
-        glow.style.transform = `translate3d(${(x - r.left).toFixed(1)}px, ${(y - r.top).toFixed(1)}px, 0)`;
+        glow.style.transform = `translate3d(${(x - rootRect.left).toFixed(1)}px, ${(y - rootRect.top).toFixed(1)}px, 0)`;
       }
     };
     const onMove = (e) => {
@@ -244,9 +245,12 @@ export function UvFlap({ active = false, authorities = {}, lamp = 'cursor' }) {
         </div>
         {hydrated ? <span className="jbp-uv-band" aria-hidden="true" /> : null}
       </div>
-      <button type="button" className="jbp-uv-toggle" aria-pressed={all} onClick={() => setAll((on) => !on)}>
-        Show everything
-      </button>
+      {lamp === 'off' ? null : (
+        // No lamp (reduced motion / stack): both cards are always revealed, so no toggle.
+        <button type="button" className="jbp-uv-toggle" aria-pressed={all} onClick={() => setAll((on) => !on)}>
+          Show everything
+        </button>
+      )}
       {hydrated ? <span ref={glowRef} className="jbp-uv-glow" aria-hidden="true" /> : null}
     </div>
   );

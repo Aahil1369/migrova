@@ -420,7 +420,8 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
   // Keyboard / assistive tech: focus landing in a page (or hero/finale, or the UV flap) that is not
   // on screen brings it on screen. Focus that follows a pointer press (click/tap) never jumps, so a
   // stray tap can never rewind the page: the flag is set on pointerdown and cleared once that
-  // press is over (after its click, or when it is cancelled) or on any key press, so later
+  // press is over (after its click / auxclick / contextmenu, or when it is cancelled) or on any
+  // key press, so later
   // screen-reader focus moves (no key events) still sync the book.
   useEffect(() => {
     const section = sectionRef.current;
@@ -449,15 +450,15 @@ function Stage({ layout, motion, phone, verifiedCount, leaves, base }) {
       if (part && !isShowing(part)) goTo(part);
     };
     window.addEventListener('pointerdown', onPointerDown, true);
-    window.addEventListener('click', onPressEnd, true);
-    window.addEventListener('pointercancel', onPressEnd, true);
+    // Every way a press can end: primary click, middle click, right click / long-press menu.
+    const pressEnds = ['click', 'auxclick', 'contextmenu', 'pointercancel'];
+    for (const type of pressEnds) window.addEventListener(type, onPressEnd, true);
     window.addEventListener('keydown', clear, true);
     section.addEventListener('focusin', onFocusIn);
     return () => {
       window.clearTimeout(clearTimer);
       window.removeEventListener('pointerdown', onPointerDown, true);
-      window.removeEventListener('click', onPressEnd, true);
-      window.removeEventListener('pointercancel', onPressEnd, true);
+      for (const type of pressEnds) window.removeEventListener(type, onPressEnd, true);
       window.removeEventListener('keydown', clear, true);
       section.removeEventListener('focusin', onFocusIn);
     };
