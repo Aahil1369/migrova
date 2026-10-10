@@ -212,13 +212,12 @@
 }
 /* Fit: the book's centre sits low enough for a page to clear the 73px navbar (+12px), and the
    whole book scales down if a page is taller than the frame below the navbar (100svh - 97px).
-   tan(atan2(a, b)) = a / b as a number. Without CSS trig the book stays centred and unscaled. */
-@supports (scale: tan(atan2(1px, 2px))) {
-  .jb-book {
-    --jb-fit: min(1, tan(atan2(100svh - 97px, var(--ph))));
-    top: max(50%, calc(85px + var(--ph) * var(--jb-fit) / 2));
-    scale: var(--jb-fit);
-  }
+   --jb-fit is written by PassportStage (bookFit, motionMode.js), not computed here: WebKit
+   resolves the CSS-trig division tan(atan2(a, b)) to a negative scale (an upside-down book).
+   Unset (before hydration): unscaled. */
+.jb-book {
+  top: max(50%, calc(85px + var(--ph) * var(--jb-fit, 1) / 2));
+  scale: var(--jb-fit, 1);
 }
 .jb-leaf,
 .jb-base,
@@ -351,23 +350,19 @@
     --jb-design-pw: 380px; /* the desktop page rhythm (7-line stories) needs a wider page */
   }
 }
+/* Fit: scale the page (top-centre origin) into the frame below the 73px navbar with 12px clear
+   above and below (100svh - 97px), and between the 16px side gutters. --jb-fit is written by
+   PassportStage (bookFit, motionMode.js) from a 100svh probe, so the iOS toolbar collapsing never
+   changes it; not computed in CSS (WebKit gets the CSS-trig division wrong, see .jb-book).
+   Centred in the frame, but never higher than 85px. Unset (before hydration): unscaled. */
 .jb-pad {
   position: absolute;
   left: calc(50% - var(--pw) / 2);
-  top: calc(50% - var(--ph) / 2);
+  top: max(calc(50% - var(--ph) * var(--jb-fit, 1) / 2), 85px);
   width: var(--pw);
   height: var(--ph);
-}
-/* Fit: scale the page (top-centre origin) into the frame below the 73px navbar with 12px clear
-   above and below (100svh - 97px), and between the 16px side gutters. svh, so the iOS toolbar
-   collapsing never changes it. Centred in the frame, but never higher than 85px. */
-@supports (scale: tan(atan2(1px, 2px))) {
-  .jb-pad {
-    --jb-fit: min(1, tan(atan2(100svh - 97px, var(--ph))), tan(atan2(100vw - 32px, var(--pw))));
-    top: max(calc(50% - var(--ph) * var(--jb-fit) / 2), 85px);
-    transform-origin: 50% 0;
-    scale: var(--jb-fit);
-  }
+  transform-origin: 50% 0;
+  scale: var(--jb-fit, 1);
 }
 .jb-npage {
   position: absolute;

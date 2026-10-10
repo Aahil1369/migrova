@@ -23,7 +23,7 @@ import {
 } from './stageStyle';
 import { scrollTarget, useScrollProgress } from './useScrollProgress';
 import { useLayoutMode } from './useLayoutMode';
-import { decideLayout } from './motionMode';
+import { bookFit, decideLayout } from './motionMode';
 import { createQualityMonitor, frameStats } from './quality';
 import { activeKey, activePages, padShown, showingPages } from './activePages';
 import { initialRoute } from './search';
@@ -51,6 +51,17 @@ const flag = (el, name, on) => (on ? el.setAttribute(name, '') : el.removeAttrib
 // The adaptive quality tier and the step back up each tier has used (quality.js), kept for the
 // visit: client navigation hands the same memory to the next monitor.
 const qualityMemory = { tier: 'high', retried: [] };
+
+/** 100svh in px (stays put while the iOS toolbar collapses), from a throwaway probe; the layout
+ *  viewport's height where svh is unsupported. */
+function smallViewportHeight() {
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100svh;visibility:hidden;pointer-events:none';
+  document.body.appendChild(probe);
+  const h = probe.offsetHeight;
+  probe.remove();
+  return h > 0 ? h : document.documentElement.clientHeight;
+}
 
 const poseFor = (layout, p) => (layout === 'spread' ? desktopPose(TIMELINE, p) : notepadPose(TIMELINE, p));
 
@@ -316,6 +327,20 @@ const Stage = memo(function Stage({ layout, motion, settled, verifiedCount, leav
       m.flapPx = 0;
       m.dims = bookRefs.pages.map((r) => (r.current ? r.current.querySelector('[data-dim]') : null));
       m.surround = null;
+    }
+    // Fit (passport.css --jb-fit): the book shrinks to the frame. Page sizes from layout boxes
+    // (offsetWidth / offsetHeight ignore the scale itself), the frame from a 100svh probe.
+    const fitEl = sectionRef.current?.querySelector(layout === 'spread' ? '.jb-book' : '.jb-pad');
+    if (fitEl) {
+      const page = layout === 'spread' ? bookRefs.leaves[0].current : fitEl;
+      const fit = bookFit({
+        spread: layout === 'spread',
+        vw: window.innerWidth,
+        svh: smallViewportHeight(),
+        pw: page ? page.offsetWidth : 0,
+        ph: page ? page.offsetHeight : 0,
+      });
+      fitEl.style.setProperty('--jb-fit', String(fit));
     }
     // One page at a time: the UV check folds out over the sources page body (see inlineFlapStyle).
     const sourcesPage = layout === 'spread' ? null : bookRefs.pages[SOURCES_INDEX]?.current;

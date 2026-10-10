@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { decideMotion } from '../../../app/components/passport/useLayoutMode.js';
 import {
+  bookFit,
   decideLayout,
   FRAME,
   FRAME_QUERIES,
@@ -257,4 +258,37 @@ test('an unrecognised override is ignored', () => {
   assert.equal(decide({ override: '' }), 'full');
   assert.equal(decide({ override: 'turbo', reducedMotion: true }), 'reduced');
   assert.equal(decide({ override: 'FULL', deviceMemory: 1 }), 'lite');
+});
+
+test('bookFit: the one-page book matches onePageScale and never flips or grows', () => {
+  for (const [w, h] of [[390, 664], [390, 750], [375, 548], [375, 629], [360, 560], [412, 780], [700, 900], [1024, 600]]) {
+    const design = w <= 767 ? FRAME.onePage : FRAME.onePageWide;
+    const pw = Math.max(design, Math.min(w - 32, (0.7 * h) / FRAME.aspect));
+    const fit = bookFit({ spread: false, vw: w, svh: h, pw, ph: pw * FRAME.aspect });
+    assert.ok(Math.abs(fit - onePageScale(w, h)) < 1e-4, `${w}x${h}: ${fit} vs ${onePageScale(w, h)}`);
+    assert.ok(fit > 0 && fit <= 1, `${w}x${h}: ${fit}`);
+  }
+  // iPhone 13 in Safari (390 x 664 small viewport): the page fits as laid out -> exactly 1.
+  assert.equal(bookFit({ spread: false, vw: 390, svh: 664, pw: 327.3, ph: 464.8 }), 1);
+});
+
+test('bookFit: the spread only scales for height; junk sizes and impossible frames give 1', () => {
+  assert.equal(bookFit({ spread: true, vw: 1440, svh: 900, pw: 330, ph: 468.6 }), 1);
+  assert.equal(bookFit({ spread: true, vw: 1097, svh: 540, pw: 330, ph: 468.6 }), +((540 - 97) / 468.6).toFixed(4));
+  assert.equal(bookFit({ spread: true, vw: 200, svh: 900, pw: 330, ph: 468.6 }), 1); // width never counts
+  for (const junk of [undefined, null, NaN, 0, -5, Infinity, '400']) {
+    assert.equal(bookFit({ spread: false, vw: junk, svh: 664, pw: 327, ph: 464 }), 1);
+    assert.equal(bookFit({ spread: false, vw: 390, svh: junk, pw: 327, ph: 464 }), 1);
+    assert.equal(bookFit({ spread: false, vw: 390, svh: 664, pw: junk, ph: 464 }), 1);
+    assert.equal(bookFit({ spread: false, vw: 390, svh: 664, pw: 327, ph: junk }), 1);
+  }
+  assert.equal(bookFit(), 1);
+  assert.equal(bookFit({ spread: false, vw: 390, svh: 60, pw: 327, ph: 464 }), 1); // shorter than the navbar: never negative
+});
+
+test('passport.css has no CSS-trig fit (WebKit resolves it to a negative scale)', () => {
+  const css = readFileSync(new URL('../../../app/components/passport/passport.css', import.meta.url), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, ''); // rules only, not comments
+  assert.doesNotMatch(css, /atan2|tan\(/);
+  assert.match(css, /scale:\s*var\(--jb-fit,\s*1\)/);
 });

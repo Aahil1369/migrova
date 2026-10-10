@@ -88,6 +88,21 @@ export function onePageScale(width, height) {
 }
 
 /**
+ * The book's fit scale (passport.css --jb-fit, written by PassportStage): shrink to fit below the
+ * navbar and, for one-page books, between the 16px side gutters; never above 1. `vw` / `svh` are
+ * the frame (100vw / 100svh in px), `pw` / `ph` a page's laid-out size. Computed here rather than
+ * in CSS: WebKit resolves the CSS-trig division (tan(atan2(a, b))) to a wrong, negative scale,
+ * which turned the book upside down on iPhones. Missing / junk sizes -> 1 (unscaled), and the
+ * result is never zero or negative. Pure.
+ */
+export function bookFit({ spread, vw, svh, pw, ph } = {}) {
+  if (!finitePositive(vw) || !finitePositive(svh) || !finitePositive(pw) || !finitePositive(ph)) return 1;
+  let fit = Math.min(1, (svh - CLEAR) / ph);
+  if (!spread) fit = Math.min(fit, (vw - 32) / pw);
+  return fit > 0 ? +fit.toFixed(4) : 1;
+}
+
+/**
  * Pure motion-tier decision. Missing / unknown signals (undefined, null, NaN) never count as
  * "low-end": only a real signal can downgrade the experience.
  *
