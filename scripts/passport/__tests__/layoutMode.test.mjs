@@ -130,10 +130,13 @@ test('FRAME_QUERIES: the stylesheets style the server HTML with the same frame d
   // Before hydration settles the layout, CSS alone shows the server's markup in its final layout:
   // the spread only where it stays, and the stacked look on tiny frames (no blocking script).
   const read = (f) => readFileSync(new URL(`../../../app/components/passport/${f}`, import.meta.url), 'utf8');
-  assert.ok(
-    read('passport.css').includes(`@media ${FRAME_QUERIES.roomy} and (prefers-reduced-motion: no-preference)`),
-    'passport.css: pre-settle spread only where it stays',
-  );
+  // Everywhere else the unsettled spread is display: none, not just invisible: a hidden spread is
+  // still laid out, and that layout held back the hero's first paint on phones.
+  const spreadQuery = `@media not all and ${FRAME_QUERIES.roomy} and (prefers-reduced-motion: no-preference) {`;
+  const passport = read('passport.css');
+  const at = passport.indexOf(spreadQuery);
+  assert.ok(at !== -1, 'passport.css: pre-settle spread only where it stays');
+  assert.match(passport.slice(at, passport.indexOf('}', at) + 1), /\.ps-section:not\(\[data-settled\]\) \.jb-spread\s*\{\s*display:\s*none;/);
   assert.ok(read('stage.css').includes(`@media ${FRAME_QUERIES.tiny} {`), 'stage.css: pre-settle stack on tiny frames');
 });
 

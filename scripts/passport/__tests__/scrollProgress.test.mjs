@@ -5,6 +5,7 @@ import {
   easeToward,
   createScrollProgress,
   TAU,
+  LEAD_PX,
   MAX_DT,
   SNAP,
 } from '../../../app/components/passport/useScrollProgress.js';
@@ -139,6 +140,118 @@ test('easeToward: snaps onto the target inside SNAP and never overshoots', () =>
     assert.ok(steps * (1000 / 60) < 1000, `took ${steps} frames to land`);
   }
   assert.ok(SNAP > 0 && SNAP <= 1e-4);
+});
+
+// ---------------------------------------------------------------- the wheel's lead
+
+// The harness's trail metric (scratchpad anim-smooth.mjs): for each frame, how long ago the
+// target was where the book is now (0 once the book is on the target).
+function trailP50(frames) {
+  const lags = [];
+  for (let k = 1; k < frames.length; k++) {
+    const [t, T, R] = frames[k];
+    if (T <= R) {
+      lags.push(0);
+      continue;
+    }
+    let j = k;
+    while (j > 0 && frames[j][1] > R) j--;
+    const [tj, Tj] = frames[j];
+    const [tn, Tn] = frames[j + 1];
+    lags.push(t - (Tn === Tj ? tn : tj + ((R - Tj) / (Tn - Tj)) * (tn - tj)));
+  }
+  lags.sort((a, b) => a - b);
+  return lags[Math.ceil(0.5 * lags.length) - 1];
+}
+// 100px wheel notches applied at once (no browser smooth scrolling) every `every` ms, on a
+// `range` px book, eased at `hz` with the wheel's tau and lead.
+function notches({ hz, every = 170, count = 40, range = 6255, lead = LEAD_PX.wheel }) {
+  const dt = 1000 / hz;
+  const frames = [];
+  let cur = 0;
+  for (let t = dt; t <= every * count; t += dt) {
+    const target = (100 * Math.min(count, Math.floor(t / every) + 1)) / range;
+    cur = easeToward(cur, target, dt, TAU.wheel, lead / range);
+    frames.push([t, target, cur]);
+  }
+  return frames;
+}
+
+test('easeToward lead: a wheel notch lands exactly, in finite time, without overshooting', () => {
+  assert.equal(LEAD_PX.wheel, 10);
+  assert.equal(LEAD_PX.touch, 0, 'touch follows the finger with the plain exponential');
+  const range = 6255;
+  const lead = LEAD_PX.wheel / range;
+  const gap = 100 / range;
+  // aimed `lead` past the target: (gap + lead)(1 - e^(-t/tau)) reaches the gap at tau ln(1 + gap/lead)
+  const arrive = TAU.wheel * Math.log(1 + 100 / LEAD_PX.wheel);
+  assert.ok(arrive < 160, String(arrive));
+  for (const hz of [30, 60, 120, 165]) {
+    const dt = 1000 / hz;
+    let cur = 0;
+    let t = 0;
+    let last = 0;
+    while (cur !== gap && t < 1000) {
+      const next = easeToward(cur, gap, dt, TAU.wheel, lead);
+      assert.ok(next <= gap, 'never past the target');
+      last = (next - cur) * range;
+      cur = next;
+      t += dt;
+    }
+    assert.equal(cur, gap, `${hz} Hz lands exactly`);
+    assert.ok(t <= arrive + dt + 1e-9 && t >= arrive - 1e-9, `${hz} Hz: landed after ${t.toFixed(1)}ms`);
+    // the last step is small: at most the lead's own pace for one frame (lead / tau px per ms)
+    assert.ok(last <= (LEAD_PX.wheel / TAU.wheel) * dt + 1e-9, `${hz} Hz: last step ${last.toFixed(2)}px`);
+  }
+  // the same place after the same time at any frame rate (within 1% of the step)
+  const at = (hz, until) => {
+    let cur = 0;
+    for (let k = 1; k * (1000 / hz) <= until + 1e-9; k++) cur = easeToward(cur, gap, 1000 / hz, TAU.wheel, lead);
+    return cur;
+  };
+  for (const until of [100, 200, 300]) { // whole frames at 30, 60 and 120 Hz
+    for (const hz of [30, 120]) assert.ok(Math.abs(at(hz, until) - at(60, until)) <= 0.01 * gap, `${hz} Hz @${until}ms`);
+  }
+});
+
+test('easeToward lead: trail p50 <= 70ms behind 100px wheel notches (S1a input), settle to 95% <= 300ms', () => {
+  for (const hz of [60, 120, 165]) {
+    const lead = trailP50(notches({ hz }));
+    const plain = trailP50(notches({ hz, lead: 0 }));
+    assert.ok(lead <= 70, `${hz} Hz: trail p50 ${lead.toFixed(1)}ms`);
+    assert.ok(plain > 70, `${hz} Hz: the plain exponential trails ${plain.toFixed(1)}ms behind notches`);
+  }
+  // settle: 95% of a stop's gap within 3 tau, at any rate
+  for (const hz of [30, 60, 120]) {
+    const dt = 1000 / hz;
+    let cur = 0;
+    let t = 0;
+    while (cur < 0.95) {
+      cur = easeToward(cur, 1, dt, TAU.wheel, LEAD_PX.wheel / 6255);
+      t += dt;
+    }
+    assert.ok(t <= 3 * TAU.wheel + dt + 1e-9 && t <= 300, `${hz} Hz: ${t.toFixed(1)}ms`);
+  }
+});
+
+test('easeToward lead: a steady scroll is trailed by at most tau, and never led', () => {
+  const range = 6255;
+  for (const hz of [30, 60, 120]) {
+    for (const pxPerMs of [0.05, 0.5, 2]) {
+      const dt = 1000 / hz;
+      const speed = pxPerMs / range;
+      let cur = 0;
+      let t = 0;
+      for (let k = 0; k < Math.ceil(2000 / dt); k++) {
+        t += dt;
+        const target = speed * t;
+        cur = easeToward(cur, target, dt, TAU.wheel, LEAD_PX.wheel / range);
+        assert.ok(cur <= target, 'never ahead of the scroll');
+      }
+      const trail = (speed * t - cur) / speed;
+      assert.ok(trail >= 0 && trail <= TAU.wheel, `${hz} Hz ${pxPerMs}px/ms: trail ${trail.toFixed(1)}ms`);
+    }
+  }
 });
 
 // ---------------------------------------------------------------- controller (the hook's core)
@@ -371,9 +484,10 @@ test('controller: touch input follows more tightly than wheel / mouse / keyboard
   const touch = at100('touch');
   assert.ok(touch.p > wheel.p, `${touch.p} vs ${wheel.p}`);
   assert.equal(at100('pen?').p, wheel.p, 'unknown input kinds ease like the wheel');
-  // 100ms after the scroll: 1 - e^(-100 / tau) of the way there
-  for (const [r, tau] of [[wheel, TAU.wheel], [touch, TAU.touch]]) {
-    const expected = r.from + (1 - r.from) * (1 - Math.exp(-100 / tau));
+  // 100ms after the scroll: 1 - e^(-100 / tau) of the way there, the wheel aimed its lead past
+  // the target (the harness's book scrolls over 5000px)
+  for (const [r, tau, lead] of [[wheel, TAU.wheel, LEAD_PX.wheel / 5000], [touch, TAU.touch, 0]]) {
+    const expected = r.from + (1 - r.from + lead) * (1 - Math.exp(-100 / tau));
     assert.ok(Math.abs(r.p - expected) < 1e-3, `${r.p} vs ${expected}`);
   }
 });
@@ -389,7 +503,7 @@ test('controller: a long gap between frames (tab switch, stall) moves no more th
   const p1 = c.current();
   h.step(2000);
   const p2 = c.current();
-  const capped = easeToward(p1, 1, MAX_DT, TAU.wheel);
+  const capped = easeToward(p1, 1, MAX_DT, TAU.wheel, LEAD_PX.wheel / 5000);
   assert.ok(Math.abs(p2 - capped) < 1e-12, `${p2} vs ${capped}`);
   h.settle();
   assert.equal(c.current(), 1);
@@ -405,7 +519,7 @@ test('controller: frames without a timestamp still ease (one learned frame each)
   const batch = h.env.queue;
   h.env.queue = [];
   batch.forEach((e) => e.cb()); // an engine that passes no rAF timestamp
-  assert.ok(Math.abs(c.current() - easeToward(0, 1, 1000 / 60, TAU.wheel)) < 1e-12);
+  assert.ok(Math.abs(c.current() - easeToward(0, 1, 1000 / 60, TAU.wheel, LEAD_PX.wheel / 5000)) < 1e-12);
   let n = 0;
   while (h.env.queue.length && n++ < 1000) {
     const b = h.env.queue;

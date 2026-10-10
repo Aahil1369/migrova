@@ -52,8 +52,9 @@ export default function UvSources({ active = false, verifiedCount = 0 }) {
   useEffect(() => {
     const el = numberRef.current;
     if (!active || !el) return undefined;
+    // Reduced motion, or flashing past as the book closes (data-sweep): the number as it is.
     const still =
-      el.closest('.jb-stack, .jb-fade') ||
+      el.closest('.jb-stack, .jb-fade, [data-sweep]') ||
       (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     if (still) return undefined;
     return countUp(el, verifiedCount);

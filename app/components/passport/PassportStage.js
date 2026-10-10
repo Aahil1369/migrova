@@ -48,8 +48,9 @@ const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN -> 0
 // A boolean data attribute: present ('') or absent.
 const flag = (el, name, on) => (on ? el.setAttribute(name, '') : el.removeAttribute(name));
 
-// The adaptive quality tier never goes back up within a visit (survives client navigation).
-let sessionTier = 'high';
+// The adaptive quality tier and the step back up each tier has used (quality.js), kept for the
+// visit: client navigation hands the same memory to the next monitor.
+const qualityMemory = { tier: 'high', retried: [] };
 
 const poseFor = (layout, p) => (layout === 'spread' ? desktopPose(TIMELINE, p) : notepadPose(TIMELINE, p));
 
@@ -184,7 +185,9 @@ function flicker(el) {
 }
 
 /** `direction` -1 slides up as it fades, 1 down, 0 (fade layout) fades in place. Fully faded
- *  out, it gets data-gone (on change only), which pauses its loops (the hero's hint arrow). */
+ *  out, it gets data-gone (on change only), which pauses its loops (the hero's hint arrow). While
+ *  it fades it gets data-fading (on change only): its own layer (stage.css), so the fade
+ *  composites instead of repainting it every frame; none at rest, where its text renders as usual. */
 function writeCopy(el, opacity, direction) {
   if (!el) return;
   const o = clamp01(opacity);
@@ -192,27 +195,28 @@ function writeCopy(el, opacity, direction) {
   el.style.transform = `translate3d(0, calc(-50% + ${(direction * (1 - o) * 40).toFixed(1)}px), 0)`;
   el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
   if (el.hasAttribute('data-gone') !== (o === 0)) flag(el, 'data-gone', o === 0);
+  const fading = o > 0 && o < 1;
+  if (el.hasAttribute('data-fading') !== fading) flag(el, 'data-fading', fading);
 }
 
 /**
  * Adaptive quality: while the user scrolls the book (from a second after load), sample rAF frame
- * intervals and step .ps-stage[data-quality] down when they are clearly over budget (quality.js).
- * One attribute write per step, no React state.
+ * intervals and step .ps-stage[data-quality] down on sustained jank, and back up once per tier
+ * after clean scrolling (quality.js). One attribute write per step, no React state.
  */
 function useQualityTier(stageRef, lastP, enabled) {
   useEffect(() => {
     const stage = stageRef.current;
     if (!enabled || !stage || typeof window.requestAnimationFrame !== 'function') return undefined;
     const write = (tier) => {
-      sessionTier = tier;
       stage.dataset.quality = tier;
     };
-    write(sessionTier);
+    write(qualityMemory.tier);
     const monitor = createQualityMonitor({
       raf: (cb) => window.requestAnimationFrame(cb),
       caf: (id) => window.cancelAnimationFrame(id),
       now: () => performance.now(),
-      tier: sessionTier,
+      memory: qualityMemory,
       onChange: write,
     });
     let armed = false;
@@ -292,6 +296,7 @@ const Stage = memo(function Stage({ layout, motion, settled, verifiedCount, leav
     showKey: null,
     turnPage: -1,
     covered: null,
+    sweep: null,
   });
   const lastP = useRef(0);
   const shownKey = useRef('');
@@ -328,6 +333,7 @@ const Stage = memo(function Stage({ layout, motion, settled, verifiedCount, leav
     m.showKey = null;
     m.turnPage = -1;
     m.covered = null;
+    m.sweep = null;
   }, [layout, bookRefs]);
 
   // onFrame: keyed on the mounted DOM (layout from motion + frame), so a switch re-poses at once.
@@ -363,6 +369,8 @@ const Stage = memo(function Stage({ layout, motion, settled, verifiedCount, leav
       const pass = passRef.current;
       if (pass) {
         const f = clamp01((pose.finaleOpacity - 0.3) / 0.7);
+        const fading = f > 0 && f < 1; // its own layer while it slides in (stage.css)
+        if (pass.hasAttribute('data-fading') !== fading) flag(pass, 'data-fading', fading);
         pass.style.opacity = String(+f.toFixed(3));
         pass.style.transform = calm
           ? 'none'
@@ -396,6 +404,14 @@ const Stage = memo(function Stage({ layout, motion, settled, verifiedCount, leav
       }
 
       if (layout === 'spread') {
+        // Closing: the pages that flash past as the leaves sweep back land at once, without their
+        // arrival motion (passport.css, data-sweep; the MRZ and the count-up check for it too).
+        // Written before the page set below, so it is in place when those pages arrive.
+        const wrap = wrapRef.current;
+        if (wrap && pose.sweep !== m.sweep) {
+          m.sweep = pose.sweep;
+          flag(wrap, 'data-sweep', pose.sweep);
+        }
         // The open flap would overhang the right edge: the book slides left by half its width.
         const book = bookRefs.book.current;
         if (book) book.style.transform = bookTransform(pose, m.shiftPx, m.flapPx);
@@ -494,6 +510,7 @@ const Stage = memo(function Stage({ layout, motion, settled, verifiedCount, leav
         el.style.transform = '';
         el.style.pointerEvents = '';
         el.removeAttribute('data-gone');
+        el.removeAttribute('data-fading');
       }
     }
   }, [measure, flow]);

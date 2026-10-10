@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { countryByCode } from '../../../data/countries195';
 import { buildMrz, decodeFrame, DECODE_FRAMES, MRZ_PLAIN } from '../mrz';
@@ -17,6 +17,7 @@ const MRZ_MEANING = 'Machine-readable zone: Plain English. Official sources. No 
  * The two MRZ lines. On each arrival (`active` turning true) they scramble-decode into
  * MRZ_PLAIN, one decodeFrame every 45ms (setTimeout chain, cancelled on deactivation and
  * unmount), and stay decoded; leaving resets them to the raw lines. Tap / click / Enter replays.
+ * Arriving while the book closes (the page only flashes past, data-sweep): decoded at once.
  * `still` (stack layout) or prefers-reduced-motion: raw and plain lines shown together, no motion.
  * Visually 2 x 44 characters; assistive tech gets the plain-English meaning instead.
  */
@@ -25,17 +26,19 @@ function MrzDecode({ lines, active, still }) {
   const quiet = still || reducedMotion;
   const [frame, setFrame] = useState(0);
   const [run, setRun] = useState(0);
+  const ref = useRef(null);
 
   useEffect(() => {
     if (!active || quiet) return undefined;
-    let f = 0;
+    const sweep = !run && Boolean(ref.current?.closest('[data-sweep]'));
+    let f = sweep ? DECODE_FRAMES - 1 : 0;
     let timer = 0;
     const tick = () => {
       f += 1;
       setFrame(f);
       if (f < DECODE_FRAMES) timer = window.setTimeout(tick, FRAME_MS);
     };
-    timer = window.setTimeout(tick, run ? 0 : START_MS);
+    timer = window.setTimeout(tick, run || sweep ? 0 : START_MS);
     return () => {
       window.clearTimeout(timer);
       setFrame(0); // back to the raw lines: the next arrival (or replay) decodes again
@@ -55,6 +58,7 @@ function MrzDecode({ lines, active, still }) {
   const done = frame >= DECODE_FRAMES;
   return (
     <button
+      ref={ref}
       type="button"
       className="jbp-mrz"
       data-decoded={done ? 'true' : 'false'}

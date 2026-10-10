@@ -1105,8 +1105,8 @@ a.uvc-body:focus-visible {
 .jbp-note footer {
   margin-top: calc(var(--u) * 1.2);
 }
-.jbp-founder-route {
-  max-height: calc(var(--u) * 28);
+.jb-founder.jbp-founder-route {
+  width: min(100%, calc(var(--u) * 28 * 3.2)); /* at most 28u tall (the box is 320 x 100) */
 }
 .jbp-founder-caption {
   display: none; /* phones only, see below */
@@ -1168,8 +1168,8 @@ a.uvc-body:focus-visible {
   .jbp-chips li {
     padding: 0 calc(var(--u) * 2);
   }
-  .jbp-founder-route {
-    max-height: calc(var(--u) * 15);
+  .jb-founder.jbp-founder-route {
+    width: min(100%, calc(var(--u) * 15 * 3.2));
   }
   .jbp-founder-route .jb-founder-lbl {
     display: none; /* the caption below says it at a readable size */

@@ -52,7 +52,8 @@ function sharedPose(timeline, q) {
 /**
  * Desktop two-page spread pose. Leaves are indexed 0..3 (cover/notice, data/visas1,
  * visas2/entries, sources/travellers); angles are in degrees, 0 = lying on the right (closed
- * side), -180 = turned over to the left.
+ * side), -180 = turned over to the left. `sweep`: from the start of closing on (finale
+ * included), when every leaf sweeps back over and its pages only flash past.
  */
 export function desktopPose(timeline, p) {
   const q = clamp01(p);
@@ -85,6 +86,7 @@ export function desktopPose(timeline, p) {
     tiltX: noNegZero(CLOSED_TILT_X * shift),
     tiltY: noNegZero(CLOSED_TILT_Y * shift),
     leaves,
+    sweep: closing > 0,
     ...sharedPose(timeline, q),
   };
 }

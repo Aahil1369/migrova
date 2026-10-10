@@ -171,3 +171,78 @@ test('stage.css: the hero hint arrow stops bouncing once the hero has faded out 
   const paused = rulesWith(css, /animation-play-state\s*:\s*paused/).map((r) => r.selector).join(',');
   assert.match(paused, /\.ps-hero\[data-gone\][^,]*\.ps-hint span/);
 });
+
+// ---------------------------------------------------------------- the slow beats (desktop CPU x4)
+
+test('pose.sweep: the spread closing sweep and the finale, nowhere else', () => {
+  const at = (beat, f) => TL.ranges[beat][0] + f * (TL.ranges[beat][1] - TL.ranges[beat][0]);
+  for (let i = 0; i <= 1000; i++) {
+    const p = i / 1000;
+    assert.equal(desktopPose(TL, p).sweep, p > TL.ranges.closing[0], `p ${p}`);
+  }
+  assert.equal(desktopPose(TL, at('spread4', 0.99)).sweep, false);
+  assert.equal(desktopPose(TL, at('closing', 0.01)).sweep, true);
+  assert.equal(desktopPose(TL, 1).sweep, true);
+  // the one-page book has no sweep: observations lifts off the cover, nothing flashes past
+  assert.equal(notepadPose(TL, at('closing', 0.5)).sweep, undefined);
+});
+
+test('CSS: in the sweep, stamps, vignettes and the founder route land without their arrival motion', () => {
+  const css = read('passport.css');
+  const quiet = rulesWith(css, /transition\s*:\s*none/).filter((r) => /\[data-sweep\]/.test(r.selector));
+  // `.ps-bookwrap[data-sweep] :is(a, b)` or `.ps-bookwrap[data-sweep] a` -> [a, b]
+  const covered = quiet
+    .map((r) => r.selector)
+    .filter((sel) => sel.startsWith('.ps-bookwrap[data-sweep] '))
+    .flatMap((sel) => (/:is\(([^)]*)\)$/.exec(sel)?.[1] ?? sel.split(' ').pop()).split(',').map((x) => x.trim()));
+  for (const part of ['.jb-stamp', '.jb-vignette', '.jb-vignette-shadow', '.jb-founder-leg', '.jb-founder-stop']) {
+    assert.ok(covered.includes(part), part);
+  }
+  // The ink bleed takes no time there, but is never switched off: changing animation-name (or
+  // `animation: none`) would replay every landed stamp's bleed when the sweep ends.
+  const bleed = rulesWith(css, /animation/).filter((r) => /\[data-sweep\]/.test(r.selector) && /\.jb-stamp::before/.test(r.selector));
+  assert.equal(bleed.length, 1);
+  assert.match(bleed[0].body, /animation-duration\s*:\s*0s/);
+  assert.doesNotMatch(bleed[0].body, /animation\s*:|animation-name/);
+  // The sweep rules come last, so they win over equally specific arrival rules (founder route).
+  const lastSweep = css.lastIndexOf('[data-sweep]');
+  assert.ok(lastSweep > css.lastIndexOf(".jb-founder[data-drawn='true']"));
+});
+
+test('JS arrivals (MRZ decode, count-up) land at once in the sweep', () => {
+  assert.match(read('pages/UvSources.js'), /closest\([^)]*\[data-sweep\]/);
+  assert.match(read('pages/DataPage.js'), /closest\(\s*'\[data-sweep\]'\s*\)/);
+});
+
+test('FounderRoute: no SVG <text> (laid out again on every frame of a transform); labels and pulse ring are HTML', () => {
+  const src = read('parts/FounderRoute.js').replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, ''); // code only
+  assert.doesNotMatch(src, /<text\b|<tspan\b/);
+  const svg = /<svg[\s\S]*?<\/svg>/.exec(src)[0];
+  assert.doesNotMatch(svg, /jb-founder-pulse|jb-founder-lbl|jb-founder-place/);
+  assert.match(src, /<span className="jb-founder-pulse"/);
+  const css = read('passport.css');
+  const pulse = /@keyframes jb-founder-pulse\s*\{([\s\S]*?)\n\}/.exec(css);
+  assert.ok(pulse);
+  assert.doesNotMatch(pulse[1], /stroke|width|height|left|top|r:/);
+  assert.doesNotMatch(css, /transform-box/);
+  // Place names are sized from the drawing's width (container units), like the SVG text was.
+  assert.match(rulesWith(css, /container-type\s*:\s*inline-size/).map((r) => r.selector).join(','), /\.jb-founder\b/);
+  assert.match(rulesWith(css, /cqw/).map((r) => r.selector).join(','), /\.jb-founder-place/);
+});
+
+test('layers only while things move: hero, finale and boarding pass while they fade; the founder drawing while it draws', () => {
+  const stage = read('stage.css');
+  const copy = rulesWith(stage, /will-change\s*:/).filter((r) => /\.ps-hero|\.ps-finale|\.bp\b/.test(r.selector));
+  const selectors = copy.flatMap((r) => r.selector.split(',').map((s) => s.trim()));
+  assert.deepEqual(selectors.sort(), ['.bp[data-fading]', '.ps-finale[data-fading]', '.ps-hero[data-fading]']);
+  // PassportStage writes data-fading on change only, from the same opacity it writes
+  const src = read('PassportStage.js');
+  assert.match(src, /flag\(el, 'data-fading', fading\)/);
+  assert.match(src, /flag\(pass, 'data-fading', fading\)/);
+  // the founder drawing: a layer only while drawn, only in the animated layouts, never under reduced motion
+  const css = read('passport.css');
+  const art = rulesWith(css, /will-change\s*:/).filter((r) => /jb-founder-art/.test(r.selector));
+  assert.equal(art.length, 1);
+  assert.equal(art[0].selector, ":is(.jb-spread, .jb-notepad, .jb-lite) .jb-founder[data-drawn='true'] .jb-founder-art");
+  assert.ok(css.indexOf('@media (prefers-reduced-motion: no-preference) {\n  :is(.jb-spread, .jb-notepad, .jb-lite) .jb-founder') !== -1);
+});

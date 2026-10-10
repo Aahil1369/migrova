@@ -13,6 +13,13 @@ export const MAX_DT = 50;
  * (half way in ~45ms, 95% in 3 tau). Touch: follows the finger closely.
  */
 export const TAU = Object.freeze({ wheel: 65, touch: 35 });
+/**
+ * How far past the target (px of scroll) the easing aims, per input; it stops on the target.
+ * Wheel: a 100px notch lands in tau * ln(1 + 100 / 10) = ~156ms, instead of creeping the last
+ * pixels for ~0.3s more, so the book is on the scroll position for a good part of each notch
+ * (it finishes at the lead's own pace, 10px / tau = ~0.15px per ms). Touch: plain exponential.
+ */
+export const LEAD_PX = Object.freeze({ wheel: 10, touch: 0 });
 const FRAME_MS = 1000 / 60; // until the display's frame interval is known
 
 // useLayoutEffect warns on the server in older React; the server never runs effects anyway.
@@ -31,12 +38,17 @@ export function scrollTarget({ scrollY, sectionTop, sectionHeight, viewportHeigh
  * alpha = 1 - exp(-dt / tau), dt capped at MAX_DT. Frame-rate independent: after the same time
  * the value is in the same place at 30, 60 or 120 Hz (a constant-speed scroll is trailed by
  * tau minus at most half a frame). Lands exactly on the target inside SNAP. Pure.
+ * `lead` (same units as the values, >= 0): aim that far past the target and stop on it, so a step
+ * lands in finite time, tau * ln(1 + step / lead); still exact at any frame rate, never past the
+ * target, and a steady scroll is trailed by tau - lead / speed (never less than 0).
  */
-export function easeToward(cur, target, dt, tau) {
+export function easeToward(cur, target, dt, tau, lead = 0) {
   const diff = target - cur;
   if (Math.abs(diff) < SNAP) return target;
   const step = dt > 0 ? Math.min(dt, MAX_DT) : 0; // NaN / negative -> no time passed
-  const next = cur + diff * (1 - Math.exp(-step / (tau > 0 ? tau : TAU.wheel)));
+  const ahead = lead > 0 ? Math.sign(diff) * lead : 0;
+  const next = cur + (diff + ahead) * (1 - Math.exp(-step / (tau > 0 ? tau : TAU.wheel)));
+  if ((target - next) * diff <= 0) return target; // reached (the lead never carries it past)
   return Math.abs(target - next) < SNAP ? target : next;
 }
 
@@ -53,7 +65,8 @@ export function easeToward(cur, target, dt, tau) {
  * (call on scroll); remeasure() re-reads the section geometry first (call on resize); stop()
  * tears down. setOnFrame(fn) swaps the callback and, once started, immediately calls it with
  * the current progress: a settled loop would otherwise never feed a new callback.
- * setInput('touch' | 'wheel') picks the easing time constant (TAU) for what scrolls the page.
+ * setInput('touch' | 'wheel') picks the easing time constant (TAU) and lead (LEAD_PX) for what
+ * scrolls the page.
  * The first frame of a run steps one display frame (learned from earlier runs; 1/60s at first).
  */
 export function createScrollProgress({ measure, viewport, isHidden, raf, caf, onFrame }) {
@@ -65,6 +78,8 @@ export function createScrollProgress({ measure, viewport, isHidden, raf, caf, on
   let rafId = 0;
   let stopped = false;
   let tau = TAU.wheel;
+  let leadPx = LEAD_PX.wheel;
+  let range = 1; // px of scroll from progress 0 to 1
   let last = 0; // the previous frame's timestamp within this run (0: none yet)
   let frameMs = FRAME_MS; // the display's frame interval, smoothed
 
@@ -77,6 +92,7 @@ export function createScrollProgress({ measure, viewport, isHidden, raf, caf, on
   };
   const readTarget = () => {
     const v = viewport();
+    range = Math.max(1, height - v.height);
     target = scrollTarget({
       scrollY: v.scrollY,
       sectionTop: top,
@@ -95,7 +111,7 @@ export function createScrollProgress({ measure, viewport, isHidden, raf, caf, on
       }
       last = ts;
     }
-    const next = easeToward(cur, target, dt, tau);
+    const next = easeToward(cur, target, dt, tau, leadPx / range);
     if (next !== cur) emit(next);
     if (cur !== target) rafId = raf(tick);
     else last = 0; // settled: the next run starts fresh
@@ -128,7 +144,9 @@ export function createScrollProgress({ measure, viewport, isHidden, raf, caf, on
       if (!stopped && cur !== null) fn(cur);
     },
     setInput(kind) {
-      tau = kind === 'touch' ? TAU.touch : TAU.wheel;
+      const touch = kind === 'touch';
+      tau = touch ? TAU.touch : TAU.wheel;
+      leadPx = touch ? LEAD_PX.touch : LEAD_PX.wheel;
     },
     current: () => cur,
     stop() {
@@ -148,7 +166,7 @@ export function createScrollProgress({ measure, viewport, isHidden, raf, caf, on
  *   raw scroll position; the last frame lands exactly on the target, then the loop idles.
  * - Time-based easing (easeToward): the same feel at any frame rate. The time constant follows
  *   the last input: a touch (pointerdown from a finger or pen) tightens it, a wheel, mouse or key
- *   press relaxes it (TAU).
+ *   press relaxes it (TAU) and lands each wheel notch in finite time (LEAD_PX).
  * - rAF is paused in hidden tabs, so while `document.hidden` every scroll event snaps and
  *   calls `onFrame` immediately.
  * - The first frame on mount (before paint) snaps to the current scroll position.

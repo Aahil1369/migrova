@@ -185,13 +185,13 @@
 /* The server always renders the spread. Until the layout settles (hydration), show it only
    where it will stay: a frame with room for it (FRAME_QUERIES.roomy in motionMode.js) and motion
    allowed. So no phone, short window or reduced-motion visitor ever sees a 3D book flash. Pure
-   CSS on purpose: a parser-blocking boot script measurably delayed the hero's first paint. */
-.ps-section:not([data-settled]) .jb-spread {
-  visibility: hidden;
-}
-@media (min-width: 894px) and (min-height: 566px) and (prefers-reduced-motion: no-preference) {
+   CSS on purpose: a parser-blocking boot script measurably delayed the hero's first paint.
+   display: none, not visibility: hidden: a hidden spread is still laid out, and that layout
+   (~0.45s on a CPU x4 phone profile) held back the hero's first paint for a book that the
+   settled layout replaces anyway. */
+@media not all and (min-width: 894px) and (min-height: 566px) and (prefers-reduced-motion: no-preference) {
   .ps-section:not([data-settled]) .jb-spread {
-    visibility: visible;
+    display: none;
   }
 }
 .jb-scene {
@@ -1013,28 +1013,67 @@
 
 /* ── Founder route (Observations page) ─────────────────────────────────────── */
 
+/* A 320 x 100 box (the SVG viewBox): the SVG fills it and the HTML place names / pulse ring sit on
+   the same grid (FounderRoute.js). The names are sized in container units, so they scale with the
+   drawing exactly as SVG text did (11 / 320 of its width). */
 .jb-founder {
+  position: relative;
+  flex: none;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 320 / 100;
+  margin-inline: auto;
+}
+.jb-founder-art {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   overflow: visible;
 }
-.jb-founder-lbl text {
+.jb-founder-lbl {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.jb-founder-place {
+  position: absolute;
   font-family: var(--jb-sans, ui-sans-serif, system-ui, sans-serif);
   font-size: 11px;
+  font-size: calc(100cqw * 11 / 320);
   font-weight: 600;
-  fill: #4f5c55; /* 6.6:1 on --page */
+  line-height: 1;
+  white-space: nowrap;
+  color: #4f5c55; /* 6.6:1 on --page */
+  transform: translate(-50%, -0.86em); /* centred on x, baseline on y (text-anchor: middle) */
 }
-.jb-founder-lbl .jb-founder-here {
+.jb-founder-place--start {
+  transform: translateY(-0.86em);
+}
+.jb-founder-here {
   font-family: var(--jb-mono, ui-monospace, monospace);
   font-size: 10px;
+  font-size: calc(100cqw * 10 / 320);
   font-weight: 500;
   letter-spacing: 0.06em;
-  fill: #a94a1f; /* 5.4:1 on --page */
+  color: #a94a1f; /* 5.4:1 on --page */
+}
+.jb-founder-ring {
+  position: absolute;
+  pointer-events: none;
+}
+.jb-founder-pulse {
+  position: absolute;
+  inset: 0;
+  border: 1.4px solid #a94a1f;
+  border-width: calc(100cqw * 1.4 / 320);
+  border-radius: 50%;
 }
 /* Drawing: each leg is pathLength=1, hidden until data-drawn="true" (Observations on screen),
    then drawn by stroke-dashoffset 0.8s each in sequence (2.4s in all); each stop fades in as its
-   leg arrives and the final dot pulses (transform/opacity). Back to "false" resets instantly. */
+   leg arrives and the final dot's HTML ring pulses (transform/opacity, on the compositor). Back to
+   "false" resets instantly. */
 .jb-founder-leg {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -1042,10 +1081,6 @@
 }
 .jb-founder-stop {
   opacity: 0;
-}
-.jb-founder-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
 }
 .jb-founder[data-drawn='true'] .jb-founder-leg {
   stroke-dashoffset: 0;
@@ -1074,6 +1109,13 @@
 @keyframes jb-founder-pulse {
   0% { transform: scale(0.6); opacity: 0.8; }
   100% { transform: scale(2); opacity: 0; }
+}
+/* While drawn, the drawing is its own layer: the stroke-dashoffset draw repaints just the drawing,
+   not the page around it. Only in the layouts that draw it. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.jb-spread, .jb-notepad, .jb-lite) .jb-founder[data-drawn='true'] .jb-founder-art {
+    will-change: transform;
+  }
 }
 /* Reduced motion / stack / fade: the whole route, already drawn. */
 :is(.jb-stack, .jb-fade) .jb-founder-leg,
@@ -1120,4 +1162,17 @@
 }
 .ps-stage[data-quality='low'] :is(.jb-npage > .jb-face, .jb-base > .jb-face, .jb-leaf[data-leaf='0'] > .jb-face--back) {
   box-shadow: none;
+}
+
+/* ── Closing sweep (spread; PassportStage writes .ps-bookwrap[data-sweep] from closing on) ── */
+/* The leaves sweep back over and their pages only flash past: they show their landed state at
+   once (no thunk, drop-in, shadow or route drawing) and cover up again without a transition. The
+   ink bleed takes no time, but is never switched off: a new animation-name would replay every
+   landed stamp's bleed when the sweep ends. Last in the file: wins over the arrival rules. */
+.ps-bookwrap[data-sweep] :is(.jb-stamp, .jb-vignette, .jb-vignette-shadow, .jb-founder-leg, .jb-founder-stop) {
+  transition: none;
+}
+.ps-bookwrap[data-sweep] .jb-stamp::before {
+  animation-duration: 0s;
+  animation-delay: 0s;
 }
