@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Navbar from '../../components/Navbar';
+import ToolShell from '../../components/kit/ToolShell';
+import ToolHeader from '../../components/kit/ToolHeader';
+import VerifiedLinkCard from '../../components/kit/VerifiedLinkCard';
 import Btn from '../../components/ui/Btn';
-import Footnote from '../../components/ui/Footnote';
-import SourceLinkCard from '../../components/SourceLinkCard';
+import UvCheck from '../UvCheck';
+import { uvPair } from '../uvPair';
 import { FOOTNOTES } from '../../lib/pageCopy';
 import { COUNTRIES_195, countryByCode } from '../../data/countries195';
-import { LINK_TYPES, getSources, countVerified, domainList, formatVerified, SOURCES_VERIFIED_AT } from '../../lib/officialSources';
+import { LINK_TYPES, getSources, countVerified, domainOf, domainList, formatVerified, SOURCES_VERIFIED_AT } from '../../lib/officialSources';
+import '../sources.css';
 
 export const dynamicParams = false;
 
@@ -24,57 +27,89 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// One link type as a card: verified links are real links (VerifiedLinkCard); the rest stay dashed
+// and are never clickable.
+function SourceCard({ type, link }) {
+  if (link?.status === 'verified' && link.url) {
+    return <VerifiedLinkCard href={link.url} title={type.label} domain={domainOf(link.url)} note={link.name} verifiedAt={link.verifiedAt} />;
+  }
+  if (link?.status === 'not_applicable') {
+    return <VerifiedLinkCard verified={false} title={`${type.label} — not applicable`} note={link.note} />;
+  }
+  return <VerifiedLinkCard verified={false} title={type.label} />;
+}
+
+// Server component: the sources table is read here; the client UvCheck only gets the pair.
 export default async function CountrySourcesPage({ params }) {
   const { code } = await params;
   const country = countryByCode(code);
   const entry = getSources(code);
-  if (!country || !entry) notFound();
+  const pair = uvPair(code);
+  if (!country || !entry || !pair) notFound();
   const verified = countVerified(entry);
+  const checked = formatVerified(SOURCES_VERIFIED_AT);
+
+  const header = (
+    <ToolHeader
+      code="S-SOURCES"
+      name={`OFFICIAL SOURCES · ${country.region}`}
+      title={
+        <>
+          <span aria-hidden="true">{country.flag}</span> Official sites for
+        </>
+      }
+      accent={`${country.name}.`}
+      sub={
+        verified > 0
+          ? `${verified} of ${LINK_TYPES.length} official government links verified on ${checked}.`
+          : `We haven't been able to verify official links for ${country.name} yet. We'd rather show nothing than a guess.`
+      }
+    />
+  );
 
   return (
-    <div className="min-h-screen bg-paper-bg text-paper-ink">
-      <Navbar />
+    <ToolShell wide header={header}>
+      <div className="src-page">
+        <Link href="/sources" className="src-back">← All countries</Link>
 
-      <header className="max-w-[1280px] mx-auto px-6 sm:px-10 pt-14 pb-12">
-        <Link href="/sources" className="font-mono text-[11px] tracking-[0.12em] uppercase text-paper-ink-sub hover:text-accent">← All countries</Link>
-        <div className="mt-8 font-mono text-[11px] tracking-[0.18em] uppercase text-paper-ink-sub flex items-center gap-3">
-          <span className="inline-block w-7 h-px bg-paper-ink-sub" />
-          <span>§ Official Sources · {country.region}</span>
-        </div>
-        <h1 className="mt-5 font-display text-[48px] sm:text-[64px] leading-[1] tracking-[-0.02em] font-normal">
-          <span aria-hidden className="mr-3">{country.flag}</span>{country.name}
-        </h1>
-        <p className="mt-5 text-[16px] leading-[1.55] text-paper-ink-dim max-w-[60ch]">
-          {verified > 0
-            ? `${verified} of 6 official government links verified on ${formatVerified(SOURCES_VERIFIED_AT)}.`
-            : `We haven't been able to verify official links for ${country.name} yet. We'd rather show nothing than a guess.`}
-        </p>
-      </header>
-
-      <main className="max-w-[1280px] mx-auto px-6 sm:px-10 pb-24 border-t border-paper-rule">
-        {entry.govDomains.length > 0 && (
-          <div className="mt-12 border border-accent/40 bg-paper-bg-alt px-6 py-5 max-w-[820px]">
-            <div className="font-mono text-[10px] tracking-[0.12em] text-accent mb-2">// HOW TO SPOT THE REAL SITE</div>
-            <p className="text-[14px] leading-[1.55] text-paper-ink">
-              Official {country.name} government sites end in <span className="font-medium">{domainList(entry.govDomains)}</span>.
+        <section aria-labelledby="src-uv-h">
+          <p className="src-kicker">UV check</p>
+          <h2 id="src-uv-h" className="src-h2">Real site or look-alike?</h2>
+          <p className="src-text">
+            Look-alike &quot;visa service&quot; sites copy the official design and charge extra fees. Under the lamp, only one of these is the real thing.
+          </p>
+          <UvCheck real={pair.real} fake={pair.fake} name={country.name} />
+          {entry.govDomains.length > 0 && (
+            <p className="src-spot">
+              Official {country.name} government sites end in <strong>{domainList(entry.govDomains)}</strong>. If the address
+              doesn&apos;t match, don&apos;t pay.
             </p>
-            <p className="mt-1.5 text-[13px] leading-[1.55] text-paper-ink-dim">
-              Look-alike &quot;visa service&quot; sites copy official designs and charge extra fees. If the address doesn&apos;t match, don&apos;t pay.
-            </p>
-          </div>
-        )}
+          )}
+        </section>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {LINK_TYPES.map((t) => <SourceLinkCard key={t.key} type={t.key} link={entry.links[t.key]} />)}
-        </div>
+        <section aria-labelledby="src-links-h">
+          <p className="src-kicker">{`${verified} of ${LINK_TYPES.length} verified · checked ${checked}`}</p>
+          <h2 id="src-links-h" className="src-h2">All official links</h2>
+          <ul className="src-links">
+            {LINK_TYPES.map((t) => (
+              <li key={t.key}>
+                <SourceCard type={t} link={entry.links[t.key]} />
+              </li>
+            ))}
+          </ul>
+          <Link href="/sources#how-we-verify" className="src-more">How we verify a link →</Link>
+        </section>
 
-        <div className="mt-12 flex flex-wrap gap-3">
+        <div className="src-ctas">
           <Btn href={`/visa?to=${country.code}`} variant="primary">Check a visa for {country.name} →</Btn>
           <Btn href={`/relocate?dest=${encodeURIComponent(country.name)}`} variant="secondary">Relocation guide</Btn>
         </div>
 
-        <Footnote>{FOOTNOTES.sources}</Footnote>
-      </main>
-    </div>
+        <p className="src-footnote">
+          <span className="src-footnote-mark" aria-hidden="true">*</span>
+          {FOOTNOTES.sources}
+        </p>
+      </div>
+    </ToolShell>
   );
 }

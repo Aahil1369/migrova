@@ -1,5 +1,6 @@
 // sourcesFormat, not lib/officialSources: same helper, without the 195-country table.
 import { formatVerified } from '../../lib/sourcesFormat.js';
+import { CheckGlyph } from './Glyphs';
 import './kit.css';
 
 const UNVERIFIED_NOTE = 'Not verified yet. Check the web address carefully before you pay anything.';
@@ -32,7 +33,7 @@ export function VerifiedLinkCard({ href, title, domain, note, verifiedAt, verifi
     <a className="kit-vlink" href={href} target="_blank" rel="noopener noreferrer">
       {text}
       <span className="kit-vlink-seal" aria-hidden="true">
-        ✓ VERIFIED
+        <CheckGlyph /> VERIFIED
       </span>
       <span className="sr-only"> (verified official site, opens in a new tab)</span>
     </a>

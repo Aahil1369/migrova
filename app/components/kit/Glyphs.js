@@ -1,4 +1,4 @@
-// Tiny inline icons for symbols that would otherwise need a system fallback font (✈ ✂ ✕).
+// Tiny inline icons for symbols that would otherwise need a system fallback font (✈ ✂ ✓ ✕).
 // Emoji-capable characters make the browser load a large emoji/symbol font during the first
 // layout, which delayed the homepage's first paint (LCP) by ~0.4s on the throttled profile;
 // these draw the same marks with no font involved. Decorative: aria-hidden, sized 1em,
@@ -33,6 +33,15 @@ export function ScissorsGlyph({ className = '' }) {
         <circle cx="6" cy="18" r="3" />
         <path d="M8.6 7.6 20 18M8.6 16.4 20 6" />
       </g>
+    </svg>
+  );
+}
+
+/** ✓ */
+export function CheckGlyph({ className = '' }) {
+  return (
+    <svg {...base} className={`jb-glyph${className ? ` ${className}` : ''}`}>
+      <path d="M4.5 12.5l5 5L19.5 6.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

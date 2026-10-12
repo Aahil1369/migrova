@@ -2,10 +2,15 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import Chip from '../components/kit/Chip';
 
-// rows: [{ code, name, flag, region, verified }] — computed on the server so
-// the full sources dataset isn't shipped to the browser.
-export default function SourcesIndex({ rows, regions }) {
+/**
+ * The /sources directory: a search box, the regions as passport tab dividers (Chips: buttons with
+ * aria-pressed) and one paper row per country with its "n / 6 VERIFIED" seal.
+ * rows: [{ code, name, flag, region, verified }] and `of` (link types per country) are computed on
+ * the server, so the sources table itself never reaches the browser.
+ */
+export default function SourcesIndex({ rows, regions, of }) {
   const [query, setQuery] = useState('');
   const [region, setRegion] = useState('All');
 
@@ -14,41 +19,45 @@ export default function SourcesIndex({ rows, regions }) {
     return rows.filter((r) => (region === 'All' || r.region === region) && (!q || r.name.toLowerCase().includes(q)));
   }, [rows, query, region]);
 
-  const pill = (active) => `px-3 py-1.5 font-mono text-[10px] tracking-[0.1em] uppercase border transition-colors ${
-    active ? 'bg-paper-ink text-paper-bg border-paper-ink' : 'border-paper-rule text-paper-ink-sub hover:border-paper-ink hover:text-paper-ink'}`;
-
   return (
-    <div>
-      <div className="flex flex-col lg:flex-row lg:items-center gap-4 mb-8">
-        <input
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search a country…"
-          aria-label="Search a country"
-          className="kit-input lg:max-w-[360px]"
-        />
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by region">
-          {['All', ...regions].map((r) => (
-            <button key={r} type="button" onClick={() => setRegion(r)} className={pill(region === r)} aria-pressed={region === r}>{r}</button>
-          ))}
-        </div>
+    <div className="src-index">
+      <label htmlFor="src-search" className="src-kicker src-search-label">Search a country</label>
+      <input
+        id="src-search"
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Country name…"
+        autoComplete="off"
+        className="kit-input src-search"
+      />
+
+      <div className="src-tabs" role="group" aria-label="Filter by region">
+        {['All', ...regions].map((r) => (
+          <Chip key={r} pressed={region === r} onClick={() => setRegion(r)}>
+            {r}
+          </Chip>
+        ))}
       </div>
 
-      <p className="font-mono text-[10px] tracking-[0.12em] uppercase text-paper-ink-sub mb-3">{shown.length} {shown.length === 1 ? 'country' : 'countries'}</p>
+      <p className="src-count" role="status">
+        {shown.length} {shown.length === 1 ? 'country' : 'countries'}
+      </p>
       {shown.length === 0 ? (
-        <p className="py-10 text-[14px] text-paper-ink-dim">No country matches “{query}”.</p>
+        <p className="src-empty">No country matches “{query.trim()}”{region === 'All' ? '' : ` in ${region}`}.</p>
       ) : (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-paper-rule">
+        <ul className="src-rows">
           {shown.map((r) => (
-            <li key={r.code} className="border-r border-b border-paper-rule">
-              <Link href={`/sources/${r.code}`} className="group flex items-center justify-between gap-3 px-5 py-4 bg-paper-bg hover:bg-paper-bg-alt transition-colors">
-                <span className="flex items-center gap-3 min-w-0">
-                  <span className="text-[20px]" aria-hidden>{r.flag}</span>
-                  <span className="text-[15px] text-paper-ink group-hover:text-accent truncate">{r.name}</span>
+            <li key={r.code}>
+              {/* No viewport prefetch: scrolling 195 rows would fetch every country page that
+                  passes by (several requests each, on phone data). A tap fetches the one it needs. */}
+              <Link href={`/sources/${r.code}`} prefetch={false} className="src-row">
+                <span className="src-row-flag" aria-hidden="true">{r.flag}</span>
+                <span className="src-row-name">{r.name}</span>
+                <span className="src-row-seal" data-none={r.verified ? undefined : ''} aria-hidden="true">
+                  {r.verified} / {of} VERIFIED
                 </span>
-                <span className={`font-mono text-[10px] tracking-[0.08em] flex-shrink-0 ${r.verified ? 'text-[#5a7d3f]' : 'text-paper-ink-sub'}`}>
-                  {r.verified}/6 VERIFIED
-                </span>
+                <span className="sr-only">{`, ${r.verified} of ${of} official links verified`}</span>
               </Link>
             </li>
           ))}

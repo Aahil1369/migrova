@@ -1,11 +1,12 @@
 import ToolShell from '../components/kit/ToolShell';
 import ToolHeader from '../components/kit/ToolHeader';
-import SectionHead from '../components/ui/SectionHead';
-import Footnote from '../components/ui/Footnote';
+import PassportCard from '../components/kit/PassportCard';
 import SourcesIndex from './SourcesIndex';
+import SealCount from './SealCount';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { COUNTRIES_195, REGIONS } from '../data/countries195';
-import { getSources, countVerified, formatVerified, SOURCES_VERIFIED_AT } from '../lib/officialSources';
+import { LINK_TYPES, getSources, countVerified, formatVerified, SOURCES_VERIFIED_AT } from '../lib/officialSources';
+import './sources.css';
 
 export const metadata = {
   title: 'Official immigration websites for every country — Migrova',
@@ -19,6 +20,7 @@ const CHECKS = [
   { n: '04', title: 'Someone else agrees', body: "An independent source backs it up: Wikidata lists the site, or another official government page links to it." },
 ];
 
+// Server component: the sources table is read here, and only per-country counts reach the client.
 export default function SourcesPage() {
   const rows = [...COUNTRIES_195]
     .sort((a, b) => a.name.localeCompare(b.name))
@@ -27,30 +29,44 @@ export default function SourcesPage() {
 
   return (
     <ToolShell wide header={<ToolHeader {...HERO_COPY.sources} />}>
-        <p className="pt-4 font-mono text-[12px] tracking-[0.12em] uppercase text-paper-ink-sub">
-          195 countries · {totalVerified} verified links · checked {formatVerified(SOURCES_VERIFIED_AT)}
-        </p>
-        <section className="pt-6 pb-14">
-          <SourcesIndex rows={rows} regions={REGIONS} />
+      <div className="src-page">
+        <PassportCard className="src-tally" aria-labelledby="src-tally-h">
+          <SealCount total={totalVerified} />
+          <h2 id="src-tally-h" className="src-tally-h">{totalVerified} verified government links</h2>
+          <p className="src-text">
+            Across {COUNTRIES_195.length} countries, checked {formatVerified(SOURCES_VERIFIED_AT)}. Where we couldn&apos;t confirm a link, we leave it empty.
+          </p>
+        </PassportCard>
+
+        <section aria-labelledby="src-find-h">
+          <p className="src-kicker">The directory</p>
+          <h2 id="src-find-h" className="src-h2">Find a country</h2>
+          <SourcesIndex rows={rows} regions={REGIONS} of={LINK_TYPES.length} />
         </section>
 
-        <section className="py-14 border-t border-paper-rule">
-          <SectionHead number={1} kicker="HOW WE VERIFY" title="Four checks. No exceptions." sub="A link is marked Verified only when it passes every check. If it doesn't, we say so — we never fill the gap with a guess." />
-          <ol className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-paper-rule">
+        <section id="how-we-verify" className="src-how" aria-labelledby="src-how-h">
+          <p className="src-kicker">How we verify</p>
+          <h2 id="src-how-h" className="src-h2">Four checks. No exceptions.</h2>
+          <p className="src-text">A link is marked Verified only when it passes every check. If it doesn&apos;t, we say so — we never fill the gap with a guess.</p>
+          <ol className="src-checks">
             {CHECKS.map((c) => (
-              <li key={c.n} className="p-7 border-r border-b border-paper-rule">
-                <div className="font-mono text-[10px] tracking-[0.12em] text-accent mb-3">№ {c.n}</div>
-                <div className="font-display text-[22px] leading-[1.15] mb-2">{c.title}</div>
-                <p className="text-[13px] leading-[1.55] text-paper-ink-dim">{c.body}</p>
-              </li>
+              <PassportCard as="li" key={c.n} className="src-check">
+                <span className="src-check-n" aria-hidden="true">NO. {c.n}</span>
+                <h3 className="src-check-title">{c.title}</h3>
+                <p className="src-check-body">{c.body}</p>
+              </PassportCard>
             ))}
           </ol>
-          <p className="mt-6 text-[13px] leading-[1.55] text-paper-ink-dim max-w-[70ch]">
+          <p className="src-text src-note">
             A handful of genuine portals run on non-government addresses (for example, a tourism authority&apos;s e-visa site). We accept those only when an official government page links to them.
           </p>
         </section>
 
-        <Footnote>{FOOTNOTES.sources}</Footnote>
+        <p className="src-footnote">
+          <span className="src-footnote-mark" aria-hidden="true">*</span>
+          {FOOTNOTES.sources}
+        </p>
+      </div>
     </ToolShell>
   );
 }

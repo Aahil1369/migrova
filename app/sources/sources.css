@@ -1,0 +1,460 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Official Sources (/sources, /sources/[code]) on the warm --ground: the hologram tally, the
+   directory (region tab dividers, paper rows with an "n / 6 VERIFIED" seal), "How we verify" as
+   paper cards, and the country page's UV check (the signature moment: a violet lamp sweeps each
+   site card once and wipes its verdict in). Text colours are tested >= 4.5:1 on --page, --ground
+   and the UV band (scripts/site/__tests__/sourcesCss.test.mjs). Only transform / opacity animate,
+   and only under prefers-reduced-motion: no-preference; no CSS trig.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.src-page {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 8px;
+}
+
+.src-kicker {
+  display: block;
+  margin: 0 0 6px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.src-h2 {
+  margin: 0 0 10px;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--page-ink);
+}
+.src-text {
+  max-width: 64ch;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+
+/* ── The tally: hologram seal + the total as text ─────────────────────────── */
+
+/* Phones: the seal beside the heading, the sentence full width below; wider: the seal beside both. */
+.src-tally {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px 16px;
+}
+.src-tally > .src-text { grid-column: 1 / -1; }
+.src-seal {
+  --u: 2.8px; /* the kit seal is 38 units across */
+  display: block;
+}
+/* The ring's slow turn is an ambient loop: it rests while the seal is off screen (SealCount). */
+.src-seal[data-offscreen] .jb-seal-ring { animation-play-state: paused; }
+.src-tally-h {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--page-ink);
+}
+
+/* ── The directory ─────────────────────────────────────────────────────────── */
+
+.src-search-label { margin-top: 12px; }
+.src-search {
+  max-width: 420px;
+  -webkit-appearance: none; /* iOS draws type="search" as its own rounded field otherwise */
+  appearance: none;
+}
+
+/* The regions as passport tab dividers: Chips sitting on a rule, the pressed one inked. A strip
+   that scrolls sideways on phones (the page itself never does). */
+.src-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 20px 0 0;
+  padding: 6px 2px 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  border-bottom: 2px solid var(--page-ink);
+}
+.src-tabs::-webkit-scrollbar { display: none; }
+.src-tabs .kit-chip {
+  flex: none;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid rgba(31, 42, 36, 0.3);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: #f6eedb;
+  font: 500 14px/1.2 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.src-tabs .kit-chip[aria-pressed='true'] {
+  border-color: var(--page-ink);
+  background: var(--page-ink);
+  color: var(--page);
+}
+.src-tabs .kit-chip:focus-visible { outline-offset: -5px; }
+.src-tabs .kit-chip[aria-pressed='true']:focus-visible { outline-color: var(--page); }
+
+.src-count {
+  margin: 14px 0 0;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.src-empty {
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+
+/* Compact paper rows. Off-screen rows skip rendering (content-visibility); the paper is on the
+   <li> itself so its shadow is not clipped by the row's paint containment. */
+.src-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.src-rows > li {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 60px;
+  border-radius: 12px;
+  background: var(--page);
+  box-shadow: 0 1px 2px rgba(31, 42, 36, 0.1), inset 0 0 0 1px rgba(31, 42, 36, 0.06);
+}
+.src-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 10px 14px;
+  border-radius: inherit;
+  color: var(--page-ink);
+  text-decoration: none;
+}
+.src-row:hover .src-row-name {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.src-row:focus-visible { outline: 2px solid var(--page-ink); outline-offset: -3px; }
+.src-row-flag {
+  flex: none;
+  font-size: 22px;
+  line-height: 1;
+}
+.src-row-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+/* The "n / 6 VERIFIED" seal: decorative (the row says it in words for screen readers). */
+.src-row-seal {
+  flex: none;
+  padding: 3px 8px;
+  border: 1.5px solid #1f6f47;
+  border-radius: 999px;
+  font: 500 12px/1.3 var(--jb-mono);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: #1f6f47;
+  mix-blend-mode: multiply;
+  transform: rotate(-3deg);
+}
+.src-row-seal[data-none] {
+  border-style: dashed;
+  border-color: rgba(31, 42, 36, 0.45);
+  color: #5a6b4a;
+}
+
+/* ── How we verify ─────────────────────────────────────────────────────────── */
+
+.src-checks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.src-check-n {
+  display: block;
+  margin: 0 0 8px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  color: #a94a1f;
+}
+.src-check-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.src-check-body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.src-note { margin-top: 16px; }
+.src-how { scroll-margin-top: 88px; } /* /sources#how-we-verify lands below the sticky navbar */
+
+/* ── Country page ──────────────────────────────────────────────────────────── */
+
+.src-back,
+.src-more {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 44px;
+  border-radius: 4px;
+  color: var(--page-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+.src-back {
+  margin-bottom: -24px; /* sits close to the first section */
+  font: 500 14px/1.4 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.src-more {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.src-back:focus-visible,
+.src-more:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
+
+.src-spot {
+  max-width: 64ch;
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  border: 1.5px dashed rgba(31, 42, 36, 0.35);
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.src-spot strong { color: var(--page-ink); }
+
+.src-links {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.src-links > li { display: flex; }
+.src-links > li > .kit-vlink { flex: 1; }
+
+.src-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ── The UV check ──────────────────────────────────────────────────────────── */
+
+.uv {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+.uv-none {
+  max-width: 64ch;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.uv-none strong { color: var(--page-ink); }
+.uv-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+/* A site card: the lamp (beam) and the verdict's wipe travel inside its overflow: hidden. */
+.uv-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: space-between; /* side by side, the two verdict strips line up at the bottom */
+  gap: 4px 12px;
+  padding: 16px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 12px;
+  background: var(--page);
+  color: var(--page-ink);
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(31, 42, 36, 0.08), 0 4px 12px rgba(31, 42, 36, 0.12);
+}
+a.uv-card:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 3px; }
+.uv-face {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+.uv-title {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.uv-domain {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 16px/1.35 var(--jb-mono);
+  color: #3d443a;
+  overflow-wrap: anywhere;
+}
+.uv-lock {
+  flex: none;
+  width: 13px;
+  height: 13px;
+}
+.uv-mark {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  padding: 3px 8px;
+  border: 2px solid;
+  border-radius: 999px;
+  font: 500 12px/1.3 var(--jb-mono);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.uv-mark--ok { color: #1f6f47; }
+.uv-mark--fake { color: #a94a1f; }
+/* The strip of "UV ink": faint lilac until the lamp passes; the violet band holding the verdict
+   wipes in (the band slides in while its text slides the other way, so the text stays put). */
+.uv-strip {
+  grid-column: 1 / -1;
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ece6f6;
+}
+.uv-band {
+  display: block;
+  overflow: hidden; /* clips its own text while the two slide against each other */
+  background: #2a1e5c;
+}
+/* Same width as the band (padding here, not on the band), so the two offsets cancel exactly. */
+.uv-band-in {
+  display: block;
+  padding: 9px 12px;
+}
+.uv-verdict {
+  display: block;
+  font: 500 14px/1.4 var(--jb-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.uv-card--real .uv-verdict { color: #b8f5c8; }
+.uv-card--fake .uv-verdict { color: #ffb4a0; }
+.uv-beam { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .uv-band { transform: translateX(-101%); }
+  .uv-band-in { transform: translateX(101%); }
+  /* The lamp: a violet wash with a bright leading edge, crossing the card left to right. */
+  .uv-beam {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg,
+      rgba(106, 67, 168, 0) 0%,
+      rgba(106, 67, 168, 0.08) 40%,
+      rgba(106, 67, 168, 0.3) 88%,
+      rgba(214, 200, 255, 0.95) 97%,
+      rgba(155, 123, 255, 0) 100%);
+  }
+  .uv-card[data-lit='true'] .uv-band { animation: uv-wipe 700ms linear both; }
+  .uv-card[data-lit='true'] .uv-band-in { animation: uv-wipe-text 700ms linear both; }
+  .uv-card[data-lit='true'] .uv-beam { animation: uv-lamp 1400ms linear both; }
+  .uv-card--fake[data-lit='true'] :is(.uv-band, .uv-band-in, .uv-beam) { animation-delay: 350ms; }
+  @media (hover: hover) {
+    a.uv-card { transition: transform 150ms var(--ease); }
+    a.uv-card:hover { transform: translateY(-1px); }
+  }
+}
+@keyframes uv-wipe {
+  from { transform: translateX(-101%); }
+  to { transform: none; }
+}
+@keyframes uv-wipe-text {
+  from { transform: translateX(101%); }
+  to { transform: none; }
+}
+@keyframes uv-lamp {
+  0% { transform: translateX(-100%); opacity: 1; }
+  50% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.src-footnote {
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(31, 42, 36, 0.25);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #3d443a;
+}
+.src-footnote-mark {
+  margin-right: 6px;
+  font: 700 14px/1 var(--jb-mono);
+  color: #a94a1f;
+}
+
+@media (min-width: 640px) {
+  .src-h2 { font-size: 30px; }
+  .src-tally { grid-template-rows: auto auto; column-gap: 24px; row-gap: 6px; }
+  .src-tally > .src-seal { grid-row: 1 / span 2; }
+  .src-tally > .src-tally-h { align-self: end; }
+  .src-tally > .src-text { grid-column: 2; align-self: start; }
+  .src-seal { --u: 4px; }
+  .src-tally-h { font-size: 26px; }
+  .src-rows,
+  .src-checks,
+  .src-links,
+  .uv-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .uv-card { padding: 18px 20px; }
+}
+@media (min-width: 1024px) {
+  .src-rows,
+  .src-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .src-checks { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
