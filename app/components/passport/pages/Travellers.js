@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Stamp from '../parts/Stamp';
-import { STAMP_INKS } from '../parts/stampInks';
+import Stamp from '../../kit/Stamp';
+import { STAMP_INKS } from '../../kit/stampInks';
 import { clampStory } from './storyText';
 import './pages.css';
 

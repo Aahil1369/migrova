@@ -1,5 +1,5 @@
 import { STAMP_INKS, DEFAULT_STAMP_INK } from './stampInks.js';
-import '../passport.css';
+import './kit.css';
 
 export { STAMP_INKS };
 

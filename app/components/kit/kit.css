@@ -1,0 +1,457 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Passport kit: the presentational parts shared by the homepage Journey Book and the tool
+   pages (sky band, visa vignette, entry stamp, hologram seal). Imported by the kit components
+   that use it; nothing here depends on the homepage stage (PassportStage and friends).
+   Sizes use --u (the page unit; 4px when no book sets it). Only transform/opacity are ever
+   animated. Load order: the book's layout overrides in passport/passport.css tie with these
+   rules on specificity and win by coming later, so kit.css must be imported before it.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── NightSky ──────────────────────────────────────────────────────────────── */
+
+.jb-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--night-0);
+}
+.jb-sky-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity;
+}
+.jb-sky-night {
+  opacity: 1;
+  will-change: auto;
+  background: radial-gradient(ellipse at 70% 35%, var(--night-2) 0%, var(--night-1) 50%, var(--night-0) 100%);
+}
+.jb-sky-predawn {
+  background:
+    radial-gradient(ellipse 90% 45% at 60% 112%, rgba(199, 118, 106, 0.45), rgba(199, 118, 106, 0) 70%),
+    linear-gradient(180deg, #0f1a1f 0%, #1d2b52 50%, var(--dawn-1) 100%);
+}
+.jb-sky-sunrise {
+  background:
+    radial-gradient(circle at 78% 104%, rgba(255, 226, 176, 0.95), rgba(240, 164, 110, 0) 42%),
+    linear-gradient(180deg, var(--dawn-1) 0%, #c7766a 40%, var(--dawn-2) 66%, var(--dawn-3) 100%);
+}
+.jb-sky-day {
+  background: linear-gradient(180deg, var(--dawn-3) 0%, var(--page) 58%);
+}
+.jb-sky-dim {
+  /* opacity 1 = full UV-check darkness; write pose.uvDim straight in */
+  background: radial-gradient(ellipse at 50% 50%, rgba(22, 12, 48, 0.62), rgba(4, 5, 10, 0.88));
+}
+/* The star field: three pre-rendered SVG layers of 2-3px dots (starField() in kit/starField.js),
+   each twinkling as a whole (opacity only, its own rhythm), instead of 64 animated elements. */
+.jb-starfield {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: #ece6d2;
+  opacity: 0.45;
+  animation: jb-twinkle 4s ease-in-out infinite;
+}
+.jb-starfield--2 {
+  animation-duration: 5.2s;
+  animation-delay: -1.7s;
+}
+.jb-starfield--3 {
+  animation-duration: 6.4s;
+  animation-delay: -3.9s;
+}
+.jb-globe {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(900px, 130vmax);
+  height: min(900px, 130vmax);
+  margin: calc(min(900px, 130vmax) / -2) 0 0 calc(min(900px, 130vmax) / -2);
+  opacity: 0.12;
+  animation: jb-spin 120s linear infinite;
+}
+@keyframes jb-twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.75; }
+}
+@keyframes jb-spin {
+  to { transform: rotate(360deg); }
+}
+.jb-sky--still .jb-starfield,
+.jb-sky--still .jb-globe {
+  animation: none;
+}
+/* Lite keeps the (cheap) twinkle; the big turning globe stays still. */
+.jb-sky--lite .jb-globe {
+  animation: none;
+}
+/* Unseen loops pause: the stars and globe once the opaque sunrise layer covers them
+   (data-covered) or the stage is scrolled away (data-offscreen). Whoever owns the sky toggles
+   both on change only (the homepage stage does; a tool page's header band can too). */
+.jb-sky:is([data-covered], [data-offscreen]) :is(.jb-starfield, .jb-globe) {
+  animation-play-state: paused;
+}
+
+/* ── Visa vignette (tool link) ─────────────────────────────────────────────── */
+
+.jb-vignette {
+  --vg-a: #e7f0d6;
+  --vg-b: #f5e8d6;
+  --vg-ink: #2f6b47;
+  position: relative;
+  display: block;
+  min-height: max(48px, calc(var(--u, 4px) * 24));
+  color: var(--page-ink);
+  text-decoration: none;
+  border-radius: calc(var(--u, 4px) * 1.6);
+  transform: none;
+  transition: transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.jb-vignette[data-applied='false'] {
+  transform: translate(8px, -14px) rotate(4deg);
+}
+.jb-vignette[data-type='V-VISA'] { --vg-a: #f8e3d2; --vg-b: #eef0dc; --vg-ink: #9a4a22; }
+.jb-vignette[data-type='R-RELOCATE'] { --vg-a: #dde8f2; --vg-b: #f3ead8; --vg-ink: #2d5b8a; }
+.jb-vignette[data-type='L-COUNSEL'] { --vg-a: #e7e0f3; --vg-b: #f4e9df; --vg-ink: #6a4a9c; }
+.jb-vignette[data-type='S-SOURCES'] { --vg-a: #f1e7c6; --vg-b: #e6efda; --vg-ink: #806419; }
+.jb-vignette-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 24px 30px rgba(0, 0, 0, 0.25), 0 8px 12px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transition: opacity 450ms ease;
+  pointer-events: none;
+}
+.jb-vignette[data-applied='false'] .jb-vignette-shadow {
+  opacity: 1;
+}
+.jb-vignette-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: inherit;
+  overflow: hidden;
+  border-radius: inherit;
+  padding: calc(var(--u, 4px) * 2.4) calc(var(--u, 4px) * 11) calc(var(--u, 4px) * 2.4) calc(var(--u, 4px) * 3);
+  background: linear-gradient(135deg, var(--vg-a), var(--vg-b));
+  box-shadow: 0 1px 2px rgba(31, 42, 36, 0.12), inset 0 0 0 1px rgba(31, 42, 36, 0.08);
+}
+.jb-vignette-rosette {
+  position: absolute;
+  right: calc(var(--u, 4px) * 9);
+  top: 50%;
+  width: calc(var(--u, 4px) * 18);
+  height: calc(var(--u, 4px) * 18);
+  margin-top: calc(var(--u, 4px) * -9);
+  background-size: 100% 100%;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.jb-vignette-letter {
+  position: absolute;
+  right: calc(var(--u, 4px) * 11.5);
+  bottom: calc(var(--u, 4px) * -2.5);
+  font-weight: 800;
+  font-size: calc(var(--u, 4px) * 15);
+  line-height: 1;
+  color: var(--vg-ink);
+  opacity: 0.1;
+  pointer-events: none;
+}
+.jb-vignette-type,
+.jb-vignette-mrz {
+  position: relative;
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  color: #4f5c55;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+.jb-vignette-type {
+  font-size: max(9px, calc(var(--u, 4px) * 2.1));
+  letter-spacing: 0.14em;
+}
+.jb-vignette-type b {
+  color: var(--vg-ink);
+  font-weight: 500;
+}
+.jb-vignette-title {
+  position: relative;
+  display: block;
+  margin: calc(var(--u, 4px) * 0.6) 0 calc(var(--u, 4px) * 0.4);
+  font-weight: 800;
+  font-size: max(16px, calc(var(--u, 4px) * 4.2));
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.jb-vignette-desc {
+  position: relative;
+  display: block;
+  font-size: max(var(--jb-body-min, 12px), calc(var(--u, 4px) * 2.8));
+  line-height: 1.4;
+  color: #3d4a43;
+}
+.jb-vignette-mrz {
+  display: block;
+  margin-top: calc(var(--u, 4px) * 1.4);
+  font-size: max(8px, calc(var(--u, 4px) * 1.9));
+  letter-spacing: 0.1em;
+}
+.jb-vignette-go {
+  position: absolute;
+  right: calc(var(--u, 4px) * 9.5);
+  top: calc(var(--u, 4px) * 2.2);
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  font-size: max(9px, calc(var(--u, 4px) * 2.1));
+  letter-spacing: 0.12em;
+  color: var(--vg-ink);
+}
+.jb-vignette-holo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: calc(var(--u, 4px) * 7);
+  overflow: hidden;
+  opacity: 0.85;
+  pointer-events: none;
+}
+.jb-vignette-holo > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 300%;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0) 55%) 0 0 / 100% 33.334%,
+    linear-gradient(180deg, #b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d) 0 0 / 100% 33.334%;
+}
+.jb-vignette:hover .jb-vignette-holo > span,
+.jb-vignette:focus-visible .jb-vignette-holo > span {
+  animation: jb-holo 1.4s linear infinite;
+}
+@keyframes jb-holo {
+  to { transform: translateY(-33.334%); }
+}
+.jb-vignette:focus-visible {
+  outline: 3px solid #2f5139;
+  outline-offset: 3px;
+}
+
+/* ── Entry stamp ───────────────────────────────────────────────────────────── */
+
+.jb-stamp {
+  --c: #1f6f47; /* STAMP_INKS.green; every ink must reach 4.5:1 on --page */
+  --r: -6deg;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  text-align: center;
+  color: var(--c);
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  mix-blend-mode: multiply; /* only darkens: text contrast >= the ink's own */
+  opacity: 0;
+  transform: rotate(var(--r)) scale(2.2);
+  transition: transform 320ms cubic-bezier(0.2, 1.7, 0.4, 1), opacity 180ms ease;
+}
+.jb-stamp[data-applied='true'] {
+  opacity: 1;
+  transform: rotate(var(--r)) scale(1);
+}
+/* The decorative ring: faded ink with paper-coloured gaps where the rubber didn't take.
+   Only the ring is faded/textured; the text is painted above it at full ink. */
+.jb-stamp-ink {
+  position: absolute;
+  inset: 0;
+  opacity: 0.88;
+  pointer-events: none;
+}
+.jb-stamp-ink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 40%, transparent 55%, rgba(251, 248, 242, 0.6) 56%, transparent 62%),
+    radial-gradient(circle at 70% 70%, transparent 40%, rgba(251, 248, 242, 0.5) 42%, transparent 48%),
+    radial-gradient(circle at 82% 22%, rgba(251, 248, 242, 0.45) 0 4%, transparent 5%);
+}
+/* Short ink bleed as it lands. */
+.jb-stamp::before {
+  content: '';
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 30%, transparent), transparent);
+  opacity: 0;
+}
+.jb-stamp[data-applied='true']::before {
+  animation: jb-bleed 520ms ease-out 200ms both;
+}
+@keyframes jb-bleed {
+  from { opacity: 0.55; transform: scale(0.9); }
+  to { opacity: 0; transform: scale(1.12); }
+}
+.jb-stamp-text {
+  position: relative; /* after .jb-stamp-ink in the DOM, so painted above the ring */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--u, 4px) * 0.5);
+  max-width: 100%;
+  padding: 0 calc(var(--u, 4px) * 2.6);
+}
+.jb-stamp-text small {
+  font-size: max(8px, calc(var(--u, 4px) * 2));
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+.jb-stamp-text b {
+  font-size: max(11px, calc(var(--u, 4px) * 3.6));
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+.jb-stamp--circle {
+  width: calc(var(--u, 4px) * 28);
+  height: calc(var(--u, 4px) * 28);
+}
+.jb-stamp--circle .jb-stamp-ink {
+  border: calc(var(--u, 4px) * 0.8) solid var(--c);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 calc(var(--u, 4px) * 1.2) var(--page), inset 0 0 0 calc(var(--u, 4px) * 1.7) var(--c);
+}
+.jb-stamp--rect {
+  width: calc(var(--u, 4px) * 34);
+  height: calc(var(--u, 4px) * 18);
+}
+.jb-stamp--rect .jb-stamp-ink {
+  border: calc(var(--u, 4px) * 0.8) solid var(--c);
+  border-radius: calc(var(--u, 4px) * 1.6);
+  box-shadow: inset 0 0 0 calc(var(--u, 4px) * 1) var(--page), inset 0 0 0 calc(var(--u, 4px) * 1.4) var(--c);
+}
+.jb-stamp--triangle {
+  width: calc(var(--u, 4px) * 32);
+  height: calc(var(--u, 4px) * 28);
+  align-items: flex-end;
+  padding-bottom: calc(var(--u, 4px) * 3.4);
+}
+.jb-stamp--triangle .jb-stamp-text {
+  padding: 0 calc(var(--u, 4px) * 6);
+}
+.jb-stamp--hexagon {
+  width: calc(var(--u, 4px) * 32);
+  height: calc(var(--u, 4px) * 27);
+}
+.jb-stamp--hexagon .jb-stamp-text {
+  padding: 0 calc(var(--u, 4px) * 5);
+}
+.jb-stamp-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: var(--c);
+  stroke-linejoin: round;
+}
+.jb-stamp-outline .o { stroke-width: calc(var(--u, 4px) * 0.8); }
+.jb-stamp-outline .i { stroke-width: calc(var(--u, 4px) * 0.4); }
+
+/* ── Hologram seal ─────────────────────────────────────────────────────────── */
+
+.jb-seal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--u, 4px) * 38);
+  height: calc(var(--u, 4px) * 38);
+  border-radius: 50%;
+  box-shadow: 0 0 calc(var(--u, 4px) * 5) rgba(184, 207, 93, 0.35);
+}
+.jb-seal-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    repeating-conic-gradient(rgba(255, 255, 255, 0.22) 0 1deg, rgba(255, 255, 255, 0) 1deg 4deg),
+    conic-gradient(#b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d);
+  animation: jb-spin 16s linear infinite;
+}
+.jb-seal-core {
+  position: relative;
+  width: 82%;
+  height: 82%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(251, 248, 242, 0.92);
+  color: var(--page-ink);
+}
+.jb-seal-rosette {
+  position: absolute;
+  inset: 6%;
+  background-size: 100% 100%;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.jb-seal-core b {
+  position: relative;
+  font-weight: 800;
+  font-size: calc(var(--u, 4px) * 9);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.jb-seal-core span {
+  position: relative;
+  max-width: 78%;
+  margin-top: calc(var(--u, 4px) * 1);
+  font-family: var(--jb-mono, ui-monospace, monospace);
+  font-size: max(8px, calc(var(--u, 4px) * 2.1));
+  letter-spacing: 0.14em;
+  line-height: 1.35;
+  color: #4f5c55;
+}
+
+/* ── Reduced motion (OS preference): the final state, no motion ────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .jb-vignette,
+  .jb-vignette[data-applied='false'] {
+    transform: none;
+    transition: none;
+  }
+  .jb-vignette-shadow { opacity: 0 !important; transition: none; }
+  .jb-vignette:hover .jb-vignette-holo > span,
+  .jb-vignette:focus-visible .jb-vignette-holo > span { animation: none; }
+  .jb-stamp,
+  .jb-stamp[data-applied='false'] {
+    opacity: 1;
+    transform: rotate(var(--r));
+    transition: none;
+  }
+  .jb-stamp::before,
+  .jb-seal-ring,
+  .jb-starfield,
+  .jb-globe { animation: none; }
+}

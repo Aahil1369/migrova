@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { countryByCode } from '../../../data/countries195';
-import { buildMrz, decodeFrame, DECODE_FRAMES, MRZ_PLAIN } from '../mrz';
+import { buildMrz, decodeFrame, DECODE_FRAMES, MRZ_PLAIN } from '../../kit/mrz';
 import { useRoute } from '../PassportContext';
-import { REDUCED_MOTION, useMediaQuery } from '../useMediaQuery';
+import { REDUCED_MOTION, useMediaQuery } from '../../kit/useMediaQuery';
 import './pages.css';
 
 const FRAME_MS = 45;

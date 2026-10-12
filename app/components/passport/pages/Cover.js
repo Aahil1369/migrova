@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Noto_Naskh_Arabic } from 'next/font/google';
-import { Stamp } from '../parts/Stamp';
-import { STAMP_INKS } from '../parts/stampInks';
-import { useHydrated } from '../useMediaQuery';
+import { Stamp } from '../../kit/Stamp';
+import { STAMP_INKS } from '../../kit/stampInks';
+import { useHydrated } from '../../kit/useMediaQuery';
 import './pages.css';
 
 // Only the cover word uses it; not preloaded, so it never competes with the hero H1 (LCP).

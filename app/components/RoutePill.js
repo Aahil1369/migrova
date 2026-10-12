@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { forgetRoute, hasRoute, routeCodes, routeLabel, ROUTE_EVENT } from './passport/routeStore';
-import { CrossGlyph, PlaneGlyph } from './passport/parts/Glyphs';
+import { CrossGlyph, PlaneGlyph } from './kit/Glyphs';
 import { visaHref } from './passport/search';
 import { announceRouteChange, deviceStorage, useSavedRoute } from './passport/useSavedRoute';
 

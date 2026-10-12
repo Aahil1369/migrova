@@ -7,8 +7,8 @@ import { hasRoute, routeCodes, routeLabel, routeSpoken, sameRoute, saveRoute } f
 import { stubState } from './passStub';
 import { visaHref } from './search';
 import { announceRouteChange, deviceStorage, useSavedRoute } from './useSavedRoute';
-import { PlaneGlyph, ScissorsGlyph } from './parts/Glyphs';
-import { REDUCED_MOTION, useHydrated, useMediaQuery } from './useMediaQuery';
+import { PlaneGlyph, ScissorsGlyph } from '../kit/Glyphs';
+import { REDUCED_MOTION, useHydrated, useMediaQuery } from '../kit/useMediaQuery';
 import './stage.css';
 
 const TEAR_MS = 700; // the stub's flight (CSS transition)

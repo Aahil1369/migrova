@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { guillocheDataUri, rosetteDataUri } from '../../../app/components/passport/parts/guillochePattern.js';
+import { guillocheDataUri, rosetteDataUri } from '../../../app/components/kit/guillochePattern.js';
 
 test('guillocheDataUri is a CSS url() of an SVG data URI', () => {
   const uri = guillocheDataUri(3);

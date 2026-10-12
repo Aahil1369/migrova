@@ -3,8 +3,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { starField } from '../../../app/components/kit/starField.js';
 import {
-  starField,
   starsCovered,
   skyLayers,
   pageLayer,
@@ -123,9 +123,10 @@ test('showingPages: loops run only on pages actually on screen', () => {
 });
 
 test('CSS: stars and globe pause when covered or off screen; seal and sheen pause off their page', () => {
-  const passport = read('passport.css');
+  const kit = read('../kit/kit.css'); // the sky
+  const passport = read('passport.css'); // the book's faces
   const pages = read('pages/pages.css');
-  const paused = rulesWith(passport + pages, /animation-play-state\s*:\s*paused/).map((r) => r.selector).join(',');
+  const paused = rulesWith(kit + passport + pages, /animation-play-state\s*:\s*paused/).map((r) => r.selector).join(',');
   for (const part of ['.jb-starfield', '.jb-globe']) {
     assert.ok(paused.includes('[data-covered]') && paused.includes('[data-offscreen]') && paused.includes(part), part);
   }
@@ -134,7 +135,7 @@ test('CSS: stars and globe pause when covered or off screen; seal and sheen paus
 });
 
 test('CSS: the star field is a few layers that twinkle by opacity only; no per-star elements or rules', () => {
-  const css = read('passport.css');
+  const css = read('../kit/kit.css');
   assert.doesNotMatch(css, /\.jb-star(?![a-z-])/, 'the 64 individually animated stars are gone');
   const twinkle = /@keyframes jb-twinkle\s*\{([\s\S]*?)\n\}/.exec(css);
   assert.ok(twinkle, 'jb-twinkle keyframes');

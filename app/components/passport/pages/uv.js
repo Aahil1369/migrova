@@ -3,21 +3,9 @@
 
 const clamp01 = (n) => (n > 0 ? (n < 1 ? n : 1) : 0); // NaN -> 0
 
-/**
- * The invented look-alike site for a country: `<country-name-lowercased-hyphenated>-visa-fastpass.example`.
- * Accents are stripped (NFKD), anything that is not a-z / 0-9 becomes '-', runs of dashes collapse
- * and the ends are trimmed. Always the reserved `.example` TLD, so it can never be a real (scam)
- * domain; render it as plain text, never as a link.
- */
-export function fakeDomain(name) {
-  const slug = String(name ?? '')
-    .normalize('NFKD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  return `${slug || 'country'}-visa-fastpass.example`;
-}
+// fakeDomain (the invented look-alike site) moved to the kit so the tool pages share it; re-exported
+// here so the book's call sites and scripts/passport/__tests__/uv.test.mjs are unchanged.
+export { fakeDomain } from '../../kit/fakeDomain.js';
 
 // Where, inside the `uv` beat (0..1), each card reveals itself without the lamp. The flap is
 // fully open from 0.2 to 0.85 of the beat, so the lamp has the first part of the hold to itself.

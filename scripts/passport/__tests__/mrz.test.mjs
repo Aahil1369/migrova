@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   MRZ_LEN, MRZ_PLAIN, DECODE_FRAMES, buildMrz, decodeFrame,
-} from '../../../app/components/passport/mrz.js';
+} from '../../../app/components/kit/mrz.js';
 
 const MRZ_RE = /^[A-Z0-9<]{44}$/;
 

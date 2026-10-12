@@ -2,6 +2,7 @@
 
 import { memo } from 'react';
 import { starField } from './stageStyle';
+import '../kit/kit.css'; // before passport.css: the book's overrides win ties by coming later
 import './passport.css';
 
 // 64 deterministic stars in three layers (stageStyle.js): one SVG each, twinkling as a whole.

@@ -1,3 +1,4 @@
+import '../../kit/kit.css'; // before passport.css: the book's overrides win ties by coming later
 import '../passport.css';
 
 const LABEL = "Founder's route: Gilgit-Baltistan, then Kampala, then the USA: here, building this.";

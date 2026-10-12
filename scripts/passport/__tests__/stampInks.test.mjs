@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   STAMP_INKS, DEFAULT_STAMP_INK, PAGE_PAPER, contrastRatio,
-} from '../../../app/components/passport/parts/stampInks.js';
+} from '../../../app/components/kit/stampInks.js';
 
 test('contrastRatio matches known WCAG values', () => {
   assert.equal(contrastRatio('#000000', '#ffffff'), 21);

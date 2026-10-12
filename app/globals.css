@@ -194,7 +194,7 @@ body {
   .italic-draw { background-size: 100% 1.5px; }
 }
 
-/* ─── Inline glyph icons (components/passport/parts/Glyphs.js) ─── */
+/* ─── Inline glyph icons (components/kit/Glyphs.js) ─── */
 .jb-glyph {
   display: inline-block;
   flex: none;

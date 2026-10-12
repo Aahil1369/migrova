@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { fakeDomain, uvRevealLevel, uvFlickerStep } from '../../../app/components/passport/pages/uv.js';
+import { fakeDomain } from '../../../app/components/kit/fakeDomain.js';
+import { uvRevealLevel, uvFlickerStep } from '../../../app/components/passport/pages/uv.js';
 import { flapStyle, inlineFlapStyle } from '../../../app/components/passport/stageStyle.js';
 
 // ---- fakeDomain (the invented look-alike for the UV check; never a real scam domain) --------

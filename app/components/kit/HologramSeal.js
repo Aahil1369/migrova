@@ -1,5 +1,5 @@
 import Guilloche from './Guilloche';
-import '../passport.css';
+import './kit.css';
 
 /**
  * Rainbow hologram seal: a slowly turning conic-gradient ring around a paper disc that

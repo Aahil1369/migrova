@@ -1,4 +1,4 @@
-import Vignette from '../parts/Vignette';
+import Vignette from '../../kit/Vignette';
 import './pages.css';
 
 /** p3: the tools intro + Country Match and Visa Intelligence vignettes (applied on arrival). */

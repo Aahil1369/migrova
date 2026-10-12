@@ -1,8 +1,9 @@
 'use client';
 
 import { Fragment } from 'react';
-import Guilloche from './parts/Guilloche';
+import Guilloche from '../kit/Guilloche';
 import { PAGES } from './timeline';
+import '../kit/kit.css'; // before passport.css: the book's overrides win ties by coming later
 import './passport.css';
 
 // Page furniture drawn by the Book (decorative, aria-hidden): header microcopy + page number.

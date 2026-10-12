@@ -1,8 +1,8 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
-import Stamp from '../parts/Stamp';
-import { STAMP_INKS } from '../parts/stampInks';
+import Stamp from '../../kit/Stamp';
+import { STAMP_INKS } from '../../kit/stampInks';
 import { stampDate } from './storyText';
 import './pages.css';
 

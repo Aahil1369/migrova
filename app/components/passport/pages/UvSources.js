@@ -2,16 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { countryByCode } from '../../../data/countries195';
-import HologramSeal from '../parts/HologramSeal';
+import { countUp } from '../../kit/countUp';
+import HologramSeal from '../../kit/HologramSeal';
 import { useRoute } from '../PassportContext';
-import { FINE_HOVER, useHydrated, useMediaQuery } from '../useMediaQuery';
+import { FINE_HOVER, useHydrated, useMediaQuery } from '../../kit/useMediaQuery';
 import { fakeDomain } from './uv';
 import './pages.css';
 
 const FALLBACK = 'ca';
-const COUNT_MS = 1200;
 const OFFSCREEN = '-9999px';
-const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
 function LockIcon() {
   return (
@@ -20,25 +19,6 @@ function LockIcon() {
       <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" strokeWidth="1.6" />
     </svg>
   );
-}
-
-/** Count `el`'s number up from 0 to `target` (rAF, ~1.2s). Returns a cancel function. */
-function countUp(el, target) {
-  const node = el.firstChild; // React's text node: update it in place, never replace it
-  if (!node || !target) return () => {};
-  let frame = 0;
-  let start = 0;
-  const tick = (now) => {
-    if (!start) start = now;
-    const t = Math.min(1, (now - start) / COUNT_MS);
-    node.nodeValue = String(Math.round(target * easeOutCubic(t)));
-    if (t < 1) frame = window.requestAnimationFrame(tick);
-  };
-  frame = window.requestAnimationFrame(tick);
-  return () => {
-    window.cancelAnimationFrame(frame);
-    node.nodeValue = String(target);
-  };
 }
 
 /**

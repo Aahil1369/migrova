@@ -1,4 +1,4 @@
-import Vignette from '../parts/Vignette';
+import Vignette from '../../kit/Vignette';
 import './pages.css';
 
 /** p4: Relocation, Lawyer Guide and Official Sources vignettes (applied on arrival). */
