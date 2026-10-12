@@ -13,7 +13,7 @@ const headingClass = 'mb-2 text-[11px] font-semibold uppercase tracking-[0.14em]
 
 export default function SiteFooter() {
   return (
-    <footer className="w-full bg-night-1 text-[#ece6d2]">
+    <footer className="site-footer w-full bg-night-1 text-[#ece6d2]">
       <div className="mx-auto max-w-[1280px] px-6 py-12 sm:px-10">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>

@@ -192,6 +192,21 @@ body {
   vertical-align: -0.125em;
 }
 
+/* ─── Site footer (components/SiteFooter.js) ───
+   Below the fold on every page, so its layout and paint are skipped until it nears the
+   viewport: about 100 ms of first layout on a throttled phone (the /sources/ca LCP budget).
+   It stays in the accessibility tree; keyboard focus and find-in-page still reach it. The
+   placeholder heights are its measured heights (one column below md: 812px at 360-414px wide;
+   three columns from md up: 430px), so the page does not grow or shrink when it renders, and
+   `auto` keeps the real height once it has. Height only: the width stays the full row. */
+.site-footer {
+  content-visibility: auto;
+  contain-intrinsic-height: auto 812px;
+}
+@media (min-width: 48rem) {
+  .site-footer { contain-intrinsic-height: auto 430px; }
+}
+
 /* ─── Navbar route pill (components/RoutePill.js) ───
    In the global sheet (not its own file): the navbar is on every page, and a separate CSS
    chunk would be one more render-blocking request. Dark pill with lime text in both navbar
