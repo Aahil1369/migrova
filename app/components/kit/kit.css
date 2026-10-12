@@ -7,6 +7,17 @@
    rules on specificity and win by coming later, so kit.css must be imported before it.
    ───────────────────────────────────────────────────────────────────────────── */
 
+/* Kit-level defaults for the two book tokens the parts read. The Journey Book defines both on
+   .jb (passport.css), which overrides these inside the book, so the homepage is unchanged; on a
+   tool page there is no .jb, and without these the stamps, vignette labels, MRZ and seal label
+   fall back to the system monospace and .jb-vignette-desc to a 12px floor. --font-jb-mono is
+   set by the font class on <html> (app/layout.js), the same element as :root. A kit-boundary
+   test requires every --jb-* token this file reads to be declared here. */
+:root {
+  --jb-mono: var(--font-jb-mono), ui-monospace, SFMono-Regular, monospace;
+  --jb-body-min: 16px; /* body-text floor on phones; the book sets its own per layout */
+}
+
 /* ── NightSky ──────────────────────────────────────────────────────────────── */
 
 .jb-sky {
@@ -194,7 +205,7 @@
 .jb-vignette-desc {
   position: relative;
   display: block;
-  font-size: max(var(--jb-body-min, 12px), calc(var(--u, 4px) * 2.8));
+  font-size: max(var(--jb-body-min, 16px), calc(var(--u, 4px) * 2.8));
   line-height: 1.4;
   color: #3d4a43;
 }

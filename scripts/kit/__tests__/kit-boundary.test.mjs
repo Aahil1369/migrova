@@ -45,6 +45,29 @@ test('kit CSS has no CSS trig', () => {
   assert.doesNotMatch(css, /atan2|tan\(/);
 });
 
+test('kit CSS gives every --jb-* token it reads a kit-level default', () => {
+  // --jb-mono / --jb-body-min are defined under .jb (the homepage book) and nowhere else, so a kit
+  // part on a tool page would fall back to the system monospace and a 12px description. kit.css
+  // therefore declares each one it reads on :root; .jb still overrides them inside the book.
+  const css = readFileSync(kitUrl('kit.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const used = new Set([...css.matchAll(/var\(\s*(--jb-[\w-]+)/g)].map((m) => m[1]));
+  assert.ok(used.size > 0, 'kit.css reads book tokens (the regex found none)');
+
+  const rootDecls = new Map();
+  for (const rule of css.matchAll(/(^|\})\s*:root\s*\{([^}]*)\}/g)) {
+    for (const decl of rule[2].matchAll(/(--jb-[\w-]+)\s*:\s*([^;]+);?/g)) rootDecls.set(decl[1], decl[2].trim());
+  }
+  for (const name of used) assert.ok(rootDecls.has(name), `kit.css reads var(${name}) but declares no :root default`);
+
+  // The defaults are the right ones, not just present: JetBrains Mono, and the 16px phone floor.
+  if (rootDecls.has('--jb-mono')) assert.match(rootDecls.get('--jb-mono'), /^var\(--font-jb-mono\)\s*,/);
+  if (rootDecls.has('--jb-body-min')) assert.equal(rootDecls.get('--jb-body-min'), '16px');
+  // An inline fallback must never undercut that floor either.
+  for (const m of css.matchAll(/var\(\s*--jb-body-min\s*,\s*([\d.]+)px/g)) {
+    assert.ok(Number(m[1]) >= 16, `--jb-body-min fallback ${m[1]}px is below the 16px phone floor`);
+  }
+});
+
 test('moved parts keep their API', async () => {
   const { STAMP_INKS } = await import(kitUrl('stampInks.js'));
   assert.deepEqual(Object.keys(STAMP_INKS), ['green', 'blue', 'terracotta', 'purple', 'gold']);
