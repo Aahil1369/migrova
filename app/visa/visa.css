@@ -1,0 +1,456 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Visa Intelligence (/visa) on the warm --ground: the application form, the issued visa (the
+   page's signature moment: MRZ scramble -> decode -> entry stamp) and the report's paper
+   sections. Text colours are page ink, #3d443a, #5a6b4a and the STAMP_INKS, each tested >= 4.5:1
+   on --page, --ground and the visa tint (scripts/site/__tests__/visaCss.test.mjs). Only
+   transform / opacity ever animate (the kit's stamp + vignette); no CSS trig.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.visa-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.visa-kicker,
+.visa-label {
+  display: block;
+  margin: 0 0 6px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.visa-h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.visa-h4 {
+  margin: 16px 0 6px;
+  font: 600 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.visa-text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.visa-text + .visa-text { margin-top: 10px; }
+.visa-text--note { margin-top: 12px; font-style: italic; }
+
+/* ── The application form ──────────────────────────────────────────────────── */
+
+.visa-prefilled {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid rgba(31, 42, 36, 0.25);
+  border-radius: 999px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d443a;
+}
+.visa-prefilled-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1f6f47;
+}
+.visa-form-h { margin-bottom: 14px; }
+.visa-fields {
+  display: grid;
+  gap: 16px;
+}
+.visa-purpose {
+  min-width: 0;
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+.visa-purpose legend { padding: 0; margin-bottom: 8px; }
+.visa-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.visa-error {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #a94a1f;
+}
+.visa-error:empty { margin: 0; }
+.visa-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 16px;
+}
+.visa-submit:disabled { opacity: 1; cursor: progress; } /* busy, not unavailable: keep its text at full contrast */
+@media (min-width: 640px) {
+  .visa-fields { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── The issued visa (IssuedVisa.js) ──────────────────────────────────────────
+   The stamp waits off the paper at 2.2x until it lands; the card clips it, so the page never
+   widens on a phone while it is in the air. */
+
+.visa-results,
+.visa-results .kit-arrival {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.visa-results:empty { display: none; }
+
+.visa-card {
+  overflow: hidden;
+  overflow: clip;
+}
+.visa-card-stamp {
+  --u: 3.6px; /* the circle stamp is 28u across: about 100px */
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 104px;
+  margin: 10px -4px 8px 14px;
+  shape-outside: circle(50%);
+}
+@media (max-width: 359px) {
+  /* the smallest phones: a smaller stamp leaves the text beside it a usable column */
+  .visa-card-stamp { --u: 3.1px; width: 90px; height: 90px; }
+}
+.visa-card-stamp--empty {
+  border: 2px dashed rgba(31, 111, 71, 0.35);
+  border-radius: 50%;
+}
+.visa-card-h {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+.visa-card-label {
+  margin: 0;
+  font: 600 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1f6f47;
+}
+.visa-card-type {
+  margin: 0;
+  font-size: clamp(24px, 1.6vw + 18px, 32px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--page-ink);
+}
+.visa-card-type--pending { margin-top: 6px; color: #5a6b4a; }
+.visa-skel {
+  display: block;
+  width: 62%;
+  height: 12px;
+  margin-top: 14px;
+  border-radius: 6px;
+  background: rgba(31, 42, 36, 0.08);
+}
+.visa-skel--short { width: 38%; margin-top: 10px; }
+.visa-card-entry,
+.visa-card-summary {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.visa-card-entry strong { font-weight: 800; color: var(--page-ink); }
+.visa-card-summary { margin-top: 6px; }
+.visa-card-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin: 16px 0 0;
+}
+.visa-card-facts:empty { display: none; }
+.visa-card-facts dt,
+.visa-facts dt {
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.visa-card-facts dd,
+.visa-facts dd {
+  margin: 2px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--page-ink);
+}
+.visa-card-chance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--page-ink);
+}
+.visa-caution {
+  padding: 2px 9px;
+  border: 1.5px solid #a94a1f;
+  border-radius: 999px;
+  font: 700 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a94a1f;
+}
+.visa-card-mrz {
+  clear: both;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(31, 42, 36, 0.2);
+}
+
+/* ── Report sections ───────────────────────────────────────────────────────── */
+
+.visa-overview {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #3d443a;
+}
+.visa-page .kit-check {
+  overflow: hidden;
+  overflow: clip; /* the PACKED stamp also waits at 2.2x before it lands */
+}
+
+.visa-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.visa-list > li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.visa-list > li::before {
+  content: '';
+  position: absolute;
+  top: 0.62em;
+  left: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1f2a24;
+}
+.visa-list--good > li::before { background: #1f6f47; }
+.visa-list--gold > li::before { background: #7a5c12; }
+.visa-list--tips > li::before { background: #1f6f47; }
+.visa-list--reasons > li {
+  display: flex;
+  gap: 10px;
+  padding-left: 0;
+}
+.visa-list--reasons > li::before { content: none; }
+.visa-cross {
+  flex: none;
+  margin-top: 0.3em;
+  color: #a94a1f;
+}
+.visa-imp {
+  margin-right: 8px;
+  font: 700 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.visa-imp--critical { color: #a94a1f; }
+.visa-imp--important { color: #7a5c12; }
+.visa-imp--helpful { color: #1f6f47; }
+
+.visa-pair {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .visa-pair { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+.visa-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+.visa-tags > li {
+  padding: 5px 12px;
+  border: 1.5px solid rgba(31, 42, 36, 0.3);
+  border-radius: 999px;
+  font: 600 15px/1.3 var(--jb-mono);
+  color: var(--page-ink);
+}
+
+/* Visa types: vignette stickers that open for their details (the summary is the toggle). */
+.visa-types {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.visa-type-summary {
+  position: relative;
+  display: block;
+  list-style: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.visa-type-summary::-webkit-details-marker { display: none; }
+.visa-type-summary:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 3px; }
+.visa-type-more {
+  position: absolute;
+  top: 9px;
+  right: 38px;
+  font: 600 11px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  color: #3d4a43;
+  pointer-events: none;
+}
+.visa-type-more::after { content: 'DETAILS +'; }
+.visa-type[open] .visa-type-more::after { content: 'HIDE −'; }
+.visa-type-body { padding: 6px 4px 4px; }
+.visa-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin: 12px 0 0;
+}
+.visa-facts:empty { display: none; }
+.visa-facts--rows {
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* Vignette tints per purpose: the kit's existing sticker palettes. */
+.jb-vignette[data-type='V-WORK'] { --vg-a: #dde8f2; --vg-b: #f3ead8; --vg-ink: #2d5b8a; }
+.jb-vignette[data-type='V-STUDY'] { --vg-a: #e7e0f3; --vg-b: #f4e9df; --vg-ink: #6a4a9c; }
+.jb-vignette[data-type='V-TOUR'] { --vg-a: #f1e7c6; --vg-b: #e6efda; --vg-ink: #806419; }
+.jb-vignette[data-type='V-PR'] { --vg-a: #e7f0d6; --vg-b: #f5e8d6; --vg-ink: #2f6b47; }
+.jb-vignette[data-type='V-NOMAD'] { --vg-a: #f8e3d2; --vg-b: #eef0dc; --vg-ink: #9a4a22; }
+
+/* Steps: a numbered itinerary, stops joined by a dashed route line. */
+.visa-itinerary {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.visa-stop {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  padding-bottom: 18px;
+}
+.visa-stop:last-child { padding-bottom: 0; }
+.visa-stop::before {
+  content: '';
+  position: absolute;
+  top: 38px;
+  bottom: 2px;
+  left: 17px;
+  border-left: 2px dashed rgba(31, 42, 36, 0.25);
+}
+.visa-stop:last-child::before { content: none; }
+.visa-stop-no {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #1f6f47;
+  border-radius: 50%;
+  background: var(--page);
+  font: 700 13px/1 var(--jb-mono);
+  color: #1f6f47;
+}
+.visa-stop-text { min-width: 0; padding-top: 6px; }
+.visa-stop-title {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--page-ink);
+}
+
+/* Timeline + money: a fare box, its two columns split by a perforation. */
+.visa-fare-grid {
+  display: grid;
+  gap: 16px;
+}
+.visa-fare-col .visa-h4 {
+  margin-top: 0;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid rgba(31, 111, 71, 0.35);
+  font-weight: 700;
+  color: #1f6f47;
+}
+.visa-fare-col + .visa-fare-col {
+  padding-top: 16px;
+  border-top: 2px dashed rgba(31, 42, 36, 0.2);
+}
+.visa-fare-col .visa-text { margin-top: 10px; }
+@media (min-width: 640px) {
+  .visa-fare-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .visa-fare-col + .visa-fare-col {
+    padding: 0 0 0 24px;
+    border-top: 0;
+    border-left: 2px dashed rgba(31, 42, 36, 0.2);
+  }
+}
+
+/* The closing disclaimer and the page footnote. */
+.visa-closing {
+  margin: 0;
+  padding: 16px 18px;
+  border: 1.5px dashed rgba(31, 42, 36, 0.3);
+  border-radius: 14px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.visa-closing strong { color: var(--page-ink); }
+.visa-footnote {
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(31, 42, 36, 0.25);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #3d443a;
+}
+.visa-footnote-mark {
+  margin-right: 6px;
+  font: 700 14px/1 var(--jb-mono);
+  color: #a94a1f;
+}
