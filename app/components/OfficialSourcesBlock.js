@@ -1,58 +1,94 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import Link from 'next/link';
+import VerifiedLinkCard from './kit/VerifiedLinkCard';
 import { linkTypeMeta, domainOf, domainList } from '../lib/sourcesFormat';
 
-// Verified official links for one country, shown inside Visa / Relocate results.
-// The links come from /api/sources/<code> (one country, about 1 KB) instead of the bundled
-// 195-country table. Renders nothing while loading, for an unknown country, or if the fetch fails.
-export default function OfficialSourcesBlock({ code, types }) {
-  // { code, payload } for the last fetch, so a payload for an old code is never shown for a new one.
-  const [loaded, setLoaded] = useState(null);
+// Payloads of /api/sources/<code> already fetched in this tab (one country, about 1 KB each).
+const loaded = new Map();
+const inFlight = new Map();
 
-  useEffect(() => {
-    if (!code) return undefined;
-    let live = true;
-    fetch(`/api/sources/${encodeURIComponent(code)}`)
+/**
+ * Fetch one country's official links (/api/sources/<code>) into this tab's cache, once; resolves
+ * with the payload, or null for an unknown country or a failed request (not cached, so a later
+ * call tries again). Pages call it when a search starts, so the block below the AI result is
+ * ready when the result renders instead of popping in (and pushing the report down) after it.
+ */
+export function prefetchSources(code) {
+  if (!code) return Promise.resolve(null);
+  if (loaded.has(code)) return Promise.resolve(loaded.get(code));
+  if (!inFlight.has(code)) {
+    const request = fetch(`/api/sources/${encodeURIComponent(code)}`)
       .then((res) => (res.ok ? res.json() : null))
       .catch(() => null)
-      .then((payload) => { if (live) setLoaded({ code, payload }); });
-    return () => { live = false; };
+      .then((payload) => {
+        inFlight.delete(code);
+        if (payload) loaded.set(code, payload);
+        return payload;
+      });
+    inFlight.set(code, request);
+  }
+  return inFlight.get(code);
+}
+
+/**
+ * Verified official links for one country (`code`), shown inside Visa / Relocate results: one
+ * VerifiedLinkCard per link type in `types` that we have verified, the official government
+ * domains, and a link to the country's sources page. The links come from /api/sources/<code>
+ * (prefetchSources), never from the bundled 195-country table. Renders nothing until they are
+ * loaded, for an unknown country, or if the request fails.
+ */
+export default function OfficialSourcesBlock({ code, types }) {
+  const headingId = useId();
+  // { code, payload } for the last fetch, so a payload for an old code is never shown for a new one.
+  const [fetched, setFetched] = useState(null);
+
+  useEffect(() => {
+    if (!code || loaded.has(code)) return undefined;
+    let live = true;
+    prefetchSources(code).then((payload) => {
+      if (live) setFetched({ code, payload });
+    });
+    return () => {
+      live = false;
+    };
   }, [code]);
 
-  const entry = loaded && loaded.code === code ? loaded.payload : null;
-  if (!entry) return null;
+  const entry = loaded.get(code) || (fetched && fetched.code === code ? fetched.payload : null);
+  if (!code || !entry) return null;
   const rows = types.map((t) => [t, entry.links?.[t]]).filter(([, l]) => l?.status === 'verified' && l.url);
 
   return (
-    <div className="border border-paper-rule bg-paper-bg-alt p-5">
-      <h3 className="font-mono text-[10px] tracking-[0.12em] text-accent mb-3">{`// OFFICIAL SOURCES — ${entry.name.toUpperCase()}`}</h3>
+    <section className="flex flex-col gap-3" aria-labelledby={headingId}>
+      <h3 id={headingId} className="m-0 text-[22px] font-extrabold leading-[1.2] tracking-[-0.01em] text-page-ink">
+        {`Official links · ${entry.name}`}
+      </h3>
       {rows.length > 0 ? (
-        <ul className="divide-y divide-paper-rule border-y border-paper-rule">
+        <ul className="m-0 grid list-none gap-3 p-0">
           {rows.map(([t, l]) => (
             <li key={t}>
-              <a href={l.url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between gap-4 py-3">
-                <span>
-                  <span className="block font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub">{linkTypeMeta(t).label}</span>
-                  <span className="text-[14px] text-paper-ink group-hover:text-accent break-all">{domainOf(l.url)}</span>
-                </span>
-                <span className="text-[12px] text-paper-ink-sub group-hover:text-accent flex-shrink-0">Open ↗</span>
-              </a>
+              <VerifiedLinkCard
+                href={l.url}
+                title={linkTypeMeta(t)?.label ?? t}
+                domain={domainOf(l.url)}
+                note={l.title}
+                verifiedAt={entry.verifiedAt}
+              />
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-[12px] text-paper-ink-dim">We haven&apos;t been able to verify official links for these topics yet.</p>
+        <p className="m-0 text-[16px] leading-[1.55] text-paper-ink-dim">We haven&apos;t been able to verify official links for these topics yet.</p>
       )}
-      {entry.domains.length > 0 && (
-        <p className="mt-3 text-[12px] leading-[1.5] text-paper-ink-dim">
-          Official government domains: <span className="font-medium text-paper-ink">{domainList(entry.domains)}</span>. Look-alike agent sites often charge extra fees.
+      {entry.domains?.length > 0 && (
+        <p className="m-0 text-[16px] leading-[1.55] text-paper-ink-dim">
+          Official government domains: <strong className="font-bold text-page-ink">{domainList(entry.domains)}</strong>. Look-alike agent sites often charge extra fees.
         </p>
       )}
-      <Link href={`/sources/${entry.code}`} className="mt-3 inline-block text-[12px] font-medium text-paper-ink hover:text-accent">
+      <Link href={`/sources/${entry.code}`} className="self-start rounded-sm text-[16px] font-bold text-page-ink underline decoration-[1.5px] underline-offset-4 hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-page-ink">
         All official links for {entry.name} →
       </Link>
-    </div>
+    </section>
   );
 }
