@@ -592,6 +592,211 @@
 .kit-chip:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
 .kit-chip:disabled { cursor: not-allowed; opacity: 0.5; }
 
+/* ── Results: PassportCard, VerifiedLinkCard, ChecklistPage, MrzDecode ───────────
+   Paper on the --ground. Every text colour here is tested >= 4.5:1 on --page, on --ground and
+   on the darkest point of the visa tint (scripts/kit/__tests__/results.test.mjs). */
+
+.kit-card {
+  position: relative;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--page);
+  color: var(--page-ink);
+  overflow-wrap: anywhere; /* a long unbroken AI string wraps instead of widening the column */
+  box-shadow: 0 1px 2px rgba(31, 42, 36, 0.08), 0 6px 18px rgba(31, 42, 36, 0.12);
+}
+/* The issued-visa paper: a faint green guilloche tint, a hairline green edge, a foil strip. */
+.kit-card--visa {
+  padding-right: 30px;
+  background:
+    repeating-radial-gradient(circle at 80% 30%, rgba(31, 111, 71, 0.07) 0 1px, transparent 1px 7px),
+    linear-gradient(135deg, #f4f7e4, #fbf3e6);
+  box-shadow: inset 0 0 0 1px rgba(31, 111, 71, 0.2), 0 1px 2px rgba(31, 42, 36, 0.08), 0 6px 18px rgba(31, 42, 36, 0.12);
+}
+.kit-card-foil {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  border-radius: 0 14px 14px 0;
+  background: linear-gradient(180deg, #f3e3a0, #b89a4a, #9b7bff, #f0a46e, #b8cf5d);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.kit-vlink {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--page);
+  color: var(--page-ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  box-shadow: 0 1px 2px rgba(31, 42, 36, 0.08), 0 4px 12px rgba(31, 42, 36, 0.1);
+  transition: transform 150ms var(--ease);
+}
+.kit-vlink:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 3px; }
+.kit-vlink--unverified {
+  border: 1.5px dashed rgba(31, 42, 36, 0.4);
+  background: transparent;
+  box-shadow: none;
+}
+.kit-vlink-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.kit-vlink-title {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.kit-vlink-domain {
+  font: 500 16px/1.35 var(--jb-mono);
+  color: #2f5139;
+}
+.kit-vlink-note {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d443a;
+}
+.kit-vlink-date {
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.kit-vlink-seal {
+  flex: none;
+  padding: 4px 9px;
+  border: 2px solid #1f6f47;
+  border-radius: 999px;
+  font: 700 11px/1.2 var(--jb-mono);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  color: #1f6f47;
+  mix-blend-mode: multiply;
+  transform: rotate(-4deg);
+}
+@media (hover: hover) {
+  a.kit-vlink:hover { transform: translateY(-1px); }
+}
+
+.kit-check-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.kit-check-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.kit-check-count {
+  margin: 6px 0 0;
+  font: 500 14px/1.4 var(--jb-mono);
+  letter-spacing: 0.06em;
+  color: #5a6b4a;
+}
+/* Room for the PACKED stamp (a rect stamp at --u 3px is 102 x 54), kept so ticking the last item
+   moves nothing. */
+.kit-check-stamp {
+  --u: 3px;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 60px;
+}
+.kit-check-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.kit-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 1px dashed rgba(31, 42, 36, 0.2);
+}
+.kit-check-item:last-child { border-bottom: 0; }
+.kit-check-item label {
+  flex: 1;
+  min-height: 44px;
+  padding: 11px 0;
+  font-size: 16px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.kit-check-box {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 12px 0 0;
+  border: 2px solid #1f6f47;
+  border-radius: 5px;
+  background: var(--page) center / 14px no-repeat;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.kit-check-box:checked {
+  background-color: #1f6f47;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.5 7.5l3 3 6-7' fill='none' stroke='%23fbf8f2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.kit-check-box:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
+
+/* MrzDecode's own look (the homepage data page styles its 'jbp-mrz' block in pages.css): 44
+   monospace characters sized to the line's width (container units), raw grey, decoded green. */
+.kit-mrzd {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  container-type: inline-size;
+  font-family: var(--jb-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1.55;
+  white-space: pre;
+  overflow: hidden;
+  color: #3d4a43;
+}
+.kit-mrzd > span { font-size: min(14px, 3.3cqi); }
+button.kit-mrzd {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+button.kit-mrzd:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
+.kit-mrzd[data-decoded='true'],
+.kit-mrzd-plain { color: #1f6f47; }
+
+.kit-arrival [tabindex='-1'] { scroll-margin-top: 96px; } /* clear the sticky navbar */
+.kit-arrival [tabindex='-1']:focus { outline: none; }
+.kit-arrival [tabindex='-1']:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 4px; }
+
+@media (min-width: 640px) {
+  .kit-card { padding: 24px; }
+  .kit-card--visa { padding-right: 36px; }
+  .kit-vlink { padding: 18px 20px; }
+}
+
 /* ── Reduced motion (OS preference): the final state, no motion ────────────── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -613,6 +818,10 @@
   .jb-seal-ring,
   .jb-starfield,
   .jb-globe { animation: none; }
-  .kit-chip { transition: none; }
-  .kit-chip:hover:not(:disabled) { transform: none; }
+  /* in-page scrolls (a result arriving) jump instead of gliding (html is smooth site-wide) */
+  :root:has(.kit-shell, .kit-arrival) { scroll-behavior: auto; }
+  .kit-chip,
+  .kit-vlink { transition: none; }
+  .kit-chip:hover:not(:disabled),
+  a.kit-vlink:hover { transform: none; }
 }

@@ -212,7 +212,10 @@ test('CSS: in the sweep, stamps, vignettes and the founder route land without th
 
 test('JS arrivals (MRZ decode, count-up) land at once in the sweep', () => {
   assert.match(read('pages/UvSources.js'), /closest\([^)]*\[data-sweep\]/);
-  assert.match(read('pages/DataPage.js'), /closest\(\s*'\[data-sweep\]'\s*\)/);
+  // The data page's MRZ decode is the kit's MrzDecode, which does the check.
+  assert.match(read('pages/DataPage.js'), /import MrzDecode from '\.\.\/\.\.\/kit\/MrzDecode'/);
+  assert.doesNotMatch(read('pages/DataPage.js'), /function MrzDecode/);
+  assert.match(read('../kit/MrzDecode.js'), /closest\(\s*'\[data-sweep\]'\s*\)/);
 });
 
 test('FounderRoute: no SVG <text> (laid out again on every frame of a transform); labels and pulse ring are HTML', () => {
