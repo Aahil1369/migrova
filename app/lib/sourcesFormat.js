@@ -17,8 +17,13 @@ export function domainOf(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; }
 }
 
+// '2026-09-27' -> 'Sep 27, 2026'; anything that is not an ISO date is shown as given ('' for none).
+// The one date format for "Verified <date>" (the sources pages and the kit's VerifiedLinkCard).
 export function formatVerified(date) {
-  const d = new Date(`${date}T00:00:00Z`);
+  const text = String(date ?? '');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+  const d = new Date(`${text}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return text;
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 }
 

@@ -1,15 +1,6 @@
+// sourcesFormat, not lib/officialSources: same helper, without the 195-country table.
+import { formatVerified } from '../../lib/sourcesFormat.js';
 import './kit.css';
-
-// '2026-09-27' -> 'Sep 27, 2026' (as the sources pages print it); any other string as given.
-// Local rather than lib/officialSources' formatVerified, which would pull the whole sources
-// table into the client bundle.
-function verifiedDate(value) {
-  const text = String(value ?? '');
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
-  const date = new Date(`${text}T00:00:00Z`);
-  if (Number.isNaN(date.getTime())) return text;
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-}
 
 const UNVERIFIED_NOTE = 'Not verified yet. Check the web address carefully before you pay anything.';
 
@@ -23,7 +14,7 @@ const UNVERIFIED_NOTE = 'Not verified yet. Check the web address carefully befor
  */
 export function VerifiedLinkCard({ href, title, domain, note, verifiedAt, verified = true }) {
   const isLink = verified && Boolean(href);
-  const date = isLink && verifiedAt ? verifiedDate(verifiedAt) : '';
+  const date = isLink && verifiedAt ? formatVerified(verifiedAt) : '';
   const shownNote = note || (verified ? '' : UNVERIFIED_NOTE);
   const text = (
     <span className="kit-vlink-text">
