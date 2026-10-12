@@ -204,7 +204,7 @@ export default function Navbar({ tone = 'paper' }) {
               await fetch('/api/user-profile', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ profile_data: profile }),
+                body: JSON.stringify({ profile }),
               });
             } catch {}
             try {

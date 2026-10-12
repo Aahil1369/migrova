@@ -6,6 +6,8 @@ import ToolHeader from '../components/kit/ToolHeader';
 import Btn from '../components/ui/Btn';
 import Footnote from '../components/ui/Footnote';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
+import { friendlyError } from '../lib/friendlyError';
+import { createLatest } from '../components/kit/createLatest';
 import { NATIONALITIES } from '../data/countries';
 import { COUNTRIES_195 } from '../data/countries195';
 import { visaPrefill } from '../components/passport/search';
@@ -77,6 +79,18 @@ function VisaTypeCard({ visa }) {
   );
 }
 
+// POST JSON and resolve with the parsed body, or null when the call failed in any way (network
+// error, non-JSON reply, non-2xx, or an { error } body). Never rejects.
+async function postJson(url, body) {
+  try {
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    return res.ok && data && !data.error ? data : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function VisaPage() {
   const [nationality, setNationality] = useState('');
   const [targetCountry, setTargetCountry] = useState('');
@@ -87,8 +101,11 @@ export default function VisaPage() {
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [probData, setProbData] = useState(null);
   const [probLoading, setProbLoading] = useState(false);
+  const [probFailed, setProbFailed] = useState(false);
   const [showAck, setShowAck] = useState(false);
   const [resultCountry, setResultCountry] = useState('');
+  // One guard for both calls of a search: a newer search makes every response of an older one stale.
+  const [latest] = useState(createLatest);
 
   // Deep links: /visa?to=ca (from /sources/[code]) pre-selects the destination;
   // /visa?from=pk&to=ca (homepage search) also sets the nationality. Whatever the link leaves
@@ -126,44 +143,33 @@ export default function VisaPage() {
     return () => { cancelled = true; };
   }, []);
 
-  const handleSearch = async () => {
+  // The report (/api/visa-intel) and the chance estimate (/api/visa-probability) are independent
+  // calls started together: the report shows when it arrives, the chance when it arrives, and a
+  // failed chance estimate says so instead of disappearing.
+  const handleSearch = () => {
     if (!nationality || !targetCountry) { setError('Please select both your nationality and destination country.'); return; }
+    const id = latest.next();
+    const destination = targetCountry;
     setLoading(true);
     setError('');
     setResult(null);
-    try {
-      const res = await fetch('/api/visa-intel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nationality, targetCountry, purpose }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
-      setResult(data);
-      setResultCountry(targetCountry);
+    setProbData(null);
+    setProbFailed(false);
+    setProbLoading(true);
 
-      // Parallel probability fetch
-      setProbLoading(true);
-      setProbData(null);
-      const savedProfile = (() => { try { const p = localStorage.getItem('opportumap_profile'); return p ? JSON.parse(p) : null; } catch { return null; } })();
-      fetch('/api/visa-probability', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nationality: nationality,
-          destination: targetCountry,
-          purpose: purpose,
-          profile: savedProfile,
-        }),
-      })
-        .then(r => r.json())
-        .then(d => { if (!d.error) setProbData(d); })
-        .catch(() => {})
-        .finally(() => setProbLoading(false));
-    } catch (e) {
-      setError(e.message || 'Failed to load visa information.');
-    }
-    setLoading(false);
+    const savedProfile = (() => { try { const p = localStorage.getItem('opportumap_profile'); return p ? JSON.parse(p) : null; } catch { return null; } })();
+
+    postJson('/api/visa-intel', { nationality, targetCountry: destination, purpose }).then((data) => {
+      if (!latest.isCurrent(id)) return;
+      if (data) { setResult(data); setResultCountry(destination); } else setError(friendlyError('visa'));
+      setLoading(false);
+    });
+
+    postJson('/api/visa-probability', { nationality, destination, purpose, profile: savedProfile }).then((data) => {
+      if (!latest.isCurrent(id)) return;
+      if (data) setProbData(data); else setProbFailed(true);
+      setProbLoading(false);
+    });
   };
 
   const handleSearchGated = () => {
@@ -259,6 +265,9 @@ export default function VisaPage() {
                 </div>
               )}
               {probData && <VisaProbabilityMeter data={probData} />}
+              {probFailed && (
+                <p role="status" className="border border-paper-rule bg-paper-bg-alt p-5 text-[16px] text-paper-ink-dim">{friendlyError('probability')}</p>
+              )}
 
               {/* Visa types */}
               {result.visaTypes?.length > 0 && (

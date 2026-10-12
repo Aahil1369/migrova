@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk';
 import { GROQ_OPTIONS } from '../../../lib/ai.js';
+import { friendlyError } from '../../lib/friendlyError.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const cache = new Map();
@@ -99,6 +100,6 @@ Include at least 3 visa types, 5 application steps, 5 guarantee tips, 3 rejectio
     return Response.json(data);
   } catch (err) {
     console.error('Visa intel error:', err);
-    return Response.json({ error: err.message }, { status: 500 });
+    return Response.json({ error: friendlyError('visa') }, { status: 500 });
   }
 }

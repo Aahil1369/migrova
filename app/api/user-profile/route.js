@@ -24,7 +24,9 @@ export async function POST(request) {
   const { data: { user } } = await authClient.auth.getUser();
   if (!user) return Response.json({ error: 'Not authenticated' }, { status: 401 });
 
-  const { profile } = await request.json();
+  // { profile } is the shape every caller sends; profile_data is accepted too (older Navbar builds).
+  const body = await request.json();
+  const profile = body.profile ?? body.profile_data;
 
   await supabase
     .from('user_profiles')

@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk';
 import { GROQ_OPTIONS } from '../../../lib/ai.js';
+import { friendlyError } from '../../lib/friendlyError.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -62,6 +63,6 @@ Be realistic and specific. Consider actual visa policies between these countries
     return Response.json(data);
   } catch (err) {
     console.error('Visa probability error:', err);
-    return Response.json({ error: 'Failed to assess probability' }, { status: 500 });
+    return Response.json({ error: friendlyError('probability') }, { status: 500 });
   }
 }

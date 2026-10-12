@@ -1,18 +1,33 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { getSources, linkTypeMeta, domainOf, domainList } from '../lib/officialSources';
-import { countryByCode } from '../data/countries195';
+import { linkTypeMeta, domainOf, domainList } from '../lib/sourcesFormat';
 
 // Verified official links for one country, shown inside Visa / Relocate results.
-// Renders nothing if we have no entry for the country.
+// The links come from /api/sources/<code> (one country, about 1 KB) instead of the bundled
+// 195-country table. Renders nothing while loading, for an unknown country, or if the fetch fails.
 export default function OfficialSourcesBlock({ code, types }) {
-  const entry = getSources(code);
-  const country = countryByCode(code);
-  if (!entry || !country) return null;
-  const rows = types.map((t) => [t, entry.links[t]]).filter(([, l]) => l?.status === 'verified');
+  // { code, payload } for the last fetch, so a payload for an old code is never shown for a new one.
+  const [loaded, setLoaded] = useState(null);
+
+  useEffect(() => {
+    if (!code) return undefined;
+    let live = true;
+    fetch(`/api/sources/${encodeURIComponent(code)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .catch(() => null)
+      .then((payload) => { if (live) setLoaded({ code, payload }); });
+    return () => { live = false; };
+  }, [code]);
+
+  const entry = loaded && loaded.code === code ? loaded.payload : null;
+  if (!entry) return null;
+  const rows = types.map((t) => [t, entry.links?.[t]]).filter(([, l]) => l?.status === 'verified' && l.url);
 
   return (
     <div className="border border-paper-rule bg-paper-bg-alt p-5">
-      <h3 className="font-mono text-[10px] tracking-[0.12em] text-accent mb-3">// OFFICIAL SOURCES — {country.name.toUpperCase()}</h3>
+      <h3 className="font-mono text-[10px] tracking-[0.12em] text-accent mb-3">{`// OFFICIAL SOURCES — ${entry.name.toUpperCase()}`}</h3>
       {rows.length > 0 ? (
         <ul className="divide-y divide-paper-rule border-y border-paper-rule">
           {rows.map(([t, l]) => (
@@ -30,13 +45,13 @@ export default function OfficialSourcesBlock({ code, types }) {
       ) : (
         <p className="text-[12px] text-paper-ink-dim">We haven&apos;t been able to verify official links for these topics yet.</p>
       )}
-      {entry.govDomains.length > 0 && (
+      {entry.domains.length > 0 && (
         <p className="mt-3 text-[12px] leading-[1.5] text-paper-ink-dim">
-          Official government domains: <span className="font-medium text-paper-ink">{domainList(entry.govDomains)}</span>. Look-alike agent sites often charge extra fees.
+          Official government domains: <span className="font-medium text-paper-ink">{domainList(entry.domains)}</span>. Look-alike agent sites often charge extra fees.
         </p>
       )}
-      <Link href={`/sources/${country.code}`} className="mt-3 inline-block text-[12px] font-medium text-paper-ink hover:text-accent">
-        All official links for {country.name} →
+      <Link href={`/sources/${entry.code}`} className="mt-3 inline-block text-[12px] font-medium text-paper-ink hover:text-accent">
+        All official links for {entry.name} →
       </Link>
     </div>
   );

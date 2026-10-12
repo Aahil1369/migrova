@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk';
 import { GROQ_OPTIONS } from '../../../lib/ai.js';
+import { friendlyError } from '../../lib/friendlyError.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -74,6 +75,6 @@ Return ONLY valid JSON: { "matches": [...] } sorted by match_score descending. N
     return Response.json(data);
   } catch (err) {
     console.error('Country match error:', err);
-    return Response.json({ error: 'Failed to generate matches' }, { status: 500 });
+    return Response.json({ error: friendlyError('match') }, { status: 500 });
   }
 }

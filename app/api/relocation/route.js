@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk';
 import { GROQ_OPTIONS } from '../../../lib/ai.js';
+import { friendlyError } from '../../lib/friendlyError.js';
 import { supabase, hasSupabase } from '../../../lib/supabase.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
@@ -143,7 +144,7 @@ Include at least 4 neighborhoods, 3 expat communities, 5 before-you-move actions
     return Response.json({ ...data, connections });
   } catch (err) {
     console.error('Relocation error:', err);
-    return Response.json({ error: err.message }, { status: 500 });
+    return Response.json({ error: friendlyError('relocation') }, { status: 500 });
   }
 }
 
