@@ -343,7 +343,8 @@ export default function Navbar({ tone = 'paper' }) {
 
         {user && toolsUsed > 0 && (
           <div className={`h-[2px] ${t.track}`}>
-            <div className={`h-full transition-all duration-300 ${t.bar}`} style={{ width: `${progressPct}%` }} />
+            <div className={`h-full origin-left transition-transform duration-300 motion-reduce:transition-none ${t.bar}`}
+              style={{ transform: `scaleX(${progressPct / 100})` }} />
           </div>
         )}
       </header>

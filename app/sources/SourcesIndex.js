@@ -25,7 +25,7 @@ export default function SourcesIndex({ rows, regions }) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search a country…"
           aria-label="Search a country"
-          className="w-full lg:max-w-[360px] px-4 py-3 bg-paper-bg border border-paper-rule text-paper-ink text-[14px] outline-none focus:border-accent"
+          className="kit-input lg:max-w-[360px]"
         />
         <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by region">
           {['All', ...regions].map((r) => (

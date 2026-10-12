@@ -444,6 +444,154 @@
   color: #4f5c55;
 }
 
+/* ── Tool pages: ToolShell, ToolHeader, Chip, form controls ────────────────────
+   A night band (static stars, a soft glow) holding the header, fading through dawn into the
+   warm --ground paper. Text only ever sits on the night part (pairs tested >= 4.5:1 in
+   scripts/kit/__tests__/foundation.test.mjs); the band's last 88px are the decorative fade. */
+
+.kit-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--night-0); /* behind the translucent night navbar */
+}
+.kit-main {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+.kit-wrap {
+  box-sizing: content-box;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.kit-wrap--wide { max-width: 1120px; }
+.kit-sky {
+  position: relative;
+  padding: 28px 0 88px;
+  background:
+    radial-gradient(80% 70% at 88% 0, rgba(47, 81, 57, 0.5), transparent 70%),
+    linear-gradient(180deg, var(--night-0), var(--night-1) 45%, #241f3f calc(100% - 88px),
+      var(--dawn-1) calc(100% - 62px), var(--peach) calc(100% - 28px), var(--ground));
+}
+.kit-sky > .kit-wrap { position: relative; }
+.kit-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 88px);
+  fill: #ece6d2;
+  opacity: 0.5;
+}
+.kit-kicker {
+  margin: 0 0 12px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+.kit-h1 {
+  margin: 0;
+  font-size: clamp(32px, 3.4vw + 18px, 58px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  color: #f3efe4;
+}
+.kit-accent {
+  background: linear-gradient(90deg, var(--lime), var(--peach));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.kit-sub {
+  max-width: 58ch;
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #d8d3c6;
+}
+.kit-mrz {
+  margin: 18px 0 0;
+  overflow: hidden;
+  font: 400 11px/1.2 var(--jb-mono);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: #8aa085;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.kit-mrz[data-ready] { opacity: 1; }
+.kit-ground {
+  flex: 1 0 auto;
+  padding: 16px 0 64px;
+  background: var(--ground);
+  color: var(--page-ink);
+}
+@media (min-width: 640px) {
+  .kit-wrap { padding: 0 32px; }
+  .kit-sky { padding-top: 56px; }
+  .kit-sub { font-size: 18px; }
+  .kit-mrz { font-size: 13px; }
+}
+
+/* Inputs and selects: paper fields, never below 16px (iOS zooms into smaller fields on focus). */
+.kit-input,
+.kit-select {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  border: 1px solid rgba(31, 42, 36, 0.35);
+  border-radius: 10px;
+  background-color: var(--page);
+  color: var(--page-ink);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.kit-input::placeholder { color: #5a6b4a; opacity: 1; }
+.kit-input:focus,
+.kit-select:focus { outline: 2px solid var(--page-ink); outline-offset: 1px; }
+.kit-select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231f2a24' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-position: right 15px center;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+}
+
+.kit-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(31, 42, 36, 0.3);
+  border-radius: 999px;
+  background: var(--page);
+  color: var(--page-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform 150ms var(--ease);
+}
+.kit-chip:hover:not(:disabled) { transform: translateY(-1px); }
+.kit-chip[aria-pressed='true'] {
+  border-color: var(--page-ink);
+  background: var(--page-ink);
+  color: var(--page);
+}
+.kit-chip:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
+.kit-chip:disabled { cursor: not-allowed; opacity: 0.5; }
+
 /* ── Reduced motion (OS preference): the final state, no motion ────────────── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -465,4 +613,6 @@
   .jb-seal-ring,
   .jb-starfield,
   .jb-globe { animation: none; }
+  .kit-chip { transition: none; }
+  .kit-chip:hover:not(:disabled) { transform: none; }
 }

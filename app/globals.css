@@ -33,6 +33,7 @@
 
   /* Journey Book: passport paper + accents */
   --page:           #fbf8f2;
+  --ground:         #efe7d6; /* tool pages: warm paper under the night header band */
   --page-ink:       #1f2a24;
   --lime:           #b8cf5d;
   --peach:          #f0a46e;
@@ -71,6 +72,7 @@
   --color-dawn-2:         var(--dawn-2);
   --color-dawn-3:         var(--dawn-3);
   --color-page:           var(--page);
+  --color-ground:         var(--ground);
   --color-page-ink:       var(--page-ink);
   --color-lime:           var(--lime);
   --color-peach:          var(--peach);
@@ -104,7 +106,6 @@ body {
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.44s var(--ease), transform 0.44s var(--ease);
-  will-change: transform, opacity;
 }
 .reveal.revealed { opacity: 1; transform: translateY(0); }
 .reveal-d1 { transition-delay: 0.06s; }
@@ -112,17 +113,6 @@ body {
 .reveal-d3 { transition-delay: 0.18s; }
 .reveal-d4 { transition-delay: 0.24s; }
 .reveal-d5 { transition-delay: 0.30s; }
-
-/* ─── Italic draw-in ─── */
-.italic-draw {
-  background-image: linear-gradient(var(--accent), var(--accent));
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0% 1.5px;
-  transition: background-size 0.32s var(--ease);
-  padding-bottom: 2px;
-}
-.italic-draw.drawn { background-size: 100% 1.5px; }
 
 /* ─── Page-transition bar ─── */
 .page-transition-bar {
@@ -169,7 +159,7 @@ body {
   to   { stroke-dashoffset: 0; }
 }
 
-/* ─── Tool-card hover underline ─── */
+/* ─── Tool-card hover underline (grows from the left: transform only) ─── */
 .tool-card-underline {
   position: relative;
 }
@@ -177,21 +167,22 @@ body {
   content: '';
   position: absolute;
   bottom: 0; left: 0;
-  width: 0;
+  width: 100%;
   height: 1px;
   background: var(--accent);
-  transition: width 0.3s var(--ease);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--ease);
 }
-.tool-card-underline:hover::after { width: 100%; }
+.tool-card-underline:hover::after { transform: scaleX(1); }
 
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .italic-draw, .page-transition-bar, .glyph-strokes *, .tool-card-underline::after {
+  .reveal, .page-transition-bar, .glyph-strokes *, .tool-card-underline::after {
     transition: none !important;
     animation: none !important;
   }
   .reveal { opacity: 1; transform: none; }
-  .italic-draw { background-size: 100% 1.5px; }
 }
 
 /* ─── Inline glyph icons (components/kit/Glyphs.js) ─── */

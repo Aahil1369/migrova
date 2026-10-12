@@ -2,16 +2,24 @@
 import Link from 'next/link';
 import { useMagnetic } from './hooks/useMagnetic';
 
+// Paper / lime buttons (passport site). Only transform and opacity animate: a 1px lift on hover
+// (the `transform` property, not Tailwind's `translate` utilities, so the transition covers it);
+// reduced motion keeps them still.
+const BASE =
+  'inline-flex items-center gap-2 rounded-[12px] font-sans text-[15px] leading-tight px-[22px] py-3 ' +
+  'transition-[transform,opacity] duration-150 ease-out hover:[transform:translateY(-1px)] active:[transform:none] ' +
+  'disabled:cursor-not-allowed disabled:[transform:none] motion-reduce:transition-none motion-reduce:hover:[transform:none] ' +
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-page-ink';
+
+const VARIANTS = {
+  primary: 'bg-lime text-night-1 font-extrabold', // #15231a on #b8cf5d: 9.4:1
+  secondary: 'border-[1.5px] border-page-ink bg-page text-page-ink font-bold',
+  ghost: 'border border-page-ink text-page-ink font-bold',
+};
+
 export default function Btn({ as = 'button', variant = 'primary', href, children, className = '', magnetic = false, ...rest }) {
   const ref = magnetic ? useMagnetic() : null;
-  const base = 'inline-flex items-center gap-2 font-sans text-[13px] font-medium tracking-[0.01em] px-[22px] py-3 transition-colors duration-160';
-  const variants = {
-    primary:   'bg-paper-ink text-paper-bg hover:bg-[#2a3a2f]',
-    secondary: 'border border-paper-ink text-paper-ink hover:bg-paper-ink hover:text-paper-bg',
-    ghost:     'text-paper-ink relative after:content-[\'\'] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-px after:bg-accent after:transition-all hover:after:w-full px-0 py-1',
-    terminal:  'bg-data text-term-bg hover:bg-data-dim font-mono',
-  };
-  const cls = `${base} ${variants[variant] || variants.primary} ${className}`;
+  const cls = `${BASE} ${VARIANTS[variant] || VARIANTS.primary} ${className}`;
   if (href) {
     return <Link href={href} ref={ref} className={cls} {...rest}>{children}</Link>;
   }

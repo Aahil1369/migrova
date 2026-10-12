@@ -1,16 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
 import CountryMatchCard from '../components/CountryMatchCard';
-import EditorialHero from '../components/ui/EditorialHero';
+import ToolShell from '../components/kit/ToolShell';
+import ToolHeader from '../components/kit/ToolHeader';
 import Btn from '../components/ui/Btn';
 import Footnote from '../components/ui/Footnote';
-import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 
 export default function MatchPage() {
-  useScrollReveal();
   const [matches, setMatches] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -69,23 +67,9 @@ export default function MatchPage() {
     if (profile) findMatches();
   }, [profile]);
 
-  const hero = HERO_COPY.match;
-
   return (
-    <div className="min-h-screen bg-paper-bg text-paper-ink">
-      <Navbar />
-
-      <EditorialHero
-        kicker={hero.kicker}
-        title={hero.title}
-        titleItalic={hero.italic}
-        titleTail={hero.tail}
-        sub={hero.sub}
-        meta={['FROM 195 COUNTRIES', 'RANKED BY VISA + ROLE FIT', '~60 SECONDS']}
-      />
-
-      <main className="max-w-[1280px] mx-auto px-6 sm:px-10 pb-24 border-t border-paper-rule">
-        <div className="py-14">
+    <ToolShell wide header={<ToolHeader {...HERO_COPY.match} />}>
+        <div className="pt-4">
           {hasProfile === false && (
             <div className="border border-paper-rule bg-paper-bg-alt p-10 max-w-[640px]">
               <div className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-4">// NO PROFILE FOUND</div>
@@ -130,7 +114,6 @@ export default function MatchPage() {
 
           <Footnote>{FOOTNOTES.match}</Footnote>
         </div>
-      </main>
-    </div>
+    </ToolShell>
   );
 }

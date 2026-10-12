@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import EditorialHero from '../components/ui/EditorialHero';
+import ToolShell from '../components/kit/ToolShell';
+import ToolHeader from '../components/kit/ToolHeader';
 import Btn from '../components/ui/Btn';
 import Footnote from '../components/ui/Footnote';
-import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { NATIONALITIES } from '../data/countries';
 import { COUNTRIES_195 } from '../data/countries195';
@@ -79,7 +78,6 @@ function VisaTypeCard({ visa }) {
 }
 
 export default function VisaPage() {
-  useScrollReveal();
   const [nationality, setNationality] = useState('');
   const [targetCountry, setTargetCountry] = useState('');
   const [purpose, setPurpose] = useState('work');
@@ -175,23 +173,9 @@ export default function VisaPage() {
 
   const statusCfg = result ? (STATUS_CONFIG[result.currentStatus] || STATUS_CONFIG['visa-required']) : null;
 
-  const hero = HERO_COPY.visa;
-
   return (
-    <div className="min-h-screen bg-paper-bg text-paper-ink">
-      <Navbar />
-
-      <EditorialHero
-        kicker={hero.kicker}
-        title={hero.title}
-        titleItalic={hero.italic}
-        titleTail={hero.tail}
-        sub={hero.sub}
-        meta={['BY NATIONALITY + DESTINATION', 'CHECKLISTS + TIMELINES', 'APPROVAL PROBABILITY']}
-      />
-
-      <main className="max-w-[1280px] mx-auto px-6 sm:px-10 pb-24 border-t border-paper-rule">
-        <div className="py-14">
+    <ToolShell header={<ToolHeader {...HERO_COPY.visa} />}>
+        <div className="pt-4">
           {profileLoaded && (
             <div className="mb-6 inline-flex items-center gap-2 px-3 py-1.5 border border-paper-rule font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5a7d3f] inline-block" />
@@ -203,17 +187,17 @@ export default function VisaPage() {
           <div className="border border-paper-rule bg-paper-bg-alt p-6 mb-6 max-w-[720px]">
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-1.5">YOUR PASSPORT / NATIONALITY</label>
-                <select value={nationality} onChange={(e) => setNationality(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[13px] outline-none focus:border-accent">
+                <label htmlFor="visa-nationality" className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-1.5">YOUR PASSPORT / NATIONALITY</label>
+                <select id="visa-nationality" value={nationality} onChange={(e) => setNationality(e.target.value)}
+                  className="kit-select">
                   <option value="">Select your nationality</option>
                   {NATIONALITIES.map((n) => <option key={n.code} value={n.code}>{n.label}</option>)}
                 </select>
               </div>
               <div>
-                <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-1.5">DESTINATION COUNTRY</label>
-                <select value={targetCountry} onChange={(e) => setTargetCountry(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[13px] outline-none focus:border-accent">
+                <label htmlFor="visa-destination" className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-1.5">DESTINATION COUNTRY</label>
+                <select id="visa-destination" value={targetCountry} onChange={(e) => setTargetCountry(e.target.value)}
+                  className="kit-select">
                   <option value="">Select destination</option>
                   {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
                 </select>
@@ -239,7 +223,7 @@ export default function VisaPage() {
               className="w-full justify-center disabled:opacity-40">
               {loading ? (
                 <span className="flex items-center justify-center gap-2 font-mono text-[11px] tracking-[0.12em]">
-                  <span className="w-3.5 h-3.5 border-2 border-paper-bg border-t-transparent rounded-full animate-spin" />
+                  <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
                   ANALYZING VISA REQUIREMENTS…
                 </span>
               ) : 'Get Visa Intelligence Report'}
@@ -497,13 +481,12 @@ export default function VisaPage() {
 
           <Footnote>{FOOTNOTES.visa}</Footnote>
         </div>
-      </main>
 
       <LegalAckModal
         open={showAck}
         onAccept={() => { setShowAck(false); handleSearch(); }}
         onClose={() => setShowAck(false)}
       />
-    </div>
+    </ToolShell>
   );
 }

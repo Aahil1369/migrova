@@ -1,5 +1,5 @@
-import Navbar from '../components/Navbar';
-import EditorialHero from '../components/ui/EditorialHero';
+import ToolShell from '../components/kit/ToolShell';
+import ToolHeader from '../components/kit/ToolHeader';
 import SectionHead from '../components/ui/SectionHead';
 import Footnote from '../components/ui/Footnote';
 import SourcesIndex from './SourcesIndex';
@@ -20,26 +20,17 @@ const CHECKS = [
 ];
 
 export default function SourcesPage() {
-  const hero = HERO_COPY.sources;
   const rows = [...COUNTRIES_195]
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((c) => ({ code: c.code, name: c.name, flag: c.flag, region: c.region, verified: countVerified(getSources(c.code)) }));
   const totalVerified = rows.reduce((n, r) => n + r.verified, 0);
 
   return (
-    <div className="min-h-screen bg-paper-bg text-paper-ink">
-      <Navbar />
-      <EditorialHero
-        kicker={hero.kicker}
-        title={hero.title}
-        titleItalic={hero.italic}
-        titleTail={hero.tail}
-        sub={hero.sub}
-        meta={['195 COUNTRIES', `${totalVerified} VERIFIED LINKS`, `CHECKED ${formatVerified(SOURCES_VERIFIED_AT).toUpperCase()}`]}
-      />
-
-      <main className="max-w-[1280px] mx-auto px-6 sm:px-10 pb-24 border-t border-paper-rule">
-        <section className="py-14">
+    <ToolShell wide header={<ToolHeader {...HERO_COPY.sources} />}>
+        <p className="pt-4 font-mono text-[12px] tracking-[0.12em] uppercase text-paper-ink-sub">
+          195 countries · {totalVerified} verified links · checked {formatVerified(SOURCES_VERIFIED_AT)}
+        </p>
+        <section className="pt-6 pb-14">
           <SourcesIndex rows={rows} regions={REGIONS} />
         </section>
 
@@ -60,7 +51,6 @@ export default function SourcesPage() {
         </section>
 
         <Footnote>{FOOTNOTES.sources}</Footnote>
-      </main>
-    </div>
+    </ToolShell>
   );
 }

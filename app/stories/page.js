@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
 import StoryCard from '../components/StoryCard';
-import EditorialHero from '../components/ui/EditorialHero';
+import ToolShell from '../components/kit/ToolShell';
+import ToolHeader from '../components/kit/ToolHeader';
 import Btn from '../components/ui/Btn';
 import Footnote from '../components/ui/Footnote';
-import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 
 const COUNTRIES = [
@@ -18,7 +17,6 @@ const COUNTRIES = [
 ];
 
 export default function StoriesPage() {
-  useScrollReveal();
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -45,25 +43,9 @@ export default function StoriesPage() {
     }
   }
 
-  const inputClass = 'w-full px-4 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm focus:border-accent outline-none transition-colors';
-
-  const hero = HERO_COPY.stories;
-
   return (
-    <div className="min-h-screen bg-paper-bg text-paper-ink">
-      <Navbar />
-
-      <EditorialHero
-        kicker={hero.kicker}
-        title={hero.title}
-        titleItalic={hero.italic}
-        titleTail={hero.tail}
-        sub={hero.sub}
-        meta={['SUBMITTED BY READERS', 'EDITED FOR LENGTH ONLY', 'NEVER FOR HONESTY']}
-      />
-
-      <main className="max-w-[1280px] mx-auto px-6 sm:px-10 pb-24 border-t border-paper-rule">
-        <div className="py-14">
+    <ToolShell header={<ToolHeader {...HERO_COPY.stories} />}>
+        <div className="pt-4">
           {!showForm && !submitted && (
             <div className="mb-10">
               <Btn variant="primary" as="button" onClick={() => setShowForm(true)}>Share your story</Btn>
@@ -82,28 +64,28 @@ export default function StoriesPage() {
           {showForm && (
             <form onSubmit={handleSubmit} className="border border-paper-rule bg-paper-bg-alt p-7 mb-10 max-w-[720px]">
               <div className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-4">// SHARE YOUR STORY</div>
-              <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub mb-1.5 block">Where are you from?</label>
-                  <select value={form.from_country} onChange={e => setForm(f => ({...f, from_country: e.target.value}))}
-                    className={inputClass} required>
+                  <label htmlFor="story-from" className="font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub mb-1.5 block">Where are you from?</label>
+                  <select id="story-from" value={form.from_country} onChange={e => setForm(f => ({...f, from_country: e.target.value}))}
+                    className="kit-select" required>
                     <option value="">Select country</option>
                     {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub mb-1.5 block">Where are you now?</label>
-                  <select value={form.current_country} onChange={e => setForm(f => ({...f, current_country: e.target.value}))}
-                    className={inputClass} required>
+                  <label htmlFor="story-now" className="font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub mb-1.5 block">Where are you now?</label>
+                  <select id="story-now" value={form.current_country} onChange={e => setForm(f => ({...f, current_country: e.target.value}))}
+                    className="kit-select" required>
                     <option value="">Select country</option>
                     {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
               </div>
               <div className="mb-4">
-                <label className="font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub mb-1.5 block">Your story</label>
-                <textarea value={form.story_text} onChange={e => setForm(f => ({...f, story_text: e.target.value}))}
-                  rows={4} className={inputClass} required
+                <label htmlFor="story-text" className="font-mono text-[10px] tracking-[0.1em] uppercase text-paper-ink-sub mb-1.5 block">Your story</label>
+                <textarea id="story-text" value={form.story_text} onChange={e => setForm(f => ({...f, story_text: e.target.value}))}
+                  rows={4} className="kit-input" required
                   placeholder="How did you find your opportunity? What was the journey like?" />
               </div>
               <div className="mb-6">
@@ -150,7 +132,6 @@ export default function StoriesPage() {
 
           <Footnote>{FOOTNOTES.stories}</Footnote>
         </div>
-      </main>
-    </div>
+    </ToolShell>
   );
 }

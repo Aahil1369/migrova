@@ -32,6 +32,12 @@ export const metadata = {
   description: 'General information about visas, relocation, and finding immigration legal help — built for immigrant families. Information, not legal advice.',
 };
 
+// Explicit viewport (with the 16px form controls, this stops iOS zooming in on a tapped field).
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${instrumentSerif.variable} ${inter.variable} ${jbMono.variable} h-full antialiased`}>

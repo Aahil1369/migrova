@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
-import EditorialHero from '../components/ui/EditorialHero';
+import ToolShell from '../components/kit/ToolShell';
+import ToolHeader from '../components/kit/ToolHeader';
 import Btn from '../components/ui/Btn';
 import Footnote from '../components/ui/Footnote';
 import DisclaimerBlock from '../components/DisclaimerBlock';
 import LegalAckModal, { hasLegalAck } from '../components/LegalAckModal';
-import { useScrollReveal } from '../components/ui/hooks/useScrollReveal';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { LAWYER_DIRECTORIES } from '../lib/lawyerDirectories';
 
@@ -15,7 +14,6 @@ const CASE_TYPES = ['Work visa', 'Family reunification', 'Green card', 'Asylum',
 const BUDGETS = ['Need free help', 'Low', 'Medium', 'High'];
 
 export default function LawyerPage() {
-  useScrollReveal();
   const [caseType, setCaseType] = useState(CASE_TYPES[0]);
   const [destination, setDestination] = useState('');
   const [budget, setBudget] = useState('');
@@ -50,18 +48,9 @@ export default function LawyerPage() {
     runGuide();
   }
 
-  const hero = HERO_COPY.lawyer;
-  const inputCls = 'bg-paper-bg border border-paper-rule text-paper-ink text-[14px] px-4 py-3 focus:border-accent outline-none w-full';
-
   return (
-    <div className="min-h-screen bg-paper-bg text-paper-ink">
-      <Navbar />
-      <EditorialHero
-        kicker={hero.kicker} title={hero.title} titleItalic={hero.italic} titleTail={hero.tail} sub={hero.sub}
-        meta={['TYPICAL FEES BY CASE TYPE', 'RED FLAGS + CONSULT QUESTIONS', 'REAL DIRECTORIES ONLY']}
-      />
-      <main className="max-w-[1280px] mx-auto px-6 sm:px-10 pb-24 border-t border-paper-rule">
-        <div className="py-14 grid grid-cols-1 lg:grid-cols-[0.9fr_1.3fr] gap-12">
+    <ToolShell wide header={<ToolHeader {...HERO_COPY.lawyer} />}>
+        <div className="pt-4 pb-14 grid grid-cols-1 lg:grid-cols-[0.9fr_1.3fr] gap-12">
           <form onSubmit={handleSubmit} className="space-y-6 max-w-[440px]">
             <div>
               <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-2">CASE TYPE</label>
@@ -75,8 +64,8 @@ export default function LawyerPage() {
               </div>
             </div>
             <div>
-              <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-2">DESTINATION (STATE OR COUNTRY)</label>
-              <input className={inputCls} value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Texas, USA" />
+              <label htmlFor="lawyer-destination" className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-2">DESTINATION (STATE OR COUNTRY)</label>
+              <input id="lawyer-destination" className="kit-input" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="e.g. Texas, USA" />
             </div>
             <div>
               <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-2">BUDGET (OPTIONAL)</label>
@@ -90,8 +79,8 @@ export default function LawyerPage() {
               </div>
             </div>
             <div>
-              <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-2">PREFERRED LANGUAGE (OPTIONAL)</label>
-              <input className={inputCls} value={language} onChange={(e) => setLanguage(e.target.value)} placeholder="e.g. Urdu" />
+              <label htmlFor="lawyer-language" className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub block mb-2">PREFERRED LANGUAGE (OPTIONAL)</label>
+              <input id="lawyer-language" className="kit-input" value={language} onChange={(e) => setLanguage(e.target.value)} placeholder="e.g. Urdu" />
             </div>
             <Btn as="button" type="submit" variant="primary" disabled={loading || !destination.trim()} className="disabled:opacity-40">
               {loading ? 'Building your guide…' : 'Build my guide →'}
@@ -192,8 +181,7 @@ export default function LawyerPage() {
         </section>
 
         <Footnote>{FOOTNOTES.lawyer}</Footnote>
-      </main>
       <LegalAckModal open={showAck} onAccept={() => { setShowAck(false); runGuide(); }} onClose={() => setShowAck(false)} />
-    </div>
+    </ToolShell>
   );
 }
