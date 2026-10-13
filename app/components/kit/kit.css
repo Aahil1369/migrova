@@ -583,14 +583,15 @@
   cursor: pointer;
   transition: transform 150ms var(--ease);
 }
-.kit-chip:hover:not(:disabled) { transform: translateY(-1px); }
+.kit-chip:hover:not([aria-disabled='true']) { transform: translateY(-1px); }
 .kit-chip[aria-pressed='true'] {
   border-color: var(--page-ink);
   background: var(--page-ink);
   color: var(--page);
 }
 .kit-chip:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
-.kit-chip:disabled { cursor: not-allowed; opacity: 0.5; }
+/* resting (kit/Chip.js `disabled`): aria-disabled, so the chip keeps keyboard focus */
+.kit-chip[aria-disabled='true'] { cursor: not-allowed; opacity: 0.5; }
 
 /* ── Results: PassportCard, VerifiedLinkCard, ChecklistPage, MrzDecode ───────────
    Paper on the --ground. Every text colour here is tested >= 4.5:1 on --page, on --ground and
@@ -820,7 +821,10 @@ button.kit-mrzd:focus-visible { outline: 2px solid var(--page-ink); outline-offs
     transform: rotate(var(--r));
     transition: none;
   }
+  /* [data-applied] (0,2,1) out-ranks the landing bleed's [data-applied='true'] rule above, which a
+     plain .jb-stamp::before (0,1,1) does not (scripts/kit/__tests__/results.test.mjs) */
   .jb-stamp::before,
+  .jb-stamp[data-applied]::before,
   .jb-seal-ring,
   .jb-starfield,
   .jb-globe { animation: none; }
@@ -828,6 +832,6 @@ button.kit-mrzd:focus-visible { outline: 2px solid var(--page-ink); outline-offs
   :root:has(.kit-shell, .kit-arrival) { scroll-behavior: auto; }
   .kit-chip,
   .kit-vlink { transition: none; }
-  .kit-chip:hover:not(:disabled),
+  .kit-chip:hover:not([aria-disabled='true']),
   a.kit-vlink:hover { transform: none; }
 }

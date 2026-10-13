@@ -248,6 +248,36 @@ test('pickMatches: the AI\'s answer as at most five known countries, best first,
   for (const junk of [undefined, null, {}, { matches: 'x' }, { matches: [] }, [], 'x']) assert.deepEqual(pickMatches(junk), [], String(junk));
 });
 
+test('pickMatches: a code and a name that are two different countries are dropped, never shown as the code\'s', () => {
+  // 'ch' is Switzerland, but the reason and visa path were written about China: which country the AI
+  // meant is unknown, so neither the card nor "Set as destination" (the saved route) may name one.
+  const picked = pickMatches({
+    matches: [
+      { country_code: 'ch', country_name: 'China', match_score: 95, top_reason: 'Tech hubs in Shenzhen.', visa_path: 'Z visa.' },
+      { country_code: 'AT', country_name: 'Australia', match_score: 90 },
+      { country_code: 'sk', country_name: 'South Korea', match_score: 88 },
+      { country_code: 'cd', country_name: 'Republic of the Congo', match_score: 86 },
+      { country_code: 'us', country_name: 'United States', match_score: 80 }, // both agree: kept
+      { country_code: 'gb', country_name: 'UK', match_score: 75 }, // an alias of the same country: kept
+      { country_code: 'de', country_name: 'Deutschland', match_score: 70 }, // the name is not one we know: the code decides
+      { country_code: 'cg', country_name: 'Congo', match_score: 65 }, // "Congo" alone names neither: the code decides
+      { country_code: 'cn', country_name: 'China', match_score: 60 }, // a dropped entry does not block the right one
+    ],
+  });
+  assert.deepEqual(picked.map((m) => [m.country_code, m.country_name, m.match_score]), [
+    ['us', 'United States', 80],
+    ['gb', 'United Kingdom', 75],
+    ['de', 'Germany', 70],
+    ['cg', 'Republic of the Congo', 65],
+    ['cn', 'China', 60],
+  ]);
+  assert.ok(picked.every((m) => m.top_reason !== 'Tech hubs in Shenzhen.'), 'China\'s reason is never shown under Switzerland');
+  // The device cache re-cleans its matches with the same rule.
+  assert.deepEqual(pickMatches({ matches: [{ country_code: 'ch', country_name: 'China' }] }), []);
+  assert.deepEqual(pickMatches({ matches: [{ country_code: 'ch', country_name: 'Switzerland' }] }).map((m) => m.country_code), ['ch']);
+  assert.deepEqual(pickMatches({ matches: [{ country_code: '', country_name: 'China' }] }).map((m) => m.country_code), ['cn'], 'no code: the name decides');
+});
+
 // ── Picking a destination (explicit tap only) ───────────────────────────────────
 
 test('setDestination: saves From -> the match as the route and tells the page; blocked storage says no', () => {

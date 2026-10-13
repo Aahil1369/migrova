@@ -124,7 +124,9 @@ export default function RelocatePage() {
     if (!loading) runSearch(destination);
   };
 
+  // A chip rests while a search runs (aria-disabled, so it keeps keyboard focus): a tap starts nothing.
   const pickCity = (name) => {
+    if (loading) return;
     setDestination(name);
     runSearch(name);
   };

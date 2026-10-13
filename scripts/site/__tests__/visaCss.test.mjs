@@ -115,6 +115,15 @@ test('page markup: decorative stamp and MRZ hidden, report announced and focused
   assert.match(submit, /if \(step === 'missing'\) setError\(MISSING_FIELDS\);/);
   assert.equal((submit.match(/hasLegalAck\(/g) || []).length, 1, 'the legal-ack is read once, as an input of visaSubmitStep');
   assert.match(page, /'Issue my visa report'/);
+  // Busy, not disabled: native `disabled` would drop keyboard focus to <body> (and a failed search
+  // never gives it back); visaSubmitStep answers 'busy' while a search runs, so nothing restarts it.
+  assert.match(page, /<Btn variant="primary" as="button" type="submit" aria-disabled=\{loading\} className="visa-submit">/);
+  assert.doesNotMatch(page, /\sdisabled=\{loading\}/);
+  assert.match(submit, /else if \(step === 'search'\) handleSearch\(\);/, 'only a search step searches (not busy)');
+  const busy = RULES.filter((r) => r.selectors.includes(".visa-submit[aria-disabled='true']"));
+  assert.equal(busy.length, 1, 'the busy submit keeps its look');
+  assert.match(busy[0].body, /opacity:\s*1;\s*cursor:\s*progress/);
+  assert.ok(!RULES.some((r) => r.selectors.some((s) => s.startsWith('.visa-submit:disabled'))), 'no :disabled style left');
   assert.match(page, /<ResultArrival key=\{report\.id\} id=\{VISA_HEADING_ID\} label="Your visa report is ready">/);
   assert.match(page, /<Chip key=\{p\.value\} pressed=\{purpose === p\.value\}/);
   assert.match(page, /<DisclaimerBlock tone="paper" \/>/, 'the not-legal-advice notice on the result');

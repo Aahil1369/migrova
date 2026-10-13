@@ -250,3 +250,22 @@ test('the navbar sign-in and profile pop-ups and /contact use 16px fields too (n
     assert.equal(fields, count, `${file}: text fields found`);
   }
 });
+
+test('a busy control keeps keyboard focus: chips and search buttons are aria-disabled, never natively disabled', () => {
+  // Native `disabled` blurs the focused control (focus falls to <body>), and a failed search
+  // (the shared free-tier quota) never gives it back: the kit Chip rests with aria-disabled and
+  // ignores taps instead, and the search pages guard their own busy state.
+  const chip = stripJsComments(read('app/components/kit/Chip.js'));
+  assert.match(chip, /aria-disabled=\{disabled \|\| undefined\}/);
+  assert.match(chip, /onClick=\{disabled \? undefined : onClick\}/, 'a tap on a resting chip does nothing');
+  assert.doesNotMatch(chip, /\sdisabled=\{/, 'no native disabled');
+  const css = stripCssComments(read('app/components/kit/kit.css'));
+  assert.doesNotMatch(css, /\.kit-chip:disabled|\.kit-chip[^{]*:not\(:disabled\)/, 'the chip styles follow aria-disabled');
+  assert.match(css, /\.kit-chip\[aria-disabled='true'\] \{[^}]*opacity: 0\.5;/);
+  assert.match(css, /\.kit-chip:hover:not\(\[aria-disabled='true'\]\) \{ transform: translateY\(-1px\); \}/);
+  for (const file of ['app/visa/page.js', 'app/relocate/page.js', 'app/match/page.js', 'app/match/MatchForm.js']) {
+    const tags = [...stripJsComments(read(file)).matchAll(/<(?:Btn|button)\b(?:=>|[^>])*>/g)].map((m) => m[0]);
+    assert.ok(tags.length > 0, `${file}: buttons found`);
+    for (const tag of tags) assert.doesNotMatch(tag, /\sdisabled=\{/, `${file}: ${tag}`);
+  }
+});

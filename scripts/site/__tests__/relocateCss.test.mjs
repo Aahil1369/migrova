@@ -14,7 +14,7 @@ const { contrastRatio, PAGE_PAPER, STAMP_INKS } = await import(new URL('app/comp
 
 const GROUND = '#efe7d6';
 const PAGE_INK = '#1f2a24';
-const TICKET = '#ffffff';
+const TICKET = PAGE_PAPER; // the pass's card is the passport paper, --page (spec §4.1, mockup .bp)
 const STUB = '#f6efe0';
 const TAB = '#f6eedb';
 
@@ -105,6 +105,16 @@ test('every text colour reaches 4.5:1 on each surface it can sit on', () => {
   }
 });
 
+test('the boarding pass is the passport paper (#fbf8f2, spec §4.1 and the mockup .bp), never white', () => {
+  const backgrounds = rules(TICKET_CSS).filter((r) => r.selectors.includes('.tk-main')).map((r) => decl(r.body, 'background')).filter(Boolean);
+  assert.deepEqual(backgrounds, ['var(--page)'], 'the card is the --page token');
+  assert.match(read('app/globals.css'), /--page:\s*#fbf8f2;/);
+  assert.equal(PAGE_PAPER, '#fbf8f2');
+  assert.doesNotMatch(TICKET_CSS, /#fff(?:fff)?\b|\bwhite\b(?!-space)/i, 'no white anywhere on the pass');
+  const stub = rules(TICKET_CSS).filter((r) => r.selectors.includes('.tk-stub')).map((r) => decl(r.body, 'background')).filter(Boolean);
+  assert.deepEqual(stub, [STUB], 'the stub stays the darker paper of the mockup');
+});
+
 test('body text is at least 16px on phones', () => {
   const phone = (css) => rules(withoutMedia(css, /min-width/));
   const sizes = (css, selector) => phone(css).filter((r) => r.selectors.includes(selector)).map((r) => fontSize(r.body)).filter(Boolean);
@@ -133,6 +143,8 @@ test('page markup: real form, chips, the guide announced and focused, disclaimer
   assert.match(page, /<PassportCard as="form" className="rl-form" onSubmit=\{handleSubmit\}/);
   assert.match(page, /type="submit"/);
   assert.match(page, /<Chip key=\{name\} pressed=\{destination === name\} disabled=\{loading\}/, 'chips report their state and rest while a search runs');
+  // A resting chip is aria-disabled (kit Chip), so it keeps keyboard focus; a tap on it starts nothing.
+  assert.match(page, /const pickCity = \(name\) => \{\s*if \(loading\) return;/, 'a tap while a search runs is ignored');
   assert.match(page, /<ResultArrival key=\{guide\.id\} id=\{GUIDE_HEADING_ID\}/);
   assert.match(page, /headingId=\{GUIDE_HEADING_ID\}/);
   assert.match(page, /<DisclaimerBlock tone="paper" \/>/, 'the not-legal-advice notice on the result');

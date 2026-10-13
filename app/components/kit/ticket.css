@@ -1,10 +1,11 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    Ticket (kit/Ticket.js): a boarding pass on the warm --ground, the homepage pass's sibling look
-   (passport/stage.css .bp-*), shipped only with the pages that use it. White card + perforated
-   stub: ground-coloured notches bite into both halves at the perforation (each half clips its
-   own, so nothing pokes out past the pass), and the card covers the stub's shadow.
+   (passport/stage.css .bp-*), shipped only with the pages that use it. A passport-paper card
+   (--page #fbf8f2, like every tool-page card and the approved mockup's pass) + perforated stub:
+   ground-coloured notches bite into both halves at the perforation (each half clips its own, so
+   nothing pokes out past the pass), and the card covers the stub's shadow.
    Text colours are page ink, #3d443a, #5a6b4a, #1f6f47 and #a94a1f, each tested >= 4.5:1 on the
-   card (#fff), the stub (#f6efe0), --page and --ground (scripts/site/__tests__/relocateCss.test.mjs).
+   card (--page), the stub (#f6efe0) and --ground (scripts/site/__tests__/relocateCss.test.mjs).
    Only transform / opacity animate (the stamp's thunk, the stub's 700ms tear); no CSS trig.
    ───────────────────────────────────────────────────────────────────────────── */
 
@@ -20,7 +21,7 @@
   min-width: 0;
   padding: 16px 16px 18px;
   border-radius: 16px 16px 4px 4px;
-  background: #fff;
+  background: var(--page);
   /* the ADMITTED stamp waits at 2.2x before it lands: the card clips it (no sideways scroll) */
   overflow: hidden;
   overflow: clip;

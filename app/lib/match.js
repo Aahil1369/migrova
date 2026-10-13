@@ -240,15 +240,20 @@ function scoreOf(value) {
 
 /**
  * The AI's answer ({ matches: [...] }) as at most five matches, best score first (no score last):
- * each a known country (its code, else its name, must be one of the 195; repeats dropped) with our
- * own name for it, the score as 0-100 or null, and every text field a trimmed string ('' if missing).
+ * each a known country (its code, else its name, must be one of the 195; repeats dropped, and so is
+ * a code and name that are two different countries) with our own name for it, the score as 0-100 or
+ * null, and every text field a trimmed string ('' if missing).
  */
 export function pickMatches(data) {
   const seen = new Set();
   const out = [];
   for (const m of list(isObject(data) ? data.matches : null)) {
     if (!isObject(m)) continue;
-    const country = countryByCode(text(m.country_code)) ?? findCountryInText(text(m.country_name));
+    const byCode = countryByCode(text(m.country_code));
+    const byName = findCountryInText(text(m.country_name));
+    // 'ch' + 'China': the reason and visa path may be about either country, so show neither.
+    if (byCode && byName && byCode.code !== byName.code) continue;
+    const country = byCode ?? byName;
     if (!country || seen.has(country.code)) continue;
     seen.add(country.code);
     out.push({

@@ -3,7 +3,7 @@
 // surface they can sit on, and the accessibility contract their markup must keep.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 
 const ROOT = new URL('../../../', import.meta.url);
 const read = (path) => readFileSync(new URL(path, ROOT), 'utf8');
@@ -114,6 +114,96 @@ test('a long unbroken AI string wraps inside the cards instead of widening the p
   // `anywhere` (unlike `break-word`) also lowers the min-content width, so a grid/flex column of
   // cards stays inside its 16px gutters on a 320px phone.
   for (const selector of ['.kit-card', '.kit-vlink']) assert.equal(declared(selector, 'overflow-wrap'), 'anywhere', selector);
+});
+
+// ── Reduced motion: a stamp's ink bleed (a scale animation) never plays ────────────────────────────
+
+// [ids, classes / attributes / pseudo-classes, elements / pseudo-elements] of one selector.
+function specificity(selector) {
+  const sum = [0, 0, 0];
+  const add = (s) => s.forEach((n, i) => { sum[i] += n; });
+  let rest = selector.replace(/:(is|not|has|where)\(((?:[^()]|\([^()]*\))*)\)/g, (_, fn, args) => {
+    if (fn !== 'where') add(args.split(',').map((a) => specificity(a.trim())).sort(compareSpecificity).pop());
+    return ' ';
+  });
+  const count = (re, i) => { rest = rest.replace(re, () => { sum[i]++; return ' '; }); };
+  count(/\[[^\]]*\]/g, 1);
+  count(/::[\w-]+/g, 2);
+  count(/#[\w-]+/g, 0);
+  count(/\.[\w-]+/g, 1);
+  count(/:[\w-]+/g, 1);
+  count(/(?:^|(?<=[\s>+~]))[a-z][\w-]*/gi, 2);
+  return sum;
+}
+const compareSpecificity = (a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+
+// Every stylesheet under app/ (the kit, the tool pages, the homepage passport), comments stripped.
+function appStylesheets(dir = new URL('app/', ROOT)) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const url = new URL(entry.name + (entry.isDirectory() ? '/' : ''), dir);
+    if (entry.isDirectory()) return appStylesheets(url);
+    return entry.name.endsWith('.css') ? [{ name: url.pathname.split('/app/').pop(), css: readFileSync(url, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '') }] : [];
+  });
+}
+
+// The css split into the bodies of its `@media (prefers-reduced-motion: reduce)` blocks and the rest
+// (other @media blocks keep their rules), each as innermost rules { selectors, body, at }.
+function splitReduce(css) {
+  const reduce = [];
+  let rest = '';
+  let i = 0;
+  for (let at = css.indexOf('@media', i); at !== -1; at = css.indexOf('@media', i)) {
+    const open = css.indexOf('{', at);
+    let depth = 0;
+    let end = open;
+    for (; end < css.length; end++) {
+      if (css[end] === '{') depth++;
+      else if (css[end] === '}' && --depth === 0) break;
+    }
+    rest += css.slice(i, at);
+    if (/prefers-reduced-motion:\s*reduce/.test(css.slice(at, open))) reduce.push({ body: css.slice(open + 1, end), at });
+    else rest += css.slice(open + 1, end);
+    i = end + 1;
+  }
+  const rules = (text, at = 0) =>
+    [...text.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((m) => ({ selectors: m[1].split(';').pop().split(',').map((s) => s.trim()), body: m[2], at }));
+  return { reduce: reduce.flatMap((block) => rules(block.body, block.at)), rest: rules(rest + css.slice(i)) };
+}
+
+test('reduced motion: the kit\'s rule stops every stamp\'s ink bleed, whatever starts it (spec §3)', () => {
+  const sheets = appStylesheets();
+  const kit = sheets.find((s) => s.name === 'components/kit/kit.css');
+  assert.ok(kit, 'kit.css found');
+  const isBleedBefore = (sel) => /\.jb-stamp\b[^\s>+~]*::before$/.test(sel);
+  const reduceIndex = kit.css.lastIndexOf('prefers-reduced-motion: reduce');
+
+  // The kit's reduce rules that switch the bleed off, and how strongly they do.
+  const stops = splitReduce(kit.css).reduce.filter((r) => /(?:^|;)\s*animation\s*:\s*none\s*(?:;|$)/.test(r.body));
+  const stopSelectors = stops.flatMap((r) => r.selectors).filter(isBleedBefore);
+  assert.ok(stopSelectors.length > 0, 'kit.css switches the stamp bleed off under reduced motion');
+  const strongest = stopSelectors.map(specificity).sort(compareSpecificity).pop();
+
+  // Every rule anywhere that starts a bleed (an animation that is not `none`) must lose to it.
+  // Page stylesheets load after kit.css, so they must be strictly weaker; a kit rule may tie if
+  // it comes before the reduce block.
+  let starters = 0;
+  for (const { name, css } of sheets) {
+    for (const { selectors, body } of splitReduce(css).rest) {
+      const starts = /(?:^|;)\s*animation(?:-name)?\s*:\s*([^;]+)/.exec(body);
+      if (!starts || /^none\b/.test(starts[1].trim())) continue;
+      for (const sel of selectors.filter(isBleedBefore)) {
+        starters++;
+        const order = compareSpecificity(strongest, specificity(sel));
+        const tieWins = name === kit.name && kit.css.indexOf(sel) < reduceIndex;
+        assert.ok(order > 0 || (order === 0 && tieWins), `${name} ${sel} (${specificity(sel)}) out-ranks the reduce rule (${strongest})`);
+      }
+    }
+  }
+  assert.ok(starters >= 1, 'the applied stamp\'s bleed was found');
+  // The applied stamp's own rule, named: it is (0,2,1), so a plain `.jb-stamp::before` (0,1,1) is not enough.
+  assert.deepEqual(specificity(".jb-stamp[data-applied='true']::before"), [0, 2, 1]);
+  assert.deepEqual(specificity(':is(.jb-stack, .jb-fade) .jb-stamp::before'), [0, 2, 1]);
+  assert.ok(stopSelectors.includes('.jb-stamp[data-applied]::before'), stopSelectors.join(', '));
 });
 
 test('the result components keep their accessibility contract', () => {

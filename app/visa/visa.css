@@ -96,7 +96,9 @@
   justify-content: center;
   margin-top: 16px;
 }
-.visa-submit:disabled { opacity: 1; cursor: progress; } /* busy, not unavailable: keep its text at full contrast */
+/* busy, not unavailable: aria-disabled keeps keyboard focus on it (native `disabled` drops it to
+   <body>), and its text stays at full contrast */
+.visa-submit[aria-disabled='true'] { opacity: 1; cursor: progress; }
 @media (min-width: 640px) {
   .visa-fields { grid-template-columns: 1fr 1fr; }
 }

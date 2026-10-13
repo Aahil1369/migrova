@@ -447,7 +447,7 @@ export default function VisaPage() {
             </div>
           </fieldset>
           <p className="visa-error" role="alert">{error}</p>
-          <Btn variant="primary" as="button" type="submit" disabled={loading} className="visa-submit">
+          <Btn variant="primary" as="button" type="submit" aria-disabled={loading} className="visa-submit">
             {loading ? 'Issuing your visa report…' : 'Issue my visa report'}
           </Btn>
         </PassportCard>
