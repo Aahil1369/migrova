@@ -3,6 +3,7 @@
 import { useId } from 'react';
 import Link from 'next/link';
 import Guilloche from './kit/Guilloche';
+import PassportCard from './kit/PassportCard';
 import { CheckGlyph } from './kit/Glyphs';
 import { STAMP_INKS } from './kit/stampInks';
 import { costLevel, matchLinks } from '../lib/match';
@@ -12,12 +13,16 @@ import '../match/match.css';
 const VISA_INKS = { easy: STAMP_INKS.green, moderate: STAMP_INKS.gold, hard: STAMP_INKS.terracotta, 'very hard': STAMP_INKS.terracotta };
 
 /**
- * One country match as a passport page with a visa vignette stuck on it (the Country Match
- * tool's M-MATCH tint, a guilloche rosette, a foil strip): the country (h3) and its score, the
- * reason, then the VISA / JOBS / COST / LANG strip, the visa-path sentence, links that carry the
- * route (/visa?from=<from>&to=<code>, /relocate?dest=<name>) and "Set as destination", which calls
- * `onPick(match)` like a tap on the country's stamp. `match` comes from pickMatches (app/lib/
- * match.js); `from` is the passport's country code; `picked`: it is the saved destination.
+ * One country match as a passport page (the kit's PassportCard paper) with the kit's M-MATCH visa
+ * vignette stuck on it: the kit's own .jb-vignette parts (kit.css holds the tint, ink, guilloche
+ * rosette, watermark letter, type label and foil), with the country as the vignette's title (h3),
+ * the score beside it and the reason as its description. Then the VISA / JOBS / COST / LANG strip,
+ * the visa-path sentence, links that carry the route (/visa?from=<from>&to=<code>,
+ * /relocate?dest=<name>) and "Set as destination", which calls `onPick(match)` like a tap on the
+ * country's stamp. `match` comes from pickMatches (app/lib/match.js); `from` is the passport's
+ * country code; `picked`: it is the saved destination.
+ * (Not the Vignette component itself: its parts are spans for a link / <summary>, and this head
+ * holds a heading and paragraphs.)
  */
 export default function CountryMatchCard({ match, rank, from, picked = false, onPick }) {
   const id = useId();
@@ -34,29 +39,31 @@ export default function CountryMatchCard({ match, rank, from, picked = false, on
   ];
 
   return (
-    <article className="mt-card" aria-labelledby={id}>
-      <div className="mt-vig">
-        <Guilloche variant="rosette" seed="M-MATCH" className="mt-vig-rosette" />
-        <span className="mt-vig-letter" aria-hidden="true">M</span>
-        <span className="mt-vig-foil" aria-hidden="true" />
-        <p className="mt-vig-type" aria-hidden="true">
-          Visa type <b>M-MATCH</b> · {String(rank).padStart(2, '0')}
-        </p>
-        <div className="mt-vig-head">
-          <h3 id={id} className="mt-vig-name">{match.country_name}</h3>
-          <p className="mt-vig-score">
-            {typeof score === 'number' ? (
-              <>
-                <b>{score}</b>
-                <span className="mt-vig-of">/100</span>
-                <span className="sr-only"> match score</span>
-              </>
-            ) : (
-              <span className="mt-vig-of">No score</span>
-            )}
-          </p>
+    <PassportCard as="article" className="mt-card" aria-labelledby={id}>
+      <div className="jb-vignette mt-vig" data-type="M-MATCH">
+        <div className="jb-vignette-card">
+          <Guilloche variant="rosette" seed="M-MATCH" className="jb-vignette-rosette" />
+          <span className="jb-vignette-letter" aria-hidden="true">M</span>
+          <span className="jb-vignette-type" aria-hidden="true">
+            VISA TYPE <b>M-MATCH</b> · {String(rank).padStart(2, '0')}
+          </span>
+          <div className="mt-vig-head">
+            <h3 id={id} className="jb-vignette-title">{match.country_name}</h3>
+            <p className="mt-vig-score">
+              {typeof score === 'number' ? (
+                <>
+                  <b>{score}</b>
+                  <span className="mt-vig-of">/100</span>
+                  <span className="sr-only"> match score</span>
+                </>
+              ) : (
+                <span className="mt-vig-of">No score</span>
+              )}
+            </p>
+          </div>
+          {match.top_reason ? <p className="jb-vignette-desc">{match.top_reason}</p> : null}
+          <span className="jb-vignette-holo" aria-hidden="true"><span /></span>
         </div>
-        {match.top_reason ? <p className="mt-vig-reason">{match.top_reason}</p> : null}
       </div>
 
       <dl className="mt-stats">
@@ -103,6 +110,6 @@ export default function CountryMatchCard({ match, rank, from, picked = false, on
           </p>
         ) : null}
       </div>
-    </article>
+    </PassportCard>
   );
 }
