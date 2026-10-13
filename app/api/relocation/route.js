@@ -1,7 +1,7 @@
 import Groq from 'groq-sdk';
 import { GROQ_OPTIONS } from '../../../lib/ai.js';
 import { friendlyError } from '../../lib/friendlyError.js';
-import { supabase, hasSupabase } from '../../../lib/supabase.js';
+import { pickRelocation, relocationCacheKey } from './fields.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const cache = new Map();
@@ -15,12 +15,10 @@ export async function POST(request) {
     const field = clamp(body.field, 200);
     if (!destination) return Response.json({ error: 'Destination required' }, { status: 400 });
 
-    const cacheKey = `${destination}:${origin || 'unknown'}`;
+    // The field changes the guide (job market, work culture), so it is part of the key.
+    const cacheKey = relocationCacheKey({ destination, origin, field });
     const cached = cache.get(cacheKey);
-    if (cached && Date.now() - cached.ts < 3600000) {
-      const connections = await getCommunityConnections(destination, field);
-      return Response.json({ ...cached.data, connections });
-    }
+    if (cached && Date.now() - cached.ts < 3600000) return Response.json(cached.data);
 
     const completion = await groq.chat.completions.create({
       ...GROQ_OPTIONS,
@@ -35,7 +33,6 @@ ${field ? `Professional field: ${field}` : ''}
 
 Return ONLY valid JSON (no markdown) with this exact structure:
 {
-  "destination": "${destination}",
   "overview": "<2-3 sentences about what it's like to live/work in ${destination}>",
   "costBreakdown": {
     "rent_1br_city_center": {"amount": "<USD/month>", "note": "<brief context>"},
@@ -130,36 +127,13 @@ Include at least 4 neighborhoods, 3 expat communities, 5 before-you-move actions
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (jsonMatch) text = jsonMatch[0];
 
-    const data = JSON.parse(text);
-    data.safetyInfo = data.safetyInfo || null;
-    data.climate = data.climate || null;
-    data.workCulture = data.workCulture || null;
-    data.bankingSetup = data.bankingSetup || null;
-    data.simAndInternet = data.simAndInternet || null;
-    data.emergencyNumbers = data.emergencyNumbers || null;
-    data.culturalTips = data.culturalTips || null;
+    // Exactly RELOCATION_FIELDS: a missing section is null, anything else the AI adds is dropped.
+    const data = pickRelocation(JSON.parse(text));
     cache.set(cacheKey, { data, ts: Date.now() });
-
-    const connections = await getCommunityConnections(destination, field);
-    return Response.json({ ...data, connections });
+    return Response.json(data);
   } catch (err) {
     console.error('Relocation error:', err);
     return Response.json({ error: friendlyError('relocation') }, { status: 500 });
   }
 }
 
-async function getCommunityConnections(destination, field) {
-  if (!hasSupabase) return [];
-  try {
-    const dest = destination.toLowerCase();
-    const { data } = await supabase
-      .from('posts')
-      .select('id, user_name, user_avatar, title, content, post_type, created_at, like_count')
-      .or(`content.ilike.%${dest}%,title.ilike.%${dest}%`)
-      .order('like_count', { ascending: false })
-      .limit(6);
-    return data || [];
-  } catch {
-    return [];
-  }
-}
