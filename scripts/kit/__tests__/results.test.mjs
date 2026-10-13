@@ -87,6 +87,21 @@ test('checkboxes: the box edge and the tick stand out (3:1, non-text)', () => {
   assert.ok(contrastRatio(`#${tick}`, fill) >= 3, `tick #${tick} on ${fill}`);
 });
 
+test('checkboxes stay readable in forced-colors mode (Windows High Contrast)', () => {
+  // The custom box draws its tick as a pale background image, which forced colours keep while
+  // forcing the background to Canvas: the system checkbox comes back there instead.
+  assert.equal(declared('.kit-check-box', 'appearance'), 'auto', 'the last .kit-check-box appearance is the forced-colors one');
+  const css = read('app/components/kit/kit.css').replace(/\/\*[\s\S]*?\*\//g, '');
+  assert.match(css, /\.kit-check-box \{[^}]*-webkit-appearance: none;\s*appearance: none;/, 'the paper box everywhere else');
+  assert.match(css, /@media \(forced-colors: active\) \{\s*\.kit-check-box \{ -webkit-appearance: auto; appearance: auto; \}\s*\}/);
+});
+
+test('the checklist count is an uppercase, tracked mono label (mockup A: "2 / 5 PACKED")', () => {
+  assert.match(declared('.kit-check-count', 'font'), /var\(--jb-mono\)/);
+  assert.equal(declared('.kit-check-count', 'text-transform'), 'uppercase');
+  assert.ok(Number.parseFloat(declared('.kit-check-count', 'letter-spacing')) >= 0.12, declared('.kit-check-count', 'letter-spacing'));
+});
+
 test('text and controls in the result components are never below 16px where people read them', () => {
   for (const selector of ['.kit-vlink-domain', '.kit-vlink-note', '.kit-check-item label']) {
     const size = declared(selector, 'font-size') ?? /\b(\d+)px\//.exec(declared(selector, 'font') ?? '')?.[1];

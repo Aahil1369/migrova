@@ -105,14 +105,14 @@ export default function AuthModal({ onClose, onSuccess }) {
                 {mode === 'signup' && (
                   <input value={name} onChange={(e) => setName(e.target.value)}
                     placeholder="Your name"
-                    className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm outline-none focus:border-accent transition-colors" />
+                    className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[16px] outline-none focus:border-accent transition-colors" />
                 )}
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address" required
-                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm outline-none focus:border-accent transition-colors" />
+                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[16px] outline-none focus:border-accent transition-colors" />
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password" required minLength={6}
-                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm outline-none focus:border-accent transition-colors" />
+                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[16px] outline-none focus:border-accent transition-colors" />
 
                 {error && <p className="font-mono text-[11px] text-accent">{error}</p>}
 

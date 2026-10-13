@@ -230,3 +230,23 @@ test('every text input, select and textarea on the tool pages is a 16px kit cont
     assert.deepEqual(fontSize, ['16px'], `${cls} font-size (iOS zooms on focus below 16px)`);
   }
 });
+
+test('the navbar sign-in and profile pop-ups and /contact use 16px fields too (no iOS zoom)', () => {
+  // These keep their own look (their redesign is a later round); only the field size is pinned.
+  const files = { 'app/components/AuthModal.js': 3, 'app/components/ProfileModal.js': 4, 'app/contact/page.js': 4 };
+  for (const [file, count] of Object.entries(files)) {
+    const src = read(file);
+    const inputCls = /const inputCls = '([^']*)'/.exec(src)?.[1];
+    let fields = 0;
+    for (const m of src.matchAll(/<(input|select|textarea)\b([^<]*)/g)) {
+      const [, tag, attrs] = m;
+      if (/type="(checkbox|radio|file|hidden)"/.test(attrs)) continue;
+      fields += 1;
+      const cls = /className="([^"]*)"/.exec(attrs)?.[1] ?? (/className=\{`?\$?\{?inputCls\b/.test(attrs) ? inputCls : null);
+      assert.ok(cls, `${file}: <${tag}> has a className`);
+      const sizes = cls.match(/(?:^|\s)text-(?:xs|sm|base|lg|\[\d+(?:\.\d+)?px\])(?=\s|$)/g)?.map((t) => t.trim()) ?? [];
+      assert.deepEqual(sizes, ['text-[16px]'], `${file}: <${tag}> font size (iOS zooms on focus below 16px)`);
+    }
+    assert.equal(fields, count, `${file}: text fields found`);
+  }
+});

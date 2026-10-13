@@ -95,12 +95,12 @@ export default function ProfileModal({ onSave, initialProfile, onClose, welcome 
               <div>
                 <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-1.5 block">YOUR NAME</label>
                 <input value={profile.name} onChange={(e) => set('name', e.target.value)}
-                  placeholder="e.g. Alex" className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm outline-none focus:border-accent transition-colors" />
+                  placeholder="e.g. Alex" className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[16px] outline-none focus:border-accent transition-colors" />
               </div>
               <div>
                 <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-1.5 block">YOUR NATIONALITY (PASSPORT)</label>
                 <select value={profile.nationality} onChange={(e) => set('nationality', e.target.value)}
-                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm outline-none focus:border-accent transition-colors">
+                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[16px] outline-none focus:border-accent transition-colors">
                   <option value="">Select nationality</option>
                   {NATIONALITIES.map((n) => <option key={n.code} value={n.code}>{n.label}</option>)}
                 </select>
@@ -108,7 +108,7 @@ export default function ProfileModal({ onSave, initialProfile, onClose, welcome 
               <div>
                 <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-1.5 block">WHERE DO YOU CURRENTLY LIVE?</label>
                 <input value={profile.currentCountry} onChange={(e) => set('currentCountry', e.target.value)}
-                  placeholder="e.g. United States, Uganda, Pakistan" className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm outline-none focus:border-accent transition-colors" />
+                  placeholder="e.g. United States, Uganda, Pakistan" className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[16px] outline-none focus:border-accent transition-colors" />
               </div>
             </>
           )}
@@ -203,7 +203,7 @@ export default function ProfileModal({ onSave, initialProfile, onClose, welcome 
                 <label className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-1.5 block">SKILLS (COMMA SEPARATED)</label>
                 <textarea value={profile.skills} onChange={(e) => set('skills', e.target.value)} rows={3}
                   placeholder="e.g. Python, React, Machine Learning, SQL, AWS"
-                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-sm outline-none focus:border-accent transition-colors resize-none" />
+                  className="w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-paper-ink text-[16px] outline-none focus:border-accent transition-colors resize-none" />
               </div>
               <div className="border border-paper-rule p-4">
                 <p className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-2">// PROFILE SUMMARY</p>

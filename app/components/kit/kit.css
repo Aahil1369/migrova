@@ -704,7 +704,8 @@
 .kit-check-count {
   margin: 6px 0 0;
   font: 500 14px/1.4 var(--jb-mono);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: #5a6b4a;
 }
 /* Room for the PACKED stamp (a rect stamp at --u 3px is 102 x 54), kept so ticking the last item
@@ -755,6 +756,11 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.5 7.5l3 3 6-7' fill='none' stroke='%23fbf8f2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 .kit-check-box:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
+/* Windows High Contrast forces the background to Canvas but keeps the pale tick image, so ticked
+   and unticked would look the same: hand the box back to the system's own checkbox there. */
+@media (forced-colors: active) {
+  .kit-check-box { -webkit-appearance: auto; appearance: auto; }
+}
 
 /* MrzDecode's own look (the homepage data page styles its 'jbp-mrz' block in pages.css): 44
    monospace characters sized to the line's width (container units), raw grey, decoded green. */

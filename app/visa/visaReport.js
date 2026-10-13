@@ -1,7 +1,7 @@
-// The issued visa on /visa, as pure logic: which entry stamp a report gets, the chance line, the
-// two machine-readable-zone lines (raw, then plain English), the card's lead visa, and the
-// documents checklist (key + items). Framework-free; everything the AI sends is treated as
-// possibly missing or malformed (unit-tested in scripts/site/__tests__/visaReport.test.mjs).
+// The issued visa on /visa, as pure logic: what a form submit does, which entry stamp a report
+// gets, the chance line, the two machine-readable-zone lines (raw, then plain English), the card's
+// lead visa, and the documents checklist (key + items). Framework-free; everything the AI sends is
+// treated as possibly missing or malformed (unit-tested in scripts/site/__tests__/visaReport.test.mjs).
 import { checklistKey } from '../components/kit/checklistStore.js';
 import { MRZ_LEN } from '../components/kit/mrz.js';
 
@@ -62,6 +62,20 @@ function fingerprint(value) {
     hash = Math.imul(hash, 0x01000193);
   }
   return (hash >>> 0).toString(36).toUpperCase().padStart(7, '0');
+}
+
+export const MISSING_FIELDS = 'Please select both your nationality and destination country.';
+
+/**
+ * What submitting the visa form does, in this order: 'busy' (ignored while a search is loading),
+ * 'missing' (show MISSING_FIELDS: the form is checked before anything else, so a first visit never
+ * sees the legal notice for an empty form), 'ack' (the one-time legal notice first), 'search'.
+ */
+export function visaSubmitStep({ loading, nationality, targetCountry, acked }) {
+  if (loading) return 'busy';
+  if (!nationality || !targetCountry) return 'missing';
+  if (!acked) return 'ack';
+  return 'search';
 }
 
 /** The entry stamp for a report's `currentStatus`: { lines, ink } (a copy); CHECK / gold when unknown. */

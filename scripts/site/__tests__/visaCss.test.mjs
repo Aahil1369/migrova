@@ -87,9 +87,11 @@ test('the vignette tints keep the sticker text readable', () => {
 });
 
 test('body text is at least 16px on phones', () => {
-  const body = ['.visa-text', '.visa-list > li', '.visa-card-entry', '.visa-card-summary', '.visa-error', '.visa-closing', '.visa-footnote', '.visa-overview'];
+  // .visa-tags > li: the AI's language-test names (set with the `font` shorthand).
+  const body = ['.visa-text', '.visa-list > li', '.visa-card-entry', '.visa-card-summary', '.visa-error', '.visa-closing', '.visa-footnote', '.visa-overview', '.visa-tags > li'];
+  const fontSize = (ruleBody) => decl(ruleBody, 'font-size') ?? /(?:^|\s)(\d+(?:\.\d+)?px)\//.exec(decl(ruleBody, 'font') ?? '')?.[1] ?? null;
   for (const selector of body) {
-    const sizes = RULES.filter((r) => r.selectors.includes(selector)).map((r) => decl(r.body, 'font-size')).filter(Boolean);
+    const sizes = RULES.filter((r) => r.selectors.includes(selector)).map((r) => fontSize(r.body)).filter(Boolean);
     assert.ok(sizes.length > 0, `${selector} sets a font size`);
     for (const size of sizes) assert.ok(parseFloat(size) >= 16, `${selector}: ${size}`);
   }
@@ -107,6 +109,11 @@ test('page markup: decorative stamp and MRZ hidden, report announced and focused
   const visa = read('app/visa/IssuedVisa.js');
   assert.match(page, /<PassportCard as="form"[^>]*onSubmit=\{handleSubmit\}/);
   assert.match(page, /type="submit"/);
+  // The submit runs visaSubmitStep (fields before the legal notice), and nothing else gates it.
+  const submit = /const handleSubmit = \(event\) => \{([\s\S]*?)\n  \};/.exec(page)?.[1] ?? '';
+  assert.match(submit, /const step = visaSubmitStep\(\{ loading, nationality, targetCountry, acked: hasLegalAck\(\) \}\);/);
+  assert.match(submit, /if \(step === 'missing'\) setError\(MISSING_FIELDS\);/);
+  assert.equal((submit.match(/hasLegalAck\(/g) || []).length, 1, 'the legal-ack is read once, as an input of visaSubmitStep');
   assert.match(page, /'Issue my visa report'/);
   assert.match(page, /<ResultArrival key=\{report\.id\} id=\{VISA_HEADING_ID\} label="Your visa report is ready">/);
   assert.match(page, /<Chip key=\{p\.value\} pressed=\{purpose === p\.value\}/);

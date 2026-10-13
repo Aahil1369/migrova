@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 
 const {
   VISA_STAMPS, visaStamp, visaEntry, chanceLine, visaRawMrz, visaPlainMrz, leadVisa, docsKey, checklistItems,
+  MISSING_FIELDS, visaSubmitStep,
 } = await import(new URL('../../../app/visa/visaReport.js', import.meta.url));
 
 const RAW = /^[A-Z0-9<]{44}$/;
@@ -184,4 +185,19 @@ test('checklistItems: one label per document, as the report lists them', () => {
     ],
   );
   for (const junk of [undefined, null, 'passport', {}, 3]) assert.deepEqual(checklistItems(junk), []);
+});
+
+test('visaSubmitStep: the form is checked before the legal notice opens', () => {
+  const filled = { nationality: 'pk', targetCountry: 'ca' };
+  // A first visit (no legal-ack yet) with an empty or half-filled form gets the message, not the notice.
+  for (const fields of [{ nationality: '', targetCountry: '' }, { nationality: 'pk', targetCountry: '' }, { nationality: '', targetCountry: 'ca' }]) {
+    assert.equal(visaSubmitStep({ loading: false, acked: false, ...fields }), 'missing', JSON.stringify(fields));
+    assert.equal(visaSubmitStep({ loading: false, acked: true, ...fields }), 'missing', JSON.stringify(fields));
+  }
+  assert.equal(visaSubmitStep({ loading: false, acked: false, ...filled }), 'ack', 'a complete form opens the notice once');
+  assert.equal(visaSubmitStep({ loading: false, acked: true, ...filled }), 'search');
+  // A submit while a search is loading does nothing at all.
+  assert.equal(visaSubmitStep({ loading: true, acked: false, nationality: '', targetCountry: '' }), 'busy');
+  assert.equal(visaSubmitStep({ loading: true, acked: true, ...filled }), 'busy');
+  assert.equal(MISSING_FIELDS, 'Please select both your nationality and destination country.');
 });

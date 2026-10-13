@@ -4,33 +4,7 @@ import { useEffect, useId, useState } from 'react';
 import Link from 'next/link';
 import VerifiedLinkCard from './kit/VerifiedLinkCard';
 import { linkTypeMeta, domainOf, domainList } from '../lib/sourcesFormat';
-
-// Payloads of /api/sources/<code> already fetched in this tab (one country, about 1 KB each).
-const loaded = new Map();
-const inFlight = new Map();
-
-/**
- * Fetch one country's official links (/api/sources/<code>) into this tab's cache, once; resolves
- * with the payload, or null for an unknown country or a failed request (not cached, so a later
- * call tries again). Pages call it when a search starts, so the block below the AI result is
- * ready when the result renders instead of popping in (and pushing the report down) after it.
- */
-export function prefetchSources(code) {
-  if (!code) return Promise.resolve(null);
-  if (loaded.has(code)) return Promise.resolve(loaded.get(code));
-  if (!inFlight.has(code)) {
-    const request = fetch(`/api/sources/${encodeURIComponent(code)}`)
-      .then((res) => (res.ok ? res.json() : null))
-      .catch(() => null)
-      .then((payload) => {
-        inFlight.delete(code);
-        if (payload) loaded.set(code, payload);
-        return payload;
-      });
-    inFlight.set(code, request);
-  }
-  return inFlight.get(code);
-}
+import { cachedSources, watchSources } from './officialSourcesCache';
 
 /**
  * Verified official links for one country (`code`), shown inside Visa / Relocate results: one
@@ -44,18 +18,10 @@ export default function OfficialSourcesBlock({ code, types }) {
   // { code, payload } for the last fetch, so a payload for an old code is never shown for a new one.
   const [fetched, setFetched] = useState(null);
 
-  useEffect(() => {
-    if (!code || loaded.has(code)) return undefined;
-    let live = true;
-    prefetchSources(code).then((payload) => {
-      if (live) setFetched({ code, payload });
-    });
-    return () => {
-      live = false;
-    };
-  }, [code]);
+  // Always subscribed, even when the payload is already cached (see watchSources).
+  useEffect(() => watchSources(code, (payload) => setFetched({ code, payload })), [code]);
 
-  const entry = loaded.get(code) || (fetched && fetched.code === code ? fetched.payload : null);
+  const entry = cachedSources(code) || (fetched && fetched.code === code ? fetched.payload : null);
   if (!code || !entry) return null;
   const rows = types.map((t) => [t, entry.links?.[t]]).filter(([, l]) => l?.status === 'verified' && l.url);
 

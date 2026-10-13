@@ -18,12 +18,13 @@ import { COUNTRIES_195 } from '../data/countries195';
 import { visaPrefill } from '../components/passport/search';
 import { readRoute } from '../components/passport/routeStore';
 import { deviceStorage } from '../components/passport/useSavedRoute';
-import OfficialSourcesBlock, { prefetchSources } from '../components/OfficialSourcesBlock';
+import OfficialSourcesBlock from '../components/OfficialSourcesBlock';
+import { prefetchSources } from '../components/officialSourcesCache';
 import VisaProbabilityMeter from '../components/VisaProbabilityMeter';
 import DisclaimerBlock from '../components/DisclaimerBlock';
 import LegalAckModal, { hasLegalAck } from '../components/LegalAckModal';
 import IssuedVisa, { VISA_HEADING_ID } from './IssuedVisa';
-import { checklistItems, docsKey } from './visaReport';
+import { checklistItems, docsKey, MISSING_FIELDS, visaSubmitStep } from './visaReport';
 import './visa.css';
 
 const COUNTRIES = [...COUNTRIES_195]
@@ -374,7 +375,7 @@ export default function VisaPage() {
   // calls started together, with the country's official links: the visa card fills in when the
   // report arrives (with "checking…" until the chance is in), and a failed estimate says so.
   const handleSearch = () => {
-    if (!nationality || !targetCountry) { setError('Please select both your nationality and destination country.'); return; }
+    if (!nationality || !targetCountry) { setError(MISSING_FIELDS); return; }
     const id = latest.next();
     const searched = { from: nationality, to: targetCountry, purpose };
     setQuery(searched);
@@ -398,11 +399,13 @@ export default function VisaPage() {
     });
   };
 
+  // The fields are checked before the one-time legal notice (visaSubmitStep).
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (loading) return;
-    if (!hasLegalAck()) { setShowAck(true); return; }
-    handleSearch();
+    const step = visaSubmitStep({ loading, nationality, targetCountry, acked: hasLegalAck() });
+    if (step === 'missing') setError(MISSING_FIELDS);
+    else if (step === 'ack') { setError(''); setShowAck(true); }
+    else if (step === 'search') handleSearch();
   };
 
   return (

@@ -22,7 +22,7 @@ export default function ContactPage() {
     setSubmitted(true);
   };
 
-  const inputCls = 'w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-[14px] text-paper-ink placeholder-paper-ink-sub outline-none focus:border-accent transition-colors';
+  const inputCls = 'w-full px-3 py-2.5 bg-paper-bg border border-paper-rule text-[16px] text-paper-ink placeholder-paper-ink-sub outline-none focus:border-accent transition-colors';
   const labelCls = 'font-mono text-[10px] tracking-[0.12em] uppercase text-paper-ink-sub mb-1.5 block';
 
   return (
