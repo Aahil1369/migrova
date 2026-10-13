@@ -4,6 +4,8 @@
 // treated as possibly missing or malformed (unit-tested in scripts/site/__tests__/visaReport.test.mjs).
 import { checklistKey } from '../components/kit/checklistStore.js';
 import { MRZ_LEN } from '../components/kit/mrz.js';
+// The raw MRZ's document number and the checklist's list fingerprint.
+import { fingerprint } from '../lib/fingerprint.js';
 
 /**
  * The entry stamp per `currentStatus` (stamp ink names from STAMP_INKS). Never a negative word:
@@ -52,17 +54,6 @@ const iso3 = (value) => {
 
 // Exactly MRZ_LEN characters: cut, or padded with `filler`.
 const fit = (line, filler) => line.slice(0, MRZ_LEN).padEnd(MRZ_LEN, filler);
-
-// FNV-1a over a string, as 7 base-36 characters [0-9A-Z]: the raw MRZ's document number and the
-// checklist's list fingerprint (stable across runs and browsers, not a security hash).
-function fingerprint(value) {
-  let hash = 0x811c9dc5;
-  for (let i = 0; i < value.length; i++) {
-    hash ^= value.charCodeAt(i);
-    hash = Math.imul(hash, 0x01000193);
-  }
-  return (hash >>> 0).toString(36).toUpperCase().padStart(7, '0');
-}
 
 export const MISSING_FIELDS = 'Please select both your nationality and destination country.';
 
