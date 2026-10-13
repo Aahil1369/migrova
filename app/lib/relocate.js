@@ -50,6 +50,17 @@ export function chaptersFor(result) {
 }
 
 /**
+ * The chapter ids whose panels are rendered once chapter `id` is open: those `opened` before,
+ * plus `id`. The guide arrives with only its first chapter rendered (one panel to lay out while
+ * the ADMITTED stamp lands); a chapter stays rendered once opened, so a checklist's in-memory
+ * ticks survive a tab switch. Returns `opened` itself when `id` is already in it (or missing).
+ */
+export function openChapter(opened, id) {
+  const list = Array.isArray(opened) ? opened : [];
+  return id === undefined || id === null || list.includes(id) ? list : [...list, id];
+}
+
+/**
  * The 3-letter code on the boarding pass: the ISO3 code of the country named in `place`
  * ('Toronto, Canada' -> 'CAN'), else the place's first three letters with accents dropped and
  * padded with X ('Lahore' -> 'LAH', 'Ōsaka' -> 'OSA', '' -> 'XXX'). Always [A-Z]{3}.

@@ -172,3 +172,15 @@ test('the chapters: a real tablist with arrow keys; tel: and safe external links
   // The fields the old page dropped are shown.
   for (const shown of ['bank.notes', 'language.detail', 'c.url']) assert.ok(src.includes(shown), shown);
 });
+
+test('the chapters render only the opened panels: one on arrival, while the ADMITTED stamp lands', () => {
+  const src = read('app/relocate/GuideChapters.js');
+  // Every chapter keeps its tabpanel (so each tab's aria-controls resolves) ...
+  const shells = /\{chapters\.map\(\(c\) => \{[\s\S]*?role="tabpanel"[\s\S]*?id=\{`\$\{base\}-panel-\$\{c\.id\}`\}[\s\S]*?\}\)\}/.exec(src)?.[0] ?? '';
+  assert.ok(shells, 'a tabpanel for every chapter, with the id its tab controls');
+  // ... but a panel's content is rendered only once its tab is opened (openChapter).
+  assert.match(src, /useState\(\(\) => openChapter\(\[\], chapters\[0\]\?\.id\)\)/, 'on arrival only the first chapter');
+  assert.match(src, /setOpened\(\(list\) => openChapter\(list, id\)\)/, 'choosing a tab renders its panel');
+  assert.match(shells, /shown\.includes\(c\.id\) \? <Panel /, 'the other panels stay empty');
+  assert.equal(src.match(/<Panel /g)?.length, 1, 'no other place renders a panel');
+});

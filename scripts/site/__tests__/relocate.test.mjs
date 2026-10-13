@@ -12,7 +12,7 @@ const read = (path) => readFileSync(new URL(path, ROOT), 'utf8');
 
 const {
   RELOCATE_CHAPTERS, ticketCode, budgetTiers, chaptersFor, stubKey, beforeKey, cityName, admittedStamp,
-  weekPlan, saveWeekPlan, savedWeekPlan, telHref, safeUrl, visaLink, fetchGuide, relocatePrefill, usd,
+  weekPlan, saveWeekPlan, savedWeekPlan, telHref, safeUrl, visaLink, fetchGuide, relocatePrefill, usd, openChapter,
 } = await import(new URL('app/lib/relocate.js', ROOT));
 const { RELOCATION_FIELDS, relocationCacheKey } = await import(new URL('app/api/relocation/fields.js', ROOT));
 const { checklistKey } = await import(new URL('app/components/kit/checklistStore.js', ROOT));
@@ -131,6 +131,21 @@ test('chaptersFor: only the chapters with at least one present field, in chapter
   for (const junk of [undefined, null, 'guide', 42, []]) assert.deepEqual(chaptersFor(junk), [], String(junk));
   const all = Object.fromEntries(RELOCATION_FIELDS.map((f) => [f, 'x']));
   assert.deepEqual(chaptersFor(all).map((c) => c.id), RELOCATE_CHAPTERS.map((c) => c.id));
+});
+
+test('openChapter: the guide arrives with one chapter rendered; a chapter stays once opened', () => {
+  // On arrival only the first present chapter's panel is rendered (the stamp's moment lays out one).
+  const first = chaptersFor({ costBreakdown: {}, safetyInfo: {}, beforeYouMove: ['Book a flat'] })[0].id;
+  const arrived = openChapter([], first);
+  assert.deepEqual(arrived, ['money']);
+  // Opening another tab adds it; going back keeps both (a checklist's unsaved ticks survive).
+  const settled = openChapter(arrived, 'settling');
+  assert.deepEqual(settled, ['money', 'settling']);
+  assert.equal(openChapter(settled, 'money'), settled, 'an opened chapter: the same list (no re-render)');
+  assert.deepEqual(arrived, ['money'], 'the list given is never changed');
+  // No chapter (an empty guide) or junk: nothing rendered, never a throw.
+  assert.deepEqual(openChapter([], undefined), []);
+  for (const junk of [undefined, null, 'money', 42]) assert.deepEqual(openChapter(junk, 'work'), ['work'], String(junk));
 });
 
 test('stubKey and beforeKey: per-destination device keys (the checklist one carries a list fingerprint)', () => {

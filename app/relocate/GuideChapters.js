@@ -5,7 +5,7 @@ import Link from 'next/link';
 import PassportCard from '../components/kit/PassportCard';
 import ChecklistPage from '../components/kit/ChecklistPage';
 import { CheckGlyph, CrossGlyph } from '../components/kit/Glyphs';
-import { beforeKey, budgetTiers, chaptersFor, lines, list, safeUrl, telHref, text, usd, visaLink } from '../lib/relocate';
+import { beforeKey, budgetTiers, chaptersFor, lines, list, openChapter, safeUrl, telHref, text, usd, visaLink } from '../lib/relocate';
 
 const COSTS = [
   ['rent_1br_city_center', 'Rent · 1-bed, centre'],
@@ -381,15 +381,25 @@ const PANELS = { money: Money, living: Living, work: Work, safety: Safety, settl
  * The guide below the boarding pass: its sections grouped into chapter tabs (only the chapters
  * the guide has, the first one open). A real tablist: arrow keys / Home / End move between tabs,
  * the strip scrolls sideways on phones, each panel is labelled by its tab.
+ * Only the opened chapters' panels are rendered (openChapter): the guide arrives with one, so
+ * the arrival frame lays out a single chapter while the ADMITTED stamp lands; every other
+ * tabpanel is an empty, hidden shell (its tab's aria-controls still resolves) until opened.
  * `guide` is the API's answer, `query` the search ({ destination, origin }), `city` its name.
  */
 export default function GuideChapters({ guide, query, city }) {
   const chapters = chaptersFor(guide);
   const [selected, setSelected] = useState(chapters[0]?.id);
+  const [opened, setOpened] = useState(() => openChapter([], chapters[0]?.id));
   const tabs = useRef({});
   const base = useId();
   if (chapters.length === 0) return null;
   const current = chapters.some((c) => c.id === selected) ? selected : chapters[0].id;
+  const shown = openChapter(opened, current);
+
+  const select = (id) => {
+    setSelected(id);
+    setOpened((list) => openChapter(list, id));
+  };
 
   const onKeyDown = (event) => {
     const at = chapters.findIndex((c) => c.id === current);
@@ -398,7 +408,7 @@ export default function GuideChapters({ guide, query, city }) {
     if (to === undefined) return;
     event.preventDefault();
     const id = chapters[to].id;
-    setSelected(id);
+    select(id);
     tabs.current[id]?.focus();
   };
 
@@ -418,7 +428,7 @@ export default function GuideChapters({ guide, query, city }) {
             aria-controls={`${base}-panel-${c.id}`}
             tabIndex={c.id === current ? 0 : -1}
             className="rl-tab"
-            onClick={() => setSelected(c.id)}
+            onClick={() => select(c.id)}
           >
             {c.label}
           </button>
@@ -436,7 +446,7 @@ export default function GuideChapters({ guide, query, city }) {
             hidden={c.id !== current}
             className="rl-panel"
           >
-            <Panel guide={guide} query={query} city={city} />
+            {shown.includes(c.id) ? <Panel guide={guide} query={query} city={city} /> : null}
           </div>
         );
       })}
