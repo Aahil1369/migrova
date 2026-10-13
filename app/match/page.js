@@ -1,119 +1,250 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import CountryMatchCard from '../components/CountryMatchCard';
+import { useEffect, useRef, useState } from 'react';
 import ToolShell from '../components/kit/ToolShell';
 import ToolHeader from '../components/kit/ToolHeader';
+import PassportCard from '../components/kit/PassportCard';
+import ResultArrival from '../components/kit/ResultArrival';
+import { createLatest } from '../components/kit/createLatest';
 import Btn from '../components/ui/Btn';
-import Footnote from '../components/ui/Footnote';
+import CountryMatchCard from '../components/CountryMatchCard';
+import DisclaimerBlock from '../components/DisclaimerBlock';
+import { readRoute } from '../components/passport/routeStore';
+import { announceRouteChange, deviceStorage, useSavedRoute } from '../components/passport/useSavedRoute';
+import { countryByCode } from '../data/countries195';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
+import {
+  fetchMatches, matchPrefill, profileKey, readLastMatch, readMatchCache, requestProfile, setDestination, writeMatchCache,
+} from '../lib/match';
+import MatchForm, { EMPTY_FORM } from './MatchForm';
+import MatchRoute, { PendingRoute } from './MatchRoute';
+import './match.css';
 
-export default function MatchPage() {
-  const [matches, setMatches] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [hasProfile, setHasProfile] = useState(null);
+const RESULTS_HEADING_ID = 'match-results-h';
+const NO_NATIONALITY = 'Choose the country of your passport.';
 
-  useEffect(() => {
-    async function loadProfile() {
-      try {
-        const res = await fetch('/api/user-profile');
-        const data = await res.json();
-        if (data.profile && data.profile.nationality) {
-          setProfile(data.profile);
-          setHasProfile(true);
-        } else {
-          const saved = localStorage.getItem('opportumap_profile');
-          if (saved) {
-            const parsed = JSON.parse(saved);
-            if (parsed.nationality) {
-              setProfile(parsed);
-              setHasProfile(true);
-            } else {
-              setHasProfile(false);
-            }
-          } else {
-            setHasProfile(false);
-          }
-        }
-      } catch {
-        setHasProfile(false);
-      }
-    }
-    loadProfile();
-  }, []);
-
-  async function findMatches() {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch('/api/country-match', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ profile }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
-      setMatches(data.matches);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+// The profile saved on this device by the profile pop-up (when "remember" was ticked), or null.
+function deviceProfile() {
+  try {
+    return JSON.parse(deviceStorage()?.getItem('opportumap_profile') ?? 'null');
+  } catch {
+    return null;
   }
+}
 
+const countLabel = (n) => (n === 1 ? 'Your top country' : `Your top ${n} countries`);
+
+// Where the result lives: kept on this device (and for how long), or not (blocked storage).
+function keptText({ fresh, kept }) {
+  if (!kept) return 'This browser is blocking storage, so these matches are not kept. Refresh to ask again.';
+  return `${fresh ? 'Saved on this device for 24 hours.' : 'Your last matches, saved on this device.'} Refresh to ask again with the same details.`;
+}
+
+// A result restored from this device on load: the same section, without the arrival's focus move
+// and announcement (nobody asked for it just now); its stamps land when the route comes on screen.
+function Restored({ id, children }) {
+  return (
+    <section className="mt-arrival" aria-labelledby={id}>
+      {children}
+    </section>
+  );
+}
+
+/**
+ * Country Match (/match). Everyone gets the passport data-page form (no signed-out dead end):
+ * the passport country comes from the saved route's From, else the profile, which also fills the
+ * rest. The AI runs only on submit and on "Refresh matches": the last result is kept on this
+ * device for 24 hours (app/lib/match.js), so a reload shows it again with no request, and a submit
+ * of the same details reuses it. A result lands as stamps along a dashed route (MatchRoute), then
+ * five detail cards; tapping a stamp or "Set as destination" saves it as the route's To, which the
+ * navbar's route pill follows.
+ */
+export default function MatchPage() {
+  const [form, setForm] = useState(EMPTY_FORM);
+  // Where the passport country came from: 'route' | 'profile' | 'saved' (the restored last search).
+  const [note, setNote] = useState(null);
+  // A request in flight: 'search' (the form; the result makes way for a blank route) or 'refresh'.
+  const [busy, setBusy] = useState(null);
+  const [error, setError] = useState('');
+  const [refreshError, setRefreshError] = useState('');
+  // The result shown: { id, matches, profile (what was sent), fresh (arrived on a submit / refresh,
+  // not restored on load), kept (it is saved on this device) }.
+  const [result, setResult] = useState(null);
+  const [pickNote, setPickNote] = useState('');
+  // One guard per page: a newer search (a resubmit, a refresh) makes older answers stale.
+  const [latest] = useState(createLatest);
+  // The saved profile (its job types join the request); `edited`: the person has changed the form.
+  const saved = useRef(null);
+  const edited = useRef(false);
+  const route = useSavedRoute();
+
+  // On load: the last result kept on this device (with the details it ran for), else the prefill
+  // (matchPrefill) from the saved route and the profile on this device, then the account's profile
+  // once it arrives, unless the form was changed meanwhile. Nothing here asks the AI.
   useEffect(() => {
-    if (profile) findMatches();
-  }, [profile]);
+    const storage = deviceStorage();
+    const last = readLastMatch(storage, Date.now());
+    // The device's storage exists only in the browser: the server renders the empty form, and it
+    // is filled once, right after hydration.
+    /* eslint-disable react-hooks/set-state-in-effect */
+    if (last) {
+      saved.current = last.profile;
+      setForm(matchPrefill({ profile: last.profile }).value);
+      setNote('saved');
+      setResult({ id: latest.next(), matches: last.matches, profile: last.profile, fresh: false, kept: true });
+      return undefined;
+    }
+    const savedRoute = readRoute(storage);
+    const fill = (profile) => {
+      saved.current = profile;
+      const prefill = matchPrefill({ route: savedRoute, profile });
+      setForm(prefill.value);
+      setNote(prefill.nationalityFrom);
+    };
+    fill(deviceProfile());
+    /* eslint-enable react-hooks/set-state-in-effect */
+    let cancelled = false;
+    fetch('/api/user-profile')
+      .then((res) => res.json())
+      .then(({ profile }) => {
+        if (!cancelled && !edited.current && profile && typeof profile === 'object' && profile.nationality) fill(profile);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [latest]);
+
+  const changeForm = (next) => {
+    edited.current = true;
+    if (next.nationality !== form.nationality) setNote(null);
+    setForm(next);
+  };
+
+  // A search for `profile`: the result kept on this device for it when fresh (no request), unless
+  // `refresh`; otherwise the AI, under the stale guard, and the answer is kept for 24 hours. A
+  // refresh keeps the current result on screen until the new one arrives (or fails).
+  const run = async (profile, { refresh = false } = {}) => {
+    const key = profileKey(profile);
+    setError('');
+    setRefreshError('');
+    setPickNote('');
+    const kept = refresh ? null : readMatchCache(deviceStorage(), key, Date.now());
+    if (kept) {
+      // A new id: an answer still on its way (if any) is now stale.
+      setResult({ id: latest.next(), matches: kept, profile, fresh: true, kept: true });
+      return;
+    }
+    setBusy(refresh ? 'refresh' : 'search');
+    if (!refresh) setResult(null);
+    const outcome = await fetchMatches(latest, profile, { refresh });
+    if (!outcome) return; // a newer search started meanwhile: its answer is the one shown
+    setBusy(null);
+    if (outcome.error) {
+      if (refresh) setRefreshError(outcome.error);
+      else setError(outcome.error);
+      return;
+    }
+    const keptNow = writeMatchCache(deviceStorage(), key, outcome.matches, Date.now(), profile);
+    setResult({ id: outcome.id, matches: outcome.matches, profile, fresh: true, kept: keptNow });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (busy) return;
+    if (!countryByCode(form.nationality)) {
+      setError(NO_NATIONALITY);
+      return;
+    }
+    run(requestProfile(form, saved.current));
+  };
+
+  const refresh = () => {
+    if (!busy && result) run(result.profile, { refresh: true });
+  };
+
+  // A tap on a stamp or "Set as destination": the route From (the passport searched) -> this
+  // country, saved on this device; the navbar's route pill follows (announceRouteChange).
+  const pick = (match) => {
+    const ok = setDestination(deviceStorage(), { from: result?.profile.nationality, to: match.country_code }, announceRouteChange);
+    setPickNote(
+      ok
+        ? `${match.country_name} is now your destination.`
+        : `Couldn’t save ${match.country_name} as your destination: this browser is blocking storage.`,
+    );
+  };
+
+  const picked = route?.to ?? null;
+  const fromName = result ? countryByCode(result.profile.nationality)?.name : '';
+  const Wrap = result?.fresh ? ResultArrival : Restored;
 
   return (
-    <ToolShell wide header={<ToolHeader {...HERO_COPY.match} />}>
-        <div className="pt-4">
-          {hasProfile === false && (
-            <div className="border border-paper-rule bg-paper-bg-alt p-10 max-w-[640px]">
-              <div className="font-mono text-[10px] tracking-[0.12em] text-paper-ink-sub mb-4">// NO PROFILE FOUND</div>
-              <h2 className="font-display text-[28px] leading-[1.15] mb-3">Set up your profile first.</h2>
-              <p className="text-[14px] text-paper-ink-dim leading-[1.55] mb-2">
-                We need your nationality and skills to find the countries where you actually have a shot.
+    <ToolShell header={<ToolHeader {...HERO_COPY.match} />}>
+      <div className="mt-page">
+        <MatchForm
+          value={form}
+          onChange={changeForm}
+          onSubmit={handleSubmit}
+          loading={Boolean(busy)}
+          error={error}
+          note={note}
+        />
+
+        <div className="mt-results">
+          {busy === 'search' && (
+            <PassportCard as="div" className="mt-routecard mt-routecard--pending">
+              <p className="mt-kicker" aria-hidden="true">
+                Plotting your route…
               </p>
-              <p className="text-[13px] text-paper-ink-sub leading-[1.5]">
-                Click your avatar in the top-right, or sign in to get started.
-              </p>
-            </div>
+              <PendingRoute />
+            </PassportCard>
           )}
-
-          {loading && (
-            <div className="py-20 text-center">
-              <div className="font-mono text-[11px] tracking-[0.12em] text-paper-ink-sub animate-pulse">
-                FINDING YOUR BEST MATCHES…
-              </div>
-            </div>
-          )}
-
-          {error && (
-            <div className="border border-accent/40 bg-paper-bg-alt p-8 max-w-[520px]">
-              <div className="font-mono text-[10px] tracking-[0.12em] text-accent mb-3">// ERROR</div>
-              <p className="text-[14px] text-paper-ink-dim mb-5">{error}</p>
-              <Btn variant="primary" as="button" onClick={findMatches}>Try again</Btn>
-            </div>
-          )}
-
-          {matches && (
-            <>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                {matches.map((match, i) => (
-                  <CountryMatchCard key={match.country_code || i} match={match} rank={i + 1} />
+          {result && (
+            <Wrap key={result.id} id={RESULTS_HEADING_ID} label={`${countLabel(result.matches.length)} are ready`}>
+              <PassportCard as="div" className="mt-routecard">
+                <h2 id={RESULTS_HEADING_ID} className="mt-h2">
+                  {countLabel(result.matches.length)}
+                </h2>
+                <p className="mt-hint">
+                  {fromName ? `For a passport from ${fromName}. ` : ''}Tap a stamp to set it as your destination.
+                </p>
+                <MatchRoute matches={result.matches} onPick={pick} picked={picked} />
+                <p className="mt-picked" role="status">
+                  {pickNote}
+                </p>
+              </PassportCard>
+              <ol className="mt-cards">
+                {result.matches.map((match, i) => (
+                  <li key={match.country_code}>
+                    <CountryMatchCard
+                      match={match}
+                      rank={i + 1}
+                      from={result.profile.nationality}
+                      picked={picked === match.country_code}
+                      onPick={pick}
+                    />
+                  </li>
                 ))}
+              </ol>
+              <div className="mt-again">
+                <p className="mt-saved">{keptText(result)}</p>
+                <p className="mt-error" role="alert">
+                  {refreshError}
+                </p>
+                <Btn variant="secondary" as="button" type="button" onClick={refresh} aria-disabled={Boolean(busy)} className="mt-refresh">
+                  {busy === 'refresh' ? 'Asking again…' : 'Refresh matches'}
+                </Btn>
               </div>
-              <div className="pt-10">
-                <Btn variant="secondary" as="button" onClick={findMatches}>Refresh matches</Btn>
-              </div>
-            </>
+              <DisclaimerBlock tone="paper" />
+            </Wrap>
           )}
-
-          <Footnote>{FOOTNOTES.match}</Footnote>
         </div>
+
+        <p className="mt-footnote">
+          <span className="mt-footnote-mark" aria-hidden="true">*</span>
+          {FOOTNOTES.match}
+        </p>
+      </div>
     </ToolShell>
   );
 }

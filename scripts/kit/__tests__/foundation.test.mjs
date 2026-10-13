@@ -179,9 +179,9 @@ test('HERO_COPY: tool-page code, name, headline and gradient word (subs unchange
   }
 });
 
-// The six tool pages that used EditorialHero, plus the client part of /sources that holds its input.
+// The six tool pages that used EditorialHero, plus the client parts of /sources and /match that hold their inputs.
 const TOOL_PAGES = ['visa', 'relocate', 'match', 'lawyer', 'stories', 'sources'].map((p) => `app/${p}/page.js`);
-const CONTROL_FILES = [...TOOL_PAGES, 'app/sources/SourcesIndex.js'];
+const CONTROL_FILES = [...TOOL_PAGES, 'app/sources/SourcesIndex.js', 'app/match/MatchForm.js'];
 
 function appSources(dir = new URL('app/', ROOT), prefix = 'app/') {
   const out = [];

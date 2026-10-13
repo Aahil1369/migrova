@@ -6,13 +6,14 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
+import { readFileSync } from 'node:fs';
 
 const ROOT = new URL('../../../', import.meta.url);
 
 const {
   MATCH_CACHE_KEY, profileKey, readMatchCache, writeMatchCache, readLastMatch, describeProfile, matchLinks,
-  stampSlots, ROUTE_STOPS, ROUTE_BOX, ROUTE_PATH, ROUTE_LENGTH, pickMatches, stampFace, setDestination, fetchMatches,
-  matchPrefill,
+  stampSlots, ROUTE_STOPS, ROUTE_BOX, ROUTE_PATH, ROUTE_LENGTH, STAMP_SIZE, pickMatches, stampFace, setDestination, fetchMatches,
+  matchPrefill, requestProfile, costLevel,
 } = await import(new URL('app/lib/match.js', ROOT));
 const { readRoute, ROUTE_KEY } = await import(new URL('app/components/passport/routeStore.js', ROOT));
 const { createLatest } = await import(new URL('app/components/kit/createLatest.js', ROOT));
@@ -28,6 +29,7 @@ function memoryStorage() {
     map,
   };
 }
+const MATCHES_KEY_FOR_TEST = 'migrova_match';
 const blocked = {
   getItem() { throw new Error('SecurityError'); },
   setItem() { throw new Error('QuotaExceededError'); },
@@ -36,10 +38,11 @@ const blocked = {
 
 const HOUR = 60 * 60 * 1000;
 const NOW = Date.UTC(2026, 9, 12, 9, 0, 0);
-const MATCHES = [
-  { country_code: 'ca', country_name: 'Canada', match_score: 92 },
+// What the page keeps: pickMatches' answer (every field present).
+const MATCHES = pickMatches({ matches: [
+  { country_code: 'ca', country_name: 'Canada', match_score: 92, visa_difficulty: 'Moderate' },
   { country_code: 'de', country_name: 'Germany', match_score: 87 },
-];
+] });
 
 // ── The match cache ─────────────────────────────────────────────────────────────
 
@@ -73,6 +76,19 @@ test('the match cache: another profile, nothing saved, junk or blocked storage r
   assert.equal(writeMatchCache(null, key, MATCHES, NOW), false);
   assert.equal(writeMatchCache(memoryStorage(), key, [], NOW), false, 'nothing to keep');
   assert.equal(writeMatchCache(memoryStorage(), key, 'junk', NOW), false);
+});
+
+test('the match cache: kept matches are checked again on the way out (junk or an older format never reaches the page)', () => {
+  const storage = memoryStorage();
+  const key = profileKey({ nationality: 'pk' });
+  const profile = { nationality: 'pk' };
+  const keep = (matches) => storage.setItem(MATCHES_KEY_FOR_TEST, JSON.stringify({ key, savedAt: NOW, matches, profile }));
+  keep([{ country_code: 'xx' }, 'junk', null, 7]);
+  assert.equal(readMatchCache(storage, key, NOW), null, 'nothing usable');
+  assert.equal(readLastMatch(storage, NOW), null);
+  keep([{ country_code: 'ca', match_score: 92 }, { visa_difficulty: { evil: true } }]);
+  assert.deepEqual(readMatchCache(storage, key, NOW), pickMatches({ matches: [{ country_code: 'ca', match_score: 92 }] }), 'the usable ones, cleaned');
+  assert.equal(readLastMatch(storage, NOW).matches[0].visa_difficulty, '', 'every text field a string');
 });
 
 test('readLastMatch: the last fresh result with the profile it ran for (to restore the form after a reload)', () => {
@@ -171,6 +187,22 @@ test('the route passes through every stamp spot, inside its box', () => {
   assert.ok(ROUTE_LENGTH > 400 && ROUTE_LENGTH < 2000, `length ${ROUTE_LENGTH}`);
 });
 
+test('the five stamps (STAMP_SIZE of the route\'s width) stay inside the route box and never overlap', () => {
+  const size = STAMP_SIZE * ROUTE_BOX.w; // units; the stamps are square buttons (round)
+  for (const [i, a] of ROUTE_STOPS.entries()) {
+    assert.ok(a.x - size / 2 >= 0 && a.x + size / 2 <= ROUTE_BOX.w, `stop ${i + 1} across`);
+    assert.ok(a.y - size / 2 >= 0 && a.y + size / 2 <= ROUTE_BOX.h, `stop ${i + 1} down`);
+    for (const b of ROUTE_STOPS.slice(i + 1)) {
+      assert.ok(Math.abs(a.x - b.x) >= size || Math.abs(a.y - b.y) >= size, `${JSON.stringify(a)} and ${JSON.stringify(b)} overlap`);
+    }
+  }
+  // match.css draws them at that size: STAMP_SIZE of the route box's width (container units).
+  const css = readFileSync(new URL('app/match/match.css', ROOT), 'utf8');
+  const cqi = `${STAMP_SIZE * 100}cqi`;
+  assert.match(css, new RegExp(`\\.mt-stop \\{[^}]*width: ${cqi};[^}]*height: ${cqi};[^}]*margin: -${STAMP_SIZE * 50}cqi 0 0 -${STAMP_SIZE * 50}cqi;`));
+  assert.match(css, new RegExp(`aspect-ratio: ${ROUTE_BOX.w} / ${ROUTE_BOX.h};`));
+});
+
 test('stampFace: our own country name (never the AI\'s words) and the score, every line at most 11 characters', () => {
   assert.deepEqual(stampFace({ country_code: 'ca', country_name: 'Canada', match_score: 92 }), ['CANADA', '92']);
   assert.deepEqual(stampFace({ country_code: 'nz', country_name: 'New Zealand', match_score: 76 }), ['NEW ZEALAND', '76']);
@@ -254,6 +286,25 @@ test('matchPrefill: nationality from the saved route\'s From, else the profile; 
   assert.deepEqual(matchPrefill(), junk);
 });
 
+test('requestProfile: the form\'s five fields plus the saved profile\'s job types, nothing else (no name)', () => {
+  const form = { nationality: 'pk', currentCountry: '', experience: '3-5', skills: 'Nursing', preferredCountries: ['Europe'] };
+  const saved = { name: 'Ali', nationality: 'in', jobTypes: ['Research', 7, ''], resumeSummary: 'x'.repeat(9000), rememberOnDevice: true };
+  assert.deepEqual(requestProfile(form, saved), { ...form, jobTypes: ['Research'] });
+  assert.deepEqual(requestProfile(form, null), form);
+  assert.deepEqual(requestProfile(form, { jobTypes: 'Design' }), form);
+  assert.equal(profileKey(requestProfile(form, saved)), profileKey(form), 'job types do not split the cache');
+  assert.deepEqual(requestProfile({ nationality: 'pk', extra: 1 }), { nationality: 'pk', currentCountry: '', experience: '', skills: '', preferredCountries: [] });
+});
+
+test('costLevel: the AI\'s $ signs in words', () => {
+  assert.deepEqual(costLevel('$'), { signs: '$', word: 'Low' });
+  assert.deepEqual(costLevel(' $$ '), { signs: '$$', word: 'Moderate' });
+  assert.deepEqual(costLevel('$$$'), { signs: '$$$', word: 'High' });
+  assert.deepEqual(costLevel('$$$$'), { signs: '$$$$', word: 'Very high' });
+  assert.deepEqual(costLevel('Moderate'), { signs: '', word: 'Moderate' }, 'words stay as written');
+  assert.deepEqual(costLevel(undefined), { signs: '', word: '' });
+});
+
 // ── The request, under the page's stale-response guard ──────────────────────────
 
 test('fetchMatches: the newest search wins; a failure is the friendly sentence; the answer is cleaned', async () => {
@@ -261,16 +312,19 @@ test('fetchMatches: the newest search wins; a failure is the friendly sentence; 
   const answer = { matches: [{ country_code: 'ca', match_score: 92 }, { country_code: 'xx', match_score: 99 }] };
   const sent = [];
   const slow = (url, body) => { sent.push([url, body]); return new Promise((r) => setTimeout(() => r(answer), 20)); };
-  const first = fetchMatches(latest, { nationality: 'pk' }, slow);
-  const second = fetchMatches(latest, { nationality: 'in' }, async (url, body) => { sent.push([url, body]); return answer; });
+  const first = fetchMatches(latest, { nationality: 'pk' }, { post: slow });
+  const second = fetchMatches(latest, { nationality: 'in' }, { post: async (url, body) => { sent.push([url, body]); return answer; } });
   assert.equal(await first, null, 'the older search is dropped');
   const won = await second;
   assert.deepEqual(won.matches.map((m) => m.country_code), ['ca']);
   assert.equal(typeof won.id, 'number');
   assert.deepEqual(sent.map(([url]) => url), ['/api/country-match', '/api/country-match']);
   assert.deepEqual(sent[1][1], { profile: { nationality: 'in' } });
+  // "Refresh matches" asks the AI again: the request says so (the route then skips its own cache).
+  await fetchMatches(latest, { nationality: 'in' }, { refresh: true, post: async (url, body) => { sent.push([url, body]); return answer; } });
+  assert.deepEqual(sent[2][1], { profile: { nationality: 'in' }, refresh: true });
   for (const bad of [async () => null, async () => ({ matches: [] }), async () => { throw new Error('offline'); }]) {
-    const failed = await fetchMatches(latest, { nationality: 'pk' }, bad);
+    const failed = await fetchMatches(latest, { nationality: 'pk' }, { post: bad });
     assert.deepEqual(failed, { id: failed.id, error: friendlyError('match') });
   }
 });
@@ -334,6 +388,13 @@ test('the country-match route answers cleaned matches, caches per profile, and n
   assert.deepEqual(first.data.matches.map((m) => [m.country_code, m.country_name, m.match_score]), [['de', 'Germany', 88]]);
   await post({ profile: { ...profile, skills: ['a', 'b'] } });
   assert.equal(groqCalls - start, 1, 'the same profile is served from the cache');
+  // "Refresh matches" asks the AI again, and its answer replaces the cached one.
+  answer = { matches: [{ country_code: 'nz', match_score: 70 }] };
+  const refreshed = await post({ profile, refresh: true });
+  assert.equal(groqCalls - start, 2, 'a refresh is not served from the cache');
+  assert.deepEqual(refreshed.data.matches.map((m) => m.country_code), ['nz']);
+  assert.deepEqual((await post({ profile })).data.matches.map((m) => m.country_code), ['nz'], 'the new answer is cached');
+  assert.equal(groqCalls - start, 2);
 
   // The real error goes to the server log (kept out of the test output); the visitor reads the calm sentence.
   const logged = [];
@@ -352,7 +413,7 @@ test('the country-match route answers cleaned matches, caches per profile, and n
   }
   assert.equal(logged.length, 2);
   assert.match(logged[1], /no known country/);
-  assert.equal(groqCalls - start, 3, 'a junk answer was not cached');
+  assert.equal(groqCalls - start, 4, 'a junk answer was not cached');
 
   assert.equal((await post({ profile: {} })).status, 400, 'nationality is required');
 });

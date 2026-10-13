@@ -1,0 +1,535 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Country Match (/match) on the warm --ground: the passport data-page form, the route of stamps
+   (the page's signature moment: a dashed route draws itself and five match-score stamps land on
+   it, MatchRoute.js) and the matches as passport pages with an M-MATCH vignette
+   (CountryMatchCard.js). Text colours are page ink, #3d443a, #5a6b4a, #1f6f47 and #a94a1f, each
+   tested >= 4.5:1 on --page, --ground and the vignette tint (scripts/site/__tests__/
+   matchCss.test.mjs). Only transform / opacity / stroke-dashoffset ever animate; no CSS trig.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.mt-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.mt-kicker,
+.mt-label {
+  display: block;
+  margin: 0 0 6px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.mt-fr { color: #4f5c55; }
+
+/* ── The form: a passport data page ────────────────────────────────────────── */
+
+.mt-form {
+  isolation: isolate; /* the guilloche sits between the paper and the fields */
+  overflow: hidden;
+  overflow: clip; /* and stays inside the rounded corners */
+}
+.mt-form-guilloche {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: 100% 100%;
+  opacity: 0.8;
+  pointer-events: none;
+}
+.mt-form-kicker {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mt-form-h {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.mt-form-sub {
+  margin: 4px 0 16px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d443a;
+}
+.mt-fields {
+  display: grid;
+  gap: 16px;
+}
+.mt-prefilled {
+  margin: 6px 0 0;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1f6f47;
+}
+.mt-regions {
+  min-width: 0;
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+.mt-regions legend { margin-bottom: 8px; padding: 0; }
+.mt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.mt-error {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #a94a1f;
+}
+.mt-error:empty { margin: 0; }
+.mt-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 16px;
+}
+.mt-submit[aria-disabled='true'],
+.mt-refresh[aria-disabled='true'] { cursor: progress; }
+.mt-form-mrz {
+  margin: 18px 0 0;
+  overflow: hidden;
+  font: 400 11px/1.2 var(--jb-mono);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: #5a6b4a;
+}
+@media (min-width: 640px) {
+  .mt-fields { grid-template-columns: 1fr 1fr; }
+  .mt-form-mrz { font-size: 13px; }
+}
+
+/* ── Results ───────────────────────────────────────────────────────────────── */
+
+.mt-results,
+.mt-results .kit-arrival,
+.mt-arrival {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mt-results:empty { display: none; }
+
+.mt-routecard {
+  overflow: hidden;
+  overflow: clip; /* the stamps wait at 2.2x before they land: never a sideways scroll */
+}
+.mt-h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+.mt-hint {
+  margin: 4px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d443a;
+}
+.mt-picked {
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #1f6f47;
+}
+.mt-picked:empty { margin: 0; } /* stays in the tree: a live region must exist before it speaks */
+
+/* The route: a box with the drawing's aspect ratio; the stamps are 30% of its width (container
+   units, STAMP_SIZE in app/lib/match.js), centred on their stops (stampSlots, in percent), so every
+   size keeps the same picture. --u scales the kit Stamp's rings with them. */
+.mt-route {
+  --u: 1.07cqi;
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 320 / 250;
+  margin: 12px auto 0;
+}
+.mt-route-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.mt-route-line {
+  fill: none;
+  stroke: #a94a1f;
+  stroke-width: 2;
+  stroke-dasharray: 6 7;
+  stroke-linecap: round;
+}
+/* Paper laid over the line, sliding off it from the start (stroke-dashoffset): the route draws. */
+.mt-route-cover {
+  fill: none;
+  stroke: var(--page);
+  stroke-width: 8;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 950ms linear;
+}
+.mt-route[data-landed] .mt-route-cover { stroke-dashoffset: calc(-1 * var(--len)); }
+
+.mt-stops {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mt-stop {
+  position: absolute;
+  width: 30cqi;
+  height: 30cqi;
+  margin: -15cqi 0 0 -15cqi;
+}
+/* A stop: a round paper button that hides the line under it, the stamp on top. */
+.mt-stop-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--page);
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 150ms var(--ease);
+}
+.mt-stop-btn:focus-visible { outline: 3px solid var(--page-ink); outline-offset: 3px; }
+@media (hover: hover) {
+  .mt-stop-btn:hover { transform: translateY(-2px); }
+}
+.mt-stop-face,
+.mt-stop-face .jb-stamp {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* One after another (--d, set per stop) once the route has started to draw. */
+.mt-stop .jb-stamp { transition-delay: var(--d, 0ms); }
+.mt-stop .jb-stamp[data-applied='true']::before {
+  animation-delay: calc(200ms + var(--d, 0ms));
+  animation-fill-mode: forwards; /* no bleed before its own stamp lands */
+}
+.mt-stop .jb-stamp-text {
+  gap: 0.6cqi;
+  padding: 0 2cqi;
+}
+.mt-stop .jb-stamp-text small {
+  font-size: max(9px, 2.7cqi);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.mt-stop .jb-stamp-text b {
+  font-size: max(20px, 7cqi);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+/* The saved destination: a ring and a plane pin (decorative; described as "Your destination"). */
+.mt-stop--picked .mt-stop-btn {
+  box-shadow: 0 0 0 3px var(--page), 0 0 0 5px var(--page-ink);
+}
+.mt-stop-pin {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--page-ink);
+  color: var(--page);
+  font-size: 14px;
+}
+/* While waiting: empty dashed stops, the dashes marching (paused off screen, still if reduced). */
+.mt-stop-blank {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed rgba(31, 42, 36, 0.28);
+  border-radius: 50%;
+  background: var(--page);
+}
+.mt-route--pending .mt-route-line {
+  stroke: rgba(31, 42, 36, 0.35);
+  animation: mt-march 1.2s linear infinite;
+}
+.mt-route--pending[data-offscreen] .mt-route-line { animation-play-state: paused; }
+@keyframes mt-march {
+  to { stroke-dashoffset: -26px; }
+}
+
+/* ── The matches: passport pages with an M-MATCH vignette ──────────────────── */
+
+.mt-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mt-card {
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--page);
+  color: var(--page-ink);
+  overflow-wrap: anywhere;
+  box-shadow: 0 1px 2px rgba(31, 42, 36, 0.08), 0 6px 18px rgba(31, 42, 36, 0.12);
+}
+.mt-vig {
+  position: relative;
+  isolation: isolate; /* the rosette, letter and foil sit between the tint and the text */
+  overflow: hidden;
+  padding: 16px 44px 18px 18px;
+  background: linear-gradient(135deg, #e7f0d6, #f5e8d6);
+  box-shadow: inset 0 -1px 0 rgba(31, 42, 36, 0.1);
+}
+.mt-vig-rosette {
+  position: absolute;
+  right: 34px;
+  bottom: -30px; /* low in the corner, clear of the score */
+  z-index: -1;
+  width: 92px;
+  height: 92px;
+  background-size: 100% 100%;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.mt-vig-letter {
+  position: absolute;
+  right: 48px;
+  bottom: -14px;
+  z-index: -1;
+  font-size: 84px;
+  font-weight: 800;
+  line-height: 1;
+  color: #2f6b47;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.mt-vig-foil {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  width: 26px;
+  background: linear-gradient(180deg, #b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d);
+  opacity: 0.85;
+}
+.mt-vig-type {
+  margin: 0;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4f5c55;
+}
+.mt-vig-type b { font-weight: 600; color: #2f6b47; }
+.mt-vig-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+.mt-vig-name {
+  margin: 0;
+  min-width: 0;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.mt-vig-score {
+  flex: none;
+  margin: 0;
+  font-size: 16px;
+  color: #3d443a;
+  white-space: nowrap;
+}
+.mt-vig-score b {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--page-ink);
+}
+.mt-vig-of { font: 500 14px/1 var(--jb-mono); color: #3d443a; }
+.mt-vig-reason {
+  margin: 8px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d443a;
+}
+
+.mt-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 0;
+  background: rgba(31, 42, 36, 0.14);
+  border-bottom: 1px solid rgba(31, 42, 36, 0.14);
+}
+.mt-stats > div {
+  padding: 10px 18px 12px;
+  background: var(--page);
+}
+.mt-stats dt {
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.mt-stats dd {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.mt-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.mt-signs { font: 600 14px/1 var(--jb-mono); color: #5a6b4a; }
+
+.mt-path {
+  margin: 0;
+  padding: 14px 18px 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.mt-path-label {
+  display: block;
+  margin-bottom: 2px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.mt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 18px 0;
+}
+.mt-go,
+.mt-set {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.5px solid var(--page-ink);
+  border-radius: 12px;
+  background: var(--page);
+  color: var(--page-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 150ms var(--ease);
+}
+.mt-go--primary {
+  background: var(--page-ink);
+  color: var(--page);
+}
+.mt-go:focus-visible,
+.mt-set:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
+@media (hover: hover) {
+  .mt-go:hover,
+  .mt-set:hover { transform: translateY(-1px); }
+}
+.mt-set-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 10px 18px 18px;
+}
+.mt-set { border-style: dashed; }
+.mt-is-dest {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font: 600 14px/1.4 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1f6f47;
+}
+
+.mt-again {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.mt-saved {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d443a;
+}
+
+.mt-footnote {
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(31, 42, 36, 0.25);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #3d443a;
+}
+.mt-footnote-mark {
+  margin-right: 6px;
+  font: 700 14px/1 var(--jb-mono);
+  color: #a94a1f;
+}
+
+@media (min-width: 640px) {
+  .mt-h2 { font-size: 28px; }
+  .mt-vig { padding: 20px 52px 20px 24px; }
+  .mt-vig-name { font-size: 30px; }
+  .mt-stats { grid-template-columns: repeat(4, 1fr); }
+  .mt-stats > div { padding: 12px 24px 14px; }
+  .mt-path { padding: 16px 24px 0; }
+  .mt-actions { padding: 16px 24px 0; }
+  .mt-set-row { padding: 12px 24px 24px; }
+}
+
+/* ── Reduced motion: the drawn route and the landed stamps at once ─────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .mt-route-cover { display: none; }
+  .mt-route--pending .mt-route-line { animation: none; }
+  .mt-stop-btn,
+  .mt-go,
+  .mt-set { transition: none; }
+  .mt-stop-btn:hover,
+  .mt-go:hover,
+  .mt-set:hover { transform: none; }
+}

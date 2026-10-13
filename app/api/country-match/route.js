@@ -11,7 +11,8 @@ const CACHE_TTL = 24 * 60 * 60 * 1000;
 const listText = (value) => (Array.isArray(value) ? value.join(', ') : (value || ''));
 
 export async function POST(request) {
-  const { profile } = await request.json();
+  // `refresh`: "Refresh matches" asks the AI again instead of the cached answer (which it replaces).
+  const { profile, refresh = false } = await request.json();
 
   if (typeof profile?.nationality !== 'string' || !profile.nationality.trim()) {
     return Response.json({ error: 'Nationality is required' }, { status: 400 });
@@ -22,7 +23,7 @@ export async function POST(request) {
   }
 
   const key = profileKey(profile);
-  const cached = cache.get(key);
+  const cached = refresh === true ? null : cache.get(key);
   if (cached && Date.now() - cached.ts < CACHE_TTL) {
     return Response.json(cached.data);
   }

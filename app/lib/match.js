@@ -51,14 +51,16 @@ export function profileKey(profile) {
 }
 
 // The saved entry { key, savedAt, matches, profile? } while it is fresh (saved at most 24h before
-// `now`, never "in the future"), else null. Never throws.
+// `now`, never "in the future"), else null. Its matches go through pickMatches again, so junk or
+// an older format never reaches the page (none usable -> null). Never throws.
 function freshEntry(storage, now) {
   try {
     const entry = JSON.parse(storage.getItem(MATCH_CACHE_KEY));
     if (!isObject(entry) || typeof entry.key !== 'string' || typeof entry.savedAt !== 'number') return null;
-    if (!Array.isArray(entry.matches) || entry.matches.length === 0) return null;
     const age = now - entry.savedAt;
-    return age >= 0 && age <= CACHE_MS ? entry : null;
+    if (!(age >= 0 && age <= CACHE_MS)) return null;
+    const matches = pickMatches({ matches: entry.matches });
+    return matches.length ? { ...entry, matches } : null;
   } catch {
     return null;
   }
@@ -129,16 +131,20 @@ export function matchLinks({ from, to, name } = {}) {
 /** The route's drawing box (SVG user units); MatchRoute keeps this aspect ratio. */
 export const ROUTE_BOX = Object.freeze({ w: 320, h: 250 });
 
+/** A stamp's diameter as a share of the route box's width (match.css: 30cqi). */
+export const STAMP_SIZE = 0.3;
+
 /**
  * The five stops, best match first: a winding route from the bottom left, low and high in turn,
- * so stamps 28% of the box wide never overlap (each pair is at least 90 units apart across or down).
+ * so the stamps (STAMP_SIZE: 96 units) stay in the box and never overlap (each pair is at least
+ * 96 units apart across or down).
  */
 export const ROUTE_STOPS = Object.freeze([
   { x: 48, y: 188 },
   { x: 106, y: 62 },
   { x: 164, y: 178 },
   { x: 222, y: 58 },
-  { x: 274, y: 170 },
+  { x: 272, y: 170 },
 ].map(Object.freeze));
 
 const ROUTE_START = { x: 12, y: 240 };
@@ -300,6 +306,32 @@ export function matchPrefill({ route, profile } = {}) {
   };
 }
 
+/**
+ * What a search sends: the form's five fields (`value`, as matchPrefill shapes it) plus the saved
+ * `profile`'s job types (the prompt's job interests), and nothing else from the profile (no name,
+ * no resume summary).
+ */
+export function requestProfile(value, profile) {
+  const v = isObject(value) ? value : {};
+  const out = {
+    nationality: text(v.nationality),
+    currentCountry: text(v.currentCountry),
+    experience: text(v.experience),
+    skills: text(v.skills),
+    preferredCountries: strings(v.preferredCountries),
+  };
+  const jobTypes = strings(isObject(profile) ? profile.jobTypes : null);
+  return jobTypes.length ? { ...out, jobTypes } : out;
+}
+
+const COST_WORDS = { $: 'Low', $$: 'Moderate', $$$: 'High', $$$$: 'Very high' };
+
+/** The AI's cost of living ('$' to '$$$$') in words: { signs, word }; anything else is kept as the word. */
+export function costLevel(value) {
+  const raw = text(value);
+  return Object.hasOwn(COST_WORDS, raw) ? { signs: raw, word: COST_WORDS[raw] } : { signs: '', word: raw };
+}
+
 // POST JSON; the parsed body, or null when the call failed in any way (network, non-JSON, non-2xx,
 // an { error } body). Never rejects.
 async function postJson(url, body) {
@@ -316,12 +348,13 @@ async function postJson(url, body) {
  * One match request under the page's createLatest guard: { id, matches } (cleaned by
  * pickMatches), or { id, error } with the friendly sentence when the call failed or named no
  * known country; null when a newer search started meanwhile (its answer is the one shown).
+ * `refresh`: "Refresh matches", which asks the AI again (the route skips its own cache).
  */
-export async function fetchMatches(latest, profile, post = postJson) {
+export async function fetchMatches(latest, profile, { refresh = false, post = postJson } = {}) {
   const id = latest.next();
   let data = null;
   try {
-    data = await post('/api/country-match', { profile });
+    data = await post('/api/country-match', refresh ? { profile, refresh: true } : { profile });
   } catch {
     data = null;
   }
