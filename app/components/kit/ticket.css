@@ -1,0 +1,319 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Ticket (kit/Ticket.js): a boarding pass on the warm --ground, the homepage pass's sibling look
+   (passport/stage.css .bp-*), shipped only with the pages that use it. White card + perforated
+   stub: ground-coloured notches bite into both halves at the perforation (each half clips its
+   own, so nothing pokes out past the pass), and the card covers the stub's shadow.
+   Text colours are page ink, #3d443a, #5a6b4a, #1f6f47 and #a94a1f, each tested >= 4.5:1 on the
+   card (#fff), the stub (#f6efe0), --page and --ground (scripts/site/__tests__/relocateCss.test.mjs).
+   Only transform / opacity animate (the stamp's thunk, the stub's 700ms tear); no CSS trig.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.tk {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--page-ink);
+}
+.tk-main {
+  position: relative;
+  z-index: 1; /* above the stub (and its shadow) until the stub flies */
+  min-width: 0;
+  padding: 16px 16px 18px;
+  border-radius: 16px 16px 4px 4px;
+  background: #fff;
+  /* the ADMITTED stamp waits at 2.2x before it lands: the card clips it (no sideways scroll) */
+  overflow: hidden;
+  overflow: clip;
+  overflow-wrap: anywhere;
+  /* a tighter shadow than the stub's: it falls on the stub at the perforation */
+  box-shadow: 0 8px 20px -6px rgba(31, 42, 36, 0.16), 0 1px 3px rgba(31, 42, 36, 0.1);
+}
+.tk--solo .tk-main { border-radius: 16px; }
+/* the notches at the perforation, in the colour of the ground behind the pass */
+.tk-main::before,
+.tk-main::after,
+.tk-stub::before,
+.tk-stub::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ground);
+}
+.tk-main::before,
+.tk-main::after { bottom: -9px; }
+.tk-main::before,
+.tk-stub::before { left: -9px; }
+.tk-main::after,
+.tk-stub::after { right: -9px; }
+.tk--solo .tk-main::before,
+.tk--solo .tk-main::after { content: none; }
+
+.tk-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+.tk-kicker,
+.tk-label,
+.tk-stub-title {
+  margin: 0;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.tk-codes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2px;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.tk-plane {
+  font-size: 0.55em;
+  color: #a94a1f;
+}
+.tk-city {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #3d443a;
+}
+
+.tk-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+  margin-top: 14px;
+}
+.tk-fare {
+  flex: 1 1 100%; /* its own row: the stamp lands below it, on the right */
+  min-width: 0;
+  padding: 10px 12px 12px;
+  border: 1.5px solid rgba(31, 42, 36, 0.18);
+  border-radius: 10px;
+}
+.tk-label {
+  margin-bottom: 6px;
+  letter-spacing: 0.12em;
+}
+.tk-tiers {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+/* phones: one tier per row, the amount on the right */
+.tk-tiers > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tk-tiers dt,
+.tk-tiers dd {
+  overflow-wrap: normal; /* a tier label or amount never breaks inside a word */
+  white-space: nowrap;
+}
+.tk-tiers dt {
+  font: 500 13px/1.4 var(--jb-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.tk-tiers dd {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.tk-stamp {
+  --u: 3.6px;
+  display: flex;
+  flex: none;
+  margin-left: auto;
+}
+/* the rect stamp grows with a long city name (at most 18 characters, admittedStamp) */
+.tk-stamp .jb-stamp--rect {
+  width: auto;
+  min-width: calc(var(--u) * 34);
+}
+
+/* The stub: below the card on phones, beside it from 640px. */
+.tk-slot {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+.tk-stub {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 16px;
+  border-top: 2px dashed #cfc6b3;
+  border-radius: 4px 4px 16px 16px;
+  background: #f6efe0;
+  overflow: hidden;
+  overflow: clip; /* its notches stay inside */
+  overflow-wrap: anywhere;
+  box-shadow: 0 12px 28px rgba(31, 42, 36, 0.14), 0 1px 3px rgba(31, 42, 36, 0.1);
+  transform-origin: left top;
+}
+.tk-stub::before,
+.tk-stub::after { top: -9px; }
+.tk-stub-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tk-stub-list > li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 16px;
+  line-height: 1.45;
+  color: #3d443a;
+}
+.tk-stub-list > li::before {
+  /* an empty tick box: the plan reads as a list to work through */
+  content: '';
+  position: absolute;
+  top: 0.22em;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #5a6b4a;
+  border-radius: 3px;
+}
+.tk-tear {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 2px;
+  padding: 0 16px;
+  border: 2px solid var(--page-ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--page-ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .tk-tear:hover { background: rgba(31, 42, 36, 0.07); }
+}
+.tk-tear:focus-visible,
+.tk-note:focus-visible {
+  outline: 3px solid #2f5139;
+  outline-offset: 3px;
+}
+.tk-stub--flying {
+  z-index: 2; /* over the card while it flies off */
+  pointer-events: none;
+  animation: tk-tear-up 700ms cubic-bezier(0.3, 0.7, 0.3, 1) forwards;
+}
+@keyframes tk-tear-up {
+  to {
+    transform: translate(24px, -80px) rotate(-10deg);
+    opacity: 0;
+  }
+}
+@keyframes tk-tear {
+  to {
+    transform: translate(60px, -90px) rotate(24deg);
+    opacity: 0;
+  }
+}
+.tk-saved {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 64px;
+  margin: 0;
+  padding: 14px 16px;
+  border: 2px dashed #b9ae95;
+  border-top: 0;
+  border-radius: 4px 4px 16px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #1f6f47;
+}
+.tk-note {
+  width: fit-content; /* a keyboard focus ring hugs the sentence */
+  max-width: 100%;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #1f6f47;
+  outline: none;
+}
+.tk-note:not(:empty) { margin-top: 12px; }
+/* focus waits on the note while the stub flies (it fills in after 700ms): no empty ring meanwhile */
+.tk-wrap .tk-note:empty:focus-visible { outline: none; }
+.tk-note[data-ok='false'] { color: #a94a1f; }
+
+@media (min-width: 640px) {
+  .tk { flex-direction: row; align-items: stretch; }
+  .tk-main {
+    flex: 1 1 auto;
+    padding: 18px 22px 20px;
+    border-radius: 16px 4px 4px 16px;
+  }
+  .tk-codes { font-size: 40px; }
+  .tk-tiers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 32px;
+  }
+  .tk-tiers > div {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+  .tk-slot { flex: 0 0 236px; }
+  .tk-stub {
+    padding: 18px 18px 18px 20px;
+    border-top: 0;
+    border-left: 2px dashed #cfc6b3;
+    border-radius: 4px 16px 16px 4px;
+  }
+  .tk-main::before,
+  .tk-main::after { right: -9px; left: auto; }
+  .tk-main::before { top: -9px; bottom: auto; }
+  .tk-stub::before,
+  .tk-stub::after { left: -9px; right: auto; }
+  .tk-stub::after { top: auto; bottom: -9px; }
+  .tk-stub-list > li { font-size: 15px; }
+  .tk-tear { font-size: 15px; }
+  .tk-stub--flying { animation-name: tk-tear; }
+  .tk-saved {
+    flex-direction: column;
+    border-top: 2px dashed #b9ae95;
+    border-left: 0;
+    border-radius: 4px 16px 16px 4px;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Ticket never starts the tear here (its button saves at once); this is the safety net */
+  .tk-stub--flying { animation: none; opacity: 0; }
+}

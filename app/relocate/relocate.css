@@ -1,0 +1,443 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Relocation Guide (/relocate) on the warm --ground: the check-in form, the boarding pass
+   (kit/Ticket + ticket.css: the page's signature moment) and the guide's chapter tabs with their
+   paper sections. Text colours are page ink, #3d443a, #5a6b4a and the STAMP_INKS, each tested
+   >= 4.5:1 on --page and --ground (scripts/site/__tests__/relocateCss.test.mjs). Only transform /
+   opacity ever animate; no CSS trig.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.rl-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.rl-kicker,
+.rl-label,
+.rl-h4 {
+  display: block;
+  margin: 0 0 6px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.rl-h3 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.rl-h4 { margin-top: 16px; font-weight: 600; }
+.rl-text,
+.rl-note,
+.rl-level {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.rl-text + .rl-text,
+.rl-gap { margin-top: 10px; }
+.rl-lead {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #3d443a;
+}
+
+/* ── The check-in form ─────────────────────────────────────────────────────── */
+
+.rl-form-h { margin-bottom: 14px; }
+.rl-fields {
+  display: grid;
+  gap: 16px;
+}
+.rl-prefilled {
+  margin: 6px 0 0;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1f6f47;
+}
+.rl-popular {
+  min-width: 0;
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+.rl-popular legend { margin-bottom: 8px; padding: 0; }
+.rl-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rl-error {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #a94a1f;
+}
+.rl-error:empty { margin: 0; }
+.rl-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 16px;
+}
+.rl-submit[aria-disabled='true'] { cursor: progress; }
+@media (min-width: 640px) {
+  .rl-fields { grid-template-columns: 1fr 1fr; }
+  .rl-field--wide { grid-column: 1 / -1; }
+}
+
+/* ── Results ───────────────────────────────────────────────────────────────────
+   The torn stub flies up and out for 700ms: the results clip sideways at the screen edge (the
+   negative margins reach through the page gutter), so the page never scrolls sideways meanwhile. */
+
+.rl-results,
+.rl-results .kit-arrival {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.rl-results {
+  margin: 0 -16px;
+  padding: 0 16px;
+  overflow-x: clip;
+}
+.rl-results:empty { display: none; }
+.rl-page .kit-check {
+  overflow: hidden;
+  overflow: clip; /* the PACKED stamp also waits at 2.2x before it lands */
+}
+
+/* While the guide is being written: a blank pass for the route (decorative; the form's status
+   line says it in words). */
+.rl-pending {
+  padding: 16px 18px 20px;
+  border: 2px dashed rgba(31, 42, 36, 0.25);
+  border-radius: 16px;
+}
+.rl-pending-codes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0 0;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--page-ink);
+}
+.rl-pending-plane { font-size: 0.55em; color: #a94a1f; }
+.rl-pending-city {
+  margin: 2px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #3d443a;
+}
+.rl-skel {
+  display: block;
+  width: 62%;
+  height: 12px;
+  margin-top: 16px;
+  border-radius: 6px;
+  background: rgba(31, 42, 36, 0.1);
+}
+.rl-skel--short { width: 38%; margin-top: 10px; }
+
+/* The chapters: passport tab dividers on a rule (a strip that scrolls sideways on phones; the
+   page itself never does), then the open chapter's sections. */
+.rl-chapters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+.rl-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 6px 2px 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  border-bottom: 2px solid var(--page-ink);
+}
+.rl-tabs::-webkit-scrollbar { display: none; }
+.rl-tab {
+  flex: none;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(31, 42, 36, 0.3);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: #f6eedb;
+  color: var(--page-ink);
+  font: 500 14px/1.2 var(--jb-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.rl-tab[aria-selected='true'] {
+  border-color: var(--page-ink);
+  background: var(--page-ink);
+  color: var(--page);
+}
+.rl-tab:focus-visible { outline: 2px solid var(--page-ink); outline-offset: -5px; }
+.rl-tab[aria-selected='true']:focus-visible { outline-color: var(--page); }
+.rl-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 14px;
+}
+.rl-panel[hidden] { display: none; }
+.rl-panel:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 4px; }
+
+/* Facts: small mono terms over bold values, side by side where they fit. */
+.rl-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin: 12px 0 0;
+}
+.rl-facts dt {
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a6b4a;
+}
+.rl-facts dd {
+  margin: 2px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--page-ink);
+}
+.rl-h3 + .rl-facts { margin-top: 0; }
+
+.rl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rl-tags > li {
+  padding: 5px 12px;
+  border: 1.5px solid rgba(31, 42, 36, 0.3);
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--page-ink);
+}
+
+.rl-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rl-list > li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.rl-list > li::before {
+  content: '';
+  position: absolute;
+  top: 0.62em;
+  left: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1f2a24;
+}
+.rl-list--good > li,
+.rl-list--bad > li {
+  display: flex;
+  gap: 10px;
+  padding-left: 0;
+}
+.rl-list--good > li::before,
+.rl-list--bad > li::before { content: none; }
+.rl-glyph { flex: none; margin-top: 0.3em; }
+.rl-list--good .rl-glyph { color: #1f6f47; }
+.rl-list--bad .rl-glyph { color: #a94a1f; }
+.rl-pair {
+  display: grid;
+  gap: 4px 24px;
+}
+.rl-pair > div:empty { display: none; }
+@media (min-width: 640px) {
+  .rl-pair { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+.rl-level strong { font-weight: 800; color: var(--page-ink); }
+.rl-level strong[data-ink='good'] { color: #1f6f47; }
+.rl-level strong[data-ink='mid'] { color: #7a5c12; }
+.rl-level strong[data-ink='bad'] { color: #a94a1f; }
+.rl-level + .rl-text { margin-top: 8px; }
+.rl-lead + .rl-level { margin-top: 12px; }
+.rl-text strong { font-weight: 700; color: var(--page-ink); }
+.rl-note { margin-top: 12px; }
+.rl-note strong { color: #a94a1f; }
+
+/* Cost of living: a receipt of rows, the amount on the right. */
+.rl-costs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rl-costs > li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 16px;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(31, 42, 36, 0.2);
+}
+.rl-costs > li:last-child { border-bottom: 0; }
+.rl-cost-label {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--page-ink);
+}
+.rl-cost-amount {
+  font: 700 16px/1.4 var(--jb-mono);
+  text-align: right;
+  color: var(--page-ink);
+}
+.rl-cost-note {
+  grid-column: 1 / -1;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d443a;
+}
+
+/* Neighbourhoods and communities: small cards inside the section. */
+.rl-cards {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 640px) {
+  .rl-cards { grid-template-columns: 1fr 1fr; }
+}
+.rl-card {
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1.5px solid rgba(31, 42, 36, 0.16);
+  border-radius: 12px;
+}
+.rl-card-h {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--page-ink);
+}
+.rl-badge {
+  display: inline-block;
+  margin: 0 0 6px;
+  font: 500 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2d5bd7;
+}
+.rl-go {
+  display: inline-block;
+  margin-top: 12px;
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--page-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+.rl-go:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 2px; }
+
+/* Emergency numbers: a wallet card of tap-to-call buttons. */
+.rl-wallet {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 640px) {
+  .rl-wallet { grid-template-columns: repeat(4, 1fr); }
+}
+.rl-call {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 72px;
+  padding: 12px 14px;
+  border: 2px solid #a94a1f;
+  border-radius: 12px;
+  color: var(--page-ink);
+  text-decoration: none;
+}
+a.rl-call:focus-visible { outline: 3px solid var(--page-ink); outline-offset: 2px; }
+@media (hover: hover) {
+  a.rl-call:hover { background: rgba(169, 74, 31, 0.08); }
+}
+.rl-call-label {
+  font: 600 12px/1.4 var(--jb-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a94a1f;
+}
+.rl-call-no {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+/* The closing note and the page footnote. */
+.rl-closing {
+  margin: 0;
+  padding: 16px 18px;
+  border: 1.5px dashed rgba(31, 42, 36, 0.3);
+  border-radius: 14px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #3d443a;
+}
+.rl-closing strong { color: var(--page-ink); }
+.rl-footnote {
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(31, 42, 36, 0.25);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #3d443a;
+}
+.rl-footnote-mark {
+  margin-right: 6px;
+  font: 700 14px/1 var(--jb-mono);
+  color: #a94a1f;
+}
+
+@media (min-width: 640px) {
+  .rl-results { margin: 0 -32px; padding: 0 32px; }
+  .rl-pending { padding: 18px 22px 22px; }
+  .rl-pending-codes { font-size: 40px; }
+}
