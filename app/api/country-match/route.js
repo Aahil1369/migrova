@@ -1,27 +1,19 @@
 import Groq from 'groq-sdk';
 import { GROQ_OPTIONS } from '../../../lib/ai.js';
 import { friendlyError } from '../../lib/friendlyError.js';
+import { describeProfile, pickMatches, profileKey } from '../../lib/match.js';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const cache = new Map();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-function cacheKey(profile) {
-  const parts = [
-    profile.nationality,
-    profile.currentCountry,
-    (profile.preferredCountries || []).sort().join(','),
-    Array.isArray(profile.skills) ? profile.skills.sort().join(',') : (profile.skills || ''),
-    profile.experience,
-  ];
-  return parts.join('|');
-}
+const listText = (value) => (Array.isArray(value) ? value.join(', ') : (value || ''));
 
 export async function POST(request) {
   const { profile } = await request.json();
 
-  if (!profile?.nationality) {
+  if (typeof profile?.nationality !== 'string' || !profile.nationality.trim()) {
     return Response.json({ error: 'Nationality is required' }, { status: 400 });
   }
   // Guard against oversized payloads inflating token cost.
@@ -29,21 +21,23 @@ export async function POST(request) {
     return Response.json({ error: 'Profile too large' }, { status: 400 });
   }
 
-  const key = cacheKey(profile);
+  const key = profileKey(profile);
   const cached = cache.get(key);
   if (cached && Date.now() - cached.ts < CACHE_TTL) {
     return Response.json(cached.data);
   }
 
+  // Country names, not ISO2 codes: the model reads a bare "ge" as the US state.
+  const person = describeProfile(profile);
   const prompt = `You are a global mobility information guide providing general information only, not legal or career advice. Given this person's profile, recommend the top 5 countries where they would have the best chance of finding work and getting a visa.
 
 Profile:
-- Nationality: ${profile.nationality}
-- Currently in: ${profile.currentCountry || 'not specified'}
+- Nationality: ${person.nationality}
+- Currently in: ${person.currentCountry || 'not specified'}
 - Experience: ${profile.experience || 'not specified'}
-- Skills: ${Array.isArray(profile.skills) ? profile.skills.join(', ') : (profile.skills || 'not specified')}
-- Preferred regions: ${(profile.preferredCountries || []).join(', ') || 'open to anywhere'}
-- Job interests: ${(profile.jobTypes || []).join(', ') || 'not specified'}
+- Skills: ${listText(profile.skills) || 'not specified'}
+- Preferred regions: ${person.preferredRegions.join(', ') || 'open to anywhere'}
+- Job interests: ${listText(profile.jobTypes) || 'not specified'}
 
 For each country, provide:
 1. match_score (1-100, be realistic)
@@ -69,7 +63,10 @@ Return ONLY valid JSON: { "matches": [...] } sorted by match_score descending. N
 
     const raw = completion.choices[0]?.message?.content || '';
     const jsonStr = raw.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-    const data = JSON.parse(jsonStr);
+    // Only known countries, best first; an answer with none is an error, and is not cached.
+    const matches = pickMatches(JSON.parse(jsonStr));
+    if (matches.length === 0) throw new Error('The answer named no known country');
+    const data = { matches };
 
     cache.set(key, { data, ts: Date.now() });
     return Response.json(data);
