@@ -7,7 +7,6 @@ import PassportCard from './kit/PassportCard';
 import { CheckGlyph } from './kit/Glyphs';
 import { STAMP_INKS } from './kit/stampInks';
 import { costLevel, matchLinks } from '../lib/match';
-import '../match/match.css';
 
 // The visa difficulty's dot (decorative; the word is beside it).
 const VISA_INKS = { easy: STAMP_INKS.green, moderate: STAMP_INKS.gold, hard: STAMP_INKS.terracotta, 'very hard': STAMP_INKS.terracotta };
@@ -23,6 +22,8 @@ const VISA_INKS = { easy: STAMP_INKS.green, moderate: STAMP_INKS.gold, hard: STA
  * country code; `picked`: it is the saved destination.
  * (Not the Vignette component itself: its parts are spans for a link / <summary>, and this head
  * holds a heading and paragraphs.)
+ * Its own styles (.mt-card, .mt-vig-*, .mt-stats, .mt-go …) are in app/match/match.css, which the
+ * /match page imports: a shared component imports no page's stylesheet.
  */
 export default function CountryMatchCard({ match, rank, from, picked = false, onPick }) {
   const id = useId();

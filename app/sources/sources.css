@@ -146,10 +146,12 @@
   color: var(--page-ink);
   text-decoration: none;
 }
-.src-row:hover .src-row-name {
-  text-decoration: underline;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 3px;
+@media (hover: hover) {
+  .src-row:hover .src-row-name {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
 }
 .src-row:focus-visible { outline: 2px solid var(--page-ink); outline-offset: -3px; }
 .src-row-flag {
@@ -425,19 +427,8 @@ a.uv-card:focus-visible { outline: 2px solid var(--page-ink); outline-offset: 3p
   100% { transform: translateX(100%); opacity: 0; }
 }
 
-.src-footnote {
-  margin: 0;
-  padding-top: 20px;
-  border-top: 1px dashed rgba(31, 42, 36, 0.25);
-  font-size: 16px;
-  line-height: 1.6;
-  color: #3d443a;
-}
-.src-footnote-mark {
-  margin-right: 6px;
-  font: 700 14px/1 var(--jb-mono);
-  color: #a94a1f;
-}
+/* The shared paper footnote (ui/footnote.css): the page gap (40px) is its space above. */
+.src-page > .paper-footnote { margin-top: 0; }
 
 @media (min-width: 640px) {
   .src-h2 { font-size: 30px; }

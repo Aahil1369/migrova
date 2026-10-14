@@ -88,7 +88,7 @@ test('the vignette tints keep the sticker text readable', () => {
 
 test('body text is at least 16px on phones', () => {
   // .visa-tags > li: the AI's language-test names (set with the `font` shorthand).
-  const body = ['.visa-text', '.visa-list > li', '.visa-card-entry', '.visa-card-summary', '.visa-error', '.visa-closing', '.visa-footnote', '.visa-overview', '.visa-tags > li'];
+  const body = ['.visa-text', '.visa-list > li', '.visa-card-entry', '.visa-card-summary', '.visa-error', '.visa-closing', '.visa-overview', '.visa-tags > li'];
   const fontSize = (ruleBody) => decl(ruleBody, 'font-size') ?? /(?:^|\s)(\d+(?:\.\d+)?px)\//.exec(decl(ruleBody, 'font') ?? '')?.[1] ?? null;
   for (const selector of body) {
     const sizes = RULES.filter((r) => r.selectors.includes(selector)).map((r) => fontSize(r.body)).filter(Boolean);

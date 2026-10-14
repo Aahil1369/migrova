@@ -1,0 +1,18 @@
+/* The page footnote on the passport tool pages (Footnote tone="paper": /visa, /relocate, /match,
+   /sources): a dashed rule over the --ground, 16px text, the mark in terracotta ink (decorative,
+   aria-hidden). Its text colours are tested >= 4.5:1 on the ground and on the page paper
+   (scripts/site/__tests__/footnote.test.mjs). */
+
+.paper-footnote {
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(31, 42, 36, 0.25);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #3d443a;
+}
+.paper-footnote-mark {
+  margin-right: 6px;
+  font: 700 14px/1 var(--jb-mono, ui-monospace, monospace);
+  color: #a94a1f;
+}

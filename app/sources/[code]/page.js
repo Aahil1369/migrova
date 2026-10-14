@@ -4,6 +4,7 @@ import ToolShell from '../../components/kit/ToolShell';
 import ToolHeader from '../../components/kit/ToolHeader';
 import VerifiedLinkCard from '../../components/kit/VerifiedLinkCard';
 import Btn from '../../components/ui/Btn';
+import Footnote from '../../components/ui/Footnote';
 import UvCheck from '../UvCheck';
 import { uvPair } from '../uvPair';
 import { FOOTNOTES } from '../../lib/pageCopy';
@@ -105,10 +106,7 @@ export default async function CountrySourcesPage({ params }) {
           <Btn href={`/relocate?dest=${encodeURIComponent(country.name)}`} variant="secondary">Relocation guide</Btn>
         </div>
 
-        <p className="src-footnote">
-          <span className="src-footnote-mark" aria-hidden="true">*</span>
-          {FOOTNOTES.sources}
-        </p>
+        <Footnote tone="paper">{FOOTNOTES.sources}</Footnote>
       </div>
     </ToolShell>
   );

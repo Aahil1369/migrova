@@ -4,7 +4,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
-const { checklistKey, readChecklist, writeChecklist, checklistProgress } = await import(
+const { checklistKey, readChecklist, writeChecklist, checklistProgress, packedStamp } = await import(
   new URL('../../../app/components/kit/checklistStore.js', import.meta.url)
 );
 
@@ -84,4 +84,18 @@ test('checklistProgress: done counts ticked items that exist; complete only when
   // a duplicate or a stale index from a longer list never completes a shorter one
   assert.deepEqual(checklistProgress(2, [1, 1, 7]), { done: 1, total: 2, complete: false });
   assert.deepEqual(checklistProgress(2, [-1, 0, 1]), { done: 2, total: 2, complete: true });
+});
+
+test('packedStamp: the stamp lands only for a list completed by a tick here; a restored one rests', () => {
+  const key = checklistKey(['visa', 'pk', 'ca', 'study']);
+  const other = checklistKey(['visa', 'pk', 'de', 'study']);
+  assert.equal(packedStamp(false, null, key), null, 'not complete: no stamp');
+  assert.equal(packedStamp(false, key, key), null, 'unticked again: no stamp');
+  // Restored already complete from this device (no tick on this page yet): still, and silent.
+  assert.equal(packedStamp(true, null, key), 'rest');
+  assert.equal(packedStamp(true, undefined, key), 'rest');
+  // A tick on this page completed it: the thunk and the announcement.
+  assert.equal(packedStamp(true, key, key), 'land');
+  // A tick here completed another list (the page now shows a different one): this one rests.
+  assert.equal(packedStamp(true, other, key), 'rest');
 });

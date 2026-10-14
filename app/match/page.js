@@ -7,6 +7,7 @@ import PassportCard from '../components/kit/PassportCard';
 import ResultArrival from '../components/kit/ResultArrival';
 import { createLatest } from '../components/kit/createLatest';
 import Btn from '../components/ui/Btn';
+import Footnote from '../components/ui/Footnote';
 import CountryMatchCard from '../components/CountryMatchCard';
 import DisclaimerBlock from '../components/DisclaimerBlock';
 import { readRoute } from '../components/passport/routeStore';
@@ -14,7 +15,8 @@ import { announceRouteChange, deviceStorage, useSavedRoute } from '../components
 import { countryByCode } from '../data/countries195';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import {
-  fetchMatches, matchPrefill, profileKey, readLastMatch, readMatchCache, requestProfile, setDestination, writeMatchCache,
+  fetchMatches, lateProfileFills, matchCountLabel, matchKeptText, matchPrefill, matchReadyLabel, profileKey, readLastMatch,
+  readMatchCache, requestProfile, setDestination, writeMatchCache,
 } from '../lib/match';
 import MatchForm, { EMPTY_FORM } from './MatchForm';
 import MatchRoute, { PendingRoute } from './MatchRoute';
@@ -30,14 +32,6 @@ function deviceProfile() {
   } catch {
     return null;
   }
-}
-
-const countLabel = (n) => (n === 1 ? 'Your top country' : `Your top ${n} countries`);
-
-// Where the result lives: kept on this device (and for how long), or not (blocked storage).
-function keptText({ fresh, kept }) {
-  if (!kept) return 'This browser is blocking storage, so these matches are not kept. Refresh to ask again.';
-  return `${fresh ? 'Saved on this device for 24 hours.' : 'Your last matches, saved on this device.'} Refresh to ask again with the same details.`;
 }
 
 // A result restored from this device on load: the same section, without the arrival's focus move
@@ -68,12 +62,14 @@ export default function MatchPage() {
   const [error, setError] = useState('');
   const [refreshError, setRefreshError] = useState('');
   // The result shown: { id, matches, profile (what was sent), fresh (arrived on a submit / refresh,
-  // not restored on load), kept (it is saved on this device) }.
+  // not restored on load), source ('ai': the AI just answered; 'device': an earlier answer kept on
+  // this device, restored or reused), kept (it is saved on this device) }.
   const [result, setResult] = useState(null);
   const [pickNote, setPickNote] = useState('');
   // One guard per page: a newer search (a resubmit, a refresh) makes older answers stale.
   const [latest] = useState(createLatest);
-  // The saved profile (its job types join the request); `edited`: the person has changed the form.
+  // The saved profile (its job types join the request); `edited`: the person has changed the form
+  // or searched, so a late account profile no longer fills it (lateProfileFills).
   const saved = useRef(null);
   const edited = useRef(false);
   const route = useSavedRoute();
@@ -91,7 +87,7 @@ export default function MatchPage() {
       saved.current = last.profile;
       setForm(matchPrefill({ profile: last.profile }).value);
       setNote('saved');
-      setResult({ id: latest.next(), matches: last.matches, profile: last.profile, fresh: false, kept: true });
+      setResult({ id: latest.next(), matches: last.matches, profile: last.profile, fresh: false, source: 'device', kept: true });
       return undefined;
     }
     const savedRoute = readRoute(storage);
@@ -107,7 +103,7 @@ export default function MatchPage() {
     fetch('/api/user-profile')
       .then((res) => res.json())
       .then(({ profile }) => {
-        if (!cancelled && !edited.current && profile && typeof profile === 'object' && profile.nationality) fill(profile);
+        if (!cancelled && lateProfileFills(profile, edited.current)) fill(profile);
       })
       .catch(() => {});
     return () => {
@@ -132,7 +128,7 @@ export default function MatchPage() {
     const kept = refresh ? null : readMatchCache(deviceStorage(), key, Date.now());
     if (kept) {
       // A new id: an answer still on its way (if any) is now stale.
-      setResult({ id: latest.next(), matches: kept, profile, fresh: true, kept: true });
+      setResult({ id: latest.next(), matches: kept, profile, fresh: true, source: 'device', kept: true });
       return;
     }
     setBusy(refresh ? 'refresh' : 'search');
@@ -146,12 +142,14 @@ export default function MatchPage() {
       return;
     }
     const keptNow = writeMatchCache(deviceStorage(), key, outcome.matches, Date.now(), profile);
-    setResult({ id: outcome.id, matches: outcome.matches, profile, fresh: true, kept: keptNow });
+    setResult({ id: outcome.id, matches: outcome.matches, profile, fresh: true, source: 'ai', kept: keptNow });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (busy) return;
+    // From now on the form (and the result under it) is the person's: a late profile leaves it be.
+    edited.current = true;
     if (!countryByCode(form.nationality)) {
       setError(NO_NATIONALITY);
       return;
@@ -200,10 +198,10 @@ export default function MatchPage() {
             </PassportCard>
           )}
           {result && (
-            <Wrap key={result.id} id={RESULTS_HEADING_ID} label={`${countLabel(result.matches.length)} are ready`}>
+            <Wrap key={result.id} id={RESULTS_HEADING_ID} label={matchReadyLabel(result.matches.length)}>
               <PassportCard as="div" className="mt-routecard">
                 <h2 id={RESULTS_HEADING_ID} className="mt-h2">
-                  {countLabel(result.matches.length)}
+                  {matchCountLabel(result.matches.length)}
                 </h2>
                 <p className="mt-hint">
                   {fromName ? `For a passport from ${fromName}. ` : ''}Tap a stamp to set it as your destination.
@@ -227,7 +225,7 @@ export default function MatchPage() {
                 ))}
               </ol>
               <div className="mt-again">
-                <p className="mt-saved">{keptText(result)}</p>
+                <p className="mt-saved">{matchKeptText(result)}</p>
                 <p className="mt-error" role="alert">
                   {refreshError}
                 </p>
@@ -240,10 +238,7 @@ export default function MatchPage() {
           )}
         </div>
 
-        <p className="mt-footnote">
-          <span className="mt-footnote-mark" aria-hidden="true">*</span>
-          {FOOTNOTES.match}
-        </p>
+        <Footnote tone="paper">{FOOTNOTES.match}</Footnote>
       </div>
     </ToolShell>
   );

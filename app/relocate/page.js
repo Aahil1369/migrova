@@ -11,6 +11,7 @@ import { PlaneGlyph } from '../components/kit/Glyphs';
 import { createLatest } from '../components/kit/createLatest';
 import { deviceStorage } from '../components/kit/deviceStorage';
 import Btn from '../components/ui/Btn';
+import Footnote from '../components/ui/Footnote';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { admittedStamp, budgetTiers, cityName, fetchGuide, relocatePrefill, saveWeekPlan, savedWeekPlan, ticketCode, weekPlan } from '../lib/relocate';
 import { countryByCode, findCountryInText } from '../data/countries195';
@@ -237,10 +238,7 @@ export default function RelocatePage() {
           )}
         </div>
 
-        <p className="rl-footnote">
-          <span className="rl-footnote-mark" aria-hidden="true">*</span>
-          {FOOTNOTES.relocate}
-        </p>
+        <Footnote tone="paper">{FOOTNOTES.relocate}</Footnote>
       </div>
     </ToolShell>
   );

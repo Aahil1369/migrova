@@ -329,6 +329,36 @@ export function requestProfile(value, profile) {
   return jobTypes.length ? { ...out, jobTypes } : out;
 }
 
+/**
+ * Whether the account's profile, answering after the page loaded, may fill the form: only one
+ * with a passport country, and only while the person has neither changed the form nor searched
+ * (`edited`), so a late answer never overwrites their details or the ones under a shown result.
+ */
+export function lateProfileFills(profile, edited) {
+  return !edited && isObject(profile) && text(profile.nationality) !== '';
+}
+
+/** A result's heading for `n` matches: 'Your top country' (one), else 'Your top 3 countries'. */
+export function matchCountLabel(n) {
+  return n === 1 ? 'Your top country' : `Your top ${n} countries`;
+}
+
+/** What a result's arrival announces: 'Your top country is ready', 'Your top 3 countries are ready'. */
+export function matchReadyLabel(n) {
+  return `${matchCountLabel(n)} ${n === 1 ? 'is' : 'are'} ready`;
+}
+
+/**
+ * The line under a result, where it is kept. `kept` false: storage is blocked. `source`: 'ai' (the
+ * AI just answered; kept from now for 24 hours) or 'device' (an earlier answer kept on this device:
+ * restored on load, or reused for a submit of the same details).
+ */
+export function matchKeptText({ source, kept }) {
+  if (!kept) return 'This browser is blocking storage, so these matches are not kept. Refresh to ask again.';
+  const where = source === 'ai' ? 'Saved on this device for 24 hours.' : 'Your last matches, saved on this device.';
+  return `${where} Refresh to ask again with the same details.`;
+}
+
 const COST_WORDS = { $: 'Low', $$: 'Moderate', $$$: 'High', $$$$: 'Very high' };
 
 /** The AI's cost of living ('$' to '$$$$') in words: { signs, word }; anything else is kept as the word. */

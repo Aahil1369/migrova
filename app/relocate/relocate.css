@@ -411,7 +411,7 @@ a.rl-call:focus-visible { outline: 3px solid var(--page-ink); outline-offset: 2p
   overflow-wrap: anywhere;
 }
 
-/* The closing note and the page footnote. */
+/* The closing note (the page footnote is the shared Footnote, ui/footnote.css). */
 .rl-closing {
   margin: 0;
   padding: 16px 18px;
@@ -422,19 +422,6 @@ a.rl-call:focus-visible { outline: 3px solid var(--page-ink); outline-offset: 2p
   color: #3d443a;
 }
 .rl-closing strong { color: var(--page-ink); }
-.rl-footnote {
-  margin: 32px 0 0;
-  padding-top: 20px;
-  border-top: 1px dashed rgba(31, 42, 36, 0.25);
-  font-size: 16px;
-  line-height: 1.6;
-  color: #3d443a;
-}
-.rl-footnote-mark {
-  margin-right: 6px;
-  font: 700 14px/1 var(--jb-mono);
-  color: #a94a1f;
-}
 
 @media (min-width: 640px) {
   .rl-results { margin: 0 -32px; padding: 0 32px; }

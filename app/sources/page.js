@@ -1,6 +1,7 @@
 import ToolShell from '../components/kit/ToolShell';
 import ToolHeader from '../components/kit/ToolHeader';
 import PassportCard from '../components/kit/PassportCard';
+import Footnote from '../components/ui/Footnote';
 import SourcesIndex from './SourcesIndex';
 import SealCount from './SealCount';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
@@ -62,10 +63,7 @@ export default function SourcesPage() {
           </p>
         </section>
 
-        <p className="src-footnote">
-          <span className="src-footnote-mark" aria-hidden="true">*</span>
-          {FOOTNOTES.sources}
-        </p>
+        <Footnote tone="paper">{FOOTNOTES.sources}</Footnote>
       </div>
     </ToolShell>
   );

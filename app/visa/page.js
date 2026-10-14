@@ -11,6 +11,7 @@ import ResultArrival from '../components/kit/ResultArrival';
 import { CrossGlyph } from '../components/kit/Glyphs';
 import { createLatest } from '../components/kit/createLatest';
 import Btn from '../components/ui/Btn';
+import Footnote from '../components/ui/Footnote';
 import { HERO_COPY, FOOTNOTES } from '../lib/pageCopy';
 import { friendlyError } from '../lib/friendlyError';
 import { NATIONALITIES } from '../data/countries';
@@ -468,10 +469,7 @@ export default function VisaPage() {
           )}
         </div>
 
-        <p className="visa-footnote">
-          <span className="visa-footnote-mark" aria-hidden="true">*</span>
-          {FOOTNOTES.visa}
-        </p>
+        <Footnote tone="paper">{FOOTNOTES.visa}</Footnote>
       </div>
 
       <LegalAckModal

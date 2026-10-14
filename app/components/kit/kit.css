@@ -244,9 +244,14 @@
     linear-gradient(115deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0) 55%) 0 0 / 100% 33.334%,
     linear-gradient(180deg, #b8cf5d, #7fd1c3, #9ab8f0, #e6a6d8, #f0a46e, #b8cf5d) 0 0 / 100% 33.334%;
 }
-.jb-vignette:hover .jb-vignette-holo > span,
 .jb-vignette:focus-visible .jb-vignette-holo > span {
   animation: jb-holo 1.4s linear infinite;
+}
+/* the foil on hover with a mouse only: a tap would leave it looping under a stuck :hover */
+@media (hover: hover) {
+  .jb-vignette:hover .jb-vignette-holo > span {
+    animation: jb-holo 1.4s linear infinite;
+  }
 }
 @keyframes jb-holo {
   to { transform: translateY(-33.334%); }
@@ -317,6 +322,10 @@
   from { opacity: 0.55; transform: scale(0.9); }
   to { opacity: 0; transform: scale(1.12); }
 }
+/* A stamp that was already there (Stamp `still`): at rest from the start, no thunk, no bleed.
+   [data-applied] ties the landing bleed's (0,2,1) above and wins by coming after it. */
+.jb-stamp--still { transition: none; }
+.jb-stamp--still[data-applied]::before { animation: none; }
 .jb-stamp-text {
   position: relative; /* after .jb-stamp-ink in the DOM, so painted above the ring */
   display: flex;
@@ -452,7 +461,8 @@
 .kit-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* fallback for browsers without the small-viewport unit */
+  min-height: 100svh; /* iOS: the short-page footer sits at the visible bottom, toolbar shown */
   background: var(--night-0); /* behind the translucent night navbar */
 }
 .kit-main {
@@ -583,7 +593,10 @@
   cursor: pointer;
   transition: transform 150ms var(--ease);
 }
-.kit-chip:hover:not([aria-disabled='true']) { transform: translateY(-1px); }
+/* a mouse only: on a touch screen a tap leaves :hover stuck on the chip */
+@media (hover: hover) {
+  .kit-chip:hover:not([aria-disabled='true']) { transform: translateY(-1px); }
+}
 .kit-chip[aria-pressed='true'] {
   border-color: var(--page-ink);
   background: var(--page-ink);

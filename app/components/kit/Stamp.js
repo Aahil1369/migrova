@@ -20,16 +20,18 @@ const DEFAULT_ROTATE = { circle: -10, rect: 4, triangle: -4, hexagon: 7 };
  * text sits above it at full ink.
  * `applied` false -> invisible, scaled 2.2x; true (default) -> thunks down to 1x (320ms,
  * overshoot) with a short ink bleed. Reduced motion / stack show the final state; lite shows
- * it without the thunk. Optional `rotate` (deg), `className`, `style` (size/position).
+ * it without the thunk. `still`: a stamp that was already there (e.g. a list restored complete):
+ * applied from the start, with no thunk and no ink bleed. Optional `rotate` (deg), `className`,
+ * `style` (size/position).
  */
-export function Stamp({ shape = 'circle', color = DEFAULT_STAMP_INK, lines = [], applied = true, rotate, className = '', style }) {
+export function Stamp({ shape = 'circle', color = DEFAULT_STAMP_INK, lines = [], applied = true, still = false, rotate, className = '', style }) {
   const kind = DEFAULT_ROTATE[shape] === undefined ? 'circle' : shape;
   const [top, big, bottom, ...rest] = lines;
   const outline = OUTLINES[kind];
   return (
     <span
-      className={`jb-stamp jb-stamp--${kind}${className ? ` ${className}` : ''}`}
-      data-applied={applied ? 'true' : 'false'}
+      className={`jb-stamp jb-stamp--${kind}${still ? ' jb-stamp--still' : ''}${className ? ` ${className}` : ''}`}
+      data-applied={applied || still ? 'true' : 'false'}
       style={{ '--c': color, '--r': `${rotate ?? DEFAULT_ROTATE[kind]}deg`, ...style }}
     >
       <span className="jb-stamp-ink" aria-hidden="true">

@@ -206,6 +206,28 @@ test('reduced motion: the kit\'s rule stops every stamp\'s ink bleed, whatever s
   assert.ok(stopSelectors.includes('.jb-stamp[data-applied]::before'), stopSelectors.join(', '));
 });
 
+test('PACKED lands and is announced only for a completion made here; a restored complete list rests', () => {
+  const list = read('app/components/kit/ChecklistPage.js');
+  // Only a tick here marks the list as packed now; nothing on load or from storage does.
+  assert.deepEqual(list.match(/setPackedKey\(/g), ['setPackedKey('], 'one place sets it');
+  assert.match(list, /const toggle = \(index\) => \{\s*const next = [^\n]*\n\s*setPackedKey\(checklistProgress\(items\.length, next\)\.complete \? storageKey : null\);/);
+  assert.match(list, /const stamp = packedStamp\(complete, packedKey, storageKey\);/);
+  // 'land': the stamp that thunks down; 'rest': the same stamp, still from the start.
+  assert.match(list, /\{stamp === 'land' \? <LandingStamp \/> : null\}/);
+  assert.match(list, /\{stamp === 'rest' \? <Stamp shape="rect" color=\{STAMP_INKS\.green\} lines=\{PACKED_LINES\} still rotate=\{-6\} \/> : null\}/);
+  assert.doesNotMatch(list, /\{complete \?/, 'nothing shows or speaks on `complete` alone');
+
+  // A still stamp is applied from the start and its class switches the thunk and the bleed off.
+  const stamp = read('app/components/kit/Stamp.js');
+  assert.match(stamp, /\$\{still \? ' jb-stamp--still' : ''\}/);
+  assert.match(stamp, /data-applied=\{applied \|\| still \? 'true' : 'false'\}/);
+  const bleed = RULES.findIndex((r) => r.selectors.includes(".jb-stamp[data-applied='true']::before"));
+  const off = RULES.findIndex((r) => r.selectors.includes('.jb-stamp--still[data-applied]::before') && /animation\s*:\s*none/.test(r.body));
+  assert.ok(bleed >= 0 && off > bleed, 'the still rule comes after the landing bleed');
+  assert.ok(compareSpecificity(specificity('.jb-stamp--still[data-applied]::before'), specificity(".jb-stamp[data-applied='true']::before")) >= 0);
+  assert.ok(RULES.some((r) => r.selectors.includes('.jb-stamp--still') && /transition\s*:\s*none/.test(r.body)), 'no thunk');
+});
+
 test('the result components keep their accessibility contract', () => {
   const link = read('app/components/kit/VerifiedLinkCard.js');
   assert.match(link, /<a className="kit-vlink" href=\{href\} target="_blank" rel="noopener noreferrer">/);
@@ -218,7 +240,7 @@ test('the result components keep their accessibility contract', () => {
   assert.match(list, /type="checkbox"/);
   assert.match(list, /<label htmlFor=\{id\}>/);
   assert.match(list, /className="kit-check-stamp" aria-hidden="true"/);
-  assert.match(list, /aria-live="polite">\s*\{complete \? 'All items packed' : ''\}/);
+  assert.match(list, /aria-live="polite">\s*\{stamp === 'land' \? 'All items packed' : ''\}/);
   assert.match(list, /\{done\} \/ \{total\} packed/);
   assert.match(list, /from '\.\/deviceStorage'/);
 

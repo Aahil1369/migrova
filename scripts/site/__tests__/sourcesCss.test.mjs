@@ -121,7 +121,7 @@ test('every text colour reaches 4.5:1 on the surface it sits on', () => {
 });
 
 test('body text is at least 16px on phones', () => {
-  const body = ['.src-text', '.src-empty', '.src-row-name', '.src-check-body', '.src-spot', '.src-footnote', '.src-more', '.uv-none', '.uv-title', '.uv-domain'];
+  const body = ['.src-text', '.src-empty', '.src-row-name', '.src-check-body', '.src-spot', '.src-more', '.uv-none', '.uv-title', '.uv-domain'];
   for (const selector of body) {
     const sizes = ruleFor(selector).map((r) => decl(r.body, 'font-size') ?? /(\d+)px\/[\d.]+ /.exec(decl(r.body, 'font') ?? '')?.[0]).filter(Boolean);
     assert.ok(sizes.length > 0, `${selector} sets a font size`);

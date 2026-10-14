@@ -50,6 +50,18 @@ export function writeChecklist(storage, key, checked) {
   }
 }
 
+/**
+ * How a list's PACKED stamp shows: null while the list is not complete; 'land' (it thunks down and
+ * "All items packed" is announced) when a tick on this page completed it, i.e. `packedKey` (the
+ * key of the list a tick here last completed, else null) is this list's `storageKey`; otherwise
+ * 'rest': a list already complete when it appeared (restored from this device, or completed in
+ * another tab) shows its stamp still, and silently.
+ */
+export function packedStamp(complete, packedKey, storageKey) {
+  if (!complete) return null;
+  return packedKey !== null && packedKey !== undefined && packedKey === storageKey ? 'land' : 'rest';
+}
+
 /** { done, total, complete } for a list of `total` items: only ticked indexes below `total` count, each once. */
 export function checklistProgress(total, checked) {
   const done = normalize(checked).filter((n) => n < total).length;

@@ -251,6 +251,63 @@ test('the navbar sign-in and profile pop-ups and /contact use 16px fields too (n
   }
 });
 
+// Innermost CSS rules with the at-rules around them: { selector, body, media: ['@media …', …] }.
+function rulesInMedia(css) {
+  const src = stripCssComments(css);
+  const out = [];
+  const stack = [];
+  let start = 0;
+  for (let i = 0; i < src.length; i++) {
+    if (src[i] === '{') {
+      const head = src.slice(start, i).split(';').pop().trim();
+      if (head.startsWith('@')) {
+        stack.push(head);
+        start = i + 1;
+        continue;
+      }
+      const end = src.indexOf('}', i);
+      out.push({ selector: head, body: src.slice(i + 1, end), media: [...stack] });
+      i = end;
+      start = end + 1;
+    } else if (src[i] === '}') {
+      stack.pop();
+      start = i + 1;
+    }
+  }
+  return out;
+}
+
+test('the tool shell fills the small viewport (iOS toolbar shown), with 100vh as the fallback before it', () => {
+  const shell = rulesInMedia(read('app/components/kit/kit.css')).filter((r) => r.selector === '.kit-shell' && r.media.length === 0);
+  assert.equal(shell.length, 1);
+  const heights = [...shell[0].body.matchAll(/(?:^|;)\s*min-height\s*:\s*([^;]+)/g)].map((m) => m[1].trim());
+  assert.deepEqual(heights, ['100vh', '100svh'], 'the fallback first, so svh wins where it is known');
+});
+
+test('hover-only visuals in the kit and the tool pages need a pointer that hovers (no stuck tap hover)', () => {
+  // A tap on a touch screen leaves :hover on the element until the next tap elsewhere, so a lift or
+  // a foil loop would stay on: every :hover rule sits in @media (hover: hover), or is the reduced-
+  // motion reset of one.
+  const files = ['app/components/kit/kit.css', 'app/components/kit/ticket.css', 'app/visa/visa.css', 'app/relocate/relocate.css',
+    'app/match/match.css', 'app/sources/sources.css'];
+  let hovers = 0;
+  for (const file of files) {
+    for (const { selector, media } of rulesInMedia(read(file))) {
+      if (!selector.includes(':hover')) continue;
+      hovers++;
+      const gated = media.some((q) => /\(hover:\s*hover\)/.test(q) || /prefers-reduced-motion:\s*reduce/.test(q));
+      assert.ok(gated, `${file}: ${selector} applies on touch screens too`);
+    }
+  }
+  assert.ok(hovers >= 10, `found ${hovers} hover rules`);
+  // The two named in review: the chip's lift and the vignette's foil loop.
+  const kit = rulesInMedia(read('app/components/kit/kit.css'));
+  const inHover = (selector) => kit.some((r) => r.selector.split(',').map((s) => s.trim()).includes(selector) && r.media.some((q) => /\(hover:\s*hover\)/.test(q)));
+  assert.ok(inHover(".kit-chip:hover:not([aria-disabled='true'])"));
+  assert.ok(inHover('.jb-vignette:hover .jb-vignette-holo > span'));
+  assert.ok(kit.some((r) => r.selector === '.jb-vignette:focus-visible .jb-vignette-holo > span' && r.media.length === 0), 'keyboard focus still plays the foil');
+});
+
 test('a busy control keeps keyboard focus: chips and search buttons are aria-disabled, never natively disabled', () => {
   // Native `disabled` blurs the focused control (focus falls to <body>), and a failed search
   // (the shared free-tier quota) never gives it back: the kit Chip rests with aria-disabled and

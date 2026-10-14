@@ -13,7 +13,7 @@ const ROOT = new URL('../../../', import.meta.url);
 const {
   MATCH_CACHE_KEY, profileKey, readMatchCache, writeMatchCache, readLastMatch, describeProfile, matchLinks,
   stampSlots, ROUTE_STOPS, ROUTE_BOX, ROUTE_PATH, ROUTE_LENGTH, STAMP_SIZE, pickMatches, stampFace, setDestination, fetchMatches,
-  matchPrefill, requestProfile, costLevel,
+  matchPrefill, requestProfile, costLevel, lateProfileFills, matchCountLabel, matchReadyLabel, matchKeptText,
 } = await import(new URL('app/lib/match.js', ROOT));
 const { readRoute, ROUTE_KEY } = await import(new URL('app/components/passport/routeStore.js', ROOT));
 const { createLatest } = await import(new URL('app/components/kit/createLatest.js', ROOT));
@@ -326,6 +326,39 @@ test('requestProfile: the form\'s five fields plus the saved profile\'s job type
   assert.deepEqual(requestProfile({ nationality: 'pk', extra: 1 }), { nationality: 'pk', currentCountry: '', experience: '', skills: '', preferredCountries: [] });
 });
 
+test('the result\'s words: one country "is ready", several "are ready"', () => {
+  assert.equal(matchCountLabel(1), 'Your top country');
+  assert.equal(matchReadyLabel(1), 'Your top country is ready');
+  assert.equal(matchCountLabel(3), 'Your top 3 countries');
+  assert.equal(matchReadyLabel(3), 'Your top 3 countries are ready');
+  assert.equal(matchReadyLabel(5), 'Your top 5 countries are ready');
+  assert.doesNotMatch(matchReadyLabel(1), /are ready/);
+});
+
+test('matchKeptText: a fresh AI answer is kept for 24 hours; a reused or restored one is "your last matches"', () => {
+  const again = ' Refresh to ask again with the same details.';
+  assert.equal(matchKeptText({ source: 'ai', kept: true }), `Saved on this device for 24 hours.${again}`);
+  // Reused from the device cache on a submit, or restored on load: its 24 hours started earlier.
+  assert.equal(matchKeptText({ source: 'device', kept: true }), `Your last matches, saved on this device.${again}`);
+  assert.doesNotMatch(matchKeptText({ source: 'device', kept: true }), /24 hours/);
+  assert.equal(matchKeptText({ source: 'ai', kept: false }), 'This browser is blocking storage, so these matches are not kept. Refresh to ask again.');
+});
+
+test('lateProfileFills: a late account profile fills the form only until the person edits or searches', () => {
+  const profile = { nationality: 'in', experience: '3-5' };
+  assert.equal(lateProfileFills(profile, false), true);
+  assert.equal(lateProfileFills(profile, true), false, 'edited (or searched): the form is the person\'s');
+  for (const junk of [null, undefined, 'in', ['in'], {}, { nationality: '' }, { nationality: '  ' }, { nationality: null }]) {
+    assert.equal(lateProfileFills(junk, false), false, JSON.stringify(junk));
+  }
+  // The page marks the form edited on every change and on every submit, before the search runs.
+  const page = readFileSync(new URL('app/match/page.js', ROOT), 'utf8');
+  assert.match(page, /const changeForm = \(next\) => \{\s*edited\.current = true;/);
+  assert.match(page, /const handleSubmit = \(event\) => \{\s*event\.preventDefault\(\);\s*if \(busy\) return;\s*(?:\/\/[^\n]*\n\s*)*edited\.current = true;/);
+  assert.match(page, /if \(!cancelled && lateProfileFills\(profile, edited\.current\)\) fill\(profile\);/);
+  assert.equal(page.match(/\bfill\(/g)?.length, 2, 'the device profile at once, the account profile only through lateProfileFills');
+});
+
 test('costLevel: the AI\'s $ signs in words', () => {
   assert.deepEqual(costLevel('$'), { signs: '$', word: 'Low' });
   assert.deepEqual(costLevel(' $$ '), { signs: '$$', word: 'Moderate' });
@@ -446,4 +479,27 @@ test('the country-match route answers cleaned matches, caches per profile, and n
   assert.equal(groqCalls - start, 4, 'a junk answer was not cached');
 
   assert.equal((await post({ profile: {} })).status, 400, 'nationality is required');
+});
+
+test('the country-match route reads the JSON out of an answer wrapped in a sentence or a code fence', async () => {
+  const inner = JSON.stringify({ matches: [{ country_code: 'nz', country_name: 'New Zealand', match_score: 81 }] });
+  const logged = [];
+  const consoleError = console.error;
+  console.error = (...args) => logged.push(args.map(String).join(' '));
+  try {
+    answer = `Here are the five best matches for you:\n${inner}\nI hope this helps with your move.`;
+    const prose = await post({ profile: { nationality: 'pk', experience: 'prose-test' } });
+    assert.equal(prose.status, 200, 'a sentence before and after the JSON is not an error');
+    assert.deepEqual(prose.data.matches.map((m) => [m.country_code, m.match_score]), [['nz', 81]]);
+    answer = `Sure! \`\`\`json\n${inner}\n\`\`\` Good luck.`;
+    const fenced = await post({ profile: { nationality: 'pk', experience: 'fence-test' } });
+    assert.equal(fenced.status, 200);
+    assert.deepEqual(fenced.data.matches.map((m) => m.country_code), ['nz']);
+    // No JSON object at all is still the calm error, never a crash.
+    answer = 'Sorry, I cannot help with that.';
+    assert.equal((await post({ profile: { nationality: 'pk', experience: 'no-json-test' } })).status, 500);
+  } finally {
+    console.error = consoleError;
+  }
+  assert.equal(logged.length, 1, 'only the answer with no JSON failed');
 });

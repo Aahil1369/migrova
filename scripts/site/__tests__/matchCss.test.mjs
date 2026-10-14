@@ -7,7 +7,7 @@
 // refresh, the not-legal-advice notice, no emoji).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 
 const ROOT = new URL('../../../', import.meta.url);
 const read = (path) => readFileSync(new URL(path, ROOT), 'utf8');
@@ -149,7 +149,7 @@ test('body text is at least 16px on phones, and so is every form control', () =>
   const phone = rules(withoutMedia(CSS, /min-width/));
   const sizes = (selector) => phone.filter((r) => r.selectors.includes(selector)).map((r) => fontSize(r.body)).filter(Boolean);
   for (const selector of ['.mt-form-sub', '.mt-error', '.mt-hint', '.mt-picked', '.mt-vig-score', '.mt-stats dd', '.mt-path',
-    '.mt-go', '.mt-set', '.mt-saved', '.mt-footnote']) {
+    '.mt-go', '.mt-set', '.mt-saved']) {
     const found = sizes(selector);
     assert.ok(found.length > 0, `${selector} sets a font size`);
     for (const size of found) assert.ok(parseFloat(size) >= 16, `${selector}: ${size}`);
@@ -247,6 +247,32 @@ test('the AI is asked only on submit or refresh, through the stale guard; the re
   assert.match(PAGE, /const kept = refresh \? null : readMatchCache\(deviceStorage\(\), key, Date\.now\(\)\);/, 'a submit reuses a fresh kept result; a refresh does not');
   assert.match(PAGE, /const outcome = await fetchMatches\(latest, profile, \{ refresh \}\);\s*if \(!outcome\) return;/, 'a stale answer is dropped; a refresh asks the AI again');
   assert.match(PAGE, /writeMatchCache\(deviceStorage\(\), key, outcome\.matches, Date\.now\(\), profile\)/);
+  // Where each result came from, for the line under it (matchKeptText): only the AI's own answer is
+  // "saved for 24 hours"; a reused or restored one is "your last matches".
+  assert.match(PAGE, /if \(kept\) \{[^}]*setResult\(\{ id: latest\.next\(\), matches: kept, profile, fresh: true, source: 'device', kept: true \}\);/);
+  assert.match(PAGE, /setResult\(\{ id: latest\.next\(\), matches: last\.matches, profile: last\.profile, fresh: false, source: 'device', kept: true \}\);/);
+  assert.match(PAGE, /setResult\(\{ id: outcome\.id, matches: outcome\.matches, profile, fresh: true, source: 'ai', kept: keptNow \}\);/);
+  assert.match(PAGE, /<p className="mt-saved">\{matchKeptText\(result\)\}<\/p>/);
+  assert.match(PAGE, /<Wrap key=\{result\.id\} id=\{RESULTS_HEADING_ID\} label=\{matchReadyLabel\(result\.matches\.length\)\}>/, '"is ready" for one country');
+  assert.doesNotMatch(PAGE, /are ready/);
+});
+
+test('shared components import no page stylesheet (the card\'s styles come with the /match page)', () => {
+  const components = new URL('app/components/', ROOT);
+  const files = readdirSync(components, { recursive: true }).filter((f) => /\.js$/.test(f));
+  assert.ok(files.length > 20, `found ${files.length} component files`);
+  let cssImports = 0;
+  for (const file of files) {
+    const url = new URL(file.replace(/\\/g, '/'), components);
+    for (const m of stripJs(readFileSync(url, 'utf8')).matchAll(/import\s+['"]([^'"]+\.css)['"]/g)) {
+      cssImports++;
+      const target = new URL(m[1], url).href;
+      assert.ok(target.startsWith(components.href), `${file} imports ${m[1]}, outside app/components/`);
+    }
+  }
+  assert.ok(cssImports > 10, `found ${cssImports} component css imports`);
+  assert.doesNotMatch(CARD, /\.css['"]/, 'CountryMatchCard imports no stylesheet');
+  assert.match(PAGE, /import '\.\/match\.css';/, 'the /match page brings the card styles');
 });
 
 test('stamps are named buttons over a hidden stamp; a destination is saved only by a tap', () => {

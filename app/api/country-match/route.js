@@ -63,7 +63,10 @@ Return ONLY valid JSON: { "matches": [...] } sorted by match_score descending. N
     });
 
     const raw = completion.choices[0]?.message?.content || '';
-    const jsonStr = raw.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    let jsonStr = raw.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    // A sentence around the JSON (as app/api/relocation/route.js allows): keep the outermost {…}.
+    const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+    if (jsonMatch) jsonStr = jsonMatch[0];
     // Only known countries, best first; an answer with none is an error, and is not cached.
     const matches = pickMatches(JSON.parse(jsonStr));
     if (matches.length === 0) throw new Error('The answer named no known country');

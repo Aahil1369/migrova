@@ -19,6 +19,7 @@ const STUB = '#f6efe0';
 const TAB = '#f6eedb';
 
 const stripCss = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
+const stripJs = (src) => src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
 const PAGE_CSS = stripCss(read('app/relocate/relocate.css'));
 const TICKET_CSS = stripCss(read('app/components/kit/ticket.css'));
 
@@ -118,7 +119,7 @@ test('the boarding pass is the passport paper (#fbf8f2, spec §4.1 and the mocku
 test('body text is at least 16px on phones', () => {
   const phone = (css) => rules(withoutMedia(css, /min-width/));
   const sizes = (css, selector) => phone(css).filter((r) => r.selectors.includes(selector)).map((r) => fontSize(r.body)).filter(Boolean);
-  const page = ['.rl-text', '.rl-note', '.rl-level', '.rl-lead', '.rl-list > li', '.rl-tags > li', '.rl-error', '.rl-closing', '.rl-footnote',
+  const page = ['.rl-text', '.rl-note', '.rl-level', '.rl-lead', '.rl-list > li', '.rl-tags > li', '.rl-error', '.rl-closing',
     '.rl-cost-label', '.rl-cost-amount', '.rl-cost-note', '.rl-facts dd', '.rl-go', '.rl-card-h', '.rl-pending-city'];
   const ticket = ['.tk-city', '.tk-stub-list > li', '.tk-tear', '.tk-saved', '.tk-note', '.tk-tiers dd'];
   for (const [css, list] of [[PAGE_CSS, page], [TICKET_CSS, ticket]]) {
@@ -166,7 +167,30 @@ test('the boarding pass: heading for the arrival, decorative codes and stamp, an
   assert.match(ticket, /'Save my first-week plan'/, 'the reduced-motion button');
   assert.match(ticket, /aria-live="polite"/);
   assert.match(ticket, /TICKET_SAVED = 'Saved on this device'/);
-  assert.doesNotMatch(ticket, /useEffect\([^)]*onTear/, 'nothing saves without a tap');
+  // Nothing saves without a tap: onTear (the page's save) is called exactly once, inside `finish`,
+  // and finish runs only from tearOff, the button's click handler (never an effect or a timer).
+  const code = stripJs(ticket);
+  assert.deepEqual(code.match(/\bonTear\b/g), ['onTear', 'onTear'], 'the prop and its one call, nothing else');
+  assert.deepEqual(code.match(/onTear\?\.\(\)/g), ['onTear?.()'], 'called once');
+  assert.match(/const finish = \(\) => ([^;]*);/.exec(code)?.[1] ?? '', /onTear\?\.\(\)/, 'the call is inside finish');
+  assert.deepEqual(code.match(/\bfinish\b/g), ['finish', 'finish'], 'finish is defined once and run once');
+  const tearOff = /const tearOff = \(event\) => \{([\s\S]*?)\n {2}\};/.exec(code)?.[1] ?? '';
+  assert.match(tearOff, /const outcome = finish\(\);/, 'run by the tap handler');
+  assert.deepEqual(code.match(/\btearOff\b/g), ['tearOff', 'tearOff'], 'the handler is the button\'s click and nothing else');
+  assert.match(code, /<button type="button" className="tk-tear" onClick=\{tearOff\}>/);
+});
+
+test('the boarding pass: a stub that could not be saved stays on the pass, still, beside the note', () => {
+  const code = stripJs(read('app/components/kit/Ticket.js'));
+  const tearOff = /const tearOff = \(event\) => \{([\s\S]*?)\n {2}\};/.exec(code)?.[1] ?? '';
+  // Not saved (storage blocked): no flight at all; only a saved stub tears off.
+  assert.match(tearOff, /if \(reducedMotion \|\| outcome === 'failed'\) \{\s*setTear\(outcome\);\s*return;\s*\}\s*setTear\('flying'\);/);
+  assert.match(tearOff, /window\.setTimeout\(\(\) => setTear\('saved'\), TEAR_MS\)/);
+  // The stub and its items render whenever it is not saved (failed included); only the button goes.
+  assert.match(code, /if \(stubItems\.length > 0 && saved\) \{[\s\S]*?\} else if \(stubItems\.length > 0\) \{/);
+  assert.match(code, /\{failed \? null : \(\s*<button type="button" className="tk-tear"/);
+  assert.match(code, /data-ok=\{failed \? 'false' : undefined\} aria-live="polite"/);
+  assert.match(code, /const note = tear === 'saved' \? NOTE_SAVED : failed \? NOTE_FAILED : '';/);
 });
 
 test('the chapters: a real tablist with arrow keys; tel: and safe external links', () => {

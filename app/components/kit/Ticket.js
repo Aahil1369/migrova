@@ -21,15 +21,17 @@ const NOTE_FAILED = "Couldn't save it on this device: this browser is blocking s
  * words (`from` → `city`); a fare box of `tiers` ([{ label, amount }], a row that stacks on
  * phones); an ADMITTED stamp (`stamp` lines, blue ink, decorative) that lands once; and a
  * perforated stub titled `stubTitle` listing `stubItems`.
- * The stub's button is the only way to save: it plays a 700ms tear (transform / opacity), then
- * calls `onTear()`, which saves and returns false when it could not. Reduced motion: a
- * "Save my first-week plan" button does the same at once. `torn`: already saved (the stub shows
- * as torn off). No stub items -> no stub.
+ * The stub's button is the only way to save: a tap calls `onTear()`, which saves and returns
+ * false when it could not, and a saved stub then tears off in 700ms (transform / opacity). One
+ * that could not be saved (storage blocked) stays on the pass, still, its items beside the note
+ * saying so. Reduced motion: a "Save my first-week plan" button saves with no tear. `torn`:
+ * already saved (the stub shows as torn off). No stub items -> no stub.
  */
 export function Ticket({ fromCode, toCode, from = '', city, tiers = [], stamp = [], stubTitle, stubItems = [], onTear, torn = false, headingId }) {
   const reducedMotion = useMediaQuery(REDUCED_MOTION, false);
   const [landed, setLanded] = useState(false);
-  // null, then 'flying' while the stub is in the air, then 'saved' or 'failed'.
+  // null; after a tap 'flying' (saved, the stub in the air) then 'saved', or at once 'failed' (not
+  // saved) or, under reduced motion, 'saved'.
   const [tear, setTear] = useState(null);
   const noteRef = useRef(null);
   const timer = useRef(0);
@@ -42,21 +44,25 @@ export function Ticket({ fromCode, toCode, from = '', city, tiers = [], stamp = 
     };
   }, []);
 
-  const finish = () => setTear(onTear?.() === false ? 'failed' : 'saved');
+  // The save itself, run by the button's tap only: 'saved', or 'failed' when onTear could not.
+  const finish = () => (onTear?.() === false ? 'failed' : 'saved');
 
   const tearOff = (event) => {
     if (tear) return;
     // The button is about to fly away (or be replaced): keep keyboard focus next to it, on the note.
     if (document.activeElement === event.currentTarget) noteRef.current?.focus({ preventScroll: true });
-    if (reducedMotion) {
-      finish();
+    const outcome = finish();
+    // Not saved: nothing to tear off; the stub stays where it is, beside the note saying why.
+    if (reducedMotion || outcome === 'failed') {
+      setTear(outcome);
       return;
     }
     setTear('flying');
-    timer.current = window.setTimeout(finish, TEAR_MS);
+    timer.current = window.setTimeout(() => setTear('saved'), TEAR_MS);
   };
 
   const flying = tear === 'flying';
+  const failed = tear === 'failed';
   const saved = torn || tear === 'saved';
   let slot = null;
   if (stubItems.length > 0 && saved) {
@@ -65,7 +71,8 @@ export function Ticket({ fromCode, toCode, from = '', city, tiers = [], stamp = 
         <CheckGlyph /> {TICKET_SAVED}
       </p>
     );
-  } else if (stubItems.length > 0 && tear !== 'failed') {
+  } else if (stubItems.length > 0) {
+    // A stub that could not be saved keeps its items, still, with no button (storage stays blocked).
     slot = (
       <div className={`tk-stub${flying ? ' tk-stub--flying' : ''}`} aria-hidden={flying || undefined} inert={flying || undefined}>
         <p className="tk-stub-title">{stubTitle}</p>
@@ -74,20 +81,22 @@ export function Ticket({ fromCode, toCode, from = '', city, tiers = [], stamp = 
             <li key={i}>{item}</li>
           ))}
         </ul>
-        <button type="button" className="tk-tear" onClick={tearOff}>
-          {reducedMotion ? (
-            'Save my first-week plan'
-          ) : (
-            <>
-              Tear off to save<span className="sr-only"> my first-week plan</span> <ScissorsGlyph />
-            </>
-          )}
-        </button>
+        {failed ? null : (
+          <button type="button" className="tk-tear" onClick={tearOff}>
+            {reducedMotion ? (
+              'Save my first-week plan'
+            ) : (
+              <>
+                Tear off to save<span className="sr-only"> my first-week plan</span> <ScissorsGlyph />
+              </>
+            )}
+          </button>
+        )}
       </div>
     );
   }
 
-  const note = tear === 'saved' ? NOTE_SAVED : tear === 'failed' ? NOTE_FAILED : '';
+  const note = tear === 'saved' ? NOTE_SAVED : failed ? NOTE_FAILED : '';
   return (
     <div className="tk-wrap">
       <div className={`tk${slot ? '' : ' tk--solo'}`}>
@@ -130,7 +139,7 @@ export function Ticket({ fromCode, toCode, from = '', city, tiers = [], stamp = 
         </div>
         {slot ? <div className="tk-slot">{slot}</div> : null}
       </div>
-      <p ref={noteRef} tabIndex={-1} className="tk-note" data-ok={tear === 'failed' ? 'false' : undefined} aria-live="polite">
+      <p ref={noteRef} tabIndex={-1} className="tk-note" data-ok={failed ? 'false' : undefined} aria-live="polite">
         {note}
       </p>
     </div>
